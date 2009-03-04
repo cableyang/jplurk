@@ -4,15 +4,17 @@
  */
 package tw.idv.askeing.jPlurk;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.util.Scanner;
+
 import org.apache.commons.httpclient.Header;
 import org.apache.commons.httpclient.HttpClient;
 import org.apache.commons.httpclient.HttpStatus;
 import org.apache.commons.httpclient.NameValuePair;
 import org.apache.commons.httpclient.methods.PostMethod;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
 import tw.idv.askeing.jPlurk.model.AccountModel;
 import tw.idv.askeing.jPlurk.model.MessageModel;
 
@@ -23,7 +25,9 @@ import tw.idv.askeing.jPlurk.model.MessageModel;
  */
 public class MessageSender {
 
-    private static boolean forTest = false;
+	static Log logger = LogFactory.getLog(MessageSender.class);
+
+//    private static boolean forTest = false;
     private static int uid = 0;
 
     /**
@@ -41,9 +45,10 @@ public class MessageSender {
             do {
                 counter++;
                 uid = UIDGetter.getUID(user);
-                if (forTest) {
-                    System.out.println("uid: " + uid);
-                }
+//                if (forTest) {
+//                    System.out.println("uid: " + uid);
+//                }
+                logger.debug("uid: " + uid);
             } while (uid == 0 && counter <= 3);
             message.setUid(uid);
         }
@@ -71,9 +76,10 @@ public class MessageSender {
             do {
                 counter++;
                 uid = UIDGetter.getUID(user);
-                if (forTest) {
-                    System.out.println("uid: " + uid);
-                }
+//                if (forTest) {
+//                    System.out.println("uid: " + uid);
+//                }
+                logger.debug("uid: " + uid);
             } while (uid == 0 && counter <= 3);
             message.setUid(uid);
         }
@@ -82,9 +88,10 @@ public class MessageSender {
         do {
             counter++;
             cookie = CookieGetter.getCookie(host, loginUrl, user, null);
-            if (forTest) {
-                System.out.println(loginUrl + " cookie: " + cookie);
-            }
+//            if (forTest) {
+//                System.out.println(loginUrl + " cookie: " + cookie);
+//            }
+            logger.debug(loginUrl + " cookie: " + cookie);
         } while (cookie.equals("") && counter <= 3);
 
         if ((message.getUid() != 0) && !cookie.equals("")) {
@@ -120,37 +127,42 @@ public class MessageSender {
                     // 取得回傳資訊
                     Header[] headers = post.getResponseHeaders();
                     for (int i = 1; i < headers.length; i++) {
-                        if (forTest) {
-                            System.out.println(headers[i].getName() + ": " + headers[i].getValue());
-                        }
+//                        if (forTest) {
+//                            System.out.println(headers[i].getName() + ": " + headers[i].getValue());
+//                        }
+                    	logger.debug(headers[i].getName() + ": " + headers[i].getValue());
                     }
-                    if (forTest) {
-                        BufferedReader in = new BufferedReader(new InputStreamReader(post.getResponseBodyAsStream(), "UTF-8")); //編碼需要設定
-                        String line = "";
-                        while ((line = in.readLine()) != null) {
-                            System.out.println(line);
-                        }
-                    }
+//                    if (forTest) {
+//                        BufferedReader in = new BufferedReader(new InputStreamReader(post.getResponseBodyAsStream(), "UTF-8")); //編碼需要設定
+//                        String line = "";
+//                        while ((line = in.readLine()) != null) {
+//                            System.out.println(line);
+//                        }
+//                    }
+                    logger.debug(new String(post.getResponseBody(), "utf-8"));
                     return true;
                 } else {
                     System.err.println("Method failed: " + post.getStatusLine());
                     Header[] headers = post.getResponseHeaders();
                     for (int i = 1; i < headers.length; i++) {
-                        if (forTest) {
-                            System.out.println(headers[i].getName() + ": " + headers[i].getValue());
-                        }
+//                        if (forTest) {
+//                            System.out.println(headers[i].getName() + ": " + headers[i].getValue());
+//                        }
+                    	logger.debug(headers[i].getName() + ": " + headers[i].getValue());
                     }
-                    if (forTest) {
-                        BufferedReader in = new BufferedReader(new InputStreamReader(post.getResponseBodyAsStream(), "UTF-8")); //編碼需要設定
-                        String line = "";
-                        while ((line = in.readLine()) != null) {
-                            System.out.println(line);
-                        }
-                    }
+//                    if (forTest) {
+//                        BufferedReader in = new BufferedReader(new InputStreamReader(post.getResponseBodyAsStream(), "UTF-8")); //編碼需要設定
+//                        String line = "";
+//                        while ((line = in.readLine()) != null) {
+//                            System.out.println(line);
+//                        }
+//                    }
+                    logger.debug(new String(post.getResponseBody(), "utf-8"));
                     return false;
                 }
             } catch (IOException e) {
-                e.printStackTrace();
+//                e.printStackTrace();
+                logger.error(e.getMessage(), e);
             }
         }
         return false;
