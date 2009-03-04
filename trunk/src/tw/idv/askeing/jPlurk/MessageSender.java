@@ -22,8 +22,10 @@ import tw.idv.askeing.jPlurk.model.MessageModel;
  * @version 1.0
  */
 public class MessageSender {
+
     private static boolean forTest = false;
     private static int uid = 0;
+
     /**
      * Send Message to Plurk. This method will get UID first.
      * @param user
@@ -47,7 +49,7 @@ public class MessageSender {
         }
         return sendMessage(user, message, message.getUid());
     }
-    
+
     /**
      * Send Message to Plurk. This method already has UID.
      * @param user
@@ -174,17 +176,18 @@ public class MessageSender {
         System.out.print("qualifier: ");
         mesg.setQualifier(scanner.next());
         //String content = "Just For Test jPlurk! http://askeing.blogspot.com/ (星塵)";
-        String content = "踩線踩踩踩踩踩踩踩踩踩踩踩踩踩踩踩踩踩踩踩踩踩 jPlurk!";
+        String content = "Test http://askeing.twbbs.org/jPlurk/1.0/doc/api/ (jPlurk)! Time: " + new java.util.Date();
         System.out.println("content: " + content);
         mesg.setContent(content);
         System.out.print("no_comments (0 , 1): ");
         mesg.setNo_comments(scanner.nextInt());
 
         System.out.println("\n===== Test =====\n");
-        if( MessageSender.sendMessage(user, mesg) )
+        if (MessageSender.sendMessage(user, mesg)) {
             System.out.println("Send Message done!");
-        else
+        } else {
             System.out.println("Send Message Error!");
+        }
     //System.exit(0);
     }
 }
