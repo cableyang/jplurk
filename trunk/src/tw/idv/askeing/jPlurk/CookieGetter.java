@@ -37,7 +37,7 @@ public class CookieGetter {
      * @return Cookie
      */
     public static String getCookie(String host, String postUrl, AccountModel user, String optional_cookie) {
-        boolean forTest = false;
+//        boolean forTest = false;
         String cookie = "";
 
         try {
@@ -56,19 +56,22 @@ public class CookieGetter {
                 // 取得回傳資訊.
                 Header[] headers = post.getResponseHeaders();
                 for(int i=1 ; i<headers.length ; i++) {
-                    if(forTest) System.out.println( headers[i].getName()+": "+headers[i].getValue() );
+//                    if(forTest) System.out.println( headers[i].getName()+": "+headers[i].getValue() );
+                	logger.debug(headers[i].getName()+": "+headers[i].getValue());
                     if(headers[i].getName().equals("Set-Cookie")) {
+                    	// TODO: why re-set cookie ? [2009/03/04 qrtt1]
                         cookie = headers[i].getValue();
                         cookie = cookie.substring(0,cookie.indexOf(";"));
                     }
                 }
-                if(forTest) {
-                    BufferedReader in = new BufferedReader(new InputStreamReader(post.getResponseBodyAsStream(), "UTF-8")); //編碼需要設定
-                    String line = "";
-                    while ((line = in.readLine()) != null) {
-                        System.out.println(line);
-                    }
-                }
+//                if(forTest) {
+//                    BufferedReader in = new BufferedReader(new InputStreamReader(post.getResponseBodyAsStream(), "UTF-8")); //編碼需要設定
+//                    String line = "";
+//                    while ((line = in.readLine()) != null) {
+//                        System.out.println(line);
+//                    }
+//                }
+                logger.debug(new String(post.getResponseBody(), "utf-8"));
             } else {
             	logger.warn("Method failed: " + post.getStatusLine());
 //                System.err.println("Method failed: " + post.getStatusLine());
