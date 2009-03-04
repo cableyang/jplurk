@@ -18,6 +18,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import tw.idv.askeing.jPlurk.model.AccountModel;
+import tw.idv.askeing.jPlurk.net.HttpMethodUtil;
 
 /**
  * jPlurk CookieGetter: Get Cookie of User.
@@ -42,22 +43,11 @@ public class CookieGetter {
         try {
             HttpClient client = new HttpClient();
             client.getHostConfiguration().setHost(host, 80, "http");
-            // 建立 PostMethod，並指派 Post 網址
-            PostMethod post = new PostMethod(postUrl);
 
-            // 建立 Post 資料 data
-            String nameKey = "nick_name";
-            if (postUrl.equals("/m/login")) {
-                nameKey = "username";
-                post.addParameter(new NameValuePair(nameKey, user.getName()));
-                post.addParameter(new NameValuePair("password", user.getPassword()));
-            } else if (postUrl.equals("/Users/login")) {
-                nameKey = "nick_name";
-                post.addParameter(new NameValuePair(nameKey, user.getName()));
-                post.addParameter(new NameValuePair("password", user.getPassword()));
-            }else {
-                post.addParameter(new NameValuePair("Cookie", optional_cookie));
-            }
+            // extract method is better for testing.
+            PostMethod post = HttpMethodUtil.prepareForQueryCookie(user, postUrl, optional_cookie);
+            // 委派給新的實作，舊的實作先保留
+            // PostMethod post =  createGetCookieRequest(user, postUrl, optional_cookie);
 
             // 發送請求、返回狀態
             int statusCode = client.executeMethod(post);
@@ -89,6 +79,35 @@ public class CookieGetter {
         }
         return cookie;
     }
+
+	/**
+	 * @deprecated use HttpMethodUtil.prepareForQueryCookie instead
+	 * @param user
+	 * @param postUrl
+	 * @param optional_cookie
+	 * @return
+	 */
+	static PostMethod createGetCookieRequest(AccountModel user,
+			String postUrl, String optional_cookie) {
+		// 建立 PostMethod，並指派 Post 網址
+		PostMethod post = new PostMethod(postUrl);
+
+		// 建立 Post 資料 data
+		String nameKey = "nick_name";
+		if (postUrl.equals("/m/login")) {
+		    nameKey = "username";
+		    post.addParameter(new NameValuePair(nameKey, user.getName()));
+		    post.addParameter(new NameValuePair("password", user.getPassword()));
+		} else if (postUrl.equals("/Users/login")) {
+		    nameKey = "nick_name";
+		    post.addParameter(new NameValuePair(nameKey, user.getName()));
+		    post.addParameter(new NameValuePair("password", user.getPassword()));
+		}else {
+		    post.addParameter(new NameValuePair("Cookie", optional_cookie));
+		}
+
+		return post;
+	}
 
     /**
      * Test Case
