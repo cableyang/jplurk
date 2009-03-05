@@ -48,23 +48,7 @@ public class CookieGetter {
             // 發送請求、返回狀態
             int statusCode = client.executeMethod(post);
             if (statusCode == HttpStatus.SC_MOVED_TEMPORARILY || statusCode == HttpStatus.SC_OK) {
-
-                // 取得回傳資訊.
-                Header[] headers = post.getResponseHeaders();
-                for(int i=1 ; i<headers.length ; i++) {
-                	logger.debug(headers[i].getName()+": "+headers[i].getValue());
-                    if(headers[i].getName().equals("Set-Cookie")) {
-                    	/* TODO: why re-set cookie ? [2009/03/04 qrtt1]
-                         * Re-Set? This line means that, if header has "Set-Cookie", then get this cookie.
-                         * Different Users use different cookies.
-                         * And one User has more than one cookies.
-                         * Viewing Info, sending Message have differnt.
-                         * Using viewing info cookie to send message will fail. [2009.03.05 askeing]
-                        */
-                        cookie = headers[i].getValue();
-                        cookie = cookie.substring(0,cookie.indexOf(";"));
-                    }
-                }
+                cookie = parseSetCookieHeader(cookie, post.getResponseHeaders());
                 logger.debug(new String(post.getResponseBody(), "utf-8"));
             } else {
             	logger.warn("Method failed: " + post.getStatusLine());
@@ -74,6 +58,32 @@ public class CookieGetter {
         }
         return cookie;
     }
+
+	static String parseSetCookieHeader(String cookie, Header[] headers) {
+		for(int i=1 ; i<headers.length ; i++) {
+			logger.debug(headers[i].getName()+": "+headers[i].getValue());
+		    if(headers[i].getName().equals("Set-Cookie")) {
+		    	/* Review: why re-set cookie ? [2009/03/04 qrtt1] */
+
+		        /* Re-Set? This line means that, if header has "Set-Cookie", then get this cookie.
+		         * Different Users use different cookies.
+		         * And one User has more than one cookies.
+		         * Viewing Info, sending Message have different.
+		         * Using viewing info cookie to send message will fail. [2009.03.05 askeing]
+		        */
+
+		    	/*
+		    	 * Ex.
+		    	 * Set-Cookie: plurkcookie=hbuu4hs1X4CtOZa2bnPUDAIg9+A=?chk=STg1MDA2NTY1KAou&user_id=TDNxNDYpOTRMCi4=; Domain=.plurk.com; expires=Thu, 19-Mar-2009 15:47:06 GMT; Max-Age=1209600; Path=/
+		    	 *
+		    	 * */
+
+		        cookie = headers[i].getValue();
+		        cookie = cookie.substring(0,cookie.indexOf(";"));
+		    }
+		}
+		return cookie;
+	}
 
 	/**
 	 * @deprecated use HttpMethodUtil.prepareForQueryCookie instead
