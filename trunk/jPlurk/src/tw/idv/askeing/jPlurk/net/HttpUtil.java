@@ -15,10 +15,10 @@ import org.apache.commons.logging.LogFactory;
 
 import tw.idv.askeing.jPlurk.model.AccountModel;
 
-public class HttpMethodUtil {
+public class HttpUtil {
 
 	final static Pattern SET_COOKIE_PATTERN = Pattern.compile("^([^;]+).*");
-	static Log logger = LogFactory.getLog(HttpMethodUtil.class);
+	static Log logger = LogFactory.getLog(HttpUtil.class);
 
 	static Map<String, String> COOKIE_NAMEKEY_URI_MAP = null;
 
