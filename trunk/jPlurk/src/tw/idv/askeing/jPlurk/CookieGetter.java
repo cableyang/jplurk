@@ -59,7 +59,13 @@ public class CookieGetter {
 //                    if(forTest) System.out.println( headers[i].getName()+": "+headers[i].getValue() );
                 	logger.debug(headers[i].getName()+": "+headers[i].getValue());
                     if(headers[i].getName().equals("Set-Cookie")) {
-                    	// TODO: why re-set cookie ? [2009/03/04 qrtt1]
+                    	/* TODO: why re-set cookie ? [2009/03/04 qrtt1]
+                         * Re-Set? This line means that, if header has "Set-Cookie", then get this cookie.
+                         * Different Users use different cookies.
+                         * And one User has more than one cookies.
+                         * Viewing Info, sending Message have differnt.
+                         * Using viewing info cookie to send message will fail. [2009.03.05 askeing]
+                        */
                         cookie = headers[i].getValue();
                         cookie = cookie.substring(0,cookie.indexOf(";"));
                     }
