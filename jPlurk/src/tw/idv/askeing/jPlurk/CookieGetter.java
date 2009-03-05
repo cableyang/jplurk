@@ -17,7 +17,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import tw.idv.askeing.jPlurk.model.AccountModel;
-import tw.idv.askeing.jPlurk.net.HttpMethodUtil;
+import tw.idv.askeing.jPlurk.net.HttpUtil;
 
 /**
  * jPlurk CookieGetter: Get Cookie of User.
@@ -41,7 +41,7 @@ public class CookieGetter {
             client.getHostConfiguration().setHost(host, 80, "http");
 
             // 委派給新的實作，舊的實作先保留
-            PostMethod post = HttpMethodUtil.prepareForQueryCookie(user, postUrl, optional_cookie);
+            PostMethod post = HttpUtil.prepareForQueryCookie(user, postUrl, optional_cookie);
             // PostMethod post =  createGetCookieRequest(user, postUrl, optional_cookie);
 
             // 發送請求、返回狀態
@@ -54,7 +54,7 @@ public class CookieGetter {
             	return "";
             }
 
-            return HttpMethodUtil.parseSetCookieHeader(post.getResponseHeaders());
+            return HttpUtil.parseSetCookieHeader(post.getResponseHeaders());
 
 //            if (statusCode == HttpStatus.SC_MOVED_TEMPORARILY || statusCode == HttpStatus.SC_OK) {
 //            	logger.debug(new String(post.getResponseBody(), "utf-8"));
