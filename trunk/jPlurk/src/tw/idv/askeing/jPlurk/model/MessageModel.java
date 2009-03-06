@@ -54,41 +54,25 @@ public class MessageModel {
     private String qualifier = "";
     private String content = "";
     private String lang = "tr_ch";
-    private int no_comments = 0;
+    private int noComments = 0;
     private int uid = 0;
-    private String limited_to = "";
+    private String limitedTo = "";
 
     public MessageModel() {
         generatePosted();
     }
 
-//    public MessageModel(String qualifier, String content, int uid) {
-//        this.setPosted();
-//        this.setQualifier(qualifier);
-//        this.setContent(content);
-//        this.setUid(uid);
-//    }
-//    public MessageModel(String qualifier, String content, int no_comments, int uid) {
-//        this.setPosted();
-//        this.setQualifier(qualifier);
-//        this.setContent(content);
-//        this.setNo_comments(no_comments);
-//        this.setUid(uid);
-//    }
-//    public MessageModel(String qualifier, String content, String lang, int no_comments, int uid) {
-//        this.setPosted();
-//        this.setQualifier(qualifier);
-//        this.setContent(content);
-//        this.setLang(lang);
-//        this.setNo_comments(no_comments);
-//        this.setUid(uid);
-//    }
+    public MessageModel(Qualifier qualifier, String content, int uid) {
+    	super();
+        this.setQualifier(qualifier);
+        this.setContent(content);
+        this.setUid(uid);
+    }
 
 
     public void generatePosted () {
         posted = "\"" + now.get(Calendar.YEAR) + "-" + now.get(Calendar.MONTH) + "-" + now.get(Calendar.DAY_OF_MONTH)
                     + "T" + now.get(Calendar.HOUR_OF_DAY) + ":" + now.get(Calendar.MINUTE) + ":" + now.get(Calendar.SECOND) + "\"";
-//        this.setPosted(posted);
     }
 
     public void setQualifier (Qualifier qualifier) {
@@ -98,30 +82,37 @@ public class MessageModel {
 			this.qualifier = qualifier.toString();
 		}
     }
-    public void setContent (String content) {
-        if(content.length() > 140)
-            this.content = content.substring(0, 136)+"...";
-        else
-            this.content = content;
-    }
+
+    public void setContent(String content) {
+		if (content.length() > 140) {
+			this.content = content.substring(0, 136) + "...";
+		} else {
+			this.content = content;
+		}
+	}
+
     public void setLang (String lang) {
-        if( lang.equals("") )
-            this.lang = "tr_ch";
-        else
-            this.lang = lang;
+    	if("".equals(lang)){
+    		this.lang = "tr_ch";
+    	}else{
+    		this.lang = lang;
+    	}
     }
-    public void setNo_comments (int no_comments) {
-        if( no_comments > 1 || no_comments < 0 )
-            this.no_comments = 0;
-        else
-            this.no_comments = no_comments;
-    }
+
+    public void setNoComments(int no_comments) {
+		if (no_comments > 1 || no_comments < 0) {
+			this.noComments = 0;
+		} else {
+			this.noComments = no_comments;
+		}
+	}
+
     public void setUid(int uid) {
 		this.uid = uid;
 	}
 
-	public void setLimited_to(String limited_to) {
-		this.limited_to = limited_to;
+	public void setLimitedTo(String limited_to) {
+		this.limitedTo = limited_to;
 	}
 
 	public String getPosted() {
@@ -140,23 +131,24 @@ public class MessageModel {
 		return this.lang;
 	}
 
-	public int getNo_comments() {
-		return this.no_comments;
+	public int getNoComments() {
+		return this.noComments;
 	}
 
 	public int getUid() {
 		return this.uid;
 	}
 
-	public String getLimited_to() {
-		return this.limited_to;
+	public String getLimitedTo() {
+		return this.limitedTo;
 	}
 
 	public boolean hasLimited_to() {
-		if (this.limited_to.equals(""))
+		if("".equals(limitedTo)){
 			return false;
-		else
+		}else{
 			return true;
+		}
 	}
     /**
      * Test Case

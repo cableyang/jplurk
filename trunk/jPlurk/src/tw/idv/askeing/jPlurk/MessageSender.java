@@ -83,7 +83,7 @@ public class MessageSender {
 			return;
 		}
 		post.addParameter(
-			new NameValuePair("limited_to", message.getLimited_to()));
+			new NameValuePair("limited_to", message.getLimitedTo()));
 	}
 
 	private static NameValuePair[] createRequestBodyFromMessage(MessageModel message) {
@@ -93,7 +93,7 @@ public class MessageSender {
 		    new NameValuePair("qualifier", message.getQualifier()),
 		    new NameValuePair("content", message.getContent()),
 		    new NameValuePair("lang", message.getLang()),
-		    new NameValuePair("no_comments", Integer.toString(message.getNo_comments())),
+		    new NameValuePair("no_comments", Integer.toString(message.getNoComments())),
 		    new NameValuePair("uid", Integer.toString(message.getUid()))
 		};
 		return data;
@@ -123,7 +123,7 @@ public class MessageSender {
         System.out.println("content: " + content);
         mesg.setContent(content);
         System.out.print("no_comments (0 , 1): ");
-        mesg.setNo_comments(scanner.nextInt());
+        mesg.setNoComments(scanner.nextInt());
 
         System.out.println("\n===== Test =====\n");
         if (MessageSender.sendMessage(user, mesg)) {
