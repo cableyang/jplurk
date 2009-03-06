@@ -4,11 +4,8 @@
  */
 package tw.idv.askeing.jPlurk;
 
-import java.io.IOException;
 import java.util.Scanner;
 
-import org.apache.commons.httpclient.Header;
-import org.apache.commons.httpclient.HttpClient;
 import org.apache.commons.httpclient.HttpStatus;
 import org.apache.commons.httpclient.NameValuePair;
 import org.apache.commons.httpclient.methods.PostMethod;
@@ -29,8 +26,7 @@ public class MessageSender {
 
 	static Log logger = LogFactory.getLog(MessageSender.class);
 
-//    private static boolean forTest = false;
-//    private static int uid = 0;
+
 
     /**
      * Send Message to Plurk. This method will get UID first.
@@ -39,29 +35,18 @@ public class MessageSender {
      * @return
      */
     public static boolean sendMessage(AccountModel user, MessageModel message) {
+
+
+//        String loginUrl = "/Users/login";
+//        String postUrl = "/TimeLine/addPlurk";
+
         message.setUid(UIDGetter.getUID(user));
-        return doSendMessage(user, message);
-    }
-
-    /**
-     * Send Message to Plurk. This method already has UID.
-     * @param user
-     * @param message
-     * @param uid
-     * @return
-     */
-    static boolean doSendMessage(AccountModel user, MessageModel message) {
-
-        String host = "www.plurk.com";
-        String loginUrl = "/Users/login";
-        String postUrl = "/TimeLine/addPlurk";
-
         if (message.getUid() == 0) {
         	logger.warn("the uid of sent message is invalid. ");
         	return false;
 		}
 
-        String cookie = CookieGetter.getCookie(host, loginUrl, user, null);
+        String cookie = CookieGetter.getCookie(Constants.PLURK_HOST, Constants.LOGIN_URL, user, null);
         if(cookie == null || "".equals(cookie.trim())){
         	logger.warn("cookie token is not found.");
         	return false;
@@ -72,7 +57,7 @@ public class MessageSender {
          * ***/
 
         // 建立 PostMethod，並指派 Post 網址
-        PostMethod post = new PostMethod(postUrl);
+        PostMethod post = new PostMethod(Constants.POST_URL);
         post.setRequestHeader("Connection", "Keep-Alive");
         post.setRequestHeader("Content-Type", "application/x-www-form-urlencoded; charset=UTF-8");
         post.setRequestHeader("Referer", "http://www.plurk.com/" + user.getName());
@@ -81,7 +66,6 @@ public class MessageSender {
         // 設定 Post 請求
         post.setRequestBody(createRequestBodyFromMessage(message));
         applyLimitedToIfExists(message, post);
-
 
         Object result = new HttpTemplate(post).execute(
             	new int[] {HttpStatus.SC_MOVED_TEMPORARILY, HttpStatus.SC_OK },
@@ -95,33 +79,6 @@ public class MessageSender {
         if(result != null && result instanceof Boolean){
         	return ((Boolean)result).booleanValue();
         }
-
-//        try {
-//            HttpClient client = new HttpClient();
-//            client.getHostConfiguration().setHost(host, 80, "http");
-//
-//            // 發送請求、返回狀態
-//            int statusCode = client.executeMethod(post);
-//            if (statusCode == HttpStatus.SC_MOVED_TEMPORARILY || statusCode == HttpStatus.SC_OK) {
-//                // 取得回傳資訊
-//                Header[] headers = post.getResponseHeaders();
-//                for (int i = 1; i < headers.length; i++) {
-//                	logger.debug(headers[i].getName() + ": " + headers[i].getValue());
-//                }
-//                logger.debug(new String(post.getResponseBody(), "utf-8"));
-//                return true;
-//            } else {
-//                System.err.println("Method failed: " + post.getStatusLine());
-//                Header[] headers = post.getResponseHeaders();
-//                for (int i = 1; i < headers.length; i++) {
-//                	logger.debug(headers[i].getName() + ": " + headers[i].getValue());
-//                }
-//                logger.debug(new String(post.getResponseBody(), "utf-8"));
-//                return false;
-//            }
-//        } catch (IOException e) {
-//            logger.error(e.getMessage(), e);
-//        }
 
         return false;
     }
