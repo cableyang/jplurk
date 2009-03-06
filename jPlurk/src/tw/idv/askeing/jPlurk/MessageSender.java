@@ -117,7 +117,7 @@ public class MessageSender {
         System.out.println("Password:" + user.getPassword());
 
         System.out.print("qualifier: ");
-        mesg.setQualifier(scanner.next());
+        mesg.setQualifier(Qualifier.fromString(scanner.next()));
         //String content = "Just For Test jPlurk! http://askeing.blogspot.com/ (星塵)";
         String content = "Test http://askeing.twbbs.org/jPlurk/1.0/doc/api/ (jPlurk)! Time: " + new java.util.Date();
         System.out.println("content: " + content);
