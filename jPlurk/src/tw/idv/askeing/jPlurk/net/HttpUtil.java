@@ -6,6 +6,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.apache.commons.httpclient.Header;
+import org.apache.commons.httpclient.HttpClient;
 import org.apache.commons.httpclient.NameValuePair;
 import org.apache.commons.httpclient.URIException;
 import org.apache.commons.httpclient.cookie.RFC2109Spec;
@@ -13,6 +14,7 @@ import org.apache.commons.httpclient.methods.PostMethod;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
+import tw.idv.askeing.jPlurk.Constants;
 import tw.idv.askeing.jPlurk.model.AccountModel;
 
 public class HttpUtil {
@@ -31,7 +33,7 @@ public class HttpUtil {
 	/**
 	 * if request uri is /m/login set nameKey as  username
 	 * @param user
-	 * @param method
+	 * @param postMethod
 	 * @param optCookie
 	 * @return
 	 */
@@ -72,5 +74,15 @@ public class HttpUtil {
 			}
 		}
 		return "";
+	}
+
+	public static HttpClient createDefaultHttpClient(){
+		return createHttpClient(Constants.PLURK_HOST, Constants.PLURK_PORT);
+	}
+
+	public static HttpClient createHttpClient(String host, int port){
+		HttpClient client = new HttpClient();
+		client.getHostConfiguration().setHost(host, 80, "http");
+		return client;
 	}
 }

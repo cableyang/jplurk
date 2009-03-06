@@ -17,6 +17,8 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import tw.idv.askeing.jPlurk.model.AccountModel;
+import tw.idv.askeing.jPlurk.net.HttpResultCallback;
+import tw.idv.askeing.jPlurk.net.HttpTemplate;
 import tw.idv.askeing.jPlurk.net.HttpUtil;
 
 /**
@@ -36,36 +38,42 @@ public class CookieGetter {
      * @return Cookie
      */
     public static String getCookie(String host, String postUrl, AccountModel user, String optional_cookie) {
-        try {
-            HttpClient client = new HttpClient();
-            client.getHostConfiguration().setHost(host, 80, "http");
 
-            // 委派給新的實作，舊的實作先保留
-            PostMethod post = HttpUtil.prepareForQueryCookie(user, postUrl, optional_cookie);
-            // PostMethod post =  createGetCookieRequest(user, postUrl, optional_cookie);
+    	HttpTemplate template = new HttpTemplate(HttpUtil.prepareForQueryCookie(user, postUrl, optional_cookie));
 
-            // 發送請求、返回狀態
-//            int statusCode = client.executeMethod(post);
-            int httpResponseCode = client.executeMethod(post);
-            boolean isValidState = (httpResponseCode == HttpStatus.SC_MOVED_TEMPORARILY || httpResponseCode == HttpStatus.SC_OK);
+    	Object result = template.execute(
+    		new int[] { HttpStatus.SC_MOVED_TEMPORARILY, HttpStatus.SC_OK },
+    		new HttpResultCallback() {
+			protected Object processResult(PostMethod method) {
+				return HttpUtil.parseSetCookieHeader(method.getResponseHeaders());
+			}
+		});
 
-            if(!isValidState){
-            	logger.warn("Method failed: " + post.getStatusLine());
-            	return "";
-            }
+    	if(result != null && result instanceof String){
+    		return (String) result;
+    	}
 
-            return HttpUtil.parseSetCookieHeader(post.getResponseHeaders());
-
-//            if (statusCode == HttpStatus.SC_MOVED_TEMPORARILY || statusCode == HttpStatus.SC_OK) {
-//            	logger.debug(new String(post.getResponseBody(), "utf-8"));
-//               cookie = parseSetCookieHeader(post.getResponseHeaders());
-//            	 return HttpMethodUtil.parseSetCookieHeader(post.getResponseHeaders());
-//            } else {
+//        try {
+//            HttpClient client = new HttpClient();
+//            client.getHostConfiguration().setHost(host, 80, "http");
+//
+//            // 委派給新的實作，舊的實作先保留
+//            PostMethod post = HttpUtil.prepareForQueryCookie(user, postUrl, optional_cookie);
+//            // PostMethod post =  createGetCookieRequest(user, postUrl, optional_cookie);
+//
+//            // 發送請求、返回狀態
+//            int httpResponseCode = client.executeMethod(post);
+//            boolean isValidState = (httpResponseCode == HttpStatus.SC_MOVED_TEMPORARILY || httpResponseCode == HttpStatus.SC_OK);
+//
+//            if(!isValidState){
 //            	logger.warn("Method failed: " + post.getStatusLine());
+//            	return "";
 //            }
-        } catch (IOException e) {
-        	logger.error(e.getMessage(), e);
-        }
+//
+//            return HttpUtil.parseSetCookieHeader(post.getResponseHeaders());
+//        } catch (IOException e) {
+//        	logger.error(e.getMessage(), e);
+//        }
         return "";
     }
 
