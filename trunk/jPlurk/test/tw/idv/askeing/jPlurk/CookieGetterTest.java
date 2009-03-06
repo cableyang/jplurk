@@ -26,7 +26,7 @@ public class CookieGetterTest extends TestCase{
 	public void testCreateGetCookieRequestWithOptCookie() throws Exception {
 		String uri = "/foo";
 		PostMethod post1 = CookieGetter.createGetCookieRequest(user, uri, cookie);
-		PostMethod post2 = HttpUtil.prepareForQueryCookie(user, uri, cookie);
+		PostMethod post2 = HttpUtil.createGetCookieHttpMethod(user, uri, cookie);
 
 		assertEquals(post1.getURI(), post2.getURI());
 		assertEquals(post1.getParameter("Cookie"), post2.getParameter("Cookie"));
@@ -36,7 +36,7 @@ public class CookieGetterTest extends TestCase{
 	public void testCreateGetCookieRequestWithUsername() throws Exception {
 		String uri = "/m/login";
 		PostMethod post1 = CookieGetter.createGetCookieRequest(user, uri, cookie);
-		PostMethod post2 = HttpUtil.prepareForQueryCookie(user, uri, cookie);
+		PostMethod post2 = HttpUtil.createGetCookieHttpMethod(user, uri, cookie);
 
 		assertCookie(post1, post2, "username");
 	}
@@ -45,7 +45,7 @@ public class CookieGetterTest extends TestCase{
 	public void testCreateGetCookieRequestWithNickname() throws Exception {
 		String uri = "/Users/login";
 		PostMethod post1 = CookieGetter.createGetCookieRequest(user, uri, cookie);
-		PostMethod post2 = HttpUtil.prepareForQueryCookie(user, uri, cookie);
+		PostMethod post2 = HttpUtil.createGetCookieHttpMethod(user, uri, cookie);
 
 		assertCookie(post1, post2, "nick_name");
 	}

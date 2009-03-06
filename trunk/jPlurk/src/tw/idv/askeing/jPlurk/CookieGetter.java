@@ -39,7 +39,7 @@ public class CookieGetter {
      */
     public static String getCookie(String host, String postUrl, AccountModel user, String optional_cookie) {
 
-    	HttpTemplate template = new HttpTemplate(HttpUtil.prepareForQueryCookie(user, postUrl, optional_cookie));
+    	HttpTemplate template = new HttpTemplate(HttpUtil.createGetCookieHttpMethod(user, postUrl, optional_cookie));
 
     	Object result = template.execute(
     		new int[] { HttpStatus.SC_MOVED_TEMPORARILY, HttpStatus.SC_OK },
