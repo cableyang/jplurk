@@ -28,7 +28,7 @@ public class MessageSender {
 	static Log logger = LogFactory.getLog(MessageSender.class);
 
 //    private static boolean forTest = false;
-    private static int uid = 0;
+//    private static int uid = 0;
 
     /**
      * Send Message to Plurk. This method will get UID first.
@@ -39,20 +39,18 @@ public class MessageSender {
     public static boolean sendMessage(AccountModel user, MessageModel message) {
         int counter = 0;
 
-        // 若無 Uid 就擷取並設定 Uid
-        if (message.getUid() == 0) {
-            counter = 0;
-            do {
-                counter++;
-                uid = UIDGetter.getUID(user);
-//                if (forTest) {
-//                    System.out.println("uid: " + uid);
-//                }
-                logger.debug("uid: " + uid);
-            } while (uid == 0 && counter <= 3);
-            message.setUid(uid);
-        }
-        return sendMessage(user, message, message.getUid());
+//        // 若無 Uid 就擷取並設定 Uid
+//        if (message.getUid() == 0) {
+//            counter = 0;
+//            do {
+//                counter++;
+//                uid = UIDGetter.getUID(user);
+//                logger.debug("uid: " + uid);
+//            } while (uid == 0 && counter <= 3);
+//            message.setUid(uid);
+//        }
+        message.setUid(UIDGetter.getUID(user));
+        return doSendMessage(user, message);
     }
 
     /**
@@ -62,108 +60,95 @@ public class MessageSender {
      * @param uid
      * @return
      */
-    public static boolean sendMessage(AccountModel user, MessageModel message, int uid) {
-        String cookie = "";
-        int counter = 0;
+    static boolean doSendMessage(AccountModel user, MessageModel message) {
+//        String cookie = "";
+//        int counter = 0;
 
         String host = "www.plurk.com";
         String loginUrl = "/Users/login";
         String postUrl = "/TimeLine/addPlurk";
 
-        // 若無 Uid 就擷取並設定 Uid
-        if (uid == 0) {
-            counter = 0;
-            do {
-                counter++;
-                uid = UIDGetter.getUID(user);
-//                if (forTest) {
-//                    System.out.println("uid: " + uid);
-//                }
-                logger.debug("uid: " + uid);
-            } while (uid == 0 && counter <= 3);
-            message.setUid(uid);
-        }
+        if (message.getUid() == 0) {
+        	logger.warn("the uid of sent message is invalid. ");
+        	return false;
+		}
+//        // 若無 Uid 就擷取並設定 Uid
+//        if (uid == 0) {
+//            counter = 0;
+//            do {
+//                counter++;
+//                uid = UIDGetter.getUID(user);
+//                logger.debug("uid: " + uid);
+//            } while (uid == 0 && counter <= 3);
+//            message.setUid(uid);
+//        }
         // 擷取並設定 cookie
-        counter = 0;
-        do {
-            counter++;
-            cookie = CookieGetter.getCookie(host, loginUrl, user, null);
-//            if (forTest) {
-//                System.out.println(loginUrl + " cookie: " + cookie);
-//            }
-            logger.debug(loginUrl + " cookie: " + cookie);
-        } while (cookie.equals("") && counter <= 3);
 
-        if ((message.getUid() != 0) && !cookie.equals("")) {
-            try {
-                HttpClient client = new HttpClient();
-                client.getHostConfiguration().setHost(host, 80, "http");
+//        counter = 0;
+//        do {
+//            counter++;
+//            cookie = CookieGetter.getCookie(host, loginUrl, user, null);
+//            logger.debug(loginUrl + " cookie: " + cookie);
+//        } while (cookie.equals("") && counter <= 3);
+        String cookie = CookieGetter.getCookie(host, loginUrl, user, null);
+        if(cookie == null || "".equals(cookie.trim())){
+        	logger.warn("cookie token is not found.");
+        	return false;
+        }
 
-                // 建立 PostMethod，並指派 Post 網址
-                PostMethod post = new PostMethod(postUrl);
-                post.setRequestHeader("Connection", "Keep-Alive");
-                post.setRequestHeader("Content-Type", "application/x-www-form-urlencoded; charset=UTF-8");
-                post.setRequestHeader("Referer", "http://www.plurk.com/" + user.getName());
-                post.setRequestHeader("Cookie", cookie);
+        /****
+         * 以上為 pre-condition testing.
+         * ***/
 
-                // 建立 Post 資料 data
-                NameValuePair[] data = {
-                    new NameValuePair("posted", message.getPosted()),
-                    new NameValuePair("qualifier", message.getQualifier()),
-                    new NameValuePair("content", message.getContent()),
-                    new NameValuePair("lang", message.getLang()),
-                    new NameValuePair("no_comments", Integer.toString(message.getNo_comments())),
-                    new NameValuePair("uid", Integer.toString(message.getUid()))
-                };
-                // 設定 Post 請求
-                post.setRequestBody(data);
-                if (message.hasLimited_to()) {
-                    post.addParameter(new NameValuePair("limited_to", message.getLimited_to()));
-                }
 
-                // 發送請求、返回狀態
-                int statusCode = client.executeMethod(post);
-                if (statusCode == HttpStatus.SC_MOVED_TEMPORARILY || statusCode == HttpStatus.SC_OK) {
-                    // 取得回傳資訊
-                    Header[] headers = post.getResponseHeaders();
-                    for (int i = 1; i < headers.length; i++) {
-//                        if (forTest) {
-//                            System.out.println(headers[i].getName() + ": " + headers[i].getValue());
-//                        }
-                    	logger.debug(headers[i].getName() + ": " + headers[i].getValue());
-                    }
-//                    if (forTest) {
-//                        BufferedReader in = new BufferedReader(new InputStreamReader(post.getResponseBodyAsStream(), "UTF-8")); //編碼需要設定
-//                        String line = "";
-//                        while ((line = in.readLine()) != null) {
-//                            System.out.println(line);
-//                        }
-//                    }
-                    logger.debug(new String(post.getResponseBody(), "utf-8"));
-                    return true;
-                } else {
-                    System.err.println("Method failed: " + post.getStatusLine());
-                    Header[] headers = post.getResponseHeaders();
-                    for (int i = 1; i < headers.length; i++) {
-//                        if (forTest) {
-//                            System.out.println(headers[i].getName() + ": " + headers[i].getValue());
-//                        }
-                    	logger.debug(headers[i].getName() + ": " + headers[i].getValue());
-                    }
-//                    if (forTest) {
-//                        BufferedReader in = new BufferedReader(new InputStreamReader(post.getResponseBodyAsStream(), "UTF-8")); //編碼需要設定
-//                        String line = "";
-//                        while ((line = in.readLine()) != null) {
-//                            System.out.println(line);
-//                        }
-//                    }
-                    logger.debug(new String(post.getResponseBody(), "utf-8"));
-                    return false;
-                }
-            } catch (IOException e) {
-//                e.printStackTrace();
-                logger.error(e.getMessage(), e);
+        try {
+            HttpClient client = new HttpClient();
+            client.getHostConfiguration().setHost(host, 80, "http");
+
+            // 建立 PostMethod，並指派 Post 網址
+            PostMethod post = new PostMethod(postUrl);
+            post.setRequestHeader("Connection", "Keep-Alive");
+            post.setRequestHeader("Content-Type", "application/x-www-form-urlencoded; charset=UTF-8");
+            post.setRequestHeader("Referer", "http://www.plurk.com/" + user.getName());
+            post.setRequestHeader("Cookie", cookie);
+
+            // 建立 Post 資料 data
+            NameValuePair[] data = {
+                new NameValuePair("posted", message.getPosted()),
+                new NameValuePair("qualifier", message.getQualifier()),
+                new NameValuePair("content", message.getContent()),
+                new NameValuePair("lang", message.getLang()),
+                new NameValuePair("no_comments", Integer.toString(message.getNo_comments())),
+                new NameValuePair("uid", Integer.toString(message.getUid()))
+            };
+            // 設定 Post 請求
+            post.setRequestBody(data);
+
+            if (message.hasLimited_to()) {
+                post.addParameter(new NameValuePair("limited_to", message.getLimited_to()));
             }
+
+            // 發送請求、返回狀態
+            int statusCode = client.executeMethod(post);
+            if (statusCode == HttpStatus.SC_MOVED_TEMPORARILY || statusCode == HttpStatus.SC_OK) {
+                // 取得回傳資訊
+                Header[] headers = post.getResponseHeaders();
+                for (int i = 1; i < headers.length; i++) {
+                	logger.debug(headers[i].getName() + ": " + headers[i].getValue());
+                }
+                logger.debug(new String(post.getResponseBody(), "utf-8"));
+                return true;
+            } else {
+                System.err.println("Method failed: " + post.getStatusLine());
+                Header[] headers = post.getResponseHeaders();
+                for (int i = 1; i < headers.length; i++) {
+                	logger.debug(headers[i].getName() + ": " + headers[i].getValue());
+                }
+                logger.debug(new String(post.getResponseBody(), "utf-8"));
+                return false;
+            }
+        } catch (IOException e) {
+            logger.error(e.getMessage(), e);
         }
         return false;
     }
