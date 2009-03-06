@@ -4,12 +4,9 @@
  */
 package tw.idv.askeing.jPlurk;
 
-import java.io.IOException;
-import java.util.Arrays;
 import java.util.Scanner;
 
 import org.apache.commons.httpclient.Header;
-import org.apache.commons.httpclient.HttpClient;
 import org.apache.commons.httpclient.HttpStatus;
 import org.apache.commons.httpclient.NameValuePair;
 import org.apache.commons.httpclient.methods.PostMethod;
@@ -53,27 +50,6 @@ public class CookieGetter {
     		return (String) result;
     	}
 
-//        try {
-//            HttpClient client = new HttpClient();
-//            client.getHostConfiguration().setHost(host, 80, "http");
-//
-//            // 委派給新的實作，舊的實作先保留
-//            PostMethod post = HttpUtil.prepareForQueryCookie(user, postUrl, optional_cookie);
-//            // PostMethod post =  createGetCookieRequest(user, postUrl, optional_cookie);
-//
-//            // 發送請求、返回狀態
-//            int httpResponseCode = client.executeMethod(post);
-//            boolean isValidState = (httpResponseCode == HttpStatus.SC_MOVED_TEMPORARILY || httpResponseCode == HttpStatus.SC_OK);
-//
-//            if(!isValidState){
-//            	logger.warn("Method failed: " + post.getStatusLine());
-//            	return "";
-//            }
-//
-//            return HttpUtil.parseSetCookieHeader(post.getResponseHeaders());
-//        } catch (IOException e) {
-//        	logger.error(e.getMessage(), e);
-//        }
         return "";
     }
 

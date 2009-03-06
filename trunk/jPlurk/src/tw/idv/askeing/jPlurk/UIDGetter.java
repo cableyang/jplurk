@@ -35,9 +35,7 @@ public class UIDGetter {
     public static int getUID(AccountModel user) {
         boolean forTest = false;
         int uid = 0;
-//        String cookie = "";
 
-//        String host = "www.plurk.com";
         String postUrl = "/m/login";
         String getUrl = "/m/";
 
@@ -76,48 +74,6 @@ public class UIDGetter {
 		}
 
         return uid;
-
-//        try {
-////            cookie = CookieGetter.getCookie(Constants.PLURK_HOST, postUrl, user, null);
-//            HttpClient client = HttpUtil.createDefaultHttpClient();
-//
-//            // 建立 PostMethod，並指派 Post 網址
-//            GetMethod get = new GetMethod(getUrl);
-//
-//            // 設定 Cookie
-//            get.setRequestHeader("Cookie",
-//            	CookieGetter.getCookie(Constants.PLURK_HOST, postUrl, user, null));
-//
-//            // 連接不到時自動重新重試三次.
-//            //method.getParams().setParameter(HttpMethodParams.RETRY_HANDLER, new DefaultHttpMethodRetryHandler(3, false));
-//
-//            // 發送請求、返回狀態
-//            int statusCode = client.executeMethod(get);
-//            if (statusCode == HttpStatus.SC_MOVED_TEMPORARILY || statusCode == HttpStatus.SC_OK) {
-//
-//                // 取得回傳資訊.
-//                Header[] headers = get.getResponseHeaders();
-//                if(forTest) {
-//                    for(int i=1 ; i<headers.length ; i++) {
-//                        System.out.println( headers[i].getName()+": "+headers[i].getValue() );
-//                    }
-//                }
-//                BufferedReader in = new BufferedReader(new InputStreamReader(get.getResponseBodyAsStream(), "UTF-8")); //編碼需要設定
-//                String line = "";
-//                while ((line = in.readLine()) != null) {
-//                        if(forTest) System.out.println(line);
-//                        if(line.contains("<input type=\"hidden\" name=\"user_id\" value=\"")) {
-//                            String[] sUID = line.split("\"");
-//                            uid = Integer.parseInt( sUID[5] );
-//                            if(forTest) System.out.println("UID = "+uid);
-//                        }
-//                }
-//            } else {
-//                System.err.println("Method failed: " + get.getStatusLine());
-//            }
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
 
     }
 
