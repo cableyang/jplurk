@@ -26,8 +26,6 @@ public class MessageSender {
 
 	static Log logger = LogFactory.getLog(MessageSender.class);
 
-
-
     /**
      * Send Message to Plurk. This method will get UID first.
      * @param user
@@ -35,10 +33,6 @@ public class MessageSender {
      * @return
      */
     public static boolean sendMessage(AccountModel user, MessageModel message) {
-
-
-//        String loginUrl = "/Users/login";
-//        String postUrl = "/TimeLine/addPlurk";
 
         message.setUid(UIDGetter.getUID(user));
         if (message.getUid() == 0) {
