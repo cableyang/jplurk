@@ -17,7 +17,7 @@ import java.util.TimeZone;
 public class MessageModel {
     /*
      * posted			( 時間 URLEncode ) "2009-3-1T11:04:09"
-     * qualifier		( 語氣 URLEncode ) 
+     * qualifier		( 語氣 URLEncode )
      * 		:
      * 		wants		想要
      * 		needs		需要
@@ -43,10 +43,10 @@ public class MessageModel {
      * no_comments		( 回應 ) 0 可回應 1 禁止回應
      * uid			( UID )
      * limited_to		( 限制 URLEncode ) 無 , "only-friends" , [3290989,"301630","645543"]
-     * 
+     *
      * java.net.URLEncode.encode( String );
      * */
-    
+
     /**
      * ":" 無. 同 "QUALIFIER_FREESTYLE".
      */
@@ -67,7 +67,7 @@ public class MessageModel {
      * "asks" 問
      */
     public static final String QUALIFIER_ASKS = "asks";
-    /** 
+    /**
      * "wonders" 好奇
      */
     public static final String QUALIFIER_WONDERS = "wonders";
@@ -127,11 +127,11 @@ public class MessageModel {
      * "gives" 給
      */
     public static final String QUALIFIER_GIVES = "gives";
-    
+
     private TimeZone zone = TimeZone.getTimeZone("GMT 0:00");
     private Calendar now = Calendar.getInstance( zone );
     //private Date postedDate = new Date();
-    
+
     private String posted = "";
     private String qualifier = "";
     private String content = "";
@@ -139,58 +139,59 @@ public class MessageModel {
     private int no_comments = 0;
     private int uid = 0;
     private String limited_to = "";
-    
+
     public MessageModel() {
         this.setPosted();
     }
-    public MessageModel(String qualifier, String content, int uid) {
-        this.setPosted();
-        this.setQualifier(qualifier);
-        this.setContent(content);
-        this.setUid(uid);
-    }
-    public MessageModel(String qualifier, String content, int no_comments, int uid) {
-        this.setPosted();
-        this.setQualifier(qualifier);
-        this.setContent(content);
-        this.setNo_comments(no_comments);
-        this.setUid(uid);
-    }
-    public MessageModel(String qualifier, String content, String lang, int no_comments, int uid) {
-        this.setPosted();
-        this.setQualifier(qualifier);
-        this.setContent(content);
-        this.setLang(lang);
-        this.setNo_comments(no_comments);
-        this.setUid(uid);
-    }
-    public MessageModel(Date postedDate, String qualifier, String content, String lang, int no_comments, int uid) {
-        this.setPosted(postedDate);
-        this.setQualifier(qualifier);
-        this.setContent(content);
-        this.setLang(lang);
-        this.setNo_comments(no_comments);
-        this.setUid(uid);
-    }
-    public MessageModel(Date postedDate, String qualifier, String content, String lang, int no_comments, int uid, String limited_to) {
-        this.setPosted(postedDate);
-        this.setQualifier(qualifier);
-        this.setContent(content);
-        this.setLang(lang);
-        this.setNo_comments(no_comments);
-        this.setUid(uid);
-        this.setLimited_to(limited_to);
-    }
-    
+
+//    public MessageModel(String qualifier, String content, int uid) {
+//        this.setPosted();
+//        this.setQualifier(qualifier);
+//        this.setContent(content);
+//        this.setUid(uid);
+//    }
+//    public MessageModel(String qualifier, String content, int no_comments, int uid) {
+//        this.setPosted();
+//        this.setQualifier(qualifier);
+//        this.setContent(content);
+//        this.setNo_comments(no_comments);
+//        this.setUid(uid);
+//    }
+//    public MessageModel(String qualifier, String content, String lang, int no_comments, int uid) {
+//        this.setPosted();
+//        this.setQualifier(qualifier);
+//        this.setContent(content);
+//        this.setLang(lang);
+//        this.setNo_comments(no_comments);
+//        this.setUid(uid);
+//    }
+//    public MessageModel(Date postedDate, String qualifier, String content, String lang, int no_comments, int uid) {
+//        this.setPosted(postedDate);
+//        this.setQualifier(qualifier);
+//        this.setContent(content);
+//        this.setLang(lang);
+//        this.setNo_comments(no_comments);
+//        this.setUid(uid);
+//    }
+//    public MessageModel(Date postedDate, String qualifier, String content, String lang, int no_comments, int uid, String limited_to) {
+//        this.setPosted(postedDate);
+//        this.setQualifier(qualifier);
+//        this.setContent(content);
+//        this.setLang(lang);
+//        this.setNo_comments(no_comments);
+//        this.setUid(uid);
+//        this.setLimited_to(limited_to);
+//    }
+
     public void setPosted () {
-        posted = "\"" + now.get(Calendar.YEAR) + "-" + now.get(Calendar.MONTH) + "-" + now.get(Calendar.DAY_OF_MONTH) 
+        posted = "\"" + now.get(Calendar.YEAR) + "-" + now.get(Calendar.MONTH) + "-" + now.get(Calendar.DAY_OF_MONTH)
                     + "T" + now.get(Calendar.HOUR_OF_DAY) + ":" + now.get(Calendar.MINUTE) + ":" + now.get(Calendar.SECOND) + "\"";
         this.setPosted(posted);
     }
     public void setPosted (Date postedDate) {
         if(postedDate != null)
             this.now.setTime(postedDate);
-        posted = "\"" + now.get(Calendar.YEAR) + "-" + now.get(Calendar.MONTH) + "-" + now.get(Calendar.DAY_OF_MONTH) 
+        posted = "\"" + now.get(Calendar.YEAR) + "-" + now.get(Calendar.MONTH) + "-" + now.get(Calendar.DAY_OF_MONTH)
                     + "T" + now.get(Calendar.HOUR_OF_DAY) + ":" + now.get(Calendar.MINUTE) + ":" + now.get(Calendar.SECOND) + "\"";
         this.setPosted(posted);
     }
@@ -198,10 +199,10 @@ public class MessageModel {
         this.posted = posted;
     }
     public void setQualifier (String qualifier) {
-        if( qualifier.equals(":") || qualifier.equals("wants") || qualifier.equals("needs") || qualifier.equals("says") 
-                || qualifier.equals("asks") || qualifier.equals("wonders") || qualifier.equals("freestyle") || qualifier.equals("is") 
-                || qualifier.equals("shares") || qualifier.equals("will") || qualifier.equals("feels") || qualifier.equals("wishes") 
-                || qualifier.equals("likes") || qualifier.equals("loves") || qualifier.equals("hopes") || qualifier.equals("has") 
+        if( qualifier.equals(":") || qualifier.equals("wants") || qualifier.equals("needs") || qualifier.equals("says")
+                || qualifier.equals("asks") || qualifier.equals("wonders") || qualifier.equals("freestyle") || qualifier.equals("is")
+                || qualifier.equals("shares") || qualifier.equals("will") || qualifier.equals("feels") || qualifier.equals("wishes")
+                || qualifier.equals("likes") || qualifier.equals("loves") || qualifier.equals("hopes") || qualifier.equals("has")
                 || qualifier.equals("was") || qualifier.equals("thinks") || qualifier.equals("hates") || qualifier.equals("gives") )
             this.qualifier = qualifier;
         else
@@ -231,7 +232,7 @@ public class MessageModel {
     public void setLimited_to (String limited_to) {
         this.limited_to = limited_to;
     }
-    
+
     public String getPosted () {
         return this.posted;
     }
@@ -264,9 +265,9 @@ public class MessageModel {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        
+
         MessageModel msg = new MessageModel();
-        
+
         System.out.println("\n===== Test =====\n");
         System.out.println("posted: "+ msg.getPosted() );
     }
