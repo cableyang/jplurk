@@ -37,7 +37,7 @@ public class HttpUtil {
 	 * @param optCookie
 	 * @return
 	 */
-	public static PostMethod prepareForQueryCookie(AccountModel user,
+	public static PostMethod createGetCookieHttpMethod(AccountModel user,
 			String uri, String optCookie) {
 		PostMethod method = new PostMethod(uri);
 		try {
