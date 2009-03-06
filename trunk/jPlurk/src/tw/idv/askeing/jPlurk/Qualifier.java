@@ -69,6 +69,15 @@ public enum Qualifier {
 		this.qualifier = qualifier;
 	}
 
+	public static Qualifier fromString(String qualifier){
+		for (Qualifier q : Qualifier.values()) {
+			if(q.toString().equals(qualifier)){
+				return q;
+			}
+		}
+		return Qualifier.NULL;
+	}
+
 	@Override
 	public String toString() {
 		return qualifier;
