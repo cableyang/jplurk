@@ -43,7 +43,9 @@ public class AccountModel {
 		this.password = password;
 	}
 
-	// FIXME: why setUID is never used.
+	/* FIXME: why setUID is never used.
+     * fixed at UIDGetter: first time connect host to get UID, then record it for next time.
+     * */
 	public void setUID(int UID) {
 		this.UID = UID;
 	}
