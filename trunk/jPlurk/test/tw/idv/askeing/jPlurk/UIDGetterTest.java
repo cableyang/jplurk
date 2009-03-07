@@ -15,7 +15,7 @@ import tw.idv.askeing.jPlurk.model.AccountModel;
 
 /**
  *
- * @author Administrator
+ * @author Askeing, Yen
  */
 public class UIDGetterTest {
 
