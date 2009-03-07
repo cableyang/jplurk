@@ -1,28 +1,31 @@
 package tw.idv.askeing.jPlurk;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
+
 import java.util.ArrayList;
 import java.util.List;
 
-import junit.framework.TestCase;
-
 import org.apache.commons.httpclient.Header;
 import org.apache.commons.httpclient.methods.PostMethod;
+import org.junit.Before;
+import org.junit.Test;
 
 import tw.idv.askeing.jPlurk.model.AccountModel;
 import tw.idv.askeing.jPlurk.net.HttpUtil;
 
-public class CookieGetterTest extends TestCase{
+public class CookieGetterTest{
 
 	AccountModel user;
 	String cookie = "_optional_cookie";
 
-	@Override
-	protected void setUp() throws Exception {
-		super.setUp();
+	@Before
+	public void setUp() throws Exception {
 		user = new AccountModel("xd", "orz");
 	}
 
 	@SuppressWarnings("deprecation")
+	@Test
 	public void testCreateGetCookieRequestWithOptCookie() throws Exception {
 		String uri = "/foo";
 		PostMethod post1 = CookieGetter.createGetCookieRequest(user, uri, cookie);
@@ -33,6 +36,7 @@ public class CookieGetterTest extends TestCase{
 	}
 
 	@SuppressWarnings("deprecation")
+	@Test
 	public void testCreateGetCookieRequestWithUsername() throws Exception {
 		String uri = "/m/login";
 		PostMethod post1 = CookieGetter.createGetCookieRequest(user, uri, cookie);
@@ -42,6 +46,7 @@ public class CookieGetterTest extends TestCase{
 	}
 
 	@SuppressWarnings("deprecation")
+	@Test
 	public void testCreateGetCookieRequestWithNickname() throws Exception {
 		String uri = "/Users/login";
 		PostMethod post1 = CookieGetter.createGetCookieRequest(user, uri, cookie);
@@ -58,6 +63,8 @@ public class CookieGetterTest extends TestCase{
 		assertEquals(post1.getParameter(keyName).getValue(), post2.getParameter(keyName).getValue());
 	}
 
+	@SuppressWarnings("deprecation")
+	@Test
 	public void testParseSetCookieHeader() throws Exception {
 		String cookie = "plurkcookie=hbuu4hs1X4CtOZa2bnPUDAIg9+A=?chk=STg1MDA2NTY1KAou&user_id=TDNxNDYpOTRMCi4=; Domain=.plurk.com; expires=Thu, 19-Mar-2009 15:47:06 GMT; Max-Age=1209600; Path=/";
 		List<Header> headerList = new ArrayList<Header>();
