@@ -31,6 +31,6 @@ public class UIDGetterTest {
         // 設定之後，第二次應該不會再次連線，UID也必須相同
         user.setUID(expResult);
         int result = UIDGetter.getUID(user);
-        assertEquals(expResult, result);
+        assertEquals(expResult, result); // FIXME: 這樣的 assert 是沒有意義的，因為即使沒有真的取得 uid，那就會是 0 == 0
     }
 }
