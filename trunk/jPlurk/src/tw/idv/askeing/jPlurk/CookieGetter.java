@@ -152,9 +152,9 @@ public class CookieGetter {
         System.out.println("Password:"+user.getPassword());
 
         System.out.println("\n===== Test One =====\n");
-        System.out.println(postUrl_1+" Cookie: "+ CookieGetter.getCookie(host, postUrl_1, user, null) );
+        System.out.println(postUrl_1+" Cookie: "+ CookieGetter.getCookie(Constants.PLURK_HOST, Constants.LOGIN_URL, user, null) );
         System.out.println("\n===== Test Two =====\n");
-        System.out.println(postUrl_2+" Cookie: "+ CookieGetter.getCookie(host, postUrl_2, user, null) );
+        System.out.println(postUrl_2+" Cookie: "+ CookieGetter.getCookie(Constants.PLURK_HOST, Constants.LOGIN_URL, user, null) );
         //System.exit(0);
     }
 }
