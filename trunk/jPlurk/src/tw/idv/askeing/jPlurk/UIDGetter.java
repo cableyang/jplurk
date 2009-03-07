@@ -53,7 +53,7 @@ public class UIDGetter {
 
                     String line = "";
                     while ((line = in.readLine()) != null) {
-                        System.out.println(line);
+                        logger.debug(line);
                         // Review: need improvement.
                         if (line.contains("<input type=\"hidden\" name=\"user_id\" value=\"")) {
                             String[] sUID = line.split("\"");
