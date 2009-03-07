@@ -68,7 +68,9 @@ public class UIDGetter {
         });
 
         if (result != null && result instanceof Integer) {
-            return ((Integer) result).intValue();
+            int uid = ((Integer) result).intValue();
+            user.setUID(uid);
+            return uid;
         }
         return 0;
     }

@@ -32,15 +32,18 @@ public class CookieGetter {
      * @param host host name
      * @param postUrl post url
      * @param user user account
+     * @param optional_cookie
      * @return Cookie
      */
     public static String getCookie(String host, String postUrl, AccountModel user, String optional_cookie) {
-
+        /* TODO: What is "optional_cookie" used for? [askeing: 2009.03.07]
+         * */
     	HttpTemplate template = new HttpTemplate(HttpUtil.createGetCookieHttpMethod(user, postUrl, optional_cookie));
 
     	Object result = template.execute(
     		new int[] { HttpStatus.SC_MOVED_TEMPORARILY, HttpStatus.SC_OK },
     		new HttpResultCallback() {
+            @Override
 			protected Object processResult(PostMethod method) {
 				return HttpUtil.parseSetCookieHeader(method.getResponseHeaders());
 			}

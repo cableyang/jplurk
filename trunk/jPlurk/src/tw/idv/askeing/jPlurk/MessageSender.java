@@ -34,13 +34,14 @@ public class MessageSender {
      */
     public static boolean sendMessage(AccountModel user, MessageModel message) {
 
-        message.setUid(UIDGetter.getUID(user));
+        UIDGetter.getUID(user);
         if (message.getUid() == 0) {
         	logger.warn("the uid of sent message is invalid. ");
         	return false;
 		}
 
-        /* 測試後發現， 3/1 與 3/5、3/7 的 cookie 相同
+        /* TODO: 觀察 Cookie 中！
+         * 測試後發現， 3/1 與 3/5、3/7 的 cookie 相同
          * 因此初步推測 Cookie 跟人跑，一人有多組 Cookie
          * 如有不妥，再拿掉
          * */
