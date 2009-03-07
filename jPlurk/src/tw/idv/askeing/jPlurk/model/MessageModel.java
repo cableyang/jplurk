@@ -2,7 +2,6 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package tw.idv.askeing.jPlurk.model;
 
 import java.util.Calendar;
@@ -49,7 +48,7 @@ public class MessageModel {
      * */
 
     private TimeZone zone = TimeZone.getTimeZone("GMT 0:00");
-    private Calendar now = Calendar.getInstance( zone );
+    private Calendar now = Calendar.getInstance(zone);
     private String posted = "";
     private String qualifier = "";
     private String content = "";
@@ -63,93 +62,92 @@ public class MessageModel {
     }
 
     public MessageModel(Qualifier qualifier, String content, int uid) {
-    	super();
+        super();
         this.setQualifier(qualifier);
         this.setContent(content);
         this.setUid(uid);
     }
 
-
-    public void generatePosted () {
-        posted = "\"" + now.get(Calendar.YEAR) + "-" + now.get(Calendar.MONTH) + "-" + now.get(Calendar.DAY_OF_MONTH)
-                    + "T" + now.get(Calendar.HOUR_OF_DAY) + ":" + now.get(Calendar.MINUTE) + ":" + now.get(Calendar.SECOND) + "\"";
+    public void generatePosted() {
+        posted = "\"" + now.get(Calendar.YEAR) + "-" + now.get(Calendar.MONTH) + "-" + now.get(Calendar.DAY_OF_MONTH) + "T" + now.get(Calendar.HOUR_OF_DAY) + ":" + now.get(Calendar.MINUTE) + ":" + now.get(Calendar.SECOND) + "\"";
     }
 
-    public void setQualifier (Qualifier qualifier) {
-		if (qualifier == null) {
-			this.qualifier = Qualifier.NULL.toString();
-		} else {
-			this.qualifier = qualifier.toString();
-		}
+    public void setQualifier(Qualifier qualifier) {
+        if (qualifier == null) {
+            this.qualifier = Qualifier.NULL.toString();
+        } else {
+            this.qualifier = qualifier.toString();
+        }
     }
 
     public void setContent(String content) {
-		if (content.length() > 140) {
-			this.content = content.substring(0, 136) + "...";
-		} else {
-			this.content = content;
-		}
-	}
+        if (content.length() > 140) {
+            this.content = content.substring(0, 136) + "...";
+        } else {
+            this.content = content;
+        }
+    }
 
-    public void setLang (String lang) {
-    	if("".equals(lang)){
-    		this.lang = "tr_ch";
-    	}else{
-    		this.lang = lang;
-    	}
+    public void setLang(String lang) {
+        if ("".equals(lang)) {
+            this.lang = "tr_ch";
+        } else {
+            this.lang = lang;
+        }
     }
 
     public void setNoComments(int no_comments) {
-		if (no_comments > 1 || no_comments < 0) {
-			this.noComments = 0;
-		} else {
-			this.noComments = no_comments;
-		}
-	}
+        if (no_comments > 1 || no_comments < 0) {
+            this.noComments = 0;
+        } else {
+            this.noComments = no_comments;
+        }
+    }
 
     public void setUid(int uid) {
-		this.uid = uid;
-	}
+        this.uid = uid;
+    }
 
-	public void setLimitedTo(String limited_to) {
-		this.limitedTo = limited_to;
-	}
+    public void setLimitedTo(String limited_to) {
+        this.limitedTo = limited_to;
+    }
 
-	public String getPosted() {
-		return this.posted;
-	}
+    public String getPosted() {
+        return this.posted;
+    }
 
-	public String getQualifier() {
-		return qualifier;
-	}
+    public String getQualifier() {
+        return qualifier;
+    }
 
-	public String getContent() {
-		return this.content;
-	}
+    public String getContent() {
+        return this.content;
+    }
 
-	public String getLang() {
-		return this.lang;
-	}
+    public String getLang() {
+        return this.lang;
+    }
 
-	public int getNoComments() {
-		return this.noComments;
-	}
+    public int getNoComments() {
+        return this.noComments;
+    }
 
-	public int getUid() {
-		return this.uid;
-	}
+    public int getUid() {
+        return this.uid;
+    }
 
-	public String getLimitedTo() {
-		return this.limitedTo;
-	}
+    public String getLimitedTo() {
+        return this.limitedTo;
+    }
 
-	public boolean hasLimited_to() {
-		if("".equals(limitedTo)){
-			return false;
-		}else{
-			return true;
-		}
-	}
+    public boolean hasLimited_to() {
+        if ("".equals(limitedTo)) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+
     /**
      * Test Case
      * @param args the command line arguments
@@ -159,6 +157,6 @@ public class MessageModel {
         MessageModel msg = new MessageModel();
 
         System.out.println("\n===== Test =====\n");
-        System.out.println("posted: "+ msg.getPosted() );
+        System.out.println("posted: " + msg.getPosted());
     }
 }
