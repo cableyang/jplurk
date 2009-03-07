@@ -15,6 +15,7 @@ public class AccountModel {
 	private String name = "";
 	private String password = "";
 	private int UID = 0;
+    private String cookie = "";
 
 	public AccountModel() {
 	}
@@ -47,6 +48,9 @@ public class AccountModel {
 		this.UID = UID;
 	}
 
+    public void setCookie(String cookie) {
+        this.cookie = cookie;
+    }
 	public String getName() {
 		return this.name;
 	}
@@ -58,4 +62,8 @@ public class AccountModel {
 	public int getUID() {
 		return this.UID;
 	}
+
+    public String getCookie() {
+        return this.cookie;
+    }
 }

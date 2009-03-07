@@ -40,7 +40,16 @@ public class MessageSender {
         	return false;
 		}
 
-        String cookie = CookieGetter.getCookie(Constants.PLURK_HOST, Constants.LOGIN_URL, user, null);
+        /* 測試後發現， 3/1 與 3/5、3/7 的 cookie 相同
+         * 因此初步推測 Cookie 跟人跑，一人有多組 Cookie
+         * 如有不妥，再拿掉
+         * */
+        String cookie = user.getCookie();
+        if( "".equals(user.getCookie()) ) {
+            cookie = CookieGetter.getCookie(Constants.PLURK_HOST, Constants.LOGIN_URL, user, null);
+            user.setCookie(cookie);
+        }
+
         if(cookie == null || "".equals(cookie.trim())){
         	logger.warn("cookie token is not found.");
         	return false;
@@ -118,12 +127,11 @@ public class MessageSender {
 
         System.out.print("qualifier: ");
         mesg.setQualifier(Qualifier.fromString(scanner.next()));
-        //String content = "Just For Test jPlurk! http://askeing.blogspot.com/ (星塵)";
-        String content = "Test http://askeing.twbbs.org/jPlurk/1.0/doc/api/ (jPlurk)! Time: " + new java.util.Date();
-        System.out.println("content: " + content);
-        mesg.setContent(content);
         System.out.print("no_comments (0 , 1): ");
         mesg.setNoComments(scanner.nextInt());
+        String content = "Test http://askeing.twbbs.org/jPlurk/1.0/doc/api/ (jPlurk)! Time: " + new java.util.Date();
+        mesg.setContent(content);
+        System.out.println("content: " + content);
 
         System.out.println("\n===== Test =====\n");
         if (MessageSender.sendMessage(user, mesg)) {
