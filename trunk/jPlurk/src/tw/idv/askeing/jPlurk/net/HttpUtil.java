@@ -17,6 +17,9 @@ import org.apache.commons.logging.LogFactory;
 import tw.idv.askeing.jPlurk.Constants;
 import tw.idv.askeing.jPlurk.model.AccountModel;
 
+/**
+ * HTTP Util
+ */
 public class HttpUtil {
 
 	final static Pattern SET_COOKIE_PATTERN = Pattern.compile("^([^;]+).*");
@@ -31,9 +34,9 @@ public class HttpUtil {
 	}
 
 	/**
-	 * if request uri is /m/login set nameKey as  username
+	 * if request uri is /m/login set nameKey as username
 	 * @param user
-	 * @param postMethod
+     * @param uri
 	 * @param optCookie
 	 * @return
 	 */
@@ -62,7 +65,12 @@ public class HttpUtil {
 		return method;
 	}
 
-	public static String parseSetCookieHeader(Header[] headers){
+    /**
+     * Return Cookie.
+     * @param headers
+     * @return
+     */
+    public static String parseSetCookieHeader(Header[] headers){
 		for (Header header : headers) {
 			if(!RFC2109Spec.SET_COOKIE_KEY.equalsIgnoreCase(header.getName())){
 				continue;
@@ -76,11 +84,21 @@ public class HttpUtil {
 		return "";
 	}
 
-	public static HttpClient createDefaultHttpClient(){
+    /**
+     * Creat Default Http Client.
+     * @return
+     */
+    public static HttpClient createDefaultHttpClient(){
 		return createHttpClient(Constants.PLURK_HOST, Constants.PLURK_PORT);
 	}
 
-	public static HttpClient createHttpClient(String host, int port){
+    /**
+     * Creat Http Client with host and port.
+     * @param host
+     * @param port
+     * @return
+     */
+    public static HttpClient createHttpClient(String host, int port){
 		HttpClient client = new HttpClient();
 		client.getHostConfiguration().setHost(host, 80, "http");
 		return client;
