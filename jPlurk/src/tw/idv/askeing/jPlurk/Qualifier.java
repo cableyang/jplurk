@@ -1,5 +1,8 @@
 package tw.idv.askeing.jPlurk;
 
+/**
+ * Handle Qualifier of Message
+ */
 public enum Qualifier {
 
 	// ":" 無. 同 "QUALIFIER_FREESTYLE".
@@ -69,7 +72,12 @@ public enum Qualifier {
 		this.qualifier = qualifier;
 	}
 
-	public static Qualifier fromString(String qualifier){
+    /**
+     * Input Qualifier String, then it will select correct Qualifier.
+     * @param qualifier Qualifier String
+     * @return
+     */
+    public static Qualifier fromString(String qualifier){
 		for (Qualifier q : Qualifier.values()) {
 			if(q.toString().equals(qualifier)){
 				return q;
