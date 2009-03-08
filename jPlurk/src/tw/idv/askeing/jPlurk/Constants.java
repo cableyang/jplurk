@@ -1,5 +1,8 @@
 package tw.idv.askeing.jPlurk;
 
+/**
+ * Constants of URL
+ */
 public class Constants {
 
 	public final static String PLURK_HOST = "www.plurk.com";
