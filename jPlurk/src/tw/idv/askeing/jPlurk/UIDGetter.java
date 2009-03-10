@@ -18,7 +18,7 @@ import tw.idv.askeing.jPlurk.net.HttpResultCallback;
 import tw.idv.askeing.jPlurk.net.HttpTemplate;
 
 /**
- * jPlurk UIDGetter: get UID of User.
+ * jPlurk UIDGetter: get UID of User. If you get UID and UID != 0, then UID will store into AccountModel.
  * @author Askeing, Yen.
  * @version 1.0
  */
