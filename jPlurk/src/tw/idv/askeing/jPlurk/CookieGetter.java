@@ -51,7 +51,10 @@ public class CookieGetter {
                 });
 
         if (result != null && result instanceof String) {
-            return (String) result;
+            String cookie = (String) result;
+            if( postUrl.equals(Constants.LOGIN_URL))
+                user.setCookie(cookie);
+            return cookie;
         }
 
         return "";
