@@ -44,7 +44,7 @@ public class MessageSender {
             message.setUid(uid);
 		}
 
-        /* TODO: Resus Cookie
+        /* TODO: Reuse Cookie
          * 測試後發現， 3/1 與 3/5、3/7 的 cookie 相同
          * 因此初步推測 Cookie 跟人跑，一人有多組 Cookie
          * 如有不妥，再拿掉
