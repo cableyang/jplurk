@@ -14,7 +14,7 @@ package tw.idv.askeing.jPlurk.model;
 public class Account {
 	private String name = "";
 	private String password = "";
-	private int UID = 0;
+//	private int UID = 0;
     private String cookie = "";
 
 	public Account() {
@@ -43,12 +43,12 @@ public class Account {
 		this.password = password;
 	}
 
-	/* FIXME: why setUID is never used.
-     * fixed at UIDGetter: first time connect host to get UID, then record it for next time.
-     * */
-	public void setUID(int UID) {
-		this.UID = UID;
-	}
+//	/* FIXME: why setUID is never used.
+//     * fixed at UIDGetter: first time connect host to get UID, then record it for next time.
+//     * */
+//	public void setUID(int UID) {
+//		this.UID = UID;
+//	}
 
     public void setCookie(String cookie) {
         this.cookie = cookie;
@@ -61,9 +61,9 @@ public class Account {
 		return this.password;
 	}
 
-	public int getUID() {
-		return this.UID;
-	}
+//	public int getUID() {
+//		return this.UID;
+//	}
 
     public String getCookie() {
         return this.cookie;

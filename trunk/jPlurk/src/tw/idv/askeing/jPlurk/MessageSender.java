@@ -35,15 +35,12 @@ public class MessageSender {
      */
     public static boolean sendMessage(Account user, Message message) {
 
-        // Reuse UID
-        int uid = UIDGetter.getUID(user);
-        if (uid == 0) {
+        if (UIDManager.getUID(user) == 0) {
         	logger.warn("the uid of sent message is invalid. ");
         	return false;
 		}
-        if (message.getUid() == 0) {
-            message.setUid(uid);
-		}
+
+        message.setUid(UIDManager.getUID(user));
 
         /* TODO: Reuse Cookie
          * 測試後發現， 3/1 與 3/5、3/7 的 cookie 相同
