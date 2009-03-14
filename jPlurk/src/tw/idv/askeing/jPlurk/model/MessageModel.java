@@ -7,7 +7,6 @@ package tw.idv.askeing.jPlurk.model;
 import java.util.Calendar;
 import java.util.TimeZone;
 
-import tw.idv.askeing.jPlurk.Qualifier;
 
 /**
  * jPlurk MessageModel: The model to record  Message data structure, and Qualifier constant field.
