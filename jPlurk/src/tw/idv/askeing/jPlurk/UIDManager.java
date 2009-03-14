@@ -6,6 +6,8 @@ package tw.idv.askeing.jPlurk;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Scanner;
 
 import org.apache.commons.httpclient.HttpStatus;
@@ -22,9 +24,13 @@ import tw.idv.askeing.jPlurk.net.HttpTemplate;
  * @author Askeing, Yen.
  * @version 1.0
  */
-public class UIDGetter {
+public class UIDManager {
 
-    static Log logger = LogFactory.getLog(UIDGetter.class);
+    static Log logger = LogFactory.getLog(UIDManager.class);
+    static Map<Account, Integer> cachedUids = new HashMap<Account, Integer>();
+
+    private UIDManager() {
+	}
 
     /**
      * Return UID of user.
@@ -32,12 +38,16 @@ public class UIDGetter {
      * @return UID
      */
     public static int getUID(Account user) {
-        // Check, if user have uid, return uid.
-        if (user.getUID() != 0) {
-            return user.getUID();
-        }
+    	if(isHitCache(user)){
+    		return cachedUids.get(user).intValue();
+    	}
 
-        GetMethod method = new GetMethod(Constants.GET_URL_M);
+    	cachedUids.put(user, fetchUid(user));
+        return getUID(user);
+    }
+
+	static Integer fetchUid(Account user) {
+		GetMethod method = new GetMethod(Constants.GET_URL_M);
         method.setRequestHeader("Cookie", CookieGetter.getCookie(
                 Constants.PLURK_HOST, Constants.LOGIN_URL_M, user, null));
 
@@ -61,19 +71,22 @@ public class UIDGetter {
                         }
                     }
                 } catch (Exception e) {
-                    e.printStackTrace();
+                   logger.error(e.getMessage(), e);
                 }
                 return Integer.valueOf(0);
             }
         });
 
         if (result != null && result instanceof Integer) {
-            int uid = ((Integer) result).intValue();
-            user.setUID(uid);
-            return uid;
+            return (Integer) result;
         }
-        return 0;
-    }
+
+        return Integer.valueOf(0);
+	}
+
+	static boolean isHitCache(Account user) {
+		return (cachedUids.containsKey(user)) && (cachedUids.get(user) != null);
+	}
 
     /**
      * Test Case
@@ -91,6 +104,6 @@ public class UIDGetter {
         System.out.println("Password:" + user.getPassword());
 
         System.out.println("\n===== Test =====\n");
-        System.out.println("UID: " + UIDGetter.getUID(user));
+        System.out.println("UID: " + UIDManager.getUID(user));
     }
 }
