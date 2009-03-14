@@ -76,6 +76,8 @@ public class HttpUtil {
 				continue;
 			}
 
+			logger.info(header.getValue());
+			// TODO: 有需要判斷 cookie key (plurkcookie) 嗎 ?
 			Matcher matcher = SET_COOKIE_PATTERN.matcher(header.getValue());
 			if(matcher.matches()){
 				return matcher.group(1);
