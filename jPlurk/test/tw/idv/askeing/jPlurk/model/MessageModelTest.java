@@ -5,10 +5,10 @@ import org.junit.Test;
 
 public class MessageModelTest{
 
-	MessageModel mesg;
+	Message mesg;
 	@Before
 	public void setUp() throws Exception {
-		mesg = new MessageModel();
+		mesg = new Message();
 	}
 
 	@Test

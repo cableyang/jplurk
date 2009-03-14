@@ -11,17 +11,17 @@ import org.apache.commons.httpclient.methods.PostMethod;
 import org.junit.Before;
 import org.junit.Test;
 
-import tw.idv.askeing.jPlurk.model.AccountModel;
+import tw.idv.askeing.jPlurk.model.Account;
 import tw.idv.askeing.jPlurk.net.HttpUtil;
 
 public class CookieGetterTest{
 
-	AccountModel user;
+	Account user;
 	String cookie = "_optional_cookie";
 
 	@Before
 	public void setUp() throws Exception {
-		user = new AccountModel("xd", "orz");
+		user = new Account("xd", "orz");
 	}
 
 	@SuppressWarnings("deprecation")

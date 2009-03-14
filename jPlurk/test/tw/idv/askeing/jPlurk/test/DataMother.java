@@ -5,7 +5,7 @@ import java.io.IOException;
 import java.util.Properties;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import tw.idv.askeing.jPlurk.model.AccountModel;
+import tw.idv.askeing.jPlurk.model.Account;
 
 
 /**
@@ -23,8 +23,8 @@ public class DataMother {
         }
     }
 
-    public static AccountModel createTestAccountModel(){
-        AccountModel account = new AccountModel();
+    public static Account createTestAccountModel(){
+        Account account = new Account();
         account.setName(prop.getProperty("user", "__no_user_name__"));
         account.setPassword(prop.getProperty("password", "__no_password__"));
         return account;
