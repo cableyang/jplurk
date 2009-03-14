@@ -12,8 +12,8 @@ import org.apache.commons.httpclient.methods.PostMethod;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-import tw.idv.askeing.jPlurk.model.AccountModel;
-import tw.idv.askeing.jPlurk.model.MessageModel;
+import tw.idv.askeing.jPlurk.model.Account;
+import tw.idv.askeing.jPlurk.model.Message;
 import tw.idv.askeing.jPlurk.model.Qualifier;
 import tw.idv.askeing.jPlurk.net.HttpResultCallback;
 import tw.idv.askeing.jPlurk.net.HttpTemplate;
@@ -33,7 +33,7 @@ public class MessageSender {
      * @param message
      * @return
      */
-    public static boolean sendMessage(AccountModel user, MessageModel message) {
+    public static boolean sendMessage(Account user, Message message) {
 
         // Reuse UID
         int uid = UIDGetter.getUID(user);
@@ -93,7 +93,7 @@ public class MessageSender {
     }
 
 	private static void applyLimitedToIfExists(
-		MessageModel message, PostMethod post) {
+		Message message, PostMethod post) {
 		if (!message.hasLimited_to()) {
 			return;
 		}
@@ -101,7 +101,7 @@ public class MessageSender {
 			new NameValuePair("limited_to", message.getLimitedTo()));
 	}
 
-	private static NameValuePair[] createRequestBodyFromMessage(MessageModel message) {
+	private static NameValuePair[] createRequestBodyFromMessage(Message message) {
 		// 建立 Post 資料 data
 		NameValuePair[] data = {
 		    new NameValuePair("posted", message.getPosted()),
@@ -120,8 +120,8 @@ public class MessageSender {
      */
     public static void main(String[] args) {
 
-        AccountModel user = new AccountModel();
-        MessageModel mesg = new MessageModel();
+        Account user = new Account();
+        Message mesg = new Message();
 
         Scanner scanner = new Scanner(System.in);
         System.out.print("Please input your name: ");

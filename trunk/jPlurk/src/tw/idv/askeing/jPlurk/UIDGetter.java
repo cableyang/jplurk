@@ -13,7 +13,7 @@ import org.apache.commons.httpclient.methods.GetMethod;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-import tw.idv.askeing.jPlurk.model.AccountModel;
+import tw.idv.askeing.jPlurk.model.Account;
 import tw.idv.askeing.jPlurk.net.HttpResultCallback;
 import tw.idv.askeing.jPlurk.net.HttpTemplate;
 
@@ -31,7 +31,7 @@ public class UIDGetter {
      * @param user user account
      * @return UID
      */
-    public static int getUID(AccountModel user) {
+    public static int getUID(Account user) {
         // Check, if user have uid, return uid.
         if (user.getUID() != 0) {
             return user.getUID();
@@ -81,7 +81,7 @@ public class UIDGetter {
      */
     public static void main(String[] args) {
 
-        AccountModel user = new AccountModel();
+        Account user = new Account();
         Scanner scanner = new Scanner(System.in);
         System.out.print("Please input your name: ");
         user.setName(scanner.next());

@@ -15,7 +15,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import tw.idv.askeing.jPlurk.Constants;
-import tw.idv.askeing.jPlurk.model.AccountModel;
+import tw.idv.askeing.jPlurk.model.Account;
 
 /**
  * HTTP Util
@@ -40,7 +40,7 @@ public class HttpUtil {
 	 * @param optCookie
 	 * @return
 	 */
-	public static PostMethod createGetCookieHttpMethod(AccountModel user,
+	public static PostMethod createGetCookieHttpMethod(Account user,
 			String uri, String optCookie) {
 		PostMethod method = new PostMethod(uri);
 		try {

@@ -13,7 +13,7 @@ import org.apache.commons.httpclient.methods.PostMethod;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-import tw.idv.askeing.jPlurk.model.AccountModel;
+import tw.idv.askeing.jPlurk.model.Account;
 import tw.idv.askeing.jPlurk.net.HttpResultCallback;
 import tw.idv.askeing.jPlurk.net.HttpTemplate;
 import tw.idv.askeing.jPlurk.net.HttpUtil;
@@ -35,7 +35,7 @@ public class CookieGetter {
      * @param optional_cookie
      * @return Cookie
      */
-    public static String getCookie(String host, String postUrl, AccountModel user, String optional_cookie) {
+    public static String getCookie(String host, String postUrl, Account user, String optional_cookie) {
         /* TODO: What is "optional_cookie" used for? [askeing: 2009.03.07]
          * */
         HttpTemplate template = new HttpTemplate(HttpUtil.createGetCookieHttpMethod(user, postUrl, optional_cookie));
@@ -115,7 +115,7 @@ public class CookieGetter {
      * @param optional_cookie
      * @return
      */
-    static PostMethod createGetCookieRequest(AccountModel user,
+    static PostMethod createGetCookieRequest(Account user,
             String postUrl, String optional_cookie) {
         // 建立 PostMethod，並指派 Post 網址
         PostMethod post = new PostMethod(postUrl);
@@ -142,7 +142,7 @@ public class CookieGetter {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        AccountModel user = new AccountModel();
+        Account user = new Account();
         Scanner scanner = new Scanner(System.in);
         System.out.print("Please input your name: ");
         user.setName(scanner.next());

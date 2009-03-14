@@ -11,20 +11,20 @@ package tw.idv.askeing.jPlurk.model;
  * @author Askeing, Yen.
  * @version 1.0
  */
-public class AccountModel {
+public class Account {
 	private String name = "";
 	private String password = "";
 	private int UID = 0;
     private String cookie = "";
 
-	public AccountModel() {
+	public Account() {
 	}
 
-	public AccountModel(String name) {
+	public Account(String name) {
 		this.setName(name);
 	}
 
-	public AccountModel(String name, String password) {
+	public Account(String name, String password) {
 		this.setName(name);
 		this.setPassword(password);
 	}

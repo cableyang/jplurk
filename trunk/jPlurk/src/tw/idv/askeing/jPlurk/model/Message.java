@@ -13,7 +13,7 @@ import java.util.TimeZone;
  * @author Askeing, Yen.
  * @version 1.0
  */
-public class MessageModel {
+public class Message {
     /*
      * posted			( 時間 URLEncode ) "2009-3-1T11:04:09"
      * qualifier		( 語氣 URLEncode )
@@ -56,11 +56,11 @@ public class MessageModel {
     private int uid = 0;
     private String limitedTo = "";
 
-    public MessageModel() {
+    public Message() {
         generatePosted();
     }
 
-    public MessageModel(Qualifier qualifier, String content, int uid) {
+    public Message(Qualifier qualifier, String content, int uid) {
         super();
         this.setQualifier(qualifier);
         this.setContent(content);
@@ -153,7 +153,7 @@ public class MessageModel {
      */
     public static void main(String[] args) {
 
-        MessageModel msg = new MessageModel();
+        Message msg = new Message();
 
         System.out.println("\n===== Test =====\n");
         System.out.println("posted: " + msg.getPosted());
