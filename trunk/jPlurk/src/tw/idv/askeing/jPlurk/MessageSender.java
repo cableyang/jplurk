@@ -14,6 +14,7 @@ import org.apache.commons.logging.LogFactory;
 
 import tw.idv.askeing.jPlurk.model.AccountModel;
 import tw.idv.askeing.jPlurk.model.MessageModel;
+import tw.idv.askeing.jPlurk.model.Qualifier;
 import tw.idv.askeing.jPlurk.net.HttpResultCallback;
 import tw.idv.askeing.jPlurk.net.HttpTemplate;
 

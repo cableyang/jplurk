@@ -1,4 +1,4 @@
-package tw.idv.askeing.jPlurk;
+package tw.idv.askeing.jPlurk.model;
 
 /**
  * Handle Qualifier of Message
