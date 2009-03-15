@@ -27,11 +27,6 @@ public class CookieGetter {
 
     static Log logger = LogFactory.getLog(CookieGetter.class);
 
-    static class CookieEntry{
-    	String host;
-    	String postUrl;
-    }
-
     /**
      * Return Cookie of user. If you get cookie from /Users/login, then cookie will store into AccountModel.
      * @param host host name
