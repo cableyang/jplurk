@@ -10,6 +10,7 @@ public class HttpTemplate {
 
 	static Log logger = LogFactory.getLog(HttpTemplate.class);
 	Object method;
+
 	public HttpTemplate(PostMethod method) {
 		this.method = method;
 	}

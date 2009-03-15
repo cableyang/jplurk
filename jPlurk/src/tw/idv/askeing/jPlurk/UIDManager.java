@@ -4,9 +4,8 @@
  */
 package tw.idv.askeing.jPlurk;
 
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
 import java.util.Scanner;
 
@@ -18,6 +17,7 @@ import org.apache.commons.logging.LogFactory;
 import tw.idv.askeing.jPlurk.model.Account;
 import tw.idv.askeing.jPlurk.net.HttpResultCallback;
 import tw.idv.askeing.jPlurk.net.HttpTemplate;
+import tw.idv.askeing.jPlurk.util.IterableInputStreamWrapper;
 
 /**
  * jPlurk UIDGetter: get UID of User. If you get UID and UID != 0, then UID will store into AccountModel.
@@ -58,18 +58,27 @@ public class UIDManager {
             @Override
             protected Object processResult(GetMethod method) {
                 try {
-                    BufferedReader in = new BufferedReader(
-                            new InputStreamReader(method.getResponseBodyAsStream(), "UTF-8"));
-
-                    String line = "";
-                    while ((line = in.readLine()) != null) {
-                        logger.debug(line);
-                        // Review: need improvement.
-                        if (line.contains("<input type=\"hidden\" name=\"user_id\" value=\"")) {
-                            String[] sUID = line.split("\"");
-                            return Integer.valueOf((sUID[5]));
-                        }
-                    }
+					Iterator<String> it = getIterator(method.getResponseBodyAsStream(), "utf-8");
+					while (it.hasNext()) {
+						String line = it.next();
+						// Review: need improvement.
+						if (line.contains("<input type=\"hidden\" name=\"user_id\" value=\"")) {
+							String[] sUID = line.split("\"");
+							return Integer.valueOf((sUID[5]));
+						}
+					}
+//                    BufferedReader in = new BufferedReader(
+//                            new InputStreamReader(method.getResponseBodyAsStream(), "UTF-8"));
+//
+//                    String line = "";
+//                    while ((line = in.readLine()) != null) {
+//                        logger.debug(line);
+//                        // Review: need improvement.
+//                        if (line.contains("<input type=\"hidden\" name=\"user_id\" value=\"")) {
+//                            String[] sUID = line.split("\"");
+//                            return Integer.valueOf((sUID[5]));
+//                        }
+//                    }
                 } catch (Exception e) {
                    logger.error(e.getMessage(), e);
                 }
