@@ -16,7 +16,7 @@ import tw.idv.askeing.jPlurk.test.DataMother;
  *
  * @author Askeing, Yen
  */
-public class UIDGetterTest {
+public class UIDManagerTest {
 
     /**
      * Test of getUID method, of class UIDGetter.
