@@ -1,8 +1,8 @@
 package tw.idv.askeing.jPlurk.util;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
 
-import java.io.FileInputStream;
 import java.io.InputStream;
 import java.util.Iterator;
 
@@ -10,13 +10,13 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-public class InputStreamIteratorTest {
+public class IterableInputStreamWrapperTest {
 
 	InputStream inputStream;
 
 	@Before
 	public void setUp() throws Exception {
-		inputStream = InputStreamIteratorTest.class
+		inputStream = IterableInputStreamWrapperTest.class
 				.getResourceAsStream("testInput");
 	}
 
