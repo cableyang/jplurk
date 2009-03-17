@@ -29,13 +29,13 @@ public class IterableInputStreamWrapper implements Iterable<String> {
 				new InputStreamReader(inputStream, encoding));
 	}
 
-	@Override
+	//@Override
 	public Iterator<String> iterator() {
 		return new Iterator<String>() {
 
 			Queue<String> queue = new LinkedList<String>();
 
-			@Override
+			//@Override
 			public boolean hasNext() {
 				try {
 					String s = reader.readLine();
@@ -52,7 +52,7 @@ public class IterableInputStreamWrapper implements Iterable<String> {
 				return !queue.isEmpty();
 			}
 
-			@Override
+			//@Override
 			public String next() {
 				if(hasNext()){
 					return queue.remove();
@@ -60,7 +60,7 @@ public class IterableInputStreamWrapper implements Iterable<String> {
 				return null;
 			}
 
-			@Override
+			//@Override
 			public void remove() {
 				throw new UnsupportedOperationException(
 						"Cannot remove element because of no-support.");
