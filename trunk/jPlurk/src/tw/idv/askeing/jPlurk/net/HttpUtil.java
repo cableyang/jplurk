@@ -51,7 +51,7 @@ public class HttpUtil {
 			}
 
 			logger.info("login to url[" + method.getURI()
-				+ "] with nameKey["	+ COOKIE_NAMEKEY_URI_MAP.get(method.getURI()) + "] ");
+				+ "] with nameKey["	+ COOKIE_NAMEKEY_URI_MAP.get(method.getURI().toString()) + "] ");
 
 			method.addParameter(new NameValuePair(
 				COOKIE_NAMEKEY_URI_MAP.get(method.getURI().toString()), user.getName()));
@@ -73,7 +73,7 @@ public class HttpUtil {
     public static String parseSetCookieHeader(Header[] headers){
 		for (Header header : headers) {
 			if(!RFC2109Spec.SET_COOKIE_KEY.equalsIgnoreCase(header.getName())){
-				continue;
+                continue;
 			}
 
 			logger.info(header.getValue());
