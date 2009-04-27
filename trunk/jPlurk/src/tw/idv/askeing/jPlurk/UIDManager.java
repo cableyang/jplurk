@@ -5,19 +5,19 @@
 package tw.idv.askeing.jPlurk;
 
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.Map;
 import java.util.Scanner;
 
 import org.apache.commons.httpclient.HttpStatus;
 import org.apache.commons.httpclient.methods.GetMethod;
+import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang.math.NumberUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import tw.idv.askeing.jPlurk.model.Account;
 import tw.idv.askeing.jPlurk.net.HttpResultCallback;
 import tw.idv.askeing.jPlurk.net.HttpTemplate;
-import tw.idv.askeing.jPlurk.util.IterableInputStreamWrapper;
 
 /**
  * jPlurk UIDGetter: get UID of User. If you get UID and UID != 0, then UID will store into AccountModel.
@@ -57,32 +57,28 @@ public class UIDManager {
 
             @Override
             protected Object processResult(GetMethod method) {
-                try {
-					Iterator<String> it = getIterator(method.getResponseBodyAsStream(), "utf-8");
-					while (it.hasNext()) {
-						String line = it.next();
-						// Review: need improvement.
-						if (line.contains("<input type=\"hidden\" name=\"user_id\" value=\"")) {
-							String[] sUID = line.split("\"");
-							return Integer.valueOf((sUID[5]));
-						}
-					}
-//                    BufferedReader in = new BufferedReader(
-//                            new InputStreamReader(method.getResponseBodyAsStream(), "UTF-8"));
+//                try {
+//					Iterator<String> it = getIterator(method.getResponseBodyAsStream(), "utf-8");
+//					while (it.hasNext()) {
+//						String line = it.next();
+//						// Review: need improvement.
+//						if (line.contains("<input type=\"hidden\" name=\"user_id\" value=\"")) {
+//							System.out.println(line);
+//							String[] sUID = line.split("\"");
+//							return Integer.valueOf((sUID[5]));
+//						}
+//					}
 //
-//                    String line = "";
-//                    while ((line = in.readLine()) != null) {
-//                        logger.debug(line);
-//                        // Review: need improvement.
-//                        if (line.contains("<input type=\"hidden\" name=\"user_id\" value=\"")) {
-//                            String[] sUID = line.split("\"");
-//                            return Integer.valueOf((sUID[5]));
-//                        }
-//                    }
-                } catch (Exception e) {
-                   logger.error(e.getMessage(), e);
-                }
-                return Integer.valueOf(0);
+//                } catch (Exception e) {
+//                   logger.error(e.getMessage(), e);
+//                }
+//                return Integer.valueOf(0);
+
+            	try {
+            		return NumberUtils.toInt(StringUtils.substringBetween(method.getResponseBodyAsString(), "name=\"user_id\" value=\"", "\" />"));
+				} catch (Exception e) {
+					return 0;
+				}
             }
         });
 

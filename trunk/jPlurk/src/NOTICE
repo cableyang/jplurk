@@ -1,0 +1,13 @@
+these packages are the copies from Commons Lang Project.
+
+	* org.apache.commons.lang
+	* org.apache.commons.lang.math
+
+they are following the http://www.apache.org/licenses/LICENSE-2.0.html licenses.
+
+we copy those methods from StringUtils:
+	* org.apache.commons.lang.StringUtils.substringBetween(String, String, String)
+
+we copy those methods from NumberUtils:
+	* org.apache.commons.lang.math.NumberUtils.toInt(String)
+	* org.apache.commons.lang.math.NumberUtils.toInt(String, int)

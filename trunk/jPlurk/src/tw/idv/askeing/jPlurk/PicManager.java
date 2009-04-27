@@ -4,8 +4,6 @@
  */
 package tw.idv.askeing.jPlurk;
 
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
 import java.util.Iterator;
 
 import org.apache.commons.httpclient.HttpStatus;
