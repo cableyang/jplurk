@@ -1,6 +1,7 @@
 package tw.idv.askeing.jPlurk;
 
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
 import java.util.Scanner;
 
@@ -43,10 +44,11 @@ public class UIDManager {
     }
 
 	static Integer fetchUid(Account user) {
-		GetMethod method = new GetMethod(Constants.GET_URL_M);
+		//GetMethod method = new GetMethod(Constants.GET_URL_M);
+        GetMethod method = new GetMethod("/"+user.getName());
         method.setRequestHeader("Cookie", CookieGetter.getCookie(
                 Constants.PLURK_HOST, Constants.LOGIN_URL_M, user, null));
-
+        
         HttpTemplate template = new HttpTemplate(method);
         Object result = template.execute(new int[]{HttpStatus.SC_MOVED_TEMPORARILY,
                     HttpStatus.SC_OK}, new HttpResultCallback() {
@@ -71,7 +73,19 @@ public class UIDManager {
 //                return Integer.valueOf(0);
 
             	try {
-            		return NumberUtils.toInt(StringUtils.substringBetween(method.getResponseBodyAsString(), "name=\"user_id\" value=\"", "\" />"));
+                    //return NumberUtils.toInt(StringUtils.substringBetween(method.getResponseBodyAsString(), "name=\"user_id\" value=\"", "\" />"));
+                    Iterator<String> it = getIterator(method.getResponseBodyAsStream(), "utf-8");
+                    String line = "";
+					while (it.hasNext()) {
+						line = it.next();
+                      //logger.debug(line);
+                      if (line.contains("user_id") && line.contains("show_location")) {
+                          break;
+                      }
+					}
+                    logger.debug("Get Line: "+line);
+                    logger.debug("Get ID: "+StringUtils.substringBetween(line, "\"user_id\": ", ", \"show_location\""));
+                    return NumberUtils.toInt(StringUtils.substringBetween(line, "\"user_id\": ", ", \"show_location\""));
 				} catch (Exception e) {
 					return 0;
 				}
@@ -106,5 +120,9 @@ public class UIDManager {
 
         System.out.println("\n===== Test =====\n");
         System.out.println("UID: " + UIDManager.getUID(user));
+
+        System.out.println( NumberUtils.toInt(StringUtils.substringBetween(
+                "var GLOBAL = {\"page_user\": {\"page_title\": \"= \u5634\u7832 \u3000\u3000\u3000\u3000\u3000\u3000 \u822a\u9053 =\", \"uid\": 3290989, \"is_channel\": 0, \"full_name\": \"Askeing\", \"id\": 3290989, \"num_of_fans\": 33, "
+                , "uid\": ", ", \"is_channel")) );
     }
 }
