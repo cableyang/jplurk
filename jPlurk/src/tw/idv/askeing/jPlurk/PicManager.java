@@ -17,7 +17,7 @@ import tw.idv.askeing.jPlurk.net.HttpTemplate;
  */
 public class PicManager {
 
-    static Log logger = LogFactory.getLog(UIDManager.class);
+    static Log logger = LogFactory.getLog(PicManager.class);
 
     public static String getPicByName(String name) {
         GetMethod method = new GetMethod("/"+name);
