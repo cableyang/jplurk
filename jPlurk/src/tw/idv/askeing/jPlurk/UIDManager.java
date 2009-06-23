@@ -48,30 +48,13 @@ public class UIDManager {
         GetMethod method = new GetMethod("/"+user.getName());
         method.setRequestHeader("Cookie", CookieGetter.getCookie(
                 Constants.PLURK_HOST, Constants.LOGIN_URL_M, user, null));
-        
+
         HttpTemplate template = new HttpTemplate(method);
         Object result = template.execute(new int[]{HttpStatus.SC_MOVED_TEMPORARILY,
                     HttpStatus.SC_OK}, new HttpResultCallback() {
 
             @Override
             protected Object processResult(GetMethod method) {
-//                try {
-//					Iterator<String> it = getIterator(method.getResponseBodyAsStream(), "utf-8");
-//					while (it.hasNext()) {
-//						String line = it.next();
-//						// Review: need improvement.
-//						if (line.contains("<input type=\"hidden\" name=\"user_id\" value=\"")) {
-//							System.out.println(line);
-//							String[] sUID = line.split("\"");
-//							return Integer.valueOf((sUID[5]));
-//						}
-//					}
-//
-//                } catch (Exception e) {
-//                   logger.error(e.getMessage(), e);
-//                }
-//                return Integer.valueOf(0);
-
             	try {
                     //return NumberUtils.toInt(StringUtils.substringBetween(method.getResponseBodyAsString(), "name=\"user_id\" value=\"", "\" />"));
                     Iterator<String> it = getIterator(method.getResponseBodyAsStream(), "utf-8");

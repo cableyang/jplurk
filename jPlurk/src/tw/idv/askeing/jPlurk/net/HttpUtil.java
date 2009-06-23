@@ -17,18 +17,14 @@ import org.apache.commons.logging.LogFactory;
 import tw.idv.askeing.jPlurk.Constants;
 import tw.idv.askeing.jPlurk.model.Account;
 
-/**
- * HTTP Util
- */
 public class HttpUtil {
 
 	final static Pattern SET_COOKIE_PATTERN = Pattern.compile("^([^;]+).*");
 	static Log logger = LogFactory.getLog(HttpUtil.class);
 
-	static Map<String, String> COOKIE_NAMEKEY_URI_MAP = null;
+	static Map<String, String> COOKIE_NAMEKEY_URI_MAP = new HashMap<String, String>();
 
 	static {
-		COOKIE_NAMEKEY_URI_MAP = new HashMap<String, String>();
 		COOKIE_NAMEKEY_URI_MAP.put("/m/login", "username");
 		COOKIE_NAMEKEY_URI_MAP.put("/Users/login", "nick_name");
 	}
@@ -55,9 +51,10 @@ public class HttpUtil {
 
 			method.addParameter(new NameValuePair(
 				COOKIE_NAMEKEY_URI_MAP.get(method.getURI().toString()), user.getName()));
-
+			logger.info("set parameter for: " + COOKIE_NAMEKEY_URI_MAP.get(method.getURI().toString()));
 			method.addParameter(new NameValuePair("password", user.getPassword()));
 
+			logger.info("finish to set usernamd and password");
 		} catch (URIException e) {
 			logger.error(e.getMessage(), e);
 		}
