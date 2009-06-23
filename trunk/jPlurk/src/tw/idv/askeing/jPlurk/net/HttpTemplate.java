@@ -34,14 +34,16 @@ public class HttpTemplate {
 			int resp = 0;
 			if(method instanceof PostMethod){
 				resp = httpClient.executeMethod((PostMethod) method);
+				logger.info("doPost:" + method);
 			}
 
 			if(method instanceof GetMethod){
 				resp = httpClient.executeMethod((GetMethod) method);
+				logger.info("doGet:" + method);
 			}
 
 			if(!checkAcceptStatus(acceptedRespCodes, resp)){
-				// no accepted response code
+				logger.info("no accepted response code: " + resp);
 				return null;
 			}
 
@@ -54,6 +56,7 @@ public class HttpTemplate {
 				result = callback.processResult((GetMethod) method);
 			}
 
+			logger.info("finish fetch data from htttp");
 			return result;
 		} catch (Exception e) {
 			logger.error(e.getMessage(), e);
