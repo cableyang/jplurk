@@ -31,15 +31,16 @@ public class HttpTemplate {
 		HttpClient httpClient = createHttpClient();
 		try {
 
+			logger.info("start to execute http template");
 			int resp = 0;
 			if(method instanceof PostMethod){
-				resp = httpClient.executeMethod((PostMethod) method);
 				logger.info("doPost:" + method);
+				resp = httpClient.executeMethod((PostMethod) method);
 			}
 
 			if(method instanceof GetMethod){
-				resp = httpClient.executeMethod((GetMethod) method);
 				logger.info("doGet:" + method);
+				resp = httpClient.executeMethod((GetMethod) method);
 			}
 
 			if(!checkAcceptStatus(acceptedRespCodes, resp)){
@@ -49,11 +50,15 @@ public class HttpTemplate {
 
 			Object result = null;
 			if(method instanceof PostMethod){
+				logger.info("call processResult from doPost: " + callback);
 				result = callback.processResult((PostMethod) method);
+				logger.info("get result: " + result);
 			}
 
 			if(method instanceof GetMethod){
+				logger.info("call processResult from doGet: " + callback);
 				result = callback.processResult((GetMethod) method);
+				logger.info("get result: " + result);
 			}
 
 			logger.info("finish fetch data from htttp");
@@ -61,6 +66,8 @@ public class HttpTemplate {
 		} catch (Exception e) {
 			logger.error(e.getMessage(), e);
 		}
+
+		logger.warn("no more result can return(null)");
 		return null;
 	}
 
