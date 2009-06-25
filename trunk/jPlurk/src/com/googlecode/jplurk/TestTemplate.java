@@ -11,7 +11,7 @@ public class TestTemplate {
 		mesg.setQualifier(Qualifier.ASKS);
 		mesg.setContent("haha");
 
-		boolean result = new PlurkTemplate("qrtt1", "killer").doAction(
+		boolean result = new PlurkTemplate("userid", "password").doAction(
 				new NewMessage(), mesg);
 		System.out.println("post successful !? :: " + result);
 	}
