@@ -1,8 +1,11 @@
 package com.googlecode.jplurk;
 
+import java.io.IOException;
 import java.lang.reflect.Field;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.Set;
+import java.util.Map.Entry;
 
 import org.apache.commons.httpclient.HttpStatus;
 import org.apache.commons.httpclient.NameValuePair;
@@ -37,21 +40,21 @@ final public class PlurkTemplate {
 	 * @param arg
 	 * @return
 	 */
-	final public boolean doAction(Behavior behavior, Object arg) {
+	final public Result doAction(Behavior behavior, Object arg) {
 		if (!validateUid() || !vaildateCookie(account)) {
-			return false;
+			return Result.FAILURE_RESULT;
 		}
 
-		final RequestParams params = new RequestParams();
-		params.setUid("" + UIDManager.getUID(account));
+		final Request params = new Request();
+		params.setUserUId("" + UIDManager.getUID(account));
 
 		boolean needToExecute = behavior.action(params, arg);
 		if (!needToExecute) {
 			logger.info("the behavior " + behavior + " do not need to execute.");
-			return false;
+			return Result.FAILURE_RESULT;
 		}
 
-		PostMethod post = new PostMethod(params.getEndpoint());
+		PostMethod post = new PostMethod(params.getEndPoint());
 		post.setRequestHeader("Connection", "Keep-Alive");
 		post.setRequestHeader("Content-Type", "application/x-www-form-urlencoded; charset=UTF-8");
 		post.setRequestHeader("Referer", "http://www.plurk.com/" + account.getName());
@@ -62,24 +65,21 @@ final public class PlurkTemplate {
 		 * 請適當地擴充 RequestParams.validParams 名單
 		 * */
 		Set<NameValuePair> nvps = new HashSet<NameValuePair>();
-		for (String eachField : RequestParams.validParams) {
-			try {
-				Field field = params.getClass().getDeclaredField(eachField);
-				field.setAccessible(true);
-				Object v = field.get(params);
-				if (v == null) {
-					continue;
-				}
-				NameValuePair nvp = new NameValuePair(eachField, "" + v);
-				nvps.add(nvp);
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
+		Iterator<Entry<String, String>> it = params.getParams().entrySet().iterator();
+
+		while (it.hasNext()) {
+			Entry<String, String> e = it.next();
+			NameValuePair nvp = new NameValuePair(e.getKey(), e.getValue());
+			nvps.add(nvp);
 		}
 
 		post.setRequestBody(nvps.toArray(new NameValuePair[0]));
 
-		Object result = new HttpTemplate(post).execute(new int[] {
+		for (NameValuePair nv : post.getParameters()) {
+			logger.debug(nv);
+		}
+
+		Object resultStatus = new HttpTemplate(post).execute(new int[] {
 				HttpStatus.SC_MOVED_TEMPORARILY, HttpStatus.SC_OK },
 				new HttpResultCallback() {
 					@Override
@@ -88,11 +88,18 @@ final public class PlurkTemplate {
 					}
 				});
 
-		if (result != null && result instanceof Boolean) {
-			return ((Boolean) result).booleanValue();
+		Result result = new Result();
+		try {
+			result.setResponseBody(post.getResponseBodyAsString());
+		} catch (IOException e) {
+			logger.error(e.getMessage(), e);
 		}
 
-		return false;
+		if (resultStatus != null && resultStatus instanceof Boolean) {
+			result.setOk(((Boolean)resultStatus).booleanValue());
+		}
+
+		return result;
 	}
 
 	private boolean vaildateCookie(Account account) {
