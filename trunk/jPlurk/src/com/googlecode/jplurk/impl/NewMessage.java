@@ -1,15 +1,15 @@
 package com.googlecode.jplurk.impl;
 
-import com.googlecode.jplurk.Behavior;
-import com.googlecode.jplurk.RequestParams;
-
 import tw.idv.askeing.jPlurk.Constants;
 import tw.idv.askeing.jPlurk.model.Message;
+
+import com.googlecode.jplurk.Behavior;
+import com.googlecode.jplurk.Request;
 
 public class NewMessage implements Behavior {
 
 	@Override
-	public boolean action(final RequestParams param, Object arg) {
+	public boolean action(final Request param, Object arg) {
 		if (!(arg instanceof Message)) {
 			return false;
 		}
@@ -17,22 +17,30 @@ public class NewMessage implements Behavior {
 		/**
 		 * 指定 Request URI
 		 * */
-		param.setEndpoint(Constants.ADDPLURK_URL);
+		param.setEndPoint(Constants.ADDPLURK_URL);
 
 		Message m = (Message) arg;
-		param.setPosted(m.getPosted());
-		param.setQualifier(m.getQualifier());
-		param.setContent(m.getContent());
-		param.setLang(m.getLang());
-		param.setNo_comments("" + m.getNoComments());
+		// param.setPosted(m.getPosted());
+		param.addParam("posted", m.getPosted());
 
-		/**
-		 * 這裡不再需要指定 uid，將由 Plurk Template 指定
-		 * */
-//		param.setUid("" + m.getUid());
+		// param.setQualifier(m.getQualifier());
+		param.addParam("qualifier", m.getQualifier());
+
+		// param.setContent(m.getContent());
+		param.addParam("content", m.getContent());
+
+		// param.setLang(m.getLang());
+		param.addParam("lang", m.getLang());
+
+		// param.setNo_comments("" + m.getNoComments());
+		param.addParam("no_comments", "" + m.getNoComments());
+
+		// param.setUid("" + m.getUid());
+		param.addParam("uid", param.getUserUId());
 
 		if (m.hasLimited_to()) {
-			param.setLimited_to(m.getLimitedTo());
+			// param.setLimited_to(m.getLimitedTo());
+			param.addParam("limited_to", m.getLimitedTo());
 		}
 
 		return true;
