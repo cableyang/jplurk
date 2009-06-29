@@ -12,7 +12,11 @@ public class Account {
 //	private int UID = 0;
     private String cookie = "";
 
+	/**
+	 * The default constructor will assign the `plurk.user' system property as account's name and `plurk.passwd' system property as account's password.
+	 */
 	public Account() {
+		this(System.getProperty("plurk.user"), System.getProperty("plurk.passwd"));
 	}
 
 	public Account(String name) {
@@ -24,12 +28,6 @@ public class Account {
 		this.setPassword(password);
 	}
 
-//	public AccountModel(String name, String password, int UID) {
-//		this.setName(name);
-//		this.setPassword(password);
-//		this.setUID(UID);
-//	}
-
 	public void setName(String name) {
 		this.name = name;
 	}
@@ -37,13 +35,6 @@ public class Account {
 	public void setPassword(String password) {
 		this.password = password;
 	}
-
-//	/* FIXME: why setUID is never used.
-//     * fixed at UIDGetter: first time connect host to get UID, then record it for next time.
-//     * */
-//	public void setUID(int UID) {
-//		this.UID = UID;
-//	}
 
     public void setCookie(String cookie) {
         this.cookie = cookie;
@@ -55,10 +46,6 @@ public class Account {
 	public String getPassword() {
 		return this.password;
 	}
-
-//	public int getUID() {
-//		return this.UID;
-//	}
 
     public String getCookie() {
         return this.cookie;

@@ -1,4 +1,4 @@
-package com.googlecode.jplurk;
+package com.googlecode.jplurk.net;
 
 public class Result {
 
@@ -25,6 +25,11 @@ public class Result {
 
 	public void setResponseBody(String responseBody) {
 		this.responseBody = responseBody;
+	}
+
+	@Override
+	public String toString() {
+		return String.format("isOk: %s, response: %s", isOk(), responseBody);
 	}
 
 }

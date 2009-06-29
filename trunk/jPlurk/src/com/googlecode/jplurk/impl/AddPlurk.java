@@ -4,9 +4,9 @@ import tw.idv.askeing.jPlurk.Constants;
 import tw.idv.askeing.jPlurk.model.Message;
 
 import com.googlecode.jplurk.Behavior;
-import com.googlecode.jplurk.Request;
+import com.googlecode.jplurk.net.Request;
 
-public class NewMessage implements Behavior {
+public class AddPlurk implements Behavior {
 
 	@Override
 	public boolean action(final Request param, Object arg) {
@@ -17,7 +17,7 @@ public class NewMessage implements Behavior {
 		/**
 		 * 指定 Request URI
 		 * */
-		param.setEndPoint(Constants.ADDPLURK_URL);
+		param.setEndPoint(Constants.ADD_PLURK_URL);
 
 		Message m = (Message) arg;
 		// param.setPosted(m.getPosted());

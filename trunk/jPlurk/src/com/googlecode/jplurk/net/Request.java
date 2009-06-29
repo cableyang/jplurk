@@ -1,4 +1,4 @@
-package com.googlecode.jplurk;
+package com.googlecode.jplurk.net;
 
 import java.util.HashMap;
 import java.util.Map;

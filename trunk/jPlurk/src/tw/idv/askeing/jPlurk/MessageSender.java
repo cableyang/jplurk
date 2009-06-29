@@ -59,7 +59,7 @@ public class MessageSender {
          * ***/
 
         // 建立 PostMethod，並指派 Post 網址
-        PostMethod post = new PostMethod(Constants.ADDPLURK_URL);
+        PostMethod post = new PostMethod(Constants.ADD_PLURK_URL);
         post.setRequestHeader("Connection", "Keep-Alive");
         post.setRequestHeader("Content-Type", "application/x-www-form-urlencoded; charset=UTF-8");
         post.setRequestHeader("Referer", "http://www.plurk.com/" + user.getName());
