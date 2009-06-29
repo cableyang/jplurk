@@ -23,13 +23,12 @@ public class UIDManagerTest {
      */
     @Test
     public void testGetUID() {
-        System.out.println("getUID");
         Account user = DataMother.createTestAccountModel();
         // 第一次取得 UID
-        int expResult = UIDManager.getUID(user);
+        int expResult = UIDManager.get(user);
         // 設定之後，第二次應該不會再次連線，UID也必須相同
 //        user.setUID(expResult);
-        int result = UIDManager.getUID(user);
+        int result = UIDManager.get(user);
         // FIXME: 這樣的 assert 是沒有意義的，因為即使沒有真的取得 uid，那就會是 0 == 0
         // 要測的話，就要註冊一個測試帳號，之前都是 run 測試時塞一個真的帳號進去跑測試。
         assertEquals(expResult, result);

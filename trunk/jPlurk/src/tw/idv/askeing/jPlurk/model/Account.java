@@ -9,7 +9,6 @@ package tw.idv.askeing.jPlurk.model;
 public class Account {
 	private String name = "";
 	private String password = "";
-//	private int UID = 0;
     private String cookie = "";
 
 	/**
@@ -17,10 +16,6 @@ public class Account {
 	 */
 	public Account() {
 		this(System.getProperty("plurk.user"), System.getProperty("plurk.passwd"));
-	}
-
-	public Account(String name) {
-		this.setName(name);
 	}
 
 	public Account(String name, String password) {

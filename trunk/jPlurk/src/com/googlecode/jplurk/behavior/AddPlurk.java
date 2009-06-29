@@ -1,12 +1,11 @@
-package com.googlecode.jplurk.impl;
+package com.googlecode.jplurk.behavior;
 
 import tw.idv.askeing.jPlurk.Constants;
 import tw.idv.askeing.jPlurk.model.Message;
 
-import com.googlecode.jplurk.Behavior;
 import com.googlecode.jplurk.net.Request;
 
-public class AddPlurk implements Behavior {
+public class AddPlurk implements IBehavior {
 
 	@Override
 	public boolean action(final Request param, Object arg) {
@@ -20,26 +19,13 @@ public class AddPlurk implements Behavior {
 		param.setEndPoint(Constants.ADD_PLURK_URL);
 
 		Message m = (Message) arg;
-		// param.setPosted(m.getPosted());
 		param.addParam("posted", m.getPosted());
-
-		// param.setQualifier(m.getQualifier());
 		param.addParam("qualifier", m.getQualifier());
-
-		// param.setContent(m.getContent());
 		param.addParam("content", m.getContent());
-
-		// param.setLang(m.getLang());
 		param.addParam("lang", m.getLang());
-
-		// param.setNo_comments("" + m.getNoComments());
 		param.addParam("no_comments", "" + m.getNoComments());
-
-		// param.setUid("" + m.getUid());
 		param.addParam("uid", param.getUserUId());
-
 		if (m.hasLimited_to()) {
-			// param.setLimited_to(m.getLimitedTo());
 			param.addParam("limited_to", m.getLimitedTo());
 		}
 
