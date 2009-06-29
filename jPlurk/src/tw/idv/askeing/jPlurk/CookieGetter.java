@@ -18,6 +18,7 @@ import tw.idv.askeing.jPlurk.net.HttpUtil;
  * jPlurk CookieGetter: Get Cookie of User.
  * @author Askeing, Yen.
  * @version 1.0
+ * @deprecated we will use StatefullAgent that can manage the cookies automatically
  */
 public class CookieGetter {
 

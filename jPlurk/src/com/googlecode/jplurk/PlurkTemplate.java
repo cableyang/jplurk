@@ -3,11 +3,10 @@ package com.googlecode.jplurk;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-import tw.idv.askeing.jPlurk.Constants;
-import tw.idv.askeing.jPlurk.CookieGetter;
 import tw.idv.askeing.jPlurk.UIDManager;
 import tw.idv.askeing.jPlurk.model.Account;
 
+import com.googlecode.jplurk.behavior.IBehavior;
 import com.googlecode.jplurk.net.Request;
 import com.googlecode.jplurk.net.Result;
 import com.googlecode.jplurk.net.StatefulAgent;
@@ -22,9 +21,11 @@ final public class PlurkTemplate {
 	static Log logger = LogFactory.getLog(PlurkTemplate.class);
 	final StatefulAgent agent = new StatefulAgent();
 
-	public PlurkTemplate(String user, String password) {
-		account = new Account(user, password);
-		logger.info("prefetch uid: " + UIDManager.getUID(account));
+	public PlurkTemplate(Account account) {
+//		account = new Account(user, password);
+		this.account = account;
+		String uid = "" + UIDManager.get(account);
+		logger.info("prefetch uid: " + uid);
 	}
 
 	/**
@@ -33,13 +34,13 @@ final public class PlurkTemplate {
 	 * @param arg
 	 * @return
 	 */
-	final public Result doAction(Behavior behavior, Object arg) {
-		if (!validateUid() || !vaildateCookie(account)) {
-			return Result.FAILURE_RESULT;
-		}
+	final public Result doAction(IBehavior behavior, Object arg) {
+//		if (!validateUid() /*|| !vaildateCookie(account)*/) {
+//			return Result.FAILURE_RESULT;
+//		}
 
 		final Request params = new Request();
-		params.setUserUId("" + UIDManager.getUID(account));
+		params.setUserUId("" + UIDManager.get(account));
 
 		boolean needToExecute = behavior.action(params, arg);
 		if (!needToExecute) {
@@ -52,25 +53,25 @@ final public class PlurkTemplate {
 		return result;
 	}
 
-	private boolean vaildateCookie(Account account) {
-		String cookie;
-		if ("".equals(account.getCookie())) {
-			cookie = CookieGetter.getCookie(Constants.PLURK_HOST,
-					Constants.LOGIN_URL, account, null);
-			account.setCookie(cookie);
-		}
-
-		if (account.getCookie() == null
-				|| "".equals(account.getCookie().trim())) {
-			logger.warn("cookie token is not found.");
-			return false;
-		}
-
-		return true;
-	}
+//	private boolean vaildateCookie(Account account) {
+//		String cookie;
+//		if ("".equals(account.getCookie())) {
+//			cookie = CookieGetter.getCookie(Constants.PLURK_HOST,
+//					Constants.LOGIN_URL, account, null);
+//			account.setCookie(cookie);
+//		}
+//
+//		if (account.getCookie() == null
+//				|| "".equals(account.getCookie().trim())) {
+//			logger.warn("cookie token is not found.");
+//			return false;
+//		}
+//
+//		return true;
+//	}
 
 	private boolean validateUid() {
-		if (UIDManager.getUID(account) == 0) {
+		if (UIDManager.get(account) == 0) {
 			logger.warn("the uid of user's account is invalid. ");
 			return false;
 		}
