@@ -4,7 +4,7 @@ import tw.idv.askeing.jPlurk.Constants;
 import tw.idv.askeing.jPlurk.util.TimeUtil;
 
 import com.googlecode.jplurk.Behavior;
-import com.googlecode.jplurk.Request;
+import com.googlecode.jplurk.net.Request;
 
 public class GetPlurks implements Behavior {
 
@@ -36,7 +36,7 @@ post successful !? :: false
 function arguments invalid.  (2 missing, 0 additional)
 
 		 * */
-		params.setEndPoint(Constants.ADDPLURK_URL);
+		params.setEndPoint(Constants.GET_PLURK_URL);
 		params.addParam("user_id", params.getUserUId());
 		String time = TimeUtil.now();
 		params.addParam("from_date", time);
