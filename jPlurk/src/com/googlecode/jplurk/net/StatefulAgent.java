@@ -1,10 +1,8 @@
 package com.googlecode.jplurk.net;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
-import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
@@ -13,9 +11,7 @@ import org.apache.commons.httpclient.Header;
 import org.apache.commons.httpclient.HttpClient;
 import org.apache.commons.httpclient.HttpMethod;
 import org.apache.commons.httpclient.HttpStatus;
-import org.apache.commons.httpclient.NameValuePair;
 import org.apache.commons.httpclient.cookie.CookiePolicy;
-import org.apache.commons.httpclient.methods.GetMethod;
 import org.apache.commons.httpclient.methods.PostMethod;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -56,16 +52,12 @@ public class StatefulAgent {
 	}
 
 	protected Result followLinkIfNeedded(Map<String, String> params,
-			HttpMethod method, int responseCode) {
+			PostMethod method, int responseCode) {
 		if (HttpStatus.SC_MOVED_TEMPORARILY == responseCode) {
 			Header loc = method.getResponseHeader("Location");
 			if (loc != null && loc.getValue() != null) {
 				logger.info("redirect to " + loc.getValue());
-				if (method instanceof PostMethod) {
-					return executePost(loc.getValue(), params);
-				}else{
-					return executeGet(loc.getValue(), params);
-				}
+				return executePost(loc.getValue(), params);
 			}
 		}
 		return null;
@@ -88,50 +80,44 @@ public class StatefulAgent {
 		}
 	}
 
-	public Result executeGet(String uri, Map<String, String> params) {
-		logger.info("doGet method with uri: " + uri + " and params => " + params);
-		DoMethodStrategy<GetMethod> doMethod = new DoMethodStrategy<GetMethod>() {
-			@Override
-			void configureGet(Map<String, String> params) {
-				Iterator<Entry<String, String>> it = params.entrySet().iterator();
-				List<NameValuePair> nvps = new ArrayList<NameValuePair>();
-				while (it.hasNext()) {
-					Entry<String, String> e = it.next();
-					nvps.add(new NameValuePair(e.getKey(), e.getValue()));
-				}
-				if (!nvps.isEmpty()) {
-					method.setQueryString(nvps.toArray(new NameValuePair[0]));
-				}
-			}
-		};
-
-		doMethod.create(GetMethod.class);
-		doMethod.applyParams(params);
-		return doMethod.execute(client, params);
-	}
-
 	public Result executePost(String uri, Map<String, String> params) {
-		logger.info("doPost method with uri: " + uri + " and params => " + params);
-		DoMethodStrategy<PostMethod> doMethod = new DoMethodStrategy<PostMethod>() {
-			@Override
-			void configurePost(Map<String, String> params) {
-				method.setRequestHeader("Content-Type",
-					"application/x-www-form-urlencoded; charset=UTF-8");
+		logger.info("do method with uri: " + uri + " and params => " + params);
+		PostMethod method = createMethod(PostMethod.class, uri);
+		method.setRequestHeader("Content-Type", "application/x-www-form-urlencoded; charset=UTF-8");
+		Iterator<Entry<String, String>> it = params.entrySet().iterator();
+		while (it.hasNext()) {
+			Entry<String, String> e = it.next();
+			method.addParameter(e.getKey(), e.getValue());
+		}
 
-				Iterator<Entry<String, String>> it = params.entrySet().iterator();
-				while (it.hasNext()) {
-					Entry<String, String> e = it.next();
-					method.addParameter(e.getKey(), e.getValue());
-				}
+		int responseCode = 0;
+		try {
+			responseCode = client.executeMethod(method);
+			logger.info("Request Response Code: " + responseCode);
+			dumpCookies();
+			dumpResponseHeaders(method);
+			Result redirect = followLinkIfNeedded(params, method, responseCode);
+			if (redirect != null) {
+				return redirect;
 			}
-		};
-		doMethod.create(PostMethod.class);
-		doMethod.applyParams(params);
-		return doMethod.execute(client, params);
+			if (responseCode != HttpStatus.SC_OK) {
+				return Result.FAILURE_RESULT;
+			}
+		} catch (Exception e) {
+			logger.error(e.getMessage(), e);
+		}
 
+		Result result = new Result();
+		result.setOk(true);
+		try {
+			result.setResponseBody(method.getResponseBodyAsString());
+		} catch (IOException e) {
+			logger.error(e.getMessage(), e);
+		}
+
+		return result;
 	}
 
-	@SuppressWarnings("serial")
 	public static void main(String[] args) {
 		StatefulAgent agent = new StatefulAgent();
 		final Account account = new Account();
@@ -156,82 +142,5 @@ public class StatefulAgent {
 
 		agent.executePost("", new HashMap<String, String>());
 	}
-
-
-	/**
-	 * Execute GetMethod and PostMethod is similiar but a little different at setting params.
-	 * encapsulate the process and leave the configure abstract to customize.
-	 * @author Ching Yi, Chan
-	 *
-	 * @param <T>
-	 */
-	class DoMethodStrategy<T extends HttpMethod> {
-
-		T method;
-
-		public void create(Class<T> t){
-			try {
-				method = t.newInstance();
-			} catch (Exception e) {
-			}
-		}
-
-		public void applyParams(Map<String, String> params){
-			if (method instanceof PostMethod) {
-				configurePost(params);
-			}
-			if (method instanceof GetMethod) {
-				configureGet(params);
-			}
-		}
-
-		/**
-		 * when doPost should override this method to implement params configuration.
-		 * @param params
-		 */
-		void configurePost(Map<String, String> params) {
-			throw new UnsupportedOperationException("this metod is not yet implemented");
-		}
-
-		/**
-		 * when doGet should override this method to implement params configuration.
-		 * @param params
-		 */
-		void configureGet(Map<String, String> params) {
-			throw new UnsupportedOperationException("this metod is not yet implemented");
-		}
-
-		public Result execute(HttpClient client, Map<String, String> params){
-			int responseCode = 0;
-			try {
-				responseCode = client.executeMethod(method);
-				logger.info("Request Response Code: " + responseCode);
-				dumpCookies();
-				dumpResponseHeaders(method);
-				Result redirect = followLinkIfNeedded(params, method, responseCode);
-				if (redirect != null) {
-					return redirect;
-				}
-				if (responseCode != HttpStatus.SC_OK) {
-					return Result.FAILURE_RESULT;
-				}
-			} catch (Exception e) {
-				logger.error(e.getMessage(), e);
-			}
-
-			Result result = new Result();
-			result.setOk(true);
-			try {
-				result.setResponseBody(method.getResponseBodyAsString());
-			} catch (IOException e) {
-				logger.error(e.getMessage(), e);
-			}
-
-			return result;
-		}
-	}
-
-
-
 
 }
