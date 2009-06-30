@@ -3,6 +3,8 @@ package com.googlecode.jplurk;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
+import tw.idv.askeing.jPlurk.Constants;
+import tw.idv.askeing.jPlurk.CookieGetter;
 import tw.idv.askeing.jPlurk.UIDManager;
 import tw.idv.askeing.jPlurk.model.Account;
 
@@ -22,10 +24,8 @@ final public class PlurkTemplate {
 	final StatefulAgent agent = new StatefulAgent();
 
 	public PlurkTemplate(Account account) {
-//		account = new Account(user, password);
 		this.account = account;
-		String uid = "" + UIDManager.get(account);
-		logger.info("prefetch uid: " + uid);
+		logger.info("prefetch uid: " + UIDManager.getUID(account));
 	}
 
 	/**
@@ -35,12 +35,12 @@ final public class PlurkTemplate {
 	 * @return
 	 */
 	final public Result doAction(IBehavior behavior, Object arg) {
-//		if (!validateUid() /*|| !vaildateCookie(account)*/) {
-//			return Result.FAILURE_RESULT;
-//		}
+		if (!validateUid() || !vaildateCookie(account)) {
+			return Result.FAILURE_RESULT;
+		}
 
 		final Request params = new Request();
-		params.setUserUId("" + UIDManager.get(account));
+		params.setUserUId("" + UIDManager.getUID(account));
 
 		boolean needToExecute = behavior.action(params, arg);
 		if (!needToExecute) {
@@ -53,25 +53,25 @@ final public class PlurkTemplate {
 		return result;
 	}
 
-//	private boolean vaildateCookie(Account account) {
-//		String cookie;
-//		if ("".equals(account.getCookie())) {
-//			cookie = CookieGetter.getCookie(Constants.PLURK_HOST,
-//					Constants.LOGIN_URL, account, null);
-//			account.setCookie(cookie);
-//		}
-//
-//		if (account.getCookie() == null
-//				|| "".equals(account.getCookie().trim())) {
-//			logger.warn("cookie token is not found.");
-//			return false;
-//		}
-//
-//		return true;
-//	}
+	private boolean vaildateCookie(Account account) {
+		String cookie;
+		if ("".equals(account.getCookie())) {
+			cookie = CookieGetter.getCookie(Constants.PLURK_HOST,
+					Constants.LOGIN_URL, account, null);
+			account.setCookie(cookie);
+		}
+
+		if (account.getCookie() == null
+				|| "".equals(account.getCookie().trim())) {
+			logger.warn("cookie token is not found.");
+			return false;
+		}
+
+		return true;
+	}
 
 	private boolean validateUid() {
-		if (UIDManager.get(account) == 0) {
+		if (UIDManager.getUID(account) == 0) {
 			logger.warn("the uid of user's account is invalid. ");
 			return false;
 		}
