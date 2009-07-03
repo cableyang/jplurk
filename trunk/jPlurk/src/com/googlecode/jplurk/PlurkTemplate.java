@@ -65,7 +65,6 @@ final public class PlurkTemplate {
 		}
 
 		Result result = agent.executePost(params.getEndPoint(), params.getParams());
-		logger.debug(result);
 		return result;
 	}
 

@@ -35,7 +35,7 @@ public class Result {
 
 	@Override
 	public String toString() {
-		return String.format("isOk: %s, response: %s", isOk(), responseBody);
+		return String.format("isOk: %s, attachment: %s\nresponse: %s", isOk(), attachment, responseBody);
 	}
 
 	@SuppressWarnings("unchecked")
