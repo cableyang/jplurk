@@ -28,14 +28,30 @@ final public class PlurkTemplate {
 		logger.info("prefetch uid: " + UIDManager.getUID(account));
 	}
 
+	private IBehavior createBehavior(Class<? extends IBehavior> clazz){
+		IBehavior o = null;
+		try {
+			o = clazz.newInstance();
+		} catch (Exception e) {
+			logger.error(e.getMessage(), e);
+		}
+		return o;
+	}
+
 	/**
 	 * doAction 方法是使用 Plurk 的主要流程，會自動取得使用者 uid、cookie 等資訊。
 	 * @param behavior
 	 * @param arg
 	 * @return
 	 */
-	final public Result doAction(IBehavior behavior, Object arg) {
+	final public Result doAction(Class<? extends IBehavior> behaviorClazz, Object arg) {
 		if (!validateUid() || !vaildateCookie(account)) {
+			return Result.FAILURE_RESULT;
+		}
+
+		final IBehavior behavior = createBehavior(behaviorClazz);
+		if(behavior == null){
+			logger.warn("cannot create the behavior: " + behaviorClazz);
 			return Result.FAILURE_RESULT;
 		}
 
