@@ -14,21 +14,15 @@ public class TemplateUsageExample {
 		Result result = null;
 		Account account = new Account();
 		PlurkTemplate template = new PlurkTemplate(account);
-		result = template.doAction(new Login(), account);
-		System.out.println(result.getResponseBody());
-		if(result.isOk()){
-			System.exit(0);
-		}
-
-
+		result = template.doAction(Login.class, account);
 		Message mesg = new Message();
 		mesg.setQualifier(Qualifier.ASKS);
-		mesg.setContent("該思考 jplurk 下一步怎麼改了");
+		mesg.setContent("Behavior 應該要是無狀態的，把 Template Method 的參數改成使用 Class 好了.");
 
-		result = template.doAction(new GetPlurks(), null);
-		result = template.doAction(new AddPlurk(), mesg);
+		result = template.doAction(GetPlurks.class, null);
+		result = template.doAction(AddPlurk.class, mesg);
 
 		System.out.println("post successful !? :: " + result.isOk());
-		System.out.println(result.getResponseBody());
+//		System.out.println(result.getResponseBody());
 	}
 }
