@@ -1,5 +1,8 @@
 package com.googlecode.jplurk.net;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class Result {
 
 	public final static Result FAILURE_RESULT = new Result() {
@@ -10,6 +13,9 @@ public class Result {
 
 	private boolean ok;
 	private String responseBody;
+
+	@SuppressWarnings("unchecked")
+	private Map attachment = new HashMap();
 
 	public boolean isOk() {
 		return ok;
@@ -30,6 +36,11 @@ public class Result {
 	@Override
 	public String toString() {
 		return String.format("isOk: %s, response: %s", isOk(), responseBody);
+	}
+
+	@SuppressWarnings("unchecked")
+	public Map getAttachement(){
+		return attachment;
 	}
 
 }
