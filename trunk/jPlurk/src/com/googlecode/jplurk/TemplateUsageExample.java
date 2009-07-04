@@ -12,7 +12,7 @@ import com.googlecode.jplurk.net.Result;
 public class TemplateUsageExample {
 	public static void main(String[] args) {
 		Result result = null;
-		Account account = new Account();
+		Account account = Account.createWithDynamicProperties();
 		PlurkTemplate template = new PlurkTemplate(account);
 		result = template.doAction(Login.class, account);
 		Message mesg = new Message();
