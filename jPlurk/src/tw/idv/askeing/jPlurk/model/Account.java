@@ -13,10 +13,13 @@ public class Account {
     private String cookie = "";
 
 	/**
-	 * The default constructor will assign the `plurk.user' system property as account's name and `plurk.passwd' system property as account's password.
+	 * The method will assign the `plurk.user' system property as account's name and `plurk.passwd' system property as account's password.
 	 */
+    public static Account createWithDynamicProperties(){
+    	return new Account(System.getProperty("plurk.user"), System.getProperty("plurk.passwd"));
+    }
+
 	public Account() {
-		this(System.getProperty("plurk.user"), System.getProperty("plurk.passwd"));
 	}
 
 	public Account(String name) {
