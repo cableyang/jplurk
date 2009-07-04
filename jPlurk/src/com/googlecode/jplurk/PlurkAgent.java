@@ -1,5 +1,9 @@
 package com.googlecode.jplurk;
 
+import org.apache.commons.lang.StringUtils;
+import org.json.simple.JSONObject;
+import org.json.simple.JSONValue;
+
 import com.googlecode.jplurk.behavior.AddPlurk;
 import com.googlecode.jplurk.behavior.Login;
 import com.googlecode.jplurk.behavior.ResponsePlurk;
@@ -28,13 +32,13 @@ public class PlurkAgent {
 		this.plurkTemplate = new PlurkTemplate(account);
 	}
 
-	public boolean login() throws LoginFailureException {
+	public Result login() throws LoginFailureException {
 		Result result = plurkTemplate.doAction(Login.class, account);
 		if (!result.isOk()) {
 			throw new LoginFailureException(account);
 		}
 		isLogin = true;
-		return result.isOk();
+		return result;
 	}
 
 	protected void checkLogin() {
@@ -81,10 +85,20 @@ public class PlurkAgent {
 
 
 	public static void main(String[] args) {
-		Account account = new Account();
+		Account account = Account.createWithDynamicProperties();
 		PlurkAgent pa = new PlurkAgent(account);
-		pa.login();
+		Result r =pa.login();
+		System.out.println(r.getResponseBody());
 
+		String fr = StringUtils.substringBetween(r.getResponseBody(), "var FRIENDS =", ";");
+		JSONObject o = (JSONObject) JSONValue.parse(fr);
+
+		System.out.println(JSONValue.parse(fr).getClass());
+		for (Object string : o.keySet()) {
+		System.out.println(string);
+		}
+
+		System.out.println(o.keySet().size());
 		/*
 		 *
 		 * [DEBUG] PlurkTemplate - isOk: true, response: {"plurk":
@@ -97,8 +111,8 @@ public class PlurkAgent {
 		 * Date("Fri, 03 Jul 2009 07:11:14 GMT"), "owner_id": 3146394}, "error":
 		 * null}
 		 */
-		Result r = pa.addPlurk(Qualifier.FREESTYLE, "我噗了");
-		pa.responsePlurk(Qualifier.FREESTYLE, "" + r.getAttachement().get("plurkId"), "" +r.getAttachement().get("plurkOwnerId"), "我回了");
+//		 r = pa.addPlurk(Qualifier.FREESTYLE, "我噗了");
+//		pa.responsePlurk(Qualifier.FREESTYLE, "" + r.getAttachement().get("plurkId"), "" +r.getAttachement().get("plurkOwnerId"), "我回了");
 
 	}
 }
