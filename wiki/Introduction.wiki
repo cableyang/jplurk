@@ -1,0 +1,22 @@
+#summary jplurk 簡介
+
+= jplurk 的起源 =
+
+jplurk 專案的雛型由 [http://code.google.com/u/askeing/ askeing] 建立，askeing 的開發 jplurk 動機在於 [http://blog.xdite.net/?p=976 xdite 的卡碼代練計劃]。簡單地說，只要 plurk 帳號每天維持一定數量的發文，那就能使卡碼值提昇。基於這個最原始的念頭於是 askeing 貢獻了 jplurk 的雛型。
+
+
+= jplurk 的使用 =
+
+若您在專案開始的時候就使用過 jplurk，那您已經學會 [http://askeing.blogspot.com/2009/03/jplurk-plurk-unofficial-api-in-java.html 使用 jplurk 發佈訊息]：
+
+{{{
+AccountModel usr = new AccountModel("[your_nickname]", "[your_password]");
+MessageModel msg = new MessageModel();
+msg.setQualifier("needs");
+msg.setContent("jPlurk's Love!");
+msg.setNo_comments(0);
+if( MessageSender.sendMessage(usr, msg) )
+System.out.println("Send Message Done!");
+else
+System.out.println("Send Message Error!");
+}}}
