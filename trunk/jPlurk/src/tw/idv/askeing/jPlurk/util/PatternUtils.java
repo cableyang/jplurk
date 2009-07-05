@@ -1,9 +1,15 @@
 package tw.idv.askeing.jPlurk.util;
 
+import java.util.Date;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
 public class PatternUtils {
+
+	static Log logger = LogFactory.getLog(PatternUtils.class);
 
 	final static int FLAG = Pattern.DOTALL | Pattern.MULTILINE;
 
@@ -28,8 +34,9 @@ public class PatternUtils {
         StringBuffer sb = new StringBuffer();
         if (result) {
             do {
-            	System.out.println(m.group(1));
-                m.appendReplacement(sb, "" + TimeUtil.fromJsDate(m.group(1)).getTime());
+            	Date date = TimeUtil.fromJsDate(m.group(1));
+            	logger.debug("transform `" + m.group(1) + "' to timestamp: " + date.getTime());
+                m.appendReplacement(sb, "" + date.getTime());
                 result = m.find();
             } while (result);
             m.appendTail(sb);

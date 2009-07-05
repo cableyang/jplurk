@@ -10,10 +10,6 @@ public class GetPlurks implements IBehavior {
 	public boolean action(Request params, Object arg) {
 		params.setEndPoint(Constants.GET_PLURK_URL);
 		params.addParam("user_id", params.getUserUId());
-//		String time = TimeUtil.now();
-//		params.addParam("from_date", time);
-//		params.addParam("date_offset", time);
-//		params.addParam("fetch_responses", "true");
 		return true;
 	}
 }

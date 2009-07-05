@@ -7,6 +7,8 @@ import org.json.simple.JSONObject;
 import org.json.simple.JSONValue;
 
 import com.googlecode.jplurk.behavior.AddPlurk;
+import com.googlecode.jplurk.behavior.GetUnreadPlurks;
+import com.googlecode.jplurk.behavior.IBehavior;
 import com.googlecode.jplurk.behavior.Login;
 import com.googlecode.jplurk.behavior.ResponsePlurk;
 import com.googlecode.jplurk.exception.LoginFailureException;
@@ -18,6 +20,7 @@ import tw.idv.askeing.jPlurk.model.Account;
 import tw.idv.askeing.jPlurk.model.Message;
 import tw.idv.askeing.jPlurk.model.Qualifier;
 import tw.idv.askeing.jPlurk.model.ResponseMessage;
+import tw.idv.askeing.jPlurk.util.JsonUtil;
 import tw.idv.askeing.jPlurk.util.PatternUtils;
 
 /**
@@ -44,13 +47,21 @@ public class PlurkAgent {
 		return result;
 	}
 
-	protected void checkLogin() {
+	/**
+	 * execute is a standard process to check login status and execute behavior.
+	 * if the agent get a login failure in previous login method call, it raise NotLoginException.
+	 * if the agent get the result is not ok, it raise the RequestFailureException.
+	 * @param clazz
+	 * @param args
+	 * @return
+	 */
+	protected Result execute(Class<? extends IBehavior> clazz, Object args){
 		if(!isLogin) {
 			throw new NotLoginException();
 		}
-	}
 
-	protected Result checkResultStatus(final Result result) {
+		Result result = plurkTemplate.doAction(clazz, args);
+
 		if(!result.isOk()){
 			throw new RequestFailureException();
 		}
@@ -58,52 +69,43 @@ public class PlurkAgent {
 	}
 
 	/**
-	 * addPlurk method will attach plurk's plurkId and plurkOwnerId that can use in response.
+	 * addPlurk method will attach plurk's plurk_id and owner_id that can use in response.
 	 * @param qualifier
 	 * @param text
 	 * @return
 	 */
 	@SuppressWarnings("unchecked")
 	public Result addPlurk(Qualifier qualifier, String text){
-		checkLogin();
 		Message message = new Message();
 		message.setQualifier(qualifier);
 		message.setContent(text);
-		Result result = plurkTemplate.doAction(AddPlurk.class, message);
-		/*
-		 *
-		 * [DEBUG] PlurkTemplate - isOk: true, response: {"plurk":
-		 * {"responses_seen": 0, "qualifier": "asks", "plurk_id": 70772936,
-		 * "response_count": 0, "limited_to": null, "no_comments": 0,
-		 * "is_unread": 0, "lang": "tr_ch", "content_raw":
-		 * "\u665a\u4e0a\u9084\u4e0b\u96e8\u55ce?", "user_id": 3146394,
-		 * "plurk_type": 0, "id": 70772936, "content":
-		 * "\u665a\u4e0a\u9084\u4e0b\u96e8\u55ce?", "posted": new
-		 * Date("Fri, 03 Jul 2009 07:11:14 GMT"), "owner_id": 3146394}, "error":
-		 * null}
-		 */
+		Result result = execute(AddPlurk.class, message);
 
-		checkResultStatus(result);
-
-		JSONObject o = (JSONObject) JSONValue.parse(PatternUtils.replaceJsDateToTimestamp(result.getResponseBody()));
-		JSONObject plurkObject = (JSONObject) o.get("plurk");
-		String pid = "" + plurkObject.get("plurk_id");
-		String pownid = "" + plurkObject.get("owner_id");
-
-		result.getAttachement().put("plurkId", PatternUtils.getPropertyWithIntValue(result.getResponseBody(), "plurk_id"));
-		result.getAttachement().put("plurkOwnerId", PatternUtils.getPropertyWithIntValue(result.getResponseBody(), "owner_id"));
+		// parse json response and attach the plurk_id and owner_id
+		JSONObject plurkObject = (JSONObject) JsonUtil.parse(result.getResponseBody()).get("plurk");
+		result.getAttachement().putAll(JsonUtil.get(plurkObject, "plurk_id", "owner_id"));
 		return result;
 	}
 
 	public Result responsePlurk(Qualifier qualifier, String plurkId, String plurkOwnerId, String text){
-		checkLogin();
 		ResponseMessage message = new ResponseMessage();
 		message.setQualifier(qualifier);
 		message.setContent(text);
 		message.setPlurkId(plurkId);
 		message.setPlurkOwnerId(plurkOwnerId);
-		Result result = plurkTemplate.doAction(ResponsePlurk.class, message);
-		return checkResultStatus(result);
+		return execute(ResponsePlurk.class, message);
+	}
+
+	@SuppressWarnings("unchecked")
+	public Result getUnreadPlurks(){
+		Result result = execute(GetUnreadPlurks.class, null);
+		for (Object each : JsonUtil.parseArray(result.getResponseBody())) {
+			if (each instanceof JSONObject) {
+				JSONObject o = (JSONObject) each;
+				result.getAttachement().put("" + o.get("plurk_id"), o);
+			}
+		}
+		return result;
 	}
 
 
@@ -111,12 +113,11 @@ public class PlurkAgent {
 		Account account = Account.createWithDynamicProperties();
 		PlurkAgent pa = new PlurkAgent(account);
 		Result r =pa.login();
-		r = pa.addPlurk(Qualifier.SAYS, "R61 在室溫下還是太熱了orz. 開冷氣給他吹(謎：其實是自己想吹吧)");
-		System.out.println(r.getResponseBody());
-		// {"plurk": {"responses_seen": 0, "qualifier": "feels", "plurk_id": 71633278, "response_count": 0, "limited_to": null, "no_comments": 0, "is_unread": 0, "lang": "tr_ch", "content_raw": "\u623f\u9593\u958b\u59cb\u71b1\u4e86\u8d77\u4f86", "user_id": 3146394, "plurk_type": 0, "id": 71633278, "content": "\u623f\u9593\u958b\u59cb\u71b1\u4e86\u8d77\u4f86", "posted": new Date("Sun, 05 Jul 2009 02:56:30 GMT"), "owner_id": 3146394}, "error": null}
-//		String json = "{\"responses_seen\": 0, \"qualifier\": \"feels\", \"plurk_id\": 71633278, \"response_count\": 0, \"limited_to\": null, \"no_comments\": 0, \"is_unread\": 0, \"lang\": \"tr_ch\", \"content_raw\": \"\u623f\u9593\u958b\u59cb\u71b1\u4e86\u8d77\u4f86\", \"user_id\": 3146394, \"plurk_type\": 0, \"id\": 71633278, \"content\": \"\u623f\u9593\u958b\u59cb\u71b1\u4e86\u8d77\u4f86\", \"posted2\": new Date(\"Sun, 08 Jul 2009 02:56:30 GMT\"), \"posted\": new Date(\"Sun, 05 Jul 2009 02:56:30 GMT\"), \"owner_id\": 3146394}";
-//		String s = json.replaceAll("(new Date\\([^(]+\\))", "$1");
-//		System.out.println(s);
+		r = pa.getUnreadPlurks();
+		System.out.println(r.getAttachement());
+		System.out.println(r.getAttachement().size());
 
+		// pid 71669284, own 3131562
+//		pa.responsePlurk(Qualifier.FEELS, "71669284", "3131562", "是朋友就會有分寸啊!!!");
 	}
 }
