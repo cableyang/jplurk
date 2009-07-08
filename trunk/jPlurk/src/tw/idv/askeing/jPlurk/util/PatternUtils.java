@@ -28,7 +28,7 @@ public class PatternUtils {
 	 * @return
 	 */
 	public static String replaceJsDateToTimestamp(String input){
-		Matcher m = Pattern.compile("(new Date\\([^(]+\\))", Pattern.DOTALL | Pattern.MULTILINE).matcher(input);
+		Matcher m = Pattern.compile("(new Date\\([^()]+\\))", Pattern.DOTALL | Pattern.MULTILINE).matcher(input);
 		m.reset();
         boolean result = m.find();
         StringBuffer sb = new StringBuffer();
