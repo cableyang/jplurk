@@ -4,7 +4,6 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import tw.idv.askeing.jPlurk.Constants;
-import tw.idv.askeing.jPlurk.model.Message;
 import tw.idv.askeing.jPlurk.model.ResponseMessage;
 
 import com.googlecode.jplurk.net.Request;
