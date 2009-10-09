@@ -20,3 +20,5 @@ System.out.println("Send Message Done!");
 else
 System.out.println("Send Message Error!");
 }}}
+
+這就是 jplurk 專案的基本雛型。
