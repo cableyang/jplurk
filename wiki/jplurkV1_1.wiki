@@ -24,7 +24,7 @@ agent.login();
 Result result = agent.getUnreadPlurks();
 }}}
 
-對開發著來說，它必需實作 Plurk 操作行為，並擴充至 IPlurkAgent 內。每個操作行為必需實作 com.googlecode.jplurk.behavior.IBehavior：
+對開發著來說，他可以實作 Plurk 操作行為，並擴充至 IPlurkAgent 內。每個操作行為必需實作 com.googlecode.jplurk.behavior.IBehavior：
 {{{
 public interface IBehavior {
 	public boolean action(final Request params, Object arg);
