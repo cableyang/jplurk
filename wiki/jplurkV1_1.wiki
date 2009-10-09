@@ -1,0 +1,50 @@
+#summary version 1.1
+
+= JPkurk 1.1 簡介 =
+
+JPlurk 1.1 版是開發中的版本，以 1.0 版為基礎在架構上增加可擴充的設計。
+我們將 JPlurk 的實作區分為：
+
+* 網路溝通的底層
+* Plurk 操作行為
+* Plurk 代理人
+
+對使用者來說，它只需要會使用 Plurk 代理人即可：
+
+{{{
+// 透過 jvm 動態參數建立 Account 物件
+// 例如：-Dplurk.user=your_account -Dplurk.passwd=your_passwd
+IPlurkAgent agent = new PlurkAgent(Account.createWithDynamicProperties());
+
+// 執行登入
+agent.login();
+
+// 顯示未讀取的 plurk
+Result result = agent.getUnreadPlurks();
+}}}
+
+對開發著來說，它必需實作 Plurk 操作行為，並擴充至 IPlurkAgent 內。每個操作行為必需實作 com.googlecode.jplurk.behavior.IBehavior：
+{{{
+public interface IBehavior {
+	public boolean action(final Request params, Object arg);
+}
+}}}
+
+Request 參數是用來執行 Http Request 使用的參數，基本上它內含 Map 物件存放實際的參數。除此之外，它還有 EndPoint 與 User UID 欄位，是發送請求實必填的。但開發者只需要填入 EndPoint 即可，因為 User UID 欄位的內容會在使用者執行 Login 後獲得，並在發送 Request 前自動填上。
+
+以 com.googlecode.jplurk.behavior.GetUnreadPlurks 為例，它的實作如下：
+{{{
+public class GetUnreadPlurks implements IBehavior{
+
+	@Override
+	public boolean action(Request params, Object arg) {
+		params.setEndPoint(Constants.GET_UNREAD_PLURK_URL);
+		params.addParam("fetch_responses", "false");
+		return true;
+	}
+
+}
+}}}
+
+
+要取得未讀取 Plurk 的 EndPoint 為 (/TimeLine/getUnreadPlurks 已定義在 Constants.GET_UNREAD_PLURK_URL)
