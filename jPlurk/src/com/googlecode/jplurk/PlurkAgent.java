@@ -25,7 +25,7 @@ import com.googlecode.jplurk.net.Result;
  * PlurkAgent is a facade that assemble many plurk's behavior in one class.
  * @author Ching Yi, Chan
  */
-public class PlurkAgent {
+public class PlurkAgent implements IPlurkAgent {
 
 	Account account;
 	PlurkTemplate plurkTemplate;
@@ -36,6 +36,9 @@ public class PlurkAgent {
 		this.plurkTemplate = new PlurkTemplate(account);
 	}
 
+	/* (non-Javadoc)
+	 * @see com.googlecode.jplurk.IPlurkAgent#login()
+	 */
 	public Result login() throws LoginFailureException {
 		Result result = plurkTemplate.doAction(Login.class, account);
 		if (!result.isOk()) {
@@ -66,11 +69,8 @@ public class PlurkAgent {
 		return result;
 	}
 
-	/**
-	 * addPlurk method will attach plurk's plurk_id and owner_id that can use in response.
-	 * @param qualifier
-	 * @param text
-	 * @return
+	/* (non-Javadoc)
+	 * @see com.googlecode.jplurk.IPlurkAgent#addPlurk(tw.idv.askeing.jPlurk.model.Qualifier, java.lang.String)
 	 */
 	@SuppressWarnings("unchecked")
 	public Result addPlurk(Qualifier qualifier, String text){
@@ -85,6 +85,9 @@ public class PlurkAgent {
 		return result;
 	}
 
+	/* (non-Javadoc)
+	 * @see com.googlecode.jplurk.IPlurkAgent#responsePlurk(tw.idv.askeing.jPlurk.model.Qualifier, java.lang.String, java.lang.String, java.lang.String)
+	 */
 	public Result responsePlurk(Qualifier qualifier, String plurkId, String plurkOwnerId, String text){
 		ResponseMessage message = new ResponseMessage();
 		message.setQualifier(qualifier);
@@ -94,6 +97,9 @@ public class PlurkAgent {
 		return execute(ResponsePlurk.class, message);
 	}
 
+	/* (non-Javadoc)
+	 * @see com.googlecode.jplurk.IPlurkAgent#addLongPlurk(tw.idv.askeing.jPlurk.model.Qualifier, java.lang.String)
+	 */
 	public Result addLongPlurk(Qualifier qualifier, String longText){
 		List<String> texts = new ArrayList<String>();
 		StringBuffer buf = new StringBuffer(longText);
@@ -123,6 +129,9 @@ public class PlurkAgent {
 		return result;
 	}
 
+	/* (non-Javadoc)
+	 * @see com.googlecode.jplurk.IPlurkAgent#getUnreadPlurks()
+	 */
 	@SuppressWarnings("unchecked")
 	public Result getUnreadPlurks(){
 		Result result = execute(GetUnreadPlurks.class, null);
@@ -138,7 +147,7 @@ public class PlurkAgent {
 
 	public static void main(String[] args) {
 		Account account = Account.createWithDynamicProperties();
-		PlurkAgent pa = new PlurkAgent(account);
+		IPlurkAgent pa = new PlurkAgent(account);
 		Result r =pa.login();
 		r = pa.getUnreadPlurks();
 		System.out.println(r.getAttachement());

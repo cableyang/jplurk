@@ -81,6 +81,7 @@ public class StatefulAgent {
 	}
 
 	public Result executePost(String uri, Map<String, String> params) {
+		// FIXME to avoid the user's password logged.
 		logger.info("do method with uri: " + uri + " and params => " + params);
 		PostMethod method = createMethod(PostMethod.class, uri);
 		method.setRequestHeader("Content-Type", "application/x-www-form-urlencoded; charset=UTF-8");
