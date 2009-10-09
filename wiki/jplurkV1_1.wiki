@@ -64,5 +64,5 @@ protected Result execute(Class<? extends IBehavior> clazz, Object args){
 
 由 IBehavior 執行的實作，開發者須注意：
 
-* 所有的 IBehavior 必需在登入的狀態執行 (即為獲得合法的 User UID 後。)
-* IBehavior 是執行時才動態建立的。因為，我們希望它是無狀態的，在設計上利用建立的方式作為限制的手段。
+  * 所有的 IBehavior 必需在登入的狀態執行 (即為獲得合法的 User UID 後。)
+  * IBehavior 是執行時才動態建立的。因為，我們希望它是無狀態的，在設計上利用建立的方式作為限制的手段。
