@@ -46,3 +46,23 @@ public class GetUnreadPlurks implements IBehavior{
 }
 }}}
 
+對任何的 IBehavior 來說，它會以下列的方式執行：
+{{{
+protected Result execute(Class<? extends IBehavior> clazz, Object args){
+	if(!isLogin) {
+		throw new NotLoginException();
+	}
+
+	Result result = plurkTemplate.doAction(clazz, args);
+
+	if(!result.isOk()){
+		throw new RequestFailureException();
+	}
+	return result;
+}
+}}}
+
+由 IBehavior 執行的實作，開發者須注意：
+
+* 所有的 IBehavior 必需在登入的狀態執行 (即為獲得合法的 User UID 後。)
+* IBehavior 是執行時才動態建立的。因為，我們希望它是無狀態的，在設計上利用建立的方式作為限制的手段。
