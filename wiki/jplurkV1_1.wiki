@@ -32,7 +32,7 @@ public interface IBehavior {
 
 Request 參數是用來執行 Http Request 使用的參數，基本上它內含 Map 物件存放實際的參數。除此之外，它還有 EndPoint 與 User UID 欄位，是發送請求實必填的。但開發者只需要填入 EndPoint 即可，因為 User UID 欄位的內容會在使用者執行 Login 後獲得，並在發送 Request 前自動填上。
 
-以 com.googlecode.jplurk.behavior.GetUnreadPlurks 為例，它的實作如下：
+以 com.googlecode.jplurk.behavior.GetUnreadPlurks 為例，要取得未讀取 Plurk 的 EndPoint 為 (/TimeLine/getUnreadPlurks 已定義在 Constants.GET_UNREAD_PLURK_URL)，它的實作如下：
 {{{
 public class GetUnreadPlurks implements IBehavior{
 
@@ -46,5 +46,3 @@ public class GetUnreadPlurks implements IBehavior{
 }
 }}}
 
-
-要取得未讀取 Plurk 的 EndPoint 為 (/TimeLine/getUnreadPlurks 已定義在 Constants.GET_UNREAD_PLURK_URL)
