@@ -12,6 +12,7 @@ import tw.idv.askeing.jPlurk.model.ResponseMessage;
 import tw.idv.askeing.jPlurk.util.JsonUtil;
 
 import com.googlecode.jplurk.behavior.AddPlurk;
+import com.googlecode.jplurk.behavior.GetNotifications;
 import com.googlecode.jplurk.behavior.GetUnreadPlurks;
 import com.googlecode.jplurk.behavior.IBehavior;
 import com.googlecode.jplurk.behavior.Login;
@@ -36,7 +37,7 @@ public class PlurkAgent implements IPlurkAgent {
 		this.plurkTemplate = new PlurkTemplate(account);
 	}
 
-	/* (non-Javadoc)
+	/**
 	 * @see com.googlecode.jplurk.IPlurkAgent#login()
 	 */
 	public Result login() throws LoginFailureException {
@@ -69,7 +70,7 @@ public class PlurkAgent implements IPlurkAgent {
 		return result;
 	}
 
-	/* (non-Javadoc)
+	/**
 	 * @see com.googlecode.jplurk.IPlurkAgent#addPlurk(tw.idv.askeing.jPlurk.model.Qualifier, java.lang.String)
 	 */
 	@SuppressWarnings("unchecked")
@@ -85,7 +86,12 @@ public class PlurkAgent implements IPlurkAgent {
 		return result;
 	}
 
-	/* (non-Javadoc)
+	public Result getNotifications(){
+		// FIXME not completed implementation, need to parse the result and add to attachement.
+		return execute(GetNotifications.class, null);
+	}
+
+	/**
 	 * @see com.googlecode.jplurk.IPlurkAgent#responsePlurk(tw.idv.askeing.jPlurk.model.Qualifier, java.lang.String, java.lang.String, java.lang.String)
 	 */
 	public Result responsePlurk(Qualifier qualifier, String plurkId, String plurkOwnerId, String text){
@@ -97,7 +103,7 @@ public class PlurkAgent implements IPlurkAgent {
 		return execute(ResponsePlurk.class, message);
 	}
 
-	/* (non-Javadoc)
+	/**
 	 * @see com.googlecode.jplurk.IPlurkAgent#addLongPlurk(tw.idv.askeing.jPlurk.model.Qualifier, java.lang.String)
 	 */
 	public Result addLongPlurk(Qualifier qualifier, String longText){
@@ -129,7 +135,7 @@ public class PlurkAgent implements IPlurkAgent {
 		return result;
 	}
 
-	/* (non-Javadoc)
+	/**
 	 * @see com.googlecode.jplurk.IPlurkAgent#getUnreadPlurks()
 	 */
 	@SuppressWarnings("unchecked")

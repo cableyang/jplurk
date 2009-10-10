@@ -7,15 +7,17 @@ import com.googlecode.jplurk.net.Result;
 
 public interface IPlurkAgent {
 
-	public abstract Result login() throws LoginFailureException;
+	public Result login() throws LoginFailureException;
 
-	public abstract Result addPlurk(Qualifier qualifier, String text);
+	public Result addPlurk(Qualifier qualifier, String text);
 
-	public abstract Result responsePlurk(Qualifier qualifier, String plurkId,
+	public Result responsePlurk(Qualifier qualifier, String plurkId,
 			String plurkOwnerId, String text);
 
-	public abstract Result addLongPlurk(Qualifier qualifier, String longText);
+	public Result addLongPlurk(Qualifier qualifier, String longText);
 
-	public abstract Result getUnreadPlurks();
+	public Result getUnreadPlurks();
+
+	public Result getNotifications();
 
 }
