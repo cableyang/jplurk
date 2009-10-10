@@ -1,6 +1,7 @@
 package com.googlecode.jplurk;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import org.apache.commons.lang.StringUtils;
@@ -16,6 +17,7 @@ import tw.idv.askeing.jPlurk.model.ResponseMessage;
 import tw.idv.askeing.jPlurk.util.JsonUtil;
 
 import com.googlecode.jplurk.behavior.AddPlurk;
+import com.googlecode.jplurk.behavior.AllowOrDenyFriendRequest;
 import com.googlecode.jplurk.behavior.GetNotifications;
 import com.googlecode.jplurk.behavior.GetUnreadPlurks;
 import com.googlecode.jplurk.behavior.IBehavior;
@@ -178,6 +180,41 @@ public class PlurkAgent implements IPlurkAgent {
 		return result;
 	}
 
+	@SuppressWarnings({ "unchecked", "serial" })
+	@Override
+	public Result denyFriendRequest(final int uid) throws RequestFailureException {
+		Result result = execute(AllowOrDenyFriendRequest.class, new HashMap(){
+			{
+				put("type", "deny");
+				put("uid", uid);
+			}
+		});
+		return result;
+	}
+
+	@SuppressWarnings({ "unchecked", "serial" })
+	@Override
+	public Result allowFriendRequest(final int uid) throws RequestFailureException {
+		Result result = execute(AllowOrDenyFriendRequest.class, new HashMap(){
+			{
+				put("type", "allow");
+				put("uid", uid);
+			}
+		});
+		return result;
+	}
+
+//	@SuppressWarnings({ "unchecked", "serial" })
+//	@Override
+//	public Result makeFan(final int uid) throws RequestFailureException {
+//		Result result = execute(AllowOrDenyFriendRequest.class, new HashMap(){
+//			{
+//				put("type", "fan");
+//				put("uid", uid);
+//			}
+//		});
+//		return result;
+//	}
 
 	public static void main(String[] args) throws RequestFailureException {
 		Account account = Account.createWithDynamicProperties();
@@ -192,4 +229,8 @@ public class PlurkAgent implements IPlurkAgent {
 		// pid 71669284, own 3131562
 //		pa.responsePlurk(Qualifier.FEELS, "71669284", "3131562", "是朋友就會有分寸啊!!!");
 	}
+
+
+
+
 }
