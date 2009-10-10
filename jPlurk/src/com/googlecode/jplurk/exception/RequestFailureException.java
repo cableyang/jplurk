@@ -1,5 +1,7 @@
 package com.googlecode.jplurk.exception;
 
+import com.googlecode.jplurk.net.Result;
+
 public class RequestFailureException extends RuntimeException{
 
 	private static final long serialVersionUID = 2405924251357922059L;
@@ -7,4 +9,10 @@ public class RequestFailureException extends RuntimeException{
 	public RequestFailureException() {
 		super("request is failure. please check the log messages.");
 	}
+
+	public RequestFailureException(Result result) {
+		super("request is failed: " + result);
+	}
+
+
 }

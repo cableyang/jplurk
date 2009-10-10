@@ -64,7 +64,7 @@ public class PlurkAgent implements IPlurkAgent {
 		Result result = plurkTemplate.doAction(clazz, args);
 
 		if(!result.isOk()){
-			throw new RequestFailureException();
+			throw new RequestFailureException(result);
 		}
 		return result;
 	}
