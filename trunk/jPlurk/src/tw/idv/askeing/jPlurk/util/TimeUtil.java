@@ -11,6 +11,7 @@ import javax.script.ScriptException;
 import sun.org.mozilla.javascript.internal.Context;
 import sun.org.mozilla.javascript.internal.NativeJavaObject;
 
+@SuppressWarnings("restriction")
 public class TimeUtil {
 	public final static SimpleDateFormat format = new SimpleDateFormat(
 			"yyyy-MM-dd'T'HH:mm:ss");

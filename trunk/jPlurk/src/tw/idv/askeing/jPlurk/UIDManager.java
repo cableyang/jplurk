@@ -67,8 +67,12 @@ public class UIDManager {
                       }
 					}
                     logger.debug("Get Line: "+line);
-                    logger.debug("Get ID: "+StringUtils.substringBetween(line, "\"user_id\": ", ", \"view_plurks\""));
-                    return NumberUtils.toInt(StringUtils.substringBetween(line, "\"user_id\": ", ", \"view_plurks\""));
+                    String uidString = StringUtils.substringBetween(line, "\"user_id\": ", ", \"view_plurks\"");
+                    if(uidString.contains(",")){
+                    	uidString = StringUtils.substringBefore(uidString, ",");
+                    }
+                    logger.debug("Get ID: "+ uidString);
+                    return NumberUtils.toInt(uidString);
 				} catch (Exception e) {
 					return 0;
 				}
