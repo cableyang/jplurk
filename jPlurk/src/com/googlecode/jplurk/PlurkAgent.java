@@ -3,6 +3,10 @@ package com.googlecode.jplurk;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang.math.NumberUtils;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.json.simple.JSONObject;
 
 import tw.idv.askeing.jPlurk.model.Account;
@@ -28,9 +32,11 @@ import com.googlecode.jplurk.net.Result;
  */
 public class PlurkAgent implements IPlurkAgent {
 
-	Account account;
-	PlurkTemplate plurkTemplate;
-	boolean isLogin;
+	static Log logger = LogFactory.getLog(PlurkAgent.class);
+
+	private Account account;
+	private PlurkTemplate plurkTemplate;
+	private boolean isLogin;
 
 	public PlurkAgent(Account account) {
 		this.account = account;
@@ -56,7 +62,7 @@ public class PlurkAgent implements IPlurkAgent {
 	 * @param clazz
 	 * @param args
 	 * @return
-	 * @throws RequestFailureException 
+	 * @throws RequestFailureException
 	 */
 	protected Result execute(Class<? extends IBehavior> clazz, Object args) throws RequestFailureException{
 		if(!isLogin) {
@@ -72,7 +78,7 @@ public class PlurkAgent implements IPlurkAgent {
 	}
 
 	/**
-	 * @throws RequestFailureException 
+	 * @throws RequestFailureException
 	 * @see com.googlecode.jplurk.IPlurkAgent#addPlurk(tw.idv.askeing.jPlurk.model.Qualifier, java.lang.String)
 	 */
 	@SuppressWarnings("unchecked")
@@ -88,13 +94,30 @@ public class PlurkAgent implements IPlurkAgent {
 		return result;
 	}
 
+	/**
+	 * @see com.googlecode.jplurk.IPlurkAgent#getNotifications()
+	 */
+	@SuppressWarnings("unchecked")
 	public Result getNotifications() throws RequestFailureException{
-		// FIXME not completed implementation, need to parse the result and add to attachement.
-		return execute(GetNotifications.class, null);
+		// input example
+		// DI( Notifications.render( 6543452, 0) );
+		Result result = execute(GetNotifications.class, null);
+		List<Integer> uids = new ArrayList<Integer>();
+		for (String line : result.getResponseBody().split("\n")) {
+			if(line != null && line.contains("Notifications.render(")){
+				String uid = StringUtils.trimToEmpty(StringUtils.substringBetween(line, "Notifications.render(", ","));
+				logger.debug("get notification from uid: " + NumberUtils.toInt(uid, -1));
+				if(NumberUtils.toInt(uid, -1) != -1){
+					uids.add(NumberUtils.toInt(uid, -1));
+				}
+			}
+		}
+		result.getAttachement().put("uids", uids);
+		return result;
 	}
 
 	/**
-	 * @throws RequestFailureException 
+	 * @throws RequestFailureException
 	 * @see com.googlecode.jplurk.IPlurkAgent#responsePlurk(tw.idv.askeing.jPlurk.model.Qualifier, java.lang.String, java.lang.String, java.lang.String)
 	 */
 	public Result responsePlurk(Qualifier qualifier, String plurkId, String plurkOwnerId, String text) throws RequestFailureException{
@@ -107,7 +130,7 @@ public class PlurkAgent implements IPlurkAgent {
 	}
 
 	/**
-	 * @throws RequestFailureException 
+	 * @throws RequestFailureException
 	 * @see com.googlecode.jplurk.IPlurkAgent#addLongPlurk(tw.idv.askeing.jPlurk.model.Qualifier, java.lang.String)
 	 */
 	public Result addLongPlurk(Qualifier qualifier, String longText) throws RequestFailureException{
@@ -140,7 +163,7 @@ public class PlurkAgent implements IPlurkAgent {
 	}
 
 	/**
-	 * @throws RequestFailureException 
+	 * @throws RequestFailureException
 	 * @see com.googlecode.jplurk.IPlurkAgent#getUnreadPlurks()
 	 */
 	@SuppressWarnings("unchecked")

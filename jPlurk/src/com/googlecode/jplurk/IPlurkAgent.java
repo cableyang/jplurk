@@ -19,6 +19,10 @@ public interface IPlurkAgent {
 
 	public Result getUnreadPlurks() throws RequestFailureException;
 
+	/**
+	 * @return result with attachment {uids}
+	 * @throws RequestFailureException
+	 */
 	public Result getNotifications() throws RequestFailureException;
 
 }

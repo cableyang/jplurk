@@ -12,7 +12,7 @@ public class PlurkAgentUsageExample {
 
 		Result result = // agent.getUnreadPlurks();
 			agent.getNotifications();
-		System.out.println(result);
+		System.out.println(result.getAttachement());
 
 //		agent.responsePlurk(Qualifier.FEELS, "1255125920000", "133932628", "早安 :)" +
 //				"");
