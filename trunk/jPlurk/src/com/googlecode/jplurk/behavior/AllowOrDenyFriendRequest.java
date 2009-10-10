@@ -17,9 +17,10 @@ public class AllowOrDenyFriendRequest implements IBehavior {
 				if ("allow".equals(param.get("type"))) {
 					params.setEndPoint(Constants.ALLOW_AS_FRIEND);
 				}
-				if ("fan".equals(param.get("type"))) {
-					params.setEndPoint(Constants.ALLOW_AS_FAN);
-				}
+//				TODO: fan don't work, must check the right way to make a fan.
+//				if ("fan".equals(param.get("type"))) {
+//					params.setEndPoint(Constants.ALLOW_AS_FAN);
+//				}
 				if ("deny".equals(param.get("type"))) {
 					params.setEndPoint(Constants.DENY_RELATIONSHIP_REQUEST);
 				}
