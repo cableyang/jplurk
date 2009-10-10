@@ -14,7 +14,9 @@ public class Constants {
 	public final static String GET_UNREAD_PLURK_URL = "/TimeLine/getUnreadPlurks";
 	public final static String RESPONSE_PLURK_URL = "/Responses/add";
 	public final static String GET_NOTIFICATIONS = "/Notifications";
-
+	public final static String ALLOW_AS_FRIEND = "/Notifications/allow";
+	public final static String ALLOW_AS_FAN = "/Notifications/allowDontFollow";
+	public final static String DENY_RELATIONSHIP_REQUEST = "/Notifications/deny";
 	public final static String LOGIN_URL_M = "/m/login";
 	public final static String GET_URL_M = "/m/";
 

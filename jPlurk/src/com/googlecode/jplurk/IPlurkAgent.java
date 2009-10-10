@@ -25,4 +25,8 @@ public interface IPlurkAgent {
 	 */
 	public Result getNotifications() throws RequestFailureException;
 
+	public Result denyFriendRequest(int uid) throws RequestFailureException;
+	public Result allowFriendRequest(int uid) throws RequestFailureException;
+
+//	public Result makeFan(int uid) throws RequestFailureException;
 }
