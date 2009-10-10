@@ -9,7 +9,8 @@ public class PlurkAgentUsageExample {
 		IPlurkAgent agent = new PlurkAgent(Account.createWithDynamicProperties());
 		agent.login();
 
-		Result result = agent.getUnreadPlurks();
+		Result result = // agent.getUnreadPlurks();
+			agent.getNotifications();
 		System.out.println(result);
 
 //		agent.responsePlurk(Qualifier.FEELS, "1255125920000", "133932628", "早安 :)" +
