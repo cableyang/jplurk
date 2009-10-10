@@ -56,8 +56,9 @@ public class PlurkAgent implements IPlurkAgent {
 	 * @param clazz
 	 * @param args
 	 * @return
+	 * @throws RequestFailureException 
 	 */
-	protected Result execute(Class<? extends IBehavior> clazz, Object args){
+	protected Result execute(Class<? extends IBehavior> clazz, Object args) throws RequestFailureException{
 		if(!isLogin) {
 			throw new NotLoginException();
 		}
@@ -71,10 +72,11 @@ public class PlurkAgent implements IPlurkAgent {
 	}
 
 	/**
+	 * @throws RequestFailureException 
 	 * @see com.googlecode.jplurk.IPlurkAgent#addPlurk(tw.idv.askeing.jPlurk.model.Qualifier, java.lang.String)
 	 */
 	@SuppressWarnings("unchecked")
-	public Result addPlurk(Qualifier qualifier, String text){
+	public Result addPlurk(Qualifier qualifier, String text) throws RequestFailureException{
 		Message message = new Message();
 		message.setQualifier(qualifier);
 		message.setContent(text);
@@ -86,15 +88,16 @@ public class PlurkAgent implements IPlurkAgent {
 		return result;
 	}
 
-	public Result getNotifications(){
+	public Result getNotifications() throws RequestFailureException{
 		// FIXME not completed implementation, need to parse the result and add to attachement.
 		return execute(GetNotifications.class, null);
 	}
 
 	/**
+	 * @throws RequestFailureException 
 	 * @see com.googlecode.jplurk.IPlurkAgent#responsePlurk(tw.idv.askeing.jPlurk.model.Qualifier, java.lang.String, java.lang.String, java.lang.String)
 	 */
-	public Result responsePlurk(Qualifier qualifier, String plurkId, String plurkOwnerId, String text){
+	public Result responsePlurk(Qualifier qualifier, String plurkId, String plurkOwnerId, String text) throws RequestFailureException{
 		ResponseMessage message = new ResponseMessage();
 		message.setQualifier(qualifier);
 		message.setContent(text);
@@ -104,9 +107,10 @@ public class PlurkAgent implements IPlurkAgent {
 	}
 
 	/**
+	 * @throws RequestFailureException 
 	 * @see com.googlecode.jplurk.IPlurkAgent#addLongPlurk(tw.idv.askeing.jPlurk.model.Qualifier, java.lang.String)
 	 */
-	public Result addLongPlurk(Qualifier qualifier, String longText){
+	public Result addLongPlurk(Qualifier qualifier, String longText) throws RequestFailureException{
 		List<String> texts = new ArrayList<String>();
 		StringBuffer buf = new StringBuffer(longText);
 		while(buf.length()>0){
@@ -136,10 +140,11 @@ public class PlurkAgent implements IPlurkAgent {
 	}
 
 	/**
+	 * @throws RequestFailureException 
 	 * @see com.googlecode.jplurk.IPlurkAgent#getUnreadPlurks()
 	 */
 	@SuppressWarnings("unchecked")
-	public Result getUnreadPlurks(){
+	public Result getUnreadPlurks() throws RequestFailureException{
 		Result result = execute(GetUnreadPlurks.class, null);
 		for (Object each : JsonUtil.parseArray(result.getResponseBody())) {
 			if (each instanceof JSONObject) {
@@ -151,7 +156,7 @@ public class PlurkAgent implements IPlurkAgent {
 	}
 
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws RequestFailureException {
 		Account account = Account.createWithDynamicProperties();
 		IPlurkAgent pa = new PlurkAgent(account);
 		Result r =pa.login();

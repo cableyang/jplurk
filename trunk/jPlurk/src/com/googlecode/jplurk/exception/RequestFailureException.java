@@ -2,7 +2,7 @@ package com.googlecode.jplurk.exception;
 
 import com.googlecode.jplurk.net.Result;
 
-public class RequestFailureException extends RuntimeException{
+public class RequestFailureException extends Exception{
 
 	private static final long serialVersionUID = 2405924251357922059L;
 
