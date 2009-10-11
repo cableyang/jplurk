@@ -12,6 +12,7 @@ public class Constants {
 	public final static String ADD_PLURK_URL = "/TimeLine/addPlurk";
 	public final static String GET_PLURK_URL = "/TimeLine/getPlurks";
 	public final static String GET_UNREAD_PLURK_URL = "/TimeLine/getUnreadPlurks";
+	public final static String GET_RESPONSES_PLURK_URL = "/Responses/get2";
 	public final static String RESPONSE_PLURK_URL = "/Responses/add";
 	public final static String GET_NOTIFICATIONS = "/Notifications";
 	public final static String ALLOW_AS_FRIEND = "/Notifications/allow";
