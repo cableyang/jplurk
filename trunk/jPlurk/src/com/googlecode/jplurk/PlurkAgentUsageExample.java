@@ -11,7 +11,8 @@ public class PlurkAgentUsageExample {
 		agent.login();
 
 		Result result = // agent.getUnreadPlurks();
-			agent.getNotifications();
+//			agent.getNotifications();
+			agent.getResponsePlurks(135049388);
 		System.out.println(result.getAttachement());
 
 //		List<Integer> uids = (List<Integer>) result.getAttachement().get("uids");
