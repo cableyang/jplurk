@@ -1,5 +1,7 @@
 package com.googlecode.jplurk.net;
 
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -9,10 +11,16 @@ import java.util.Map.Entry;
 import org.apache.commons.httpclient.Cookie;
 import org.apache.commons.httpclient.Header;
 import org.apache.commons.httpclient.HttpClient;
+import org.apache.commons.httpclient.HttpException;
 import org.apache.commons.httpclient.HttpMethod;
 import org.apache.commons.httpclient.HttpStatus;
 import org.apache.commons.httpclient.cookie.CookiePolicy;
 import org.apache.commons.httpclient.methods.PostMethod;
+import org.apache.commons.httpclient.methods.multipart.FilePart;
+import org.apache.commons.httpclient.methods.multipart.MultipartRequestEntity;
+import org.apache.commons.httpclient.methods.multipart.Part;
+import org.apache.commons.httpclient.methods.multipart.StringPart;
+import org.apache.commons.httpclient.params.HttpMethodParams;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
@@ -80,6 +88,45 @@ public class StatefulAgent {
 		}
 	}
 
+	public Result multipartUpload(String uri, File targetFile){
+		PostMethod filePost = new PostMethod(uri);
+		filePost.getParams().setBooleanParameter(
+				HttpMethodParams.USE_EXPECT_CONTINUE, true);
+
+//		filePost.setRequestHeader("Content-Type", "application/x-www-form-urlencoded; charset=UTF-8");
+		filePost.setRequestHeader("Referer", "http://www.plurk.com/Shares/showPhoto?mini=0");
+
+		Result result = new Result();
+		try {
+			Part[] parts = {
+					new StringPart("mini", "0"),
+					new FilePart("image", targetFile) };
+			filePost.setRequestEntity(new MultipartRequestEntity(parts,
+					filePost.getParams()));
+			int status = client.executeMethod(filePost);
+
+			if (status == HttpStatus.SC_OK) {
+				result.setOk(true);
+				try {
+					result.setResponseBody(filePost.getResponseBodyAsString());
+				} catch (IOException e) {
+					logger.error(e.getMessage(), e);
+				}
+			} else{
+				result.setResponseBody(filePost.getResponseBodyAsString());
+				System.out.println("res:" + status);
+			}
+
+		} catch (Exception e) {
+			result.setOk(false);
+		} finally {
+			filePost.releaseConnection();
+		}
+
+		return result;
+
+	}
+
 	public Result executePost(String uri, Map<String, String> params) {
 		// FIXME to avoid the user's password logged.
 		logger.info("do method with uri: " + uri + " and params => " + params);
@@ -121,7 +168,7 @@ public class StatefulAgent {
 
 	public static void main(String[] args) {
 		StatefulAgent agent = new StatefulAgent();
-		final Account account = new Account();
+		final Account account = Account.createWithDynamicProperties();
 		Result result = null;
 		result = agent.executePost("/Users/login",
 				new HashMap<String, String>() {
@@ -140,8 +187,11 @@ public class StatefulAgent {
 					}
 				});
 		System.out.println(result);
-
 		agent.executePost("", new HashMap<String, String>());
+
+		result = agent.multipartUpload("/Shares/uploadImage", new File("c:/tmp/base.png"));
+		System.out.println(result);
+
 	}
 
 }
