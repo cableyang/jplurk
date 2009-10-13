@@ -44,7 +44,7 @@ public class PlurkAgent implements IPlurkAgent {
 
 	private boolean isLogin;
 
-	public PlurkAgent(Account account) {
+	public PlurkAgent(Account account) throws RequestFailureException {
 		this.account = account;
 		this.plurkTemplate = new PlurkTemplate(account);
 	}

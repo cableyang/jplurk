@@ -1,14 +1,19 @@
 package com.googlecode.jplurk;
 
+import java.util.HashMap;
+
+import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.json.simple.JSONObject;
 
 import tw.idv.askeing.jPlurk.Constants;
 import tw.idv.askeing.jPlurk.CookieGetter;
-import tw.idv.askeing.jPlurk.UIDManager;
 import tw.idv.askeing.jPlurk.model.Account;
+import tw.idv.askeing.jPlurk.util.JsonUtil;
 
 import com.googlecode.jplurk.behavior.IBehavior;
+import com.googlecode.jplurk.exception.RequestFailureException;
 import com.googlecode.jplurk.net.Request;
 import com.googlecode.jplurk.net.Result;
 import com.googlecode.jplurk.net.StatefulAgent;
@@ -22,10 +27,40 @@ final public class PlurkTemplate {
 	Account account;
 	static Log logger = LogFactory.getLog(PlurkTemplate.class);
 	final StatefulAgent agent = new StatefulAgent();
+	Long uid;
 
-	public PlurkTemplate(Account account) {
+	public PlurkTemplate(Account account) throws RequestFailureException {
 		this.account = account;
-		logger.info("prefetch uid: " + UIDManager.getUID(account));
+		getUid(account);
+		logger.info("prefetch uid: " + uid);
+	}
+	
+	private void getUid(Account account) throws RequestFailureException{
+		Result result = agent.executePost("http://www.plurk.com/" + account.getName(), new HashMap<String, String>());
+		if(result.isOk()){
+			try {
+				for (String line : result.getResponseBody().split("\n")) {
+					if(line.contains("var GLOBAL =")){
+						JSONObject json = JsonUtil.parse(StringUtils.substringAfter(line, "var GLOBAL ="));
+						if(json.containsKey("page_user")){
+							JSONObject user = (JSONObject) json.get("page_user");
+							uid = (Long) user.get("uid");
+						}
+						break ;
+					}
+				}
+			} catch (Exception e) {
+				logger.error(e.getMessage(), e);
+			}
+		}
+		
+		if(!result.isOk()){
+			throw new RequestFailureException(result);
+		}
+		
+		if(uid == null){
+			throw new RequestFailureException("cannot parse uid.");
+		}
 	}
 
 	private IBehavior createBehavior(Class<? extends IBehavior> clazz){
@@ -56,7 +91,7 @@ final public class PlurkTemplate {
 		}
 
 		final Request params = new Request();
-		params.setUserUId("" + UIDManager.getUID(account));
+		params.setUserUId("" + uid);
 
 		boolean needToExecute = behavior.action(params, arg);
 		if (!needToExecute) {
@@ -86,7 +121,7 @@ final public class PlurkTemplate {
 	}
 
 	private boolean validateUid() {
-		if (UIDManager.getUID(account) == 0) {
+		if (uid == 0) {
 			logger.warn("the uid of user's account is invalid. ");
 			return false;
 		}
