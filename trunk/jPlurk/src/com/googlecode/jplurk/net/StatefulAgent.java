@@ -1,7 +1,6 @@
 package com.googlecode.jplurk.net;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -11,7 +10,6 @@ import java.util.Map.Entry;
 import org.apache.commons.httpclient.Cookie;
 import org.apache.commons.httpclient.Header;
 import org.apache.commons.httpclient.HttpClient;
-import org.apache.commons.httpclient.HttpException;
 import org.apache.commons.httpclient.HttpMethod;
 import org.apache.commons.httpclient.HttpStatus;
 import org.apache.commons.httpclient.cookie.CookiePolicy;
@@ -128,8 +126,15 @@ public class StatefulAgent {
 	}
 
 	public Result executePost(String uri, Map<String, String> params) {
-		// FIXME to avoid the user's password logged.
-		logger.info("do method with uri: " + uri + " and params => " + params);
+		if(logger.isInfoEnabled()){
+			Map<String, String> _params = new HashMap<String, String>(params);
+			if(_params.containsKey("password")){
+				// avoid the user's password logged.
+				_params.put("password", "****************");
+			}
+			logger.info("do method with uri: " + uri + " and params => " + _params);
+		}
+		
 		PostMethod method = createMethod(PostMethod.class, uri);
 		method.setRequestHeader("Content-Type", "application/x-www-form-urlencoded; charset=UTF-8");
 		Iterator<Entry<String, String>> it = params.entrySet().iterator();
