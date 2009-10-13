@@ -9,6 +9,10 @@ public class RequestFailureException extends Exception{
 	public RequestFailureException() {
 		super("request is failure. please check the log messages.");
 	}
+	
+	public RequestFailureException(String cause){
+		super(cause);
+	}
 
 	public RequestFailureException(Result result) {
 		super("request is failed: " + result);

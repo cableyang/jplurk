@@ -6,10 +6,11 @@ import tw.idv.askeing.jPlurk.model.Qualifier;
 
 import com.googlecode.jplurk.behavior.GetPlurks;
 import com.googlecode.jplurk.behavior.Login;
+import com.googlecode.jplurk.exception.RequestFailureException;
 import com.googlecode.jplurk.net.Result;
 
 public class TemplateUsageExample {
-	public static void main(String[] args) {
+	public static void main(String[] args) throws RequestFailureException {
 		Result result = null;
 		Account account = Account.createWithDynamicProperties();
 		PlurkTemplate template = new PlurkTemplate(account);

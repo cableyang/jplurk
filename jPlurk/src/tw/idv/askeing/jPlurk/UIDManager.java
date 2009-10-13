@@ -34,7 +34,7 @@ public class UIDManager {
      * @param user user account
      * @return UID
      */
-    public static int getUID(Account user) {
+    protected static int getUID(Account user) {
     	if(isHitCache(user)){
     		return cachedUids.get(user).intValue();
     	}
