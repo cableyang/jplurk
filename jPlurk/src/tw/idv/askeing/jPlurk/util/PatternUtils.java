@@ -1,5 +1,6 @@
 package tw.idv.askeing.jPlurk.util;
 
+import java.text.ParseException;
 import java.util.Date;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -34,10 +35,17 @@ public class PatternUtils {
         StringBuffer sb = new StringBuffer();
         if (result) {
             do {
-            	Date date = TimeUtil.fromJsDate(m.group(1));
-            	logger.debug("transform `" + m.group(1) + "' to timestamp: " + date.getTime());
-                m.appendReplacement(sb, "" + date.getTime());
-                result = m.find();
+            	Date date;
+				try {
+					date = TimeUtil.fromJsDate(m.group(1));
+					logger.debug("transform `" + m.group(1) + "' to timestamp: " + date.getTime());
+	                m.appendReplacement(sb, "" + date.getTime());
+	                result = m.find();
+				} catch (ParseException e) {
+					logger.error(e.getMessage(), e);
+					break;
+				}
+        		
             } while (result);
             m.appendTail(sb);
         }

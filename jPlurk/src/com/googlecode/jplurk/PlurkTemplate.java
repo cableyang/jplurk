@@ -41,6 +41,7 @@ final public class PlurkTemplate {
 			try {
 				for (String line : result.getResponseBody().split("\n")) {
 					if(line.contains("var GLOBAL =")){
+						logger.info(line);
 						JSONObject json = JsonUtil.parse(StringUtils.substringAfter(line, "var GLOBAL ="));
 						if(json.containsKey("page_user")){
 							JSONObject user = (JSONObject) json.get("page_user");

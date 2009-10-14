@@ -1,19 +1,23 @@
 package tw.idv.askeing.jPlurk.util;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Locale;
 
-import javax.script.ScriptEngine;
-import javax.script.ScriptEngineManager;
-import javax.script.ScriptException;
-import org.mozilla.javascript.Context;
-import org.mozilla.javascript.NativeJavaObject;
+import org.apache.commons.lang.StringUtils;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 
-@SuppressWarnings("restriction")
 public class TimeUtil {
-	public final static SimpleDateFormat format = new SimpleDateFormat(
-			"yyyy-MM-dd'T'HH:mm:ss");
+	
+	static Log logger = LogFactory.getLog(TimeUtil.class);
+	public final static SimpleDateFormat format = 
+		new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale.US);
+	
+	public final static SimpleDateFormat JS_INPUT_FORMAT = 
+		new SimpleDateFormat("E, dd MMM yyyy HH:mm:ss z", Locale.US);
 
 	public static String format(Date date) {
 		return format.format(date);
@@ -34,18 +38,11 @@ public class TimeUtil {
 	 * </pre>
 	 * @param jsDate js date object. for example: <b>new Date('Sat, 04 Jul 2009 13:31:23 GMT')</b>
 	 * @return
+	 * @throws ParseException 
 	 */
-	public static Date fromJsDate(String jsDate){
-		ScriptEngineManager mgr = new ScriptEngineManager();
-		ScriptEngine engine = mgr.getEngineByName("javascript");
-		Date date = null;
-		try {
-			Object o = engine.eval(jsDate);
-			if(NativeJavaObject.canConvert(o, Date.class)){
-				date = (Date) Context.jsToJava(o, Date.class);
-			}
-		} catch (ScriptException ex) {
-		}
-		return date;
+	public static Date fromJsDate(String jsDate) throws ParseException{
+		String inputDate = jsDate.contains("new Date") ? StringUtils.substringBetween(jsDate, "\"") :jsDate;
+		logger.debug("parse data: " + inputDate);
+		return JS_INPUT_FORMAT.parse(inputDate);
 	}
 }
