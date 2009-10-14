@@ -19,6 +19,7 @@ import tw.idv.askeing.jPlurk.util.JsonUtil;
 
 import com.googlecode.jplurk.behavior.AddPlurk;
 import com.googlecode.jplurk.behavior.AllowOrDenyFriendRequest;
+import com.googlecode.jplurk.behavior.EditPlurk;
 import com.googlecode.jplurk.behavior.GetNotifications;
 import com.googlecode.jplurk.behavior.GetPlurks;
 import com.googlecode.jplurk.behavior.GetResponsePlurks;
@@ -120,6 +121,13 @@ public class PlurkAgent implements IPlurkAgent {
 				put("uid", uid);
 			}
 		});
+		return result;
+	}
+	
+	public Result editPlurk(String plurkId, String message)
+			throws RequestFailureException {
+		Result result = execute(EditPlurk.class, 
+			new String[] { message,	plurkId });
 		return result;
 	}
 

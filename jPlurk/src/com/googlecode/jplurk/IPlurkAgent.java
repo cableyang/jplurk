@@ -18,6 +18,8 @@ public interface IPlurkAgent {
 
 	public Result denyFriendRequest(int uid) throws RequestFailureException;
 
+	public Result editPlurk(String plurkId, String message) throws RequestFailureException;
+	
 	/**
 	 * @return result with attachment {uids}
 	 * @throws RequestFailureException
