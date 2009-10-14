@@ -7,9 +7,8 @@ import java.util.Date;
 import javax.script.ScriptEngine;
 import javax.script.ScriptEngineManager;
 import javax.script.ScriptException;
-
-import sun.org.mozilla.javascript.internal.Context;
-import sun.org.mozilla.javascript.internal.NativeJavaObject;
+import org.mozilla.javascript.Context;
+import org.mozilla.javascript.NativeJavaObject;
 
 @SuppressWarnings("restriction")
 public class TimeUtil {
