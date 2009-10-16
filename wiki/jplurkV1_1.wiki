@@ -68,3 +68,19 @@ protected Result execute(Class<? extends IBehavior> clazz, Object args){
 
   * 所有的 IBehavior 必需在登入的狀態執行 (即為獲得合法的 User UID 後。)
   * IBehavior 是執行時才動態建立的。因為，我們希望它是無狀態的，在設計上利用建立的方式作為限制的手段。
+
+
+= JPkurk 1.1 功能列表 =
+
+|| 功能 || 函式名稱與參數 || 備註 ||
+|| 登入 || login() || 其他功能都必需在登入後執行 ||
+|| 發送「長」噗 || addLongPlurk(Qualifier qualifier, String longText) || 範例： http://www.plurk.com/p/275fco ||
+|| 發噗 || addPlurk(Qualifier qualifier, String text) || ||
+|| 同意交友申請 || allowFriendRequest(int uid) || ||
+|| 拒絕交友申請 || denyFriendRequest(int uid) || ||
+|| 編輯噗文 || editPlurk(String plurkId, String message) || ||
+|| 取得通知 || getNotifications() || ||
+|| 取得噗文 || getPlurks() || 目前尚未實作指定區間 ||
+|| 取得回應過的噗文 || getResponsePlurks(Integer plurkId) || ||
+|| 取得未讀取的噗文 || getUnreadPlurks() || ||
+|| 回應噗文 || responsePlurk(Qualifier qualifier, String plurkId, String plurkOwnerId, String text) || ||
