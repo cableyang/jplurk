@@ -140,3 +140,15 @@ public class Result {
 您可以使用 isOk() 判斷執行是否成功，並利用 getResponseBody() 取得回應原始內容。除此之外，我們亦提供 getAttachement() 放置「加工」過的資料，像是把轉換後的 json 放在它裡面。
 
 *美中不足的地方是，目前尚未統一 getAttachement() 的資料格式* 您可能需要先查詢一下 javadoc 或 source code 才能知道實際能取得的內容。
+
+
+= 下載與使用 =
+
+您可以在 [http://jplurk.googlecode.com/files/jPlurk-1.1-20091016.jar 下載] jplurk 1.1 beta 的 binary jar 檔。除了下載 jplurk 之外，您尚需要下載相依的套件使用：
+
+  * [http://commons.apache.org/ Jakarta Commons]
+    * commons-lang-2.x.jar
+    * commons-logging-1.x.jar 
+    * commons-httpclient-3.x.jar
+      * commons-codec-1.x.jar 
+  * [http://code.google.com/p/json-simple/ json_simple-1.x.jar]
