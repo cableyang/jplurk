@@ -123,10 +123,10 @@ public class PlurkAgent implements IPlurkAgent {
 		});
 		return result;
 	}
-	
+
 	public Result editPlurk(String plurkId, String message)
 			throws RequestFailureException {
-		Result result = execute(EditPlurk.class, 
+		Result result = execute(EditPlurk.class,
 			new String[] { message,	plurkId });
 		return result;
 	}
@@ -185,6 +185,7 @@ public class PlurkAgent implements IPlurkAgent {
 				result.getAttachement().put("json", array);
 			} catch (Exception e) {
 				logger.error(e.getMessage(), e);
+				logger.error("the result of getPlurks:" + result);
 			}
 		}
 		return result;

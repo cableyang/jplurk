@@ -15,6 +15,7 @@ public class PlurkAgentUsageExample {
 //			agent.getNotifications();
 			agent.getPlurks();
 
+		agent.addPlurk(Qualifier.FEELS, "天涼了");
 		System.out.println(result);
 //		List<Integer> uids = (List<Integer>) result.getAttachement().get("uids");
 //		result = agent.allowFriendRequest(uids.get(0));

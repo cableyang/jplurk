@@ -29,15 +29,21 @@ public class PatternUtils {
 	 * @return
 	 */
 	public static String replaceJsDateToTimestamp(String input){
+		logger.info(input);
 		Matcher m = Pattern.compile("(new Date\\([^()]+\\))", Pattern.DOTALL | Pattern.MULTILINE).matcher(input);
 		m.reset();
         boolean result = m.find();
         StringBuffer sb = new StringBuffer();
         if (result) {
             do {
-            	Date date;
+            	Date date = null;;
 				try {
 					date = TimeUtil.fromJsDate(m.group(1));
+					if(date == null){
+						logger.warn("cannot convert js date to java data");
+						logger.warn(m.group(1));
+						date = new Date();
+					}
 					logger.debug("transform `" + m.group(1) + "' to timestamp: " + date.getTime());
 	                m.appendReplacement(sb, "" + date.getTime());
 	                result = m.find();
@@ -45,7 +51,7 @@ public class PatternUtils {
 					logger.error(e.getMessage(), e);
 					break;
 				}
-        		
+
             } while (result);
             m.appendTail(sb);
         }
