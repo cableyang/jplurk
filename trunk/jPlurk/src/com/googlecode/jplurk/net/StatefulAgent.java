@@ -10,6 +10,7 @@ import java.util.Map.Entry;
 import org.apache.commons.httpclient.Cookie;
 import org.apache.commons.httpclient.Header;
 import org.apache.commons.httpclient.HttpClient;
+import org.apache.commons.httpclient.HttpConnection;
 import org.apache.commons.httpclient.HttpMethod;
 import org.apache.commons.httpclient.HttpStatus;
 import org.apache.commons.httpclient.cookie.CookiePolicy;
@@ -34,6 +35,18 @@ public class StatefulAgent {
 		client = new HttpClient();
 		client.getHostConfiguration().setHost(Constants.PLURK_HOST,
 				Constants.PLURK_PORT, "http");
+	}
+
+	private void activateConnection() {
+		HttpConnection connection =
+			client.getHttpConnectionManager().getConnection(client.getHostConfiguration());
+		if (!connection.isOpen()) {
+			try {
+				connection.open();
+			} catch (IOException e) {
+				logger.error(e.getMessage(), e);
+			}
+		}
 	}
 
 	/**
@@ -87,6 +100,8 @@ public class StatefulAgent {
 	}
 
 	public Result multipartUpload(String uri, File targetFile){
+		activateConnection();
+
 		PostMethod filePost = new PostMethod(uri);
 		filePost.getParams().setBooleanParameter(
 				HttpMethodParams.USE_EXPECT_CONTINUE, true);
@@ -112,7 +127,7 @@ public class StatefulAgent {
 				}
 			} else{
 				result.setResponseBody(filePost.getResponseBodyAsString());
-				System.out.println("res:" + status);
+				logger.debug("res:" + status);
 			}
 
 		} catch (Exception e) {
@@ -126,6 +141,8 @@ public class StatefulAgent {
 	}
 
 	public Result executePost(String uri, Map<String, String> params) {
+		activateConnection();
+
 		if(logger.isInfoEnabled()){
 			Map<String, String> _params = new HashMap<String, String>(params);
 			if(_params.containsKey("password")){
@@ -134,7 +151,7 @@ public class StatefulAgent {
 			}
 			logger.info("do method with uri: " + uri + " and params => " + _params);
 		}
-		
+
 		PostMethod method = createMethod(PostMethod.class, uri);
 		method.setRequestHeader("Content-Type", "application/x-www-form-urlencoded; charset=UTF-8");
 		Iterator<Entry<String, String>> it = params.entrySet().iterator();
@@ -171,6 +188,7 @@ public class StatefulAgent {
 		return result;
 	}
 
+	@SuppressWarnings("serial")
 	public static void main(String[] args) {
 		StatefulAgent agent = new StatefulAgent();
 		final Account account = Account.createWithDynamicProperties();
