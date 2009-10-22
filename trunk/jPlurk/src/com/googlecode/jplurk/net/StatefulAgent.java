@@ -168,9 +168,11 @@ public class StatefulAgent {
 			dumpResponseHeaders(method);
 			Result redirect = followLinkIfNeedded(params, method, responseCode);
 			if (redirect != null) {
+				method.releaseConnection();
 				return redirect;
 			}
 			if (responseCode != HttpStatus.SC_OK) {
+				method.releaseConnection();
 				return Result.FAILURE_RESULT;
 			}
 		} catch (Exception e) {
@@ -183,6 +185,8 @@ public class StatefulAgent {
 			result.setResponseBody(method.getResponseBodyAsString());
 		} catch (IOException e) {
 			logger.error(e.getMessage(), e);
+		} finally {
+			method.releaseConnection();
 		}
 
 		return result;
