@@ -1,6 +1,7 @@
 package com.googlecode.jplurk;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
@@ -16,6 +17,7 @@ import tw.idv.askeing.jPlurk.model.Message;
 import tw.idv.askeing.jPlurk.model.Qualifier;
 import tw.idv.askeing.jPlurk.model.ResponseMessage;
 import tw.idv.askeing.jPlurk.util.JsonUtil;
+import tw.idv.askeing.jPlurk.util.TimeUtil;
 
 import com.googlecode.jplurk.behavior.AddPlurk;
 import com.googlecode.jplurk.behavior.AllowOrDenyFriendRequest;
@@ -175,10 +177,15 @@ public class PlurkAgent implements IPlurkAgent {
 		return result;
 	}
 
-	@SuppressWarnings("unchecked")
 	@Override
 	public Result getPlurks() throws RequestFailureException {
-		Result result = execute(GetPlurks.class, null);
+		return getPlurks(null);
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public Result getPlurks(Date offset) throws RequestFailureException {
+		Result result = execute(GetPlurks.class, TimeUtil.format(offset));
 		if(result.isOk()){
 			try {
 				JSONArray array = JsonUtil.parseArray(result.getResponseBody());

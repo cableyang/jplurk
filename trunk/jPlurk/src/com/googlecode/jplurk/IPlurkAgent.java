@@ -1,5 +1,7 @@
 package com.googlecode.jplurk;
 
+import java.util.Date;
+
 import tw.idv.askeing.jPlurk.model.Qualifier;
 
 import com.googlecode.jplurk.exception.LoginFailureException;
@@ -19,7 +21,7 @@ public interface IPlurkAgent {
 	public Result denyFriendRequest(int uid) throws RequestFailureException;
 
 	public Result editPlurk(String plurkId, String message) throws RequestFailureException;
-	
+
 	/**
 	 * @return result with attachment {uids}
 	 * @throws RequestFailureException
@@ -36,6 +38,8 @@ public interface IPlurkAgent {
 
 	public Result responsePlurk(Qualifier qualifier, String plurkId,
 			String plurkOwnerId, String text) throws RequestFailureException;
+
+	public Result getPlurks(Date offset) throws RequestFailureException;
 
 //	public Result makeFan(int uid) throws RequestFailureException;
 }
