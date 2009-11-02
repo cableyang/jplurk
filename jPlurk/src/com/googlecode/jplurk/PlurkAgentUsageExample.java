@@ -1,7 +1,11 @@
 package com.googlecode.jplurk;
 
+import java.util.Date;
+
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+
 import tw.idv.askeing.jPlurk.model.Account;
-import tw.idv.askeing.jPlurk.model.Qualifier;
 
 import com.googlecode.jplurk.exception.RequestFailureException;
 import com.googlecode.jplurk.net.Result;
@@ -11,16 +15,19 @@ public class PlurkAgentUsageExample {
 		IPlurkAgent agent = new PlurkAgent(Account.createWithDynamicProperties());
 		agent.login();
 
-		Result result = // agent.getUnreadPlurks();
-//			agent.getNotifications();
-			agent.getPlurks();
 
-		agent.addPlurk(Qualifier.FEELS, "天涼了");
-		System.out.println(result);
-//		List<Integer> uids = (List<Integer>) result.getAttachement().get("uids");
-//		result = agent.allowFriendRequest(uids.get(0));
-//		System.out.println(result);
-//		agent.responsePlurk(Qualifier.FEELS, "1255125920000", "133932628", "早安 :)" +
-//				"");
+		Date offset = new Date(System.currentTimeMillis() - 5L * 24L * 60 * 60 * 1000);
+//		offset = new Date(1257174268000L);
+		Result result = agent.getPlurks(offset);
+
+		JSONArray a = (JSONArray) result.getAttachement().get("json");
+		for (Object j : a) {
+			JSONObject js  = (JSONObject) j;
+			System.out.println(new Date((Long) js.get("posted")) + " :: "+  js.get("posted") + js.get("content"));
+		}
+		System.out.println(a.size());
+
+		System.out.println(offset);
+
 	}
 }
