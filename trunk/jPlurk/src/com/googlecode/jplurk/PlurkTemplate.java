@@ -7,8 +7,6 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.json.simple.JSONObject;
 
-import tw.idv.askeing.jPlurk.Constants;
-import tw.idv.askeing.jPlurk.CookieGetter;
 import tw.idv.askeing.jPlurk.model.Account;
 import tw.idv.askeing.jPlurk.util.JsonUtil;
 
@@ -24,15 +22,21 @@ import com.googlecode.jplurk.net.StatefulAgent;
  */
 final public class PlurkTemplate {
 
-	Account account;
-	static Log logger = LogFactory.getLog(PlurkTemplate.class);
-	final StatefulAgent agent = new StatefulAgent();
-	Long uid;
+	private Account account;
+	private static Log logger = LogFactory.getLog(PlurkTemplate.class);
+	private final StatefulAgent agent = new StatefulAgent();
+	private Long uid;
+	private boolean isGuestMode = false;
 
 	public PlurkTemplate(Account account) throws RequestFailureException {
 		this.account = account;
-		getUid(account);
+		getUid(this.account);
 		logger.info("prefetch uid: " + uid);
+	}
+	
+	public PlurkTemplate() {
+		logger.warn("in guest mode (no account logged in)");
+		isGuestMode = true;
 	}
 	
 	private void getUid(Account account) throws RequestFailureException{
@@ -81,7 +85,7 @@ final public class PlurkTemplate {
 	 * @return
 	 */
 	final public Result doAction(Class<? extends IBehavior> behaviorClazz, Object arg) {
-		if (!validateUid() || !vaildateCookie(account)) {
+		if (!validateUid() /*|| !vaildateCookie(account)*/) {
 			return Result.FAILURE_RESULT;
 		}
 
@@ -104,24 +108,30 @@ final public class PlurkTemplate {
 		return result;
 	}
 
-	private boolean vaildateCookie(Account account) {
-		String cookie;
-		if ("".equals(account.getCookie())) {
-			cookie = CookieGetter.getCookie(Constants.PLURK_HOST,
-					Constants.LOGIN_URL, account, null);
-			account.setCookie(cookie);
-		}
-
-		if (account.getCookie() == null
-				|| "".equals(account.getCookie().trim())) {
-			logger.warn("cookie token is not found.");
-			return false;
-		}
-
-		return true;
-	}
+//	private boolean vaildateCookie(Account account) {
+//		
+//		String cookie;
+//		if ("".equals(account.getCookie())) {
+//			cookie = CookieGetter.getCookie(Constants.PLURK_HOST,
+//					Constants.LOGIN_URL, account, null);
+//			account.setCookie(cookie);
+//		}
+//
+//		if (account.getCookie() == null
+//				|| "".equals(account.getCookie().trim())) {
+//			logger.warn("cookie token is not found.");
+//			return false;
+//		}
+//
+//		return true;
+//	}
 
 	private boolean validateUid() {
+		if(isGuestMode){
+			logger.warn("In guest mode, validate uid will never be checked.");
+			return true;
+		}
+		
 		if (uid == 0) {
 			logger.warn("the uid of user's account is invalid. ");
 			return false;
