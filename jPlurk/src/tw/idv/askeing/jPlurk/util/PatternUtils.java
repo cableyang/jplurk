@@ -5,8 +5,10 @@ import java.util.Date;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.json.simple.JSONObject;
 
 public class PatternUtils {
 
@@ -56,6 +58,29 @@ public class PatternUtils {
             m.appendTail(sb);
         }
         return sb.toString();
+	}
+	
+	public static Long parseUserUidFromUserpage(String userPageHtml){
+		Long userUid = 0L;
+		try {
+			for (String line : userPageHtml.split("\n")) {
+				if(line.contains("var GLOBAL =")){
+					logger.info(line);
+					JSONObject json = JsonUtil.parse(StringUtils.substringAfter(line, "var GLOBAL ="));
+					if (json == null) {
+						continue;
+					}
+					if(json.containsKey("page_user")){
+						JSONObject user = (JSONObject) json.get("page_user");
+						userUid = (Long) user.get("uid");
+					}
+					break ;
+				}
+			}
+		} catch (Exception e) {
+			logger.error(e.getMessage(), e);
+		}
+		return userUid;		
 	}
 
 

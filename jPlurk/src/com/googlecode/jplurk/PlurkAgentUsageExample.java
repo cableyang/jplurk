@@ -16,7 +16,7 @@ public class PlurkAgentUsageExample {
 		agent.login();
 
 
-		Date offset = new Date(System.currentTimeMillis() - 5L * 24L * 60 * 60 * 1000);
+		Date offset = new Date(System.currentTimeMillis() - 2L * 24L * 60 * 60 * 1000);
 //		offset = new Date(1257174268000L);
 		Result result = agent.getPlurks(offset);
 
@@ -28,6 +28,8 @@ public class PlurkAgentUsageExample {
 		System.out.println(a.size());
 
 		System.out.println(offset);
+		
+//		agent.addPlurk(Qualifier.HAS, "那個 Cookie 欄位似乎沒有在用了?");
 
 	}
 }
