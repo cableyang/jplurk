@@ -30,6 +30,7 @@ public class PlurkAgentUsageExample {
 		System.out.println(offset);
 		
 //		agent.addPlurk(Qualifier.HAS, "那個 Cookie 欄位似乎沒有在用了?");
-
+		
+		System.out.println(agent.getAvatar("npui").getAttachement());
 	}
 }

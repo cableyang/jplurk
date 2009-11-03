@@ -15,6 +15,7 @@ import tw.idv.askeing.jPlurk.net.HttpTemplate;
  * @author Askeing, Yen.
  * @version 1.0
  */
+@Deprecated
 public class PicManager {
 
     static Log logger = LogFactory.getLog(PicManager.class);
