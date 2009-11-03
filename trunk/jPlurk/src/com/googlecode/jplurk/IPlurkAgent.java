@@ -41,5 +41,4 @@ public interface IPlurkAgent {
 
 	public Result getPlurks(Date offset) throws RequestFailureException;
 
-//	public Result makeFan(int uid) throws RequestFailureException;
 }

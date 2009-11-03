@@ -2,13 +2,11 @@ package com.googlecode.jplurk;
 
 import java.util.HashMap;
 
-import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.json.simple.JSONObject;
 
 import tw.idv.askeing.jPlurk.model.Account;
-import tw.idv.askeing.jPlurk.util.JsonUtil;
+import tw.idv.askeing.jPlurk.util.PatternUtils;
 
 import com.googlecode.jplurk.behavior.IBehavior;
 import com.googlecode.jplurk.exception.RequestFailureException;
@@ -34,29 +32,19 @@ final public class PlurkTemplate {
 		logger.info("prefetch uid: " + uid);
 	}
 	
-	public PlurkTemplate() {
+	private PlurkTemplate() {
 		logger.warn("in guest mode (no account logged in)");
 		isGuestMode = true;
+	}
+	
+	public static PlurkTemplate guest() {
+		return new PlurkTemplate();
 	}
 	
 	private void getUid(Account account) throws RequestFailureException{
 		Result result = agent.executePost("http://www.plurk.com/" + account.getName(), new HashMap<String, String>());
 		if(result.isOk()){
-			try {
-				for (String line : result.getResponseBody().split("\n")) {
-					if(line.contains("var GLOBAL =")){
-						logger.info(line);
-						JSONObject json = JsonUtil.parse(StringUtils.substringAfter(line, "var GLOBAL ="));
-						if(json.containsKey("page_user")){
-							JSONObject user = (JSONObject) json.get("page_user");
-							uid = (Long) user.get("uid");
-						}
-						break ;
-					}
-				}
-			} catch (Exception e) {
-				logger.error(e.getMessage(), e);
-			}
+			uid = PatternUtils.parseUserUidFromUserpage(result.getResponseBody());
 		}
 		
 		if(!result.isOk()){
@@ -96,7 +84,12 @@ final public class PlurkTemplate {
 		}
 
 		final Request params = new Request();
-		params.setUserUId("" + uid);
+		if (!isGuestMode) {
+			params.setUserUId("" + uid);
+		} else {
+			logger.warn("In guest mode, uid will not be set with query params");
+		}
+		
 
 		boolean needToExecute = behavior.action(params, arg);
 		if (!needToExecute) {
