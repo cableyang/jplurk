@@ -17,6 +17,7 @@ import tw.idv.askeing.jPlurk.model.Message;
 import tw.idv.askeing.jPlurk.model.Qualifier;
 import tw.idv.askeing.jPlurk.model.ResponseMessage;
 import tw.idv.askeing.jPlurk.util.JsonUtil;
+import tw.idv.askeing.jPlurk.util.PatternUtils;
 import tw.idv.askeing.jPlurk.util.TimeUtil;
 
 import com.googlecode.jplurk.behavior.AddPlurk;
@@ -26,6 +27,7 @@ import com.googlecode.jplurk.behavior.GetNotifications;
 import com.googlecode.jplurk.behavior.GetPlurks;
 import com.googlecode.jplurk.behavior.GetResponsePlurks;
 import com.googlecode.jplurk.behavior.GetUnreadPlurks;
+import com.googlecode.jplurk.behavior.GetUserPageContent;
 import com.googlecode.jplurk.behavior.IBehavior;
 import com.googlecode.jplurk.behavior.Login;
 import com.googlecode.jplurk.behavior.ResponsePlurk;
@@ -263,6 +265,42 @@ public class PlurkAgent implements IPlurkAgent {
 		message.setPlurkId(plurkId);
 		message.setPlurkOwnerId(plurkOwnerId);
 		return execute(ResponsePlurk.class, message);
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public Result getAvatar(String userId) throws RequestFailureException {
+		Result result = execute(GetUserPageContent.class, userId);
+
+		if(result.isOk()){
+			JSONObject data = PatternUtils.parseUserInfoFromUserpage(result.getResponseBody());
+			System.out.println(data);
+			if(data.containsKey("avatar") && data.containsKey("id")){
+				String avatar = "" + data.get("avatar");
+				if ("0".equals(avatar)) {
+					result.getAttachement().put(
+						"avatar.big",
+						"http://avatars.plurk.com/" + data.get("id")
+								+ "-big.jpg");
+					result.getAttachement().put(
+						"avatar.small",
+						"http://avatars.plurk.com/" + data.get("id")
+								+ "-medium.gif");
+				} else {
+					result.getAttachement().put(
+						"avatar.big",
+						"http://avatars.plurk.com/" + data.get("id")
+								+ "-big" + avatar + ".jpg");
+					result.getAttachement().put(
+						"avatar.small",
+						"http://avatars.plurk.com/" + data.get("id")
+								+ "-medium" + avatar + ".gif");
+				}
+			}
+			
+		}
+		
+		return result;
 	}
 
 }

@@ -41,4 +41,5 @@ public interface IPlurkAgent {
 
 	public Result getPlurks(Date offset) throws RequestFailureException;
 
+	public Result getAvatar(String userId) throws RequestFailureException;
 }

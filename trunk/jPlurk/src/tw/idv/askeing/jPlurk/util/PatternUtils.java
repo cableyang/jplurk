@@ -60,27 +60,45 @@ public class PatternUtils {
         return sb.toString();
 	}
 	
-	public static Long parseUserUidFromUserpage(String userPageHtml){
-		Long userUid = 0L;
+	public static JSONObject parseUserInfoFromUserpage(String userPageHtml) {
 		try {
 			for (String line : userPageHtml.split("\n")) {
-				if(line.contains("var GLOBAL =")){
+				if (line.contains("var GLOBAL =")) {
 					logger.info(line);
 					JSONObject json = JsonUtil.parse(StringUtils.substringAfter(line, "var GLOBAL ="));
 					if (json == null) {
 						continue;
 					}
-					if(json.containsKey("page_user")){
+					
+					if (json.containsKey("page_user")) {
 						JSONObject user = (JSONObject) json.get("page_user");
-						userUid = (Long) user.get("uid");
+						return user;
 					}
-					break ;
+					break;
 				}
 			}
 		} catch (Exception e) {
 			logger.error(e.getMessage(), e);
 		}
-		return userUid;		
+		return null;
+	}
+	
+	public static Long parseUserUidFromUserpage(String userPageHtml) {
+		JSONObject userPage = parseUserInfoFromUserpage(userPageHtml);
+		if (userPage == null) {
+			return 0L;
+		}
+
+		if (!userPage.containsKey("uid")) {
+			return 0L;
+		}
+
+		try {
+			return (Long) userPage.get("uid");
+		} catch (Exception ignored) {
+		}
+
+		return 0L;
 	}
 
 
