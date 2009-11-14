@@ -1,7 +1,7 @@
 #summary version 1.1
 #labels Featured,Phase-Implementation
 
-= JPkurk 1.1 簡介 =
+= JPlurk 1.1 簡介 =
 
 JPlurk 1.1 版是開發中的版本，以 1.0 版為基礎在架構上增加可擴充的設計。
 我們將 JPlurk 的實作區分為：
