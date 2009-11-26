@@ -12,14 +12,12 @@ jPlurk 是以 Java 開發的函式庫，它能接受 Java 應用程式動態啟�
 您也能加上 proxyPort 參數指定連線埠號：
 
 {{{
-   java -DproxyHost=http_proxy.mydomain.com -DproxyPort=3128 your.plurk.agent.Main 
+   java -DproxyHost=socks_proxy.mydomain.com -DproxyPort=3128 your.plurk.agent.Main 
 }}}
 
 
 同樣的，我們能夠使用 socksProxyHost 與 socksProxyPort 指定 SOCKS 代理伺服器：
 
 {{{
-   java -DsocksProxyHost=http_proxy.mydomain.com -DsocksProxyPort=3128 your.plurk.agent.Main 
+   java -DsocksProxyHost=socks_proxy.mydomain.com -DsocksProxyPort=3128 your.plurk.agent.Main 
 }}}
-
-
