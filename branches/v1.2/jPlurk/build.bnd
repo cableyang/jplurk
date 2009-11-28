@@ -1,0 +1,6 @@
+Bundle-Name: jPlurkBundle
+Export-Package: tw.idv.askeing.jPlurk*, com.googlecode.jplurk*, org.json.simple*
+Import-Package: !org.junit*, org.apache.log4j;resolution:=optional, org.apache.avalon.framework.logger;resolution:=optional, \
+javax.servlet;resolution:=optional, org.apache.log;resolution:=optional, junit.framework;resolution:=optional, *
+Private-Package: org.apache.commons*
+Include-Resource: {src/commons-logging.properties}, {src/simplelog.properties}, {src/NOTICE}
