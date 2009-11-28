@@ -2,8 +2,8 @@ package com.googlecode.jplurk.behavior;
 
 import java.util.Map;
 
-import tw.idv.askeing.jPlurk.Constants;
 
+import com.googlecode.jplurk.Constants;
 import com.googlecode.jplurk.net.Request;
 
 public class AllowOrDenyFriendRequest implements IBehavior {

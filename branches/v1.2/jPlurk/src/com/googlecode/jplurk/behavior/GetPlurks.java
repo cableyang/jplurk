@@ -3,9 +3,9 @@ package com.googlecode.jplurk.behavior;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-import tw.idv.askeing.jPlurk.Constants;
 import tw.idv.askeing.jPlurk.util.TimeUtil;
 
+import com.googlecode.jplurk.Constants;
 import com.googlecode.jplurk.net.Request;
 
 public class GetPlurks implements IBehavior {

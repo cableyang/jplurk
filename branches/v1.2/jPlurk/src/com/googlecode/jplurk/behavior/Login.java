@@ -2,9 +2,9 @@ package com.googlecode.jplurk.behavior;
 
 import org.apache.commons.lang.StringUtils;
 
-import tw.idv.askeing.jPlurk.Constants;
 import tw.idv.askeing.jPlurk.model.Account;
 
+import com.googlecode.jplurk.Constants;
 import com.googlecode.jplurk.net.Request;
 
 public class Login implements IBehavior {

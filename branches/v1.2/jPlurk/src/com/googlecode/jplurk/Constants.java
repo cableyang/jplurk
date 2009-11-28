@@ -1,4 +1,4 @@
-package tw.idv.askeing.jPlurk;
+package com.googlecode.jplurk;
 
 /**
  * Constants of URL
