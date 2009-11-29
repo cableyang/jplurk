@@ -86,6 +86,7 @@ protected Result execute(Class<? extends IBehavior> clazz, Object args){
 || 取得未讀取的噗文 || getUnreadPlurks() || ||
 || 回應噗文 || responsePlurk(Qualifier qualifier, String plurkId, String plurkOwnerId, String text) || ||
 || 取得使用者圖像 || getAvatar(userId) || attachement 內含 avatar.big 與 avatar.small 各別代表大圖示與小圖示 ||
+|| 刪除噗文 || deletePlurk(plurkId) || since v1.2 ||
 
 == 回應內容 Result ==
 
