@@ -1,6 +1,6 @@
 package com.googlecode.jplurk.exception;
 
-import tw.idv.askeing.jPlurk.model.Account;
+import com.googlecode.jplurk.model.Account;
 
 public class LoginFailureException extends RuntimeException {
 	private static final long serialVersionUID = 8154874004798387253L;

@@ -4,8 +4,8 @@ import org.apache.commons.lang.math.NumberUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-import tw.idv.askeing.jPlurk.Constants;
 
+import com.googlecode.jplurk.Constants;
 import com.googlecode.jplurk.net.Request;
 
 public class EditPlurk implements IBehavior {

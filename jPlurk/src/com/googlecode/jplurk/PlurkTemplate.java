@@ -5,14 +5,14 @@ import java.util.HashMap;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-import tw.idv.askeing.jPlurk.model.Account;
-import tw.idv.askeing.jPlurk.util.PatternUtils;
 
 import com.googlecode.jplurk.behavior.IBehavior;
 import com.googlecode.jplurk.exception.RequestFailureException;
+import com.googlecode.jplurk.model.Account;
 import com.googlecode.jplurk.net.Request;
 import com.googlecode.jplurk.net.Result;
 import com.googlecode.jplurk.net.StatefulAgent;
+import com.googlecode.jplurk.utils.PatternUtils;
 
 /**
  * 將 Plurk 操作流程封裝於 Template Method，擴充只要增加新的 Behavior 即可。

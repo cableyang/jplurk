@@ -1,12 +1,12 @@
 package com.googlecode.jplurk;
 
-import tw.idv.askeing.jPlurk.model.Account;
-import tw.idv.askeing.jPlurk.model.Message;
-import tw.idv.askeing.jPlurk.model.Qualifier;
 
 import com.googlecode.jplurk.behavior.GetPlurks;
 import com.googlecode.jplurk.behavior.Login;
 import com.googlecode.jplurk.exception.RequestFailureException;
+import com.googlecode.jplurk.model.Account;
+import com.googlecode.jplurk.model.Message;
+import com.googlecode.jplurk.model.Qualifier;
 import com.googlecode.jplurk.net.Result;
 
 public class TemplateUsageExample {

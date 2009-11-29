@@ -1,4 +1,4 @@
-package tw.idv.askeing.jPlurk.util;
+package com.googlecode.jplurk.utils;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
