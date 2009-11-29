@@ -15,6 +15,7 @@ import org.json.simple.JSONObject;
 
 import com.googlecode.jplurk.behavior.AddPlurk;
 import com.googlecode.jplurk.behavior.AllowOrDenyFriendRequest;
+import com.googlecode.jplurk.behavior.DeletePlurk;
 import com.googlecode.jplurk.behavior.EditPlurk;
 import com.googlecode.jplurk.behavior.GetNotifications;
 import com.googlecode.jplurk.behavior.GetPlurks;
@@ -100,7 +101,7 @@ public class PlurkAgent implements IPlurkAgent {
 
 		// parse json response and attach the plurk_id and owner_id
 		JSONObject plurkObject = (JSONObject) JsonUtil.parse(result.getResponseBody()).get("plurk");
-		result.getAttachement().putAll(JsonUtil.get(plurkObject, "plurk_id", "owner_id"));
+		result.getAttachement().putAll(JsonUtil.get(plurkObject, "plurk_id", "owner_id", "content", "content_raw"));
 		return result;
 	}
 
@@ -114,6 +115,10 @@ public class PlurkAgent implements IPlurkAgent {
 			}
 		});
 		return result;
+	}
+
+	public Result deletePlurk(int plurkId) throws RequestFailureException {
+		return execute(DeletePlurk.class, "" + plurkId);
 	}
 
 	@SuppressWarnings({ "unchecked", "serial" })
@@ -297,9 +302,9 @@ public class PlurkAgent implements IPlurkAgent {
 								+ "-medium" + avatar + ".gif");
 				}
 			}
-			
+
 		}
-		
+
 		return result;
 	}
 
