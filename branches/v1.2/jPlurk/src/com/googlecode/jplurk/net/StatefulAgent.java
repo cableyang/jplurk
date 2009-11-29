@@ -12,7 +12,10 @@ import org.apache.commons.httpclient.Header;
 import org.apache.commons.httpclient.HttpClient;
 import org.apache.commons.httpclient.HttpConnection;
 import org.apache.commons.httpclient.HttpMethod;
+import org.apache.commons.httpclient.HttpState;
 import org.apache.commons.httpclient.HttpStatus;
+import org.apache.commons.httpclient.UsernamePasswordCredentials;
+import org.apache.commons.httpclient.auth.AuthScope;
 import org.apache.commons.httpclient.cookie.CookiePolicy;
 import org.apache.commons.httpclient.methods.PostMethod;
 import org.apache.commons.httpclient.methods.multipart.FilePart;
@@ -20,6 +23,7 @@ import org.apache.commons.httpclient.methods.multipart.MultipartRequestEntity;
 import org.apache.commons.httpclient.methods.multipart.Part;
 import org.apache.commons.httpclient.methods.multipart.StringPart;
 import org.apache.commons.httpclient.params.HttpMethodParams;
+import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
@@ -36,6 +40,18 @@ public class StatefulAgent {
 		client = new HttpClient();
 		client.getHostConfiguration().setHost(Constants.PLURK_HOST,
 				Constants.PLURK_PORT, "http");
+
+		if(StringUtils.isNotBlank(ProxyProvider.host)){
+			client.getHostConfiguration().setProxy(ProxyProvider.host, ProxyProvider.port);
+		}
+
+		if (StringUtils.isNotBlank(ProxyProvider.user)) {
+			HttpState state = new HttpState();
+			state.setProxyCredentials(
+					new AuthScope(ProxyProvider.host,	ProxyProvider.port),
+					new UsernamePasswordCredentials(ProxyProvider.user, ProxyProvider.password));
+			client.setState(state);
+		}
 	}
 
 	private void activateConnection() {
