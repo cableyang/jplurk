@@ -3,9 +3,9 @@ package com.googlecode.jplurk.behavior;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-import tw.idv.askeing.jPlurk.model.ResponseMessage;
 
 import com.googlecode.jplurk.Constants;
+import com.googlecode.jplurk.model.ResponseMessage;
 import com.googlecode.jplurk.net.Request;
 
 public class ResponsePlurk implements IBehavior{

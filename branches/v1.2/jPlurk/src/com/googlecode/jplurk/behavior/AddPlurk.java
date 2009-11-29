@@ -1,8 +1,8 @@
 package com.googlecode.jplurk.behavior;
 
-import tw.idv.askeing.jPlurk.model.Message;
 
 import com.googlecode.jplurk.Constants;
+import com.googlecode.jplurk.model.Message;
 import com.googlecode.jplurk.net.Request;
 
 public class AddPlurk implements IBehavior {

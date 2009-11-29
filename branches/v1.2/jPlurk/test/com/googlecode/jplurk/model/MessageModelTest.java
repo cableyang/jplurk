@@ -1,7 +1,9 @@
-package tw.idv.askeing.jPlurk.model;
+package com.googlecode.jplurk.model;
 
 import org.junit.Before;
 import org.junit.Test;
+
+import com.googlecode.jplurk.model.Message;
 
 public class MessageModelTest{
 

@@ -2,10 +2,10 @@ package com.googlecode.jplurk;
 
 import java.util.Date;
 
-import tw.idv.askeing.jPlurk.model.Qualifier;
 
 import com.googlecode.jplurk.exception.LoginFailureException;
 import com.googlecode.jplurk.exception.RequestFailureException;
+import com.googlecode.jplurk.model.Qualifier;
 import com.googlecode.jplurk.net.Result;
 
 public interface IPlurkAgent {

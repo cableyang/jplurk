@@ -24,8 +24,8 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import com.googlecode.jplurk.Constants;
+import com.googlecode.jplurk.model.Account;
 
-import tw.idv.askeing.jPlurk.model.Account;
 
 public class StatefulAgent {
 
