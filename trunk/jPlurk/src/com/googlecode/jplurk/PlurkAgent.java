@@ -12,16 +12,10 @@ import org.apache.commons.logging.LogFactory;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
-import tw.idv.askeing.jPlurk.model.Account;
-import tw.idv.askeing.jPlurk.model.Message;
-import tw.idv.askeing.jPlurk.model.Qualifier;
-import tw.idv.askeing.jPlurk.model.ResponseMessage;
-import tw.idv.askeing.jPlurk.util.JsonUtil;
-import tw.idv.askeing.jPlurk.util.PatternUtils;
-import tw.idv.askeing.jPlurk.util.TimeUtil;
 
 import com.googlecode.jplurk.behavior.AddPlurk;
 import com.googlecode.jplurk.behavior.AllowOrDenyFriendRequest;
+import com.googlecode.jplurk.behavior.DeletePlurk;
 import com.googlecode.jplurk.behavior.EditPlurk;
 import com.googlecode.jplurk.behavior.GetNotifications;
 import com.googlecode.jplurk.behavior.GetPlurks;
@@ -34,7 +28,14 @@ import com.googlecode.jplurk.behavior.ResponsePlurk;
 import com.googlecode.jplurk.exception.LoginFailureException;
 import com.googlecode.jplurk.exception.NotLoginException;
 import com.googlecode.jplurk.exception.RequestFailureException;
+import com.googlecode.jplurk.model.Account;
+import com.googlecode.jplurk.model.Message;
+import com.googlecode.jplurk.model.Qualifier;
+import com.googlecode.jplurk.model.ResponseMessage;
 import com.googlecode.jplurk.net.Result;
+import com.googlecode.jplurk.utils.JsonUtil;
+import com.googlecode.jplurk.utils.PatternUtils;
+import com.googlecode.jplurk.utils.TimeUtil;
 
 /**
  * PlurkAgent is a facade that assemble many plurk's behavior in one class.
@@ -56,7 +57,7 @@ public class PlurkAgent implements IPlurkAgent {
 
 	/**
 	 * @throws RequestFailureException
-	 * @see com.googlecode.jplurk.IPlurkAgent#addLongPlurk(tw.idv.askeing.jPlurk.model.Qualifier, java.lang.String)
+	 * @see com.googlecode.jplurk.IPlurkAgent#addLongPlurk(com.googlecode.jplurk.model.Qualifier, java.lang.String)
 	 */
 	public Result addLongPlurk(Qualifier qualifier, String longText) throws RequestFailureException{
 		List<String> texts = new ArrayList<String>();
@@ -89,7 +90,7 @@ public class PlurkAgent implements IPlurkAgent {
 
 	/**
 	 * @throws RequestFailureException
-	 * @see com.googlecode.jplurk.IPlurkAgent#addPlurk(tw.idv.askeing.jPlurk.model.Qualifier, java.lang.String)
+	 * @see com.googlecode.jplurk.IPlurkAgent#addPlurk(com.googlecode.jplurk.model.Qualifier, java.lang.String)
 	 */
 	@SuppressWarnings("unchecked")
 	public Result addPlurk(Qualifier qualifier, String text) throws RequestFailureException{
@@ -100,7 +101,7 @@ public class PlurkAgent implements IPlurkAgent {
 
 		// parse json response and attach the plurk_id and owner_id
 		JSONObject plurkObject = (JSONObject) JsonUtil.parse(result.getResponseBody()).get("plurk");
-		result.getAttachement().putAll(JsonUtil.get(plurkObject, "plurk_id", "owner_id"));
+		result.getAttachement().putAll(JsonUtil.get(plurkObject, "plurk_id", "owner_id", "content", "content_raw"));
 		return result;
 	}
 
@@ -114,6 +115,10 @@ public class PlurkAgent implements IPlurkAgent {
 			}
 		});
 		return result;
+	}
+
+	public Result deletePlurk(int plurkId) throws RequestFailureException {
+		return execute(DeletePlurk.class, "" + plurkId);
 	}
 
 	@SuppressWarnings({ "unchecked", "serial" })
@@ -256,7 +261,7 @@ public class PlurkAgent implements IPlurkAgent {
 
 	/**
 	 * @throws RequestFailureException
-	 * @see com.googlecode.jplurk.IPlurkAgent#responsePlurk(tw.idv.askeing.jPlurk.model.Qualifier, java.lang.String, java.lang.String, java.lang.String)
+	 * @see com.googlecode.jplurk.IPlurkAgent#responsePlurk(com.googlecode.jplurk.model.Qualifier, java.lang.String, java.lang.String, java.lang.String)
 	 */
 	public Result responsePlurk(Qualifier qualifier, String plurkId, String plurkOwnerId, String text) throws RequestFailureException{
 		ResponseMessage message = new ResponseMessage();
@@ -297,9 +302,9 @@ public class PlurkAgent implements IPlurkAgent {
 								+ "-medium" + avatar + ".gif");
 				}
 			}
-			
+
 		}
-		
+
 		return result;
 	}
 

@@ -4,10 +4,10 @@ import junit.framework.Assert;
 
 import org.junit.Test;
 
-import tw.idv.askeing.jPlurk.util.PatternUtils;
 
 import com.googlecode.jplurk.PlurkTemplate;
 import com.googlecode.jplurk.net.Result;
+import com.googlecode.jplurk.utils.PatternUtils;
 
 public class GetUserPageContentTest {
 

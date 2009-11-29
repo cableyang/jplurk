@@ -1,4 +1,4 @@
-package tw.idv.askeing.jPlurk.model;
+package com.googlecode.jplurk.model;
 
 import java.util.Calendar;
 import java.util.TimeZone;

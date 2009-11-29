@@ -1,4 +1,4 @@
-package tw.idv.askeing.jPlurk.model;
+package com.googlecode.jplurk.model;
 
 public class ResponseMessage extends Message {
 

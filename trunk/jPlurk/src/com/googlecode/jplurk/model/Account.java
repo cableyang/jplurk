@@ -1,4 +1,4 @@
-package tw.idv.askeing.jPlurk.model;
+package com.googlecode.jplurk.model;
 
 /**
  * jPlurk AccountModel: The model to record Name, Password, and UID of User.
