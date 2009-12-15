@@ -80,6 +80,7 @@ public class StatefulAgent {
 			method = t.newInstance();
 			method.setPath(uri);
 			method.getParams().setCookiePolicy(CookiePolicy.RFC_2109);
+			method.setRequestHeader("User-Agent", "Mozilla/5.0 (Windows; U; Windows NT 5.1; zh-TW; rv:1.9.1.5) Gecko/20091102 Firefox/3.5.5 GTB6 (.NET CLR 3.5.30729)");
 		} catch (Exception e) {
 			logger.error(e.getMessage(), e);
 		}
