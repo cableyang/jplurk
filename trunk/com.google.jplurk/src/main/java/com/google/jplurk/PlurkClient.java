@@ -1,9 +1,6 @@
 package com.google.jplurk;
 
 import java.io.IOException;
-import java.lang.reflect.Method;
-import java.util.HashMap;
-import java.util.Map;
 
 import javax.swing.JOptionPane;
 

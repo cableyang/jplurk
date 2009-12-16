@@ -2,8 +2,6 @@ package com.google.jplurk;
 
 import java.util.Map;
 
-import org.apache.commons.lang.StringUtils;
-
 public class MapHelper {
 
 	Map<String, String> map;

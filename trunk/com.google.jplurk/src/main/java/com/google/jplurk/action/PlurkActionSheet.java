@@ -1,7 +1,6 @@
 package com.google.jplurk.action;
 
 import java.lang.reflect.Method;
-import java.util.HashMap;
 import java.util.Map;
 
 import org.apache.commons.beanutils.MethodUtils;
