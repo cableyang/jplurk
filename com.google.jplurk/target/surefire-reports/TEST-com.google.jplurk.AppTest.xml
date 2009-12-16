@@ -1,101 +1,63 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<testsuite failures="0" time="0.078" errors="0" skipped="0" tests="1" name="com.google.jplurk.AppTest">
+<testsuite errors="0" skipped="0" tests="1" time="0.016" failures="0" name="com.google.jplurk.AppTest">
   <properties>
-    <property name="java.vendor" value="Sun Microsystems Inc."/>
-    <property name="localRepository" value="C:\Documents and Settings\qty\.m2\repository"/>
-    <property name="sun.java.launcher" value="SUN_STANDARD"/>
-    <property name="sun.management.compiler" value="HotSpot Client Compiler"/>
-    <property name="env.PROMPT" value="$P$G"/>
-    <property name="os.name" value="Windows XP"/>
-    <property name="env.FP_NO_HOST_CHECK" value="NO"/>
-    <property name="sun.boot.class.path" value="C:\Program Files\Java\jre1.6.0_06\lib\resources.jar;C:\Program Files\Java\jre1.6.0_06\lib\rt.jar;C:\Program Files\Java\jre1.6.0_06\lib\jsse.jar;C:\Program Files\Java\jre1.6.0_06\lib\jce.jar;C:\Program Files\Java\jre1.6.0_06\lib\charsets.jar"/>
-    <property name="env.COMPUTERNAME" value="OPENLAB-CYC"/>
-    <property name="env.ALLUSERSPROFILE" value="C:\Documents and Settings\All Users"/>
-    <property name="sun.desktop" value="windows"/>
-    <property name="java.vm.specification.vendor" value="Sun Microsystems Inc."/>
-    <property name="java.runtime.version" value="1.6.0_06-b02"/>
-    <property name="env.HOMEPATH" value="\Documents and Settings\qty"/>
-    <property name="user.name" value="qty"/>
-    <property name="user.language" value="zh"/>
-    <property name="sun.boot.library.path" value="C:\Program Files\Java\jre1.6.0_06\bin"/>
-    <property name="classworlds.conf" value="C:\Documents and Settings\qty\workspace\.metadata\.plugins\org.maven.ide.eclipse\launches\m2conf55184.tmp"/>
-    <property name="java.version" value="1.6.0_06"/>
-    <property name="env.PROCESSOR_IDENTIFIER" value="x86 Family 6 Model 23 Stepping 6, GenuineIntel"/>
-    <property name="user.timezone" value=""/>
-    <property name="env.TEMP" value="C:\DOCUME~1\qty\LOCALS~1\Temp"/>
-    <property name="sun.arch.data.model" value="32"/>
-    <property name="env.APR_ICONV_PATH" value="C:\APP\svn-win32-1.5.0\iconv"/>
-    <property name="java.endorsed.dirs" value="C:\Program Files\Java\jre1.6.0_06\lib\endorsed"/>
-    <property name="sun.cpu.isalist" value="pentium_pro+mmx pentium_pro pentium+mmx pentium i486 i386 i86"/>
-    <property name="env.HOMEDRIVE" value="C:"/>
-    <property name="sun.jnu.encoding" value="MS950"/>
-    <property name="file.encoding.pkg" value="sun.io"/>
-    <property name="file.separator" value="\"/>
-    <property name="java.specification.name" value="Java Platform API Specification"/>
-    <property name="java.class.version" value="50.0"/>
-    <property name="user.country" value="TW"/>
-    <property name="java.home" value="C:\Program Files\Java\jre1.6.0_06"/>
-    <property name="env.APPDATA" value="C:\Documents and Settings\qty\Application Data"/>
-    <property name="java.vm.info" value="mixed mode, sharing"/>
-    <property name="env.ComSpec" value="C:\WINDOWS\system32\cmd.exe"/>
-    <property name="env.OS" value="Windows_NT"/>
-    <property name="env.CommonProgramFiles" value="C:\Program Files\Common Files"/>
-    <property name="os.version" value="5.1"/>
-    <property name="path.separator" value=";"/>
-    <property name="java.vm.version" value="10.0-b22"/>
-    <property name="user.variant" value=""/>
-    <property name="env.USERPROFILE" value="C:\Documents and Settings\qty"/>
-    <property name="env.JAVA_HOME" value="C:\Program Files\Java\jdk1.6.0_06"/>
-    <property name="java.awt.printerjob" value="sun.awt.windows.WPrinterJob"/>
-    <property name="env.TMP" value="C:\DOCUME~1\qty\LOCALS~1\Temp"/>
-    <property name="sun.io.unicode.encoding" value="UnicodeLittle"/>
-    <property name="awt.toolkit" value="sun.awt.windows.WToolkit"/>
-    <property name="user.home" value="C:\Documents and Settings\qty"/>
-    <property name="env.SESSIONNAME" value="Console"/>
-    <property name="java.specification.vendor" value="Sun Microsystems Inc."/>
-    <property name="env.CLASSPATH" value=".;C:\PROGRA~1\JMF21~1.1E\lib\sound.jar;C:\PROGRA~1\JMF21~1.1E\lib\jmf.jar;C:\PROGRA~1\JMF21~1.1E\lib;%JAVA_HOME%\lib\tools.jar;%JAVA_HOME%\lib\dt.jar;."/>
-    <property name="env.M2_HOME" value="C:\APP\apache-maven-2.0.9"/>
-    <property name="env.VS80COMNTOOLS" value="C:\Program Files\Microsoft Visual Studio 8\Common7\Tools\"/>
-    <property name="env.NUMBER_OF_PROCESSORS" value="2"/>
-    <property name="java.library.path" value="C:\Program Files\Java\jre1.6.0_06\bin;.;C:\WINDOWS\Sun\Java\bin;C:\WINDOWS\system32;C:\WINDOWS;C:\Program Files\ImageMagick-6.5.4-Q16;C:\textlive\2008\bin\win32;c:\Program Files\Microsoft SQL Server\90\Tools\binn\;C:\Program Files\TortoiseSVN\bin;C:\WINDOWS\System32\Wbem;C:\WINDOWS;C:\WINDOWS\system32;C:\Perl\bin;C:\Perl\site\bin;C:\Mercurial;C:\Program Files\ImageMagick-6.5.4-Q16;C:\textlive\2008\bin\win32;c:\Program Files\Microsoft SQL Server\90\Tools\binn\;C:\Program Files\TortoiseSVN\bin;C:\WINDOWS\System32\Wbem;C:\WINDOWS;C:\WINDOWS\system32;C:\Perl\bin;C:\Perl\site\bin;C:\Mercurial;C:\Python25\Scripts;C:\APP\apache-ant-1.7.0\bin;C:\Program Files\Java\jdk1.6.0_06\bin;C:\APP\svn-win32-1.5.0\bin;C:\APP\apache-maven-2.0.9\bin;C:\APP\gwt-windows-1.4.62;C:\Python25;C:\APP\cmake-2.6.2-win32-x86\bin;C:\APP\MPlayer-1.0rc2;C:\Program Files\Sun\xVM VirtualBox;C:\APP\OpenCV\bin"/>
-    <property name="java.vendor.url" value="http://java.sun.com/"/>
-    <property name="java.vm.vendor" value="Sun Microsystems Inc."/>
-    <property name="maven.home" value="EMBEDDED"/>
-    <property name="java.runtime.name" value="Java(TM) SE Runtime Environment"/>
-    <property name="java.class.path" value="/C:/eclipse/plugins/org.maven.ide.components.maven_embedder_2.1.0.20080530-2300/jars/plexus-classworlds-1.2-alpha-12.jar"/>
-    <property name="env.DXSDK_DIR" value="C:\Program Files\Microsoft DirectX SDK (March 2009)\"/>
-    <property name="java.vm.specification.name" value="Java Virtual Machine Specification"/>
-    <property name="env.LOGONSERVER" value="\\OPENLAB-CYC"/>
-    <property name="env.windir" value="C:\WINDOWS"/>
-    <property name="java.vm.specification.version" value="1.0"/>
-    <property name="env.PROCESSOR_ARCHITECTURE" value="x86"/>
-    <property name="m2eclipse.workspace.state" value="C:\Documents and Settings\qty\workspace\.metadata\.plugins\org.maven.ide.eclipse\workspacestate.properties"/>
-    <property name="sun.cpu.endian" value="little"/>
-    <property name="sun.os.patch.level" value="Service Pack 3"/>
-    <property name="env.ProgramFiles" value="C:\Program Files"/>
-    <property name="env.ANT_HOME" value="C:\APP\apache-ant-1.7.0"/>
-    <property name="surefire.test.class.path" value="C:\Documents and Settings\qty\workspace\jplurk\target\test-classes;C:\Documents and Settings\qty\workspace\jplurk\target\classes;C:\Documents and Settings\qty\.m2\repository\junit\junit\3.8.1\junit-3.8.1.jar;"/>
-    <property name="java.io.tmpdir" value="C:\DOCUME~1\qty\LOCALS~1\Temp\"/>
-    <property name="env.PROCESSOR_REVISION" value="1706"/>
-    <property name="java.vendor.url.bug" value="http://java.sun.com/cgi-bin/bugreport.cgi"/>
-    <property name="env.SystemRoot" value="C:\WINDOWS"/>
-    <property name="java.awt.graphicsenv" value="sun.awt.Win32GraphicsEnvironment"/>
-    <property name="os.arch" value="x86"/>
-    <property name="java.ext.dirs" value="C:\Program Files\Java\jre1.6.0_06\lib\ext;C:\WINDOWS\Sun\Java\lib\ext"/>
-    <property name="user.dir" value="C:\Documents and Settings\qty\workspace\jplurk"/>
-    <property name="line.separator" value="
-"/>
-    <property name="java.vm.name" value="Java HotSpot(TM) Client VM"/>
-    <property name="env.PATHEXT" value=".COM;.EXE;.BAT;.CMD;.VBS;.VBE;.JS;.JSE;.WSF;.WSH"/>
-    <property name="env.Path" value="C:\Program Files\ImageMagick-6.5.4-Q16;C:\textlive\2008\bin\win32;c:\Program Files\Microsoft SQL Server\90\Tools\binn\;C:\Program Files\TortoiseSVN\bin;C:\WINDOWS\System32\Wbem;C:\WINDOWS;C:\WINDOWS\system32;C:\Perl\bin;C:\Perl\site\bin;C:\Mercurial;C:\Program Files\ImageMagick-6.5.4-Q16;C:\textlive\2008\bin\win32;c:\Program Files\Microsoft SQL Server\90\Tools\binn\;C:\Program Files\TortoiseSVN\bin;C:\WINDOWS\System32\Wbem;C:\WINDOWS;C:\WINDOWS\system32;C:\Perl\bin;C:\Perl\site\bin;C:\Mercurial;C:\Python25\Scripts;C:\APP\apache-ant-1.7.0\bin;C:\Program Files\Java\jdk1.6.0_06\bin;C:\APP\svn-win32-1.5.0\bin;C:\APP\apache-maven-2.0.9\bin;C:\APP\gwt-windows-1.4.62;C:\Python25;C:\APP\cmake-2.6.2-win32-x86\bin;C:\APP\MPlayer-1.0rc2;C:\Program Files\Sun\xVM VirtualBox;C:\APP\OpenCV\bin"/>
-    <property name="basedir" value="C:\Documents and Settings\qty\workspace\jplurk"/>
-    <property name="maven.mode.standalone" value="true"/>
-    <property name="env.USERNAME" value="qty"/>
-    <property name="env.SystemDrive" value="C:"/>
-    <property name="file.encoding" value="UTF-8"/>
-    <property name="env.USERDOMAIN" value="OPENLAB-CYC"/>
-    <property name="java.specification.version" value="1.6"/>
-    <property name="env.PROCESSOR_LEVEL" value="6"/>
+    <property value="Java(TM) 2 Runtime Environment, Standard Edition" name="java.runtime.name"/>
+    <property value="E:\Program Files\Java\jdk1.5.0_14\jre\bin" name="sun.boot.library.path"/>
+    <property value="1.5.0_14-b03" name="java.vm.version"/>
+    <property value="Sun Microsystems Inc." name="java.vm.vendor"/>
+    <property value="http://java.sun.com/" name="java.vendor.url"/>
+    <property value=";" name="path.separator"/>
+    <property value="Java HotSpot(TM) Client VM" name="java.vm.name"/>
+    <property value="sun.io" name="file.encoding.pkg"/>
+    <property value="TW" name="user.country"/>
+    <property value="SUN_STANDARD" name="sun.java.launcher"/>
+    <property value="Service Pack 2" name="sun.os.patch.level"/>
+    <property value="Java Virtual Machine Specification" name="java.vm.specification.name"/>
+    <property value="D:\projects\jPlurk\com.google.jplurk" name="user.dir"/>
+    <property value="1.5.0_14-b03" name="java.runtime.version"/>
+    <property value="sun.awt.Win32GraphicsEnvironment" name="java.awt.graphicsenv"/>
+    <property value="D:\projects\jPlurk\com.google.jplurk" name="basedir"/>
+    <property value="E:\Program Files\Java\jdk1.5.0_14\jre\lib\endorsed" name="java.endorsed.dirs"/>
+    <property value="x86" name="os.arch"/>
+    <property value="E:\DOCUME~1\Askeing\LOCALS~1\Temp\surefirebooter16453.jar" name="surefire.real.class.path"/>
+    <property value="E:\DOCUME~1\Askeing\LOCALS~1\Temp\" name="java.io.tmpdir"/>
+    <property value="
+" name="line.separator"/>
+    <property value="Sun Microsystems Inc." name="java.vm.specification.vendor"/>
+    <property value="" name="user.variant"/>
+    <property value="Windows XP" name="os.name"/>
+    <property value="MS950" name="sun.jnu.encoding"/>
+    <property value="E:\Program Files\Java\jdk1.5.0_14\jre\bin;.;E:\WINDOWS\system32;E:\WINDOWS;E:\Program Files\PC Connectivity Solution\;E:\WINDOWS\system32;E:\WINDOWS;E:\WINDOWS\System32\Wbem;D:\Program Files\Common Files\GTK\2.0\bin;E:\Program Files\Microsoft SQL Server\80\Tools\BINN;E:\Program Files\Java\jdk1.5.0_14\bin;E:\Program Files\MySQL\MySQL Server 5.0\bin;E:\MinGW\bin;E:\Qt\4.4.0\bin;E:\Python26;D:\Program Files\TortoiseSVN\bin" name="java.library.path"/>
+    <property value="D:\projects\jPlurk\com.google.jplurk\target\test-classes;D:\projects\jPlurk\com.google.jplurk\target\classes;E:\Documents and Settings\Askeing\.m2\repository\org\apache\httpcomponents\httpclient\4.0\httpclient-4.0.jar;E:\Documents and Settings\Askeing\.m2\repository\org\apache\httpcomponents\httpcore\4.0.1\httpcore-4.0.1.jar;E:\Documents and Settings\Askeing\.m2\repository\commons-logging\commons-logging\1.1.1\commons-logging-1.1.1.jar;E:\Documents and Settings\Askeing\.m2\repository\commons-codec\commons-codec\1.3\commons-codec-1.3.jar;E:\Documents and Settings\Askeing\.m2\repository\junit\junit\3.8.1\junit-3.8.1.jar;E:\Documents and Settings\Askeing\.m2\repository\commons-lang\commons-lang\2.4\commons-lang-2.4.jar;E:\Documents and Settings\Askeing\.m2\repository\commons-beanutils\commons-beanutils\1.8.1\commons-beanutils-1.8.1.jar;E:\Documents and Settings\Askeing\.m2\repository\net\jcip\jcip-annotations\1.0\jcip-annotations-1.0.jar;E:\Documents and Settings\Askeing\.m2\repository\org\json\json\20080701\json-20080701.jar;" name="surefire.test.class.path"/>
+    <property value="Java Platform API Specification" name="java.specification.name"/>
+    <property value="49.0" name="java.class.version"/>
+    <property value="HotSpot Client Compiler" name="sun.management.compiler"/>
+    <property value="5.1" name="os.version"/>
+    <property value="E:\Documents and Settings\Askeing" name="user.home"/>
+    <property value="" name="user.timezone"/>
+    <property value="sun.awt.windows.WPrinterJob" name="java.awt.printerjob"/>
+    <property value="1.5" name="java.specification.version"/>
+    <property value="MS950" name="file.encoding"/>
+    <property value="Askeing" name="user.name"/>
+    <property value="D:\projects\jPlurk\com.google.jplurk\target\test-classes;D:\projects\jPlurk\com.google.jplurk\target\classes;E:\Documents and Settings\Askeing\.m2\repository\org\apache\httpcomponents\httpclient\4.0\httpclient-4.0.jar;E:\Documents and Settings\Askeing\.m2\repository\org\apache\httpcomponents\httpcore\4.0.1\httpcore-4.0.1.jar;E:\Documents and Settings\Askeing\.m2\repository\commons-logging\commons-logging\1.1.1\commons-logging-1.1.1.jar;E:\Documents and Settings\Askeing\.m2\repository\commons-codec\commons-codec\1.3\commons-codec-1.3.jar;E:\Documents and Settings\Askeing\.m2\repository\junit\junit\3.8.1\junit-3.8.1.jar;E:\Documents and Settings\Askeing\.m2\repository\commons-lang\commons-lang\2.4\commons-lang-2.4.jar;E:\Documents and Settings\Askeing\.m2\repository\commons-beanutils\commons-beanutils\1.8.1\commons-beanutils-1.8.1.jar;E:\Documents and Settings\Askeing\.m2\repository\net\jcip\jcip-annotations\1.0\jcip-annotations-1.0.jar;E:\Documents and Settings\Askeing\.m2\repository\org\json\json\20080701\json-20080701.jar;" name="java.class.path"/>
+    <property value="1.0" name="java.vm.specification.version"/>
+    <property value="32" name="sun.arch.data.model"/>
+    <property value="E:\Program Files\Java\jdk1.5.0_14\jre" name="java.home"/>
+    <property value="Sun Microsystems Inc." name="java.specification.vendor"/>
+    <property value="zh" name="user.language"/>
+    <property value="sun.awt.windows.WToolkit" name="awt.toolkit"/>
+    <property value="mixed mode, sharing" name="java.vm.info"/>
+    <property value="1.5.0_14" name="java.version"/>
+    <property value="E:\Program Files\Java\jdk1.5.0_14\jre\lib\ext" name="java.ext.dirs"/>
+    <property value="E:\Program Files\Java\jdk1.5.0_14\jre\lib\rt.jar;E:\Program Files\Java\jdk1.5.0_14\jre\lib\i18n.jar;E:\Program Files\Java\jdk1.5.0_14\jre\lib\sunrsasign.jar;E:\Program Files\Java\jdk1.5.0_14\jre\lib\jsse.jar;E:\Program Files\Java\jdk1.5.0_14\jre\lib\jce.jar;E:\Program Files\Java\jdk1.5.0_14\jre\lib\charsets.jar;E:\Program Files\Java\jdk1.5.0_14\jre\classes" name="sun.boot.class.path"/>
+    <property value="Sun Microsystems Inc." name="java.vendor"/>
+    <property value="E:\Documents and Settings\Askeing\.m2\repository" name="localRepository"/>
+    <property value="\" name="file.separator"/>
+    <property value="http://java.sun.com/cgi-bin/bugreport.cgi" name="java.vendor.url.bug"/>
+    <property value="little" name="sun.cpu.endian"/>
+    <property value="UnicodeLittle" name="sun.io.unicode.encoding"/>
+    <property value="windows" name="sun.desktop"/>
+    <property value="pentium_pro+mmx pentium_pro pentium+mmx pentium i486 i386 i86" name="sun.cpu.isalist"/>
   </properties>
-  <testcase time="0" classname="com.google.jplurk.AppTest" name="testApp"/>
+  <testcase classname="com.google.jplurk.AppTest" time="0" name="testApp"/>
 </testsuite>
