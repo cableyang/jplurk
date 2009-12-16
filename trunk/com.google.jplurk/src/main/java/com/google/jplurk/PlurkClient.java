@@ -26,7 +26,7 @@ public class PlurkClient {
 		this.config = settings;
 	}
 
-	public JSONObject login(String user, String password) throws ClientProtocolException, IOException {
+	public JSONObject login(String user, String password) {
 
 		try {
 			HttpGet method = (HttpGet) PlurkActionSheet.getInstance().login(
