@@ -23,17 +23,11 @@ import com.google.jplurk.exception.PlurkException;
 public class PlurkClient {
 	PlurkSettings config;
 
-	private ResponseHandler responseHandler = new BasicResponseHandler();
-
-	private String getApiUri(String uri) {
-		return "http://www.plurk.com/API" + uri;
-	}
+	private ResponseHandler<String> responseHandler = new BasicResponseHandler();
 
 	public PlurkClient(PlurkSettings settings) {
 		this.config = settings;
 	}
-
-
 
 	public JSONObject login(String user, String password) throws ClientProtocolException, IOException {
 
@@ -56,7 +50,6 @@ public class PlurkClient {
 		return null;
 	}
 
-	@SuppressWarnings("unchecked")
 	private String execute(HttpRequestBase method) throws PlurkException{
 		HttpClient client = new DefaultHttpClient();
 		String result = null;
