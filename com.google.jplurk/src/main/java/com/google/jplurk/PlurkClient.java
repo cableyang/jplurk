@@ -16,6 +16,8 @@ import org.json.JSONObject;
 
 import com.google.jplurk.action.PlurkActionSheet;
 import com.google.jplurk.exception.PlurkException;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class PlurkClient {
 	PlurkSettings config;
@@ -47,6 +49,66 @@ public class PlurkClient {
 		return null;
 	}
 
+    public JSONObject register(String nick_name, String full_name,
+            String password, String gender, String date_of_birth) {
+        final int FLAG = Pattern.DOTALL | Pattern.MULTILINE;
+		Matcher m;
+
+        // validation of nick_name
+        m = Pattern.compile("[\\w]{3,}", FLAG).matcher(nick_name);
+		m.reset();
+        if( !m.find() ) {
+            return null;
+        }
+        // validation of full_name
+        m = Pattern.compile(".+", FLAG).matcher(full_name);
+		m.reset();
+        if( !m.find() ) {
+            return null;
+        }
+        // validation of password
+        m = Pattern.compile(".{3,}", FLAG).matcher(password);
+		m.reset();
+        if( !m.find() ) {
+            return null;
+        }
+        // validation of gender
+        m = Pattern.compile("male|female", FLAG).matcher(gender);
+		m.reset();
+        if( !m.find() ) {
+            return null;
+        }
+        // validation of date_of_birth
+        m = Pattern.compile("[0-9]{4}\\-(0[1-9])|(1[0-2])\\-(0[1-9])|(1[0-9])|(2[0-9])|(3[0-1])", FLAG).matcher(date_of_birth);
+		m.reset();
+        if( !m.find() ) {
+            return null;
+        }
+
+        /* TODO
+         * Need add opt param: email. (waiting for PlurkActionSheet finished)
+         */
+		try {
+			HttpGet method = (HttpGet) PlurkActionSheet.getInstance().register(
+				config.createParamMap()
+					.k("nick_name").v(nick_name)
+					.k("full_name").v(full_name)
+                    .k("password").v(password)
+                    .k("gender").v(gender)
+                    .k("date_of_birth").v(date_of_birth)
+					.getMap()
+			);
+			JSONObject ret = new JSONObject(execute(method));
+			return ret;
+		} catch (PlurkException e) {
+			e.printStackTrace();
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
+
+		return null;
+	}
+
 	private String execute(HttpRequestBase method) throws PlurkException{
 		HttpClient client = new DefaultHttpClient();
 		String result = null;
@@ -61,8 +123,17 @@ public class PlurkClient {
 
 	public static void main(String[] args) throws PlurkException, ClientProtocolException, IOException {
 		PlurkClient pc = new PlurkClient(new PlurkSettings());
+
+//        JSONObject oRegister = pc.register(JOptionPane.showInputDialog("nick_name"),
+//                JOptionPane.showInputDialog("full_name"),
+//                JOptionPane.showInputDialog("password"),
+//                JOptionPane.showInputDialog("gender"),
+//                JOptionPane.showInputDialog("date_of_birth"));
+//		System.out.println(oRegister);
+
 		JSONObject o = pc.login(JOptionPane.showInputDialog("id"), JOptionPane.showInputDialog("password"));
 		System.out.println(o);
+        
 	}
 
 

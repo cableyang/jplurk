@@ -31,6 +31,16 @@ public final class PlurkActionSheet {
 		return prepare("login", params);
 	}
 
+    /* TODO :
+     * Optional parameters:
+     * email: Must be a valid email.
+     * */
+    @Meta(uri="/Users/register", require = { "api_key", "nick_name", "full_name", "password", "gender", "date_of_birth" })
+    public HttpRequestBase register(Map<String, String> params)
+            throws PlurkException {
+        return prepare("register", params);
+    }
+
 	private HttpRequestBase prepare(String methodName, Map<String, String> params) throws PlurkException {
 		Method method = MethodUtils.getAccessibleMethod(PlurkActionSheet.class,
 				methodName, new Class[] { Map.class });
