@@ -47,13 +47,7 @@
 		<dependency>
 			<groupId>log4j</groupId>
 			<artifactId>log4j</artifactId>
-			<version>1.2.15</version>
-			<exclusions>
-				<exclusion>
-					<groupId>com.sun.jdmk</groupId>
-					<artifactId>jmxtools</artifactId>
-				</exclusion>
-			</exclusions>
+			<version>1.2.14</version>
 		</dependency>
 	</dependencies>
 
