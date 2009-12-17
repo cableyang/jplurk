@@ -12,6 +12,8 @@ JPlurk v2 正持續進行中，在 Plurk 官方 API 出現後，我們決定凍�
 || login || qrtt1 || 完成 ||
 
 
+----
+
 = About jPlurk V2  =
 
 jPlurk v2 is developing now.
