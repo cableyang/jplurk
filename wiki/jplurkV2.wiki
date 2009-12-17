@@ -9,8 +9,8 @@ JPlurk v2 正持續進行中，在 Plurk 官方 [http://www.plurk.com/API API] �
 = API 實作狀態表 =
 
 || *功能* || *誰在實作* || *狀態* ||
-|| login || qrtt1 || 完成 ||
-|| register || Askeing || 完成 ||
+|| /API/Users/login || qrtt1 || 完成 ||
+|| /API/Users/register || Askeing || 完成 ||
 
 ----
 
@@ -23,5 +23,5 @@ jPlurk v1 has been frozen because Plurk released the Official [http://www.plurk.
 = State of Plurk API Implementation =
 
 || *Method* || *Owner* || *State* ||
-|| login || qrtt1 || Done ||
-|| register || Askeing || Done ||
+|| /API/Users/login || qrtt1 || Done ||
+|| /API/Users/register || Askeing || Done ||
