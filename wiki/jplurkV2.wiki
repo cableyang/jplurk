@@ -18,7 +18,7 @@ JPlurk v2 正持續進行中，在 Plurk 官方 [http://www.plurk.com/API API] �
 
 jPlurk v2 is developing now.
 
-jPlurk v1 has been frozen because the Plurk released Official [http://www.plurk.com/API Plurk API]. And now, we propose the new architecture of jPlurk.
+jPlurk v1 has been frozen because Plurk released the Official [http://www.plurk.com/API Plurk API]. And now, we propose the new architecture of jPlurk.
 
 = State of Plurk API Implementation =
 
