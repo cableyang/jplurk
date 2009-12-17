@@ -8,7 +8,11 @@ import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.methods.HttpRequestBase;
 
+import com.google.jplurk.action.Headers.Header;
+import com.google.jplurk.action.Validation.Validators;
 import com.google.jplurk.exception.PlurkException;
+import com.google.jplurk.validator.EmailValidator;
+import com.google.jplurk.validator.IValidator;
 
 public final class PlurkActionSheet {
 
@@ -31,11 +35,9 @@ public final class PlurkActionSheet {
 		return prepare("login", params);
 	}
 
-    /* TODO :
-     * Optional parameters:
-     * email: Must be a valid email.
-     * */
-    @Meta(uri="/Users/register", require = { "api_key", "nick_name", "full_name", "password", "gender", "date_of_birth" })
+	@Meta(uri = "/Users/register",
+		require = { "api_key", "nick_name", "full_name", "password", "gender", "date_of_birth" })
+	@Validation({ @Validators(field = "email", validator = EmailValidator.class) })
     public HttpRequestBase register(Map<String, String> params)
             throws PlurkException {
         return prepare("register", params);
@@ -72,6 +74,20 @@ public final class PlurkActionSheet {
 		if (headers != null) {
 			for (Header header : headers.headers()) {
 				httpMethod.addHeader(header.key(), header.value());
+			}
+		}
+
+		Validation validation = method.getAnnotation(Validation.class);
+		if (validation != null) {
+			for (Validators v : validation.value()) {
+				if (params.containsKey(v.field())) {
+					boolean isPass = IValidator.ValidatorUtils.validate(v.validator(), params.get(v.field()));
+					if(!isPass){
+						throw new PlurkException(
+							"validation failure. the field ["
+							+ v.field() + "] can not pass validation [" + v.validator() + "]");
+					}
+				}
 			}
 		}
 

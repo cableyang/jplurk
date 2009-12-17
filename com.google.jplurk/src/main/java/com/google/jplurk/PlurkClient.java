@@ -87,12 +87,21 @@ public class PlurkClient {
             return null;
         }
 
+
         /* TODO
          * Need add opt param: email. (waiting for PlurkActionSheet finished)
          */
         try {
             HttpGet method = (HttpGet) PlurkActionSheet.getInstance().register(
-                    config.createParamMap().k("nick_name").v(nick_name).k("full_name").v(full_name).k("password").v(password).k("gender").v(gender).k("date_of_birth").v(date_of_birth).getMap());
+            	config.createParamMap()
+            		.k("nick_name").v(nick_name)
+            		.k("full_name").v(full_name)
+            		.k("password").v(password)
+            		.k("gender").v(gender)
+            		.k("date_of_birth").v(date_of_birth)
+            		.k("email").v("xd@gmail.com")
+            		.getMap());
+
             JSONObject ret = new JSONObject(execute(method));
             return ret;
         } catch (PlurkException e) {
