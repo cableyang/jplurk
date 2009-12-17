@@ -20,7 +20,7 @@ jPlurk v2 is developing now.
 When Official Plurk API released, we decided that the development of jPlurk v1 had be stopped.
 And now, we begin designing new architecture of jPlurk.
 
-= State Table of Plurk API Implementation =
+= State of Plurk API Implementation =
 
 || *Method* || *Owner* || *State* ||
 || login || qrtt1 || Done ||
