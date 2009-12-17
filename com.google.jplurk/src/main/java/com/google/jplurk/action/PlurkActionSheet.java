@@ -7,6 +7,8 @@ import org.apache.commons.beanutils.MethodUtils;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.methods.HttpRequestBase;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.google.jplurk.action.Headers.Header;
 import com.google.jplurk.action.Validation.Validators;
@@ -16,6 +18,7 @@ import com.google.jplurk.validator.IValidator;
 
 public final class PlurkActionSheet {
 
+	static Logger logger = LoggerFactory.getLogger(PlurkActionSheet.class);
 	private final static PlurkActionSheet self = new PlurkActionSheet();
 
 	private PlurkActionSheet() {
@@ -72,15 +75,19 @@ public final class PlurkActionSheet {
 
 		Headers headers = method.getAnnotation(Headers.class);
 		if (headers != null) {
+			logger.debug("found @Headers");
 			for (Header header : headers.headers()) {
+				logger.debug("add header => name[" + header.key() + "] value[" + header.value() + "]");
 				httpMethod.addHeader(header.key(), header.value());
 			}
 		}
 
 		Validation validation = method.getAnnotation(Validation.class);
 		if (validation != null) {
+			logger.debug("found @Validation");
 			for (Validators v : validation.value()) {
 				if (params.containsKey(v.field())) {
+					logger.debug("validate field[" + v.field() + "]");
 					boolean isPass = IValidator.ValidatorUtils.validate(v.validator(), params.get(v.field()));
 					if(!isPass){
 						throw new PlurkException(

@@ -1,31 +1,33 @@
 package com.google.jplurk;
 
 import java.io.IOException;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.swing.JOptionPane;
 
+import org.apache.commons.lang.StringUtils;
+import org.apache.http.HttpHost;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.ResponseHandler;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpRequestBase;
+import org.apache.http.conn.params.ConnRoutePNames;
 import org.apache.http.impl.client.BasicResponseHandler;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.google.jplurk.action.PlurkActionSheet;
 import com.google.jplurk.exception.PlurkException;
 import com.google.jplurk.net.ProxyProvider;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-import org.apache.commons.lang.StringUtils;
-import org.apache.http.HttpHost;
-import org.apache.http.auth.AuthScope;
-import org.apache.http.auth.UsernamePasswordCredentials;
-import org.apache.http.conn.params.ConnRoutePNames;
 
 public class PlurkClient {
+
+	static Logger logger = LoggerFactory.getLogger(PlurkClient.class);
 
     PlurkSettings config;
     private ResponseHandler<String> responseHandler = new BasicResponseHandler();
@@ -43,9 +45,9 @@ public class PlurkClient {
             JSONObject ret = new JSONObject(execute(method));
             return ret;
         } catch (PlurkException e) {
-            e.printStackTrace();
+        	logger.error(e.getMessage(), e);
         } catch (JSONException e) {
-            e.printStackTrace();
+        	logger.error(e.getMessage(), e);
         }
 
         return null;
@@ -100,9 +102,9 @@ public class PlurkClient {
             JSONObject ret = new JSONObject(execute(method));
             return ret;
         } catch (PlurkException e) {
-            e.printStackTrace();
+        	logger.error(e.getMessage(), e);
         } catch (JSONException e) {
-            e.printStackTrace();
+        	logger.error(e.getMessage(), e);
         }
 
         return null;
