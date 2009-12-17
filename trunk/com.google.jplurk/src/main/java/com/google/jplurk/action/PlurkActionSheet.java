@@ -14,7 +14,9 @@ import com.google.jplurk.action.Headers.Header;
 import com.google.jplurk.action.Validation.Validators;
 import com.google.jplurk.exception.PlurkException;
 import com.google.jplurk.validator.EmailValidator;
+import com.google.jplurk.validator.IDListValidator;
 import com.google.jplurk.validator.IValidator;
+import com.google.jplurk.validator.QualifierValidator;
 
 public final class PlurkActionSheet {
 
@@ -45,6 +47,14 @@ public final class PlurkActionSheet {
             throws PlurkException {
         return prepare("register", params);
     }
+
+	@Meta(uri = "/Timeline/plurkAdd", require = { "api_key", "content", "qualifier" })
+	@Validation(value = {
+			@Validators(field = "limited_to", validator = IDListValidator.class),
+			@Validators(field = "qualifier", validator = QualifierValidator.class) })
+	public HttpRequestBase plurkAdd(Map<String, String> params) throws PlurkException{
+		return prepare("plurkAdd", params);
+	}
 
 	private HttpRequestBase prepare(String methodName, Map<String, String> params) throws PlurkException {
 		Method method = MethodUtils.getAccessibleMethod(PlurkActionSheet.class,
@@ -98,6 +108,7 @@ public final class PlurkActionSheet {
 			}
 		}
 
+		logger.info("Params: " + params.toString());
 		return httpMethod;
 	}
 

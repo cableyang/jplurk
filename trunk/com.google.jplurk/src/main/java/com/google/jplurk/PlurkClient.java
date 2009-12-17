@@ -23,6 +23,7 @@ import org.slf4j.LoggerFactory;
 
 import com.google.jplurk.action.PlurkActionSheet;
 import com.google.jplurk.exception.PlurkException;
+import com.google.jplurk.net.JPlurkResponseHandler;
 import com.google.jplurk.net.ProxyProvider;
 
 public class PlurkClient {
@@ -110,6 +111,21 @@ public class PlurkClient {
         return null;
     }
 
+	public JSONObject plurkAdd(String content, Qualifier qualifier) {
+		// FIXME got {"error_text": "Requires login"}
+		try {
+			HttpGet method = (HttpGet) PlurkActionSheet.getInstance()
+				.plurkAdd(config.createParamMap()
+						.k("content").v(content).k("qualifier").v(qualifier.toString()).getMap());
+			return new JSONObject(execute(method));
+		} catch (PlurkException e) {
+			logger.error(e.getMessage(), e);
+		} catch (JSONException e) {
+			logger.error(e.getMessage(), e);
+		}
+		return null;
+	}
+
     private String execute(HttpRequestBase method) throws PlurkException {
         HttpClient client = new DefaultHttpClient();
 
@@ -130,15 +146,15 @@ public class PlurkClient {
 
         String result = null;
         try {
-            result = (String) client.execute(method, responseHandler);
+            result = (String) client.execute(method,  new JPlurkResponseHandler());
         } catch (Exception e) {
             throw new PlurkException(e);
         }
-        client.getConnectionManager().shutdown();
+//        client.getConnectionManager().shutdown();
         return result;
     }
 
-    public static void main(String[] args) throws PlurkException, ClientProtocolException, IOException {
+    public static void main(String[] args) throws PlurkException, ClientProtocolException, IOException, InterruptedException {
 //        ProxyProvider.setProvider("proxyhost", 8080);
 
         PlurkClient pc = new PlurkClient(new PlurkSettings());
@@ -152,6 +168,9 @@ public class PlurkClient {
 
         JSONObject o = pc.login(JOptionPane.showInputDialog("id"), JOptionPane.showInputDialog("password"));
         System.out.println(o);
+
+//        JSONObject oo = pc.plurkAdd("不知不覺就九點半了", Qualifier.SAYS);
+//        System.out.println(oo);
 
     }
 }
