@@ -10,3 +10,18 @@ JPlurk v2 正持續進行中，在 Plurk 官方 API 出現後，我們決定凍�
 
 || 功能 || 誰在實作 || 狀態 ||
 || login || qrtt1 || 完成 ||
+
+
+#summary jPlurk version 2
+
+= About jPlurk V2  =
+
+jPlurk v2 is developing now.
+When Official Plurk API released, we decided that the development of jPlurk v1 had be stopped.
+And now, we begin designing new architecture of jPlurk.
+
+= State Table of Plurk API Implementation =
+
+|| Method || Owner || State ||
+|| login || qrtt1 || Done ||
+|| register || Askeing || Done ||
