@@ -52,7 +52,7 @@ public class PlurkClient {
     }
 
     public JSONObject register(String nick_name, String full_name,
-            String password, String gender, String date_of_birth) {
+            String password, Gender gender, String date_of_birth) {
         final int FLAG = Pattern.DOTALL | Pattern.MULTILINE;
         Matcher m;
 
@@ -74,12 +74,7 @@ public class PlurkClient {
         if (!m.find()) {
             return null;
         }
-        // validation of gender
-        m = Pattern.compile("male|female", FLAG).matcher(gender);
-        m.reset();
-        if (!m.find()) {
-            return null;
-        }
+
         // validation of date_of_birth
         m = Pattern.compile("[0-9]{4}\\-(0[1-9])|(1[0-2])\\-(0[1-9])|(1[0-9])|(2[0-9])|(3[0-1])", FLAG).matcher(date_of_birth);
         m.reset();
@@ -97,7 +92,7 @@ public class PlurkClient {
             		.k("nick_name").v(nick_name)
             		.k("full_name").v(full_name)
             		.k("password").v(password)
-            		.k("gender").v(gender)
+            		.k("gender").v(gender.toString())
             		.k("date_of_birth").v(date_of_birth)
             		.k("email").v("xd@gmail.com")
             		.getMap());
