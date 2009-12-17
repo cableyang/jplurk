@@ -15,6 +15,8 @@ public class EmailValidatorTest extends TestCase {
 		assertTrue(validate("qrtt123.d34@hoooootmail.com"));
 		assertTrue(validate("qrtt123.tw@hoooootmail.com"));
 		assertTrue(validate("qrtt123.tw@hoooootmail.com.dotdotdot"));
+
+		assertFalse(validate("qrtt123.twhoooootmail.com.dotdotdot"));
 	}
 
 }
