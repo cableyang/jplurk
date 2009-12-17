@@ -15,4 +15,8 @@ public class PlurkException extends Throwable {
 	public PlurkException(Throwable t) {
 		super(t);
 	}
+
+	public PlurkException(String message, Throwable t) {
+		super(message, t);
+	}
 }

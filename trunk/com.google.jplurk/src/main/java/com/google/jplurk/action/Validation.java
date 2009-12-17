@@ -5,17 +5,17 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
+import com.google.jplurk.validator.IValidator;
+
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.METHOD)
-public @interface Headers {
+public @interface Validation {
 
-	Header[] headers();
+	Validators[] value();
 
-	public @interface Header {
-		String key();
-
-		String value();
+	@interface Validators{
+		String field();
+		Class<? extends IValidator> validator();
 	}
+
 }
-
-
