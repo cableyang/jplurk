@@ -10,7 +10,7 @@ JPlurk v2 正持續進行中，在 Plurk 官方 API 出現後，我們決定凍�
 
 || *功能* || *誰在實作* || *狀態* ||
 || login || qrtt1 || 完成 ||
-
+|| register || Askeing || 完成 ||
 
 ----
 
