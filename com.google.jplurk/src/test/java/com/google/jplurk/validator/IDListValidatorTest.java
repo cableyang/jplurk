@@ -1,8 +1,8 @@
 package com.google.jplurk.validator;
 
-import com.google.jplurk.exception.PlurkException;
-
 import junit.framework.TestCase;
+
+import com.google.jplurk.exception.PlurkException;
 
 public class IDListValidatorTest extends TestCase {
 
