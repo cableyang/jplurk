@@ -10,11 +10,9 @@ import org.apache.commons.lang.StringUtils;
 import org.apache.http.HttpHost;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
-import org.apache.http.client.ResponseHandler;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpRequestBase;
 import org.apache.http.conn.params.ConnRoutePNames;
-import org.apache.http.impl.client.BasicResponseHandler;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -29,15 +27,42 @@ import com.google.jplurk.net.ProxyProvider;
 public class PlurkClient {
 
 	static Logger logger = LoggerFactory.getLogger(PlurkClient.class);
+	HttpClient client = new DefaultHttpClient();
 
     PlurkSettings config;
-    private ResponseHandler<String> responseHandler = new BasicResponseHandler();
 
     public PlurkClient(PlurkSettings settings) {
         this.config = settings;
+        configureHttpClient();
     }
 
-    public JSONObject login(String user, String password) {
+	private void configureHttpClient() {
+		if (StringUtils.isNotBlank(ProxyProvider.getHost())) {
+			HttpHost proxy = new HttpHost(ProxyProvider.getHost(), ProxyProvider.getPort());
+			client.getParams().setParameter(ConnRoutePNames.DEFAULT_PROXY, proxy);
+		}
+
+		Runtime.getRuntime().addShutdownHook(new Thread() {
+			@Override
+			public void run() {
+				client.getConnectionManager().shutdown();
+			}
+		});
+		/*
+		 * TODO Add Proxy of Auth
+		 */
+		// if (StringUtils.isNotBlank(ProxyProvider.getUser())) {
+		// HttpState state = new HttpState();
+		// state.setProxyCredentials(
+		// new AuthScope(ProxyProvider.getHost(), ProxyProvider.getPort()),
+		// new UsernamePasswordCredentials(ProxyProvider.getUser(),
+		// ProxyProvider.getPassword()));
+		// client.setState(state);
+		// }
+
+	}
+
+	public JSONObject login(String user, String password) {
 
         try {
             HttpGet method = (HttpGet) PlurkActionSheet.getInstance().login(
@@ -112,7 +137,6 @@ public class PlurkClient {
     }
 
 	public JSONObject plurkAdd(String content, Qualifier qualifier) {
-		// FIXME got {"error_text": "Requires login"}
 		try {
 			HttpGet method = (HttpGet) PlurkActionSheet.getInstance()
 				.plurkAdd(config.createParamMap()
@@ -127,30 +151,12 @@ public class PlurkClient {
 	}
 
     private String execute(HttpRequestBase method) throws PlurkException {
-        HttpClient client = new DefaultHttpClient();
-
-        if (StringUtils.isNotBlank(ProxyProvider.getHost())) {
-            HttpHost proxy = new HttpHost(ProxyProvider.getHost(), ProxyProvider.getPort());
-            client.getParams().setParameter(ConnRoutePNames.DEFAULT_PROXY, proxy);
-        }
-        /* TODO
-         * Add Proxy of Auth
-         */
-//		if (StringUtils.isNotBlank(ProxyProvider.getUser())) {
-//			HttpState state = new HttpState();
-//			state.setProxyCredentials(
-//					new AuthScope(ProxyProvider.getHost(),	ProxyProvider.getPort()),
-//					new UsernamePasswordCredentials(ProxyProvider.getUser(), ProxyProvider.getPassword()));
-//			client.setState(state);
-//		}
-
-        String result = null;
+        String result = "";
         try {
             result = (String) client.execute(method,  new JPlurkResponseHandler());
         } catch (Exception e) {
             throw new PlurkException(e);
         }
-//        client.getConnectionManager().shutdown();
         return result;
     }
 
@@ -169,8 +175,8 @@ public class PlurkClient {
         JSONObject o = pc.login(JOptionPane.showInputDialog("id"), JOptionPane.showInputDialog("password"));
         System.out.println(o);
 
-//        JSONObject oo = pc.plurkAdd("不知不覺就九點半了", Qualifier.SAYS);
-//        System.out.println(oo);
+        JSONObject oo = pc.plurkAdd("怎麼會這樣呢?", Qualifier.SAYS);
+        System.out.println(oo);
 
     }
 }
