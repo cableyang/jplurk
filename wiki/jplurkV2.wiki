@@ -2,7 +2,7 @@
 
 = 關於 V2  =
 
-JPlurk v2 正持續進行中，在 Plurk 官方 API 出現後，我們決定凍結 v1 的開發。
+JPlurk v2 正持續進行中，在 Plurk 官方 [http://www.plurk.com/API API] 出現後，我們決定凍結 v1 的開發。
 並著手新的架構設計。
 
 
@@ -18,7 +18,7 @@ JPlurk v2 正持續進行中，在 Plurk 官方 API 出現後，我們決定凍�
 
 jPlurk v2 is developing now.
 
-When Official Plurk API released, we decided that the development of jPlurk v1 had be stopped.
+When Official [http://www.plurk.com/API Plurk API] released, we decided that the development of jPlurk v1 had be stopped.
 
 And now, we begin designing new architecture of jPlurk.
 
