@@ -10,12 +10,12 @@ public class DateTime {
 	public final static SimpleDateFormat OFFSET_OUTPUT_FORMAT =
 		new SimpleDateFormat("yyyy-M-d'T'HH:mm:ss", Locale.US);
 
-	int year;
-	int month;
-	int day;
-	int hour;
-	int minute;
-	int second;
+	private int year;
+	private int month;
+	private int day;
+	private int hour;
+	private int minute;
+	private int second;
 
 	private DateTime(int year, int month, int day) {
 		this.year = year;
