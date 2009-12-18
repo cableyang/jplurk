@@ -63,6 +63,11 @@ public final class PlurkActionSheet {
 		return prepare("getUnreadPlurks", params);
 	}
 
+	@Meta(uri = "/Responses/get", require = { "api_key", "plurk_id", "from_response" })
+	public HttpRequestBase responseGet(Map<String, String> params) throws PlurkException {
+		return prepare("responseGet", params);
+	}
+
 	@Meta(uri = "/Responses/responseAdd", require = { "api_key", "content", "qualifier", "plurk_id" })
 	@Validation(value = { @Validators(field = "qualifier", validator = QualifierValidator.class) })
 	public HttpRequestBase responseAdd(Map<String, String> params) throws PlurkException {
