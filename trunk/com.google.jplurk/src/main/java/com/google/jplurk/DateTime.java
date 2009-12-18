@@ -5,8 +5,6 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
-import com.sun.org.apache.xerces.internal.impl.dv.xs.YearDV;
-
 public class DateTime {
 
 	public final static SimpleDateFormat OFFSET_OUTPUT_FORMAT =

@@ -14,7 +14,6 @@ import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpRequestBase;
 import org.apache.http.conn.params.ConnRoutePNames;
 import org.apache.http.impl.client.DefaultHttpClient;
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.slf4j.Logger;
@@ -141,11 +140,11 @@ public class PlurkClient {
     	return plurkAdd(content, qualifier, null);
     }
 
-	public JSONArray getUnreadPlurks(DateTime offset) {
+	public JSONObject getUnreadPlurks(DateTime offset) {
 		try {
 			HttpGet method = (HttpGet) PlurkActionSheet.getInstance().getUnreadPlurks(
 				config.createParamMap().k("offset").v(offset.timeOffset()).getMap());
-			return new JSONArray(execute(method));
+			return new JSONObject(execute(method));
 		} catch (PlurkException e) {
 			logger.error(e.getMessage(), e);
 		} catch (JSONException e) {
@@ -196,8 +195,10 @@ public class PlurkClient {
         JSONObject o = pc.login(JOptionPane.showInputDialog("id"), JOptionPane.showInputDialog("password"));
         System.out.println(o);
 
-        JSONObject oo = pc.plurkAdd("hmmmm", Qualifier.SAYS);
-        System.out.println(oo);
+//        JSONObject oo = pc.plurkAdd("hmmmm", Qualifier.SAYS);
+//        System.out.println(oo);
 
+        JSONObject js = pc.getUnreadPlurks(DateTime.now());
+        System.out.println(js);
     }
 }
