@@ -70,7 +70,7 @@ public class PlurkSettings {
 		});
 	}
 
-	private String getLang(){
+	public String getLang(){
 		return prop.getProperty("lang", "en");
 	}
 

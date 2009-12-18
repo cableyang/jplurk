@@ -136,11 +136,18 @@ public class PlurkClient {
         return null;
     }
 
-	public JSONObject plurkAdd(String content, Qualifier qualifier) {
+    public JSONObject plurkAdd(String content, Qualifier qualifier) {
+    	return plurkAdd(content, qualifier, null);
+    }
+
+	public JSONObject plurkAdd(String content, Qualifier qualifier, Lang lang) {
 		try {
 			HttpGet method = (HttpGet) PlurkActionSheet.getInstance()
 				.plurkAdd(config.createParamMap()
-						.k("content").v(content).k("qualifier").v(qualifier.toString()).getMap());
+					.k("content").v(content)
+					.k("qualifier").v(qualifier.toString())
+					.k("lang").v(lang == null ? config.getLang() : lang.toString())
+					.getMap());
 			return new JSONObject(execute(method));
 		} catch (PlurkException e) {
 			logger.error(e.getMessage(), e);
@@ -175,7 +182,7 @@ public class PlurkClient {
         JSONObject o = pc.login(JOptionPane.showInputDialog("id"), JOptionPane.showInputDialog("password"));
         System.out.println(o);
 
-        JSONObject oo = pc.plurkAdd("怎麼會這樣呢?", Qualifier.SAYS);
+        JSONObject oo = pc.plurkAdd("hmmmm", Qualifier.SAYS);
         System.out.println(oo);
 
     }
