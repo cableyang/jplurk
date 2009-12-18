@@ -70,6 +70,10 @@ public class PlurkSettings {
 		});
 	}
 
+	private String getLang(){
+		return prop.getProperty("lang", "en");
+	}
+
 	public MapHelper createParamMapWithDefaultUserInfo(){
 		return createParamMap()
 			.k("username").v(getDefaultUser())
@@ -82,6 +86,7 @@ public class PlurkSettings {
 		File setting = new File(dir, settings);
 		return getSettings(setting);
 	}
+
 
 	private Properties getSettings(File settingFile) throws PlurkException {
 		Properties prop = new Properties();
