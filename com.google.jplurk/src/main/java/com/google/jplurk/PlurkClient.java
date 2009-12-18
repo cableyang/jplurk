@@ -170,6 +170,25 @@ public class PlurkClient {
 		return null;
 	}
 
+	public JSONObject responseAdd(String plurkId, String content, Qualifier qualifier, Lang lang) {
+		try {
+			HttpGet method = (HttpGet) PlurkActionSheet.getInstance().responseAdd(
+					config.createParamMap()
+					.k("plurk_id").v(plurkId)
+					.k("content").v(content)
+					.k("qualifier").v(qualifier.toString())
+					.k("lang").v(lang == null ? config.getLang() : lang.toString())
+					.getMap()
+			);
+			return new JSONObject(execute(method));
+		} catch (JSONException e) {
+			logger.error(e.getMessage(), e);
+		} catch (PlurkException e) {
+			logger.error(e.getMessage(), e);
+		}
+		return null;
+	}
+
     private String execute(HttpRequestBase method) throws PlurkException {
         String result = "";
         try {
@@ -200,5 +219,7 @@ public class PlurkClient {
 
         JSONObject js = pc.getUnreadPlurks(DateTime.now());
         System.out.println(js);
+
+        pc.responseAdd("183178995", "我也不喜歡這樣的人", Qualifier.FEELS, Lang.tr_ch);
     }
 }
