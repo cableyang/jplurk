@@ -13,6 +13,7 @@ JPlurk v2 正持續進行中，在 Plurk 官方 [http://www.plurk.com/API API] �
 || /API/Users/register || register || Askeing || 完成 ||
 || /API/Timeline/plurkAdd || plurkAdd || qrtt1 || 完成 ||
 || /API/Timeline/getUnreadPlurks || getUnreadPlurks || qrtt1 || 完成 ||
+|| /API/Responses/responseAdd || responseAdd || qrtt1 || 完成 ||
 
 ----
 
@@ -29,3 +30,4 @@ jPlurk v1 has been frozen because Plurk released the Official [http://www.plurk.
 || /API/Users/register || register || Askeing || Done ||
 || /API/Timeline/plurkAdd || plurkAdd || qrtt1 || Done ||
 || /API/Timeline/getUnreadPlurks || getUnreadPlurks || qrtt1 || Done ||
+|| /API/Responses/responseAdd || responseAdd || qrtt1 || Done ||
