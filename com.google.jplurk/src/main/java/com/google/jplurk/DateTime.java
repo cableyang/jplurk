@@ -2,7 +2,10 @@ package com.google.jplurk;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.Locale;
+
+import com.sun.org.apache.xerces.internal.impl.dv.xs.YearDV;
 
 public class DateTime {
 
@@ -40,6 +43,18 @@ public class DateTime {
 	public static DateTime create(int year, int month, int day,
 			int hour, int minute, int second) {
 		return new DateTime(year, month, day, hour, minute, second);
+	}
+
+	public static DateTime now() {
+		Calendar c = Calendar.getInstance();
+		c.setTime(new Date());
+		return new DateTime(
+			c.get(Calendar.YEAR),
+			c.get(Calendar.MONTH + 1),
+			c.get(Calendar.DAY_OF_MONTH),
+			c.get(Calendar.HOUR_OF_DAY),
+			c.get(Calendar.MINUTE),
+			c.get(Calendar.SECOND));
 	}
 
 	protected String birthday() {
