@@ -125,7 +125,9 @@ public final class PlurkActionSheet {
 			}
 		}
 
-		logger.error("Params: " + params.toString());
+		if (logger.isDebugEnabled()) {
+			logger.debug("Params: " + params.toString());
+		}
 		return httpMethod;
 	}
 
