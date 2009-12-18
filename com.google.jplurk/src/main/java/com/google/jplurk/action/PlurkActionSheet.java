@@ -1,6 +1,8 @@
 package com.google.jplurk.action;
 
+import java.io.UnsupportedEncodingException;
 import java.lang.reflect.Method;
+import java.net.URLEncoder;
 import java.util.Map;
 
 import org.apache.commons.beanutils.MethodUtils;
@@ -68,30 +70,13 @@ public final class PlurkActionSheet {
 			throw new PlurkException("can not find the meta annotation");
 		}
 
-		final StringBuffer buf = new StringBuffer();
-		for (String key : params.keySet()) {
-			buf.append(key).append("=").append(params.get(key)).append("&");
-		}
-		buf.deleteCharAt(buf.length() - 1);
-
-		final String uri = getApiUri(meta.uri() + "?" + buf.toString());
-		final HttpRequestBase httpMethod = meta.type().equals(Type.GET) ? new HttpGet(uri) : new HttpPost(uri);
-
 		for (String key : meta.require()) {
 			if (!params.containsKey(key)) {
 				throw new PlurkException("require param [" + key + "] is not found");
 			}
 		}
 
-		Headers headers = method.getAnnotation(Headers.class);
-		if (headers != null) {
-			logger.debug("found @Headers");
-			for (Header header : headers.headers()) {
-				logger.debug("add header => name[" + header.key() + "] value[" + header.value() + "]");
-				httpMethod.addHeader(header.key(), header.value());
-			}
-		}
-
+		// do validation
 		Validation validation = method.getAnnotation(Validation.class);
 		if (validation != null) {
 			logger.debug("found @Validation");
@@ -108,7 +93,30 @@ public final class PlurkActionSheet {
 			}
 		}
 
-		logger.info("Params: " + params.toString());
+		// prepare the http request
+		final StringBuffer buf = new StringBuffer();
+		for (String key : params.keySet()) {
+			try {
+				buf.append(key).append("=").append(URLEncoder.encode(params.get(key), "utf-8")).append("&");
+			} catch (UnsupportedEncodingException e) {
+				logger.error(e.getMessage(), e);
+			}
+		}
+		buf.deleteCharAt(buf.length() - 1);
+
+		final String uri = getApiUri(meta.uri() + "?" + buf.toString());
+		final HttpRequestBase httpMethod = meta.type().equals(Type.GET) ? new HttpGet(uri) : new HttpPost(uri);
+
+		Headers headers = method.getAnnotation(Headers.class);
+		if (headers != null) {
+			logger.debug("found @Headers");
+			for (Header header : headers.headers()) {
+				logger.debug("add header => name[" + header.key() + "] value[" + header.value() + "]");
+				httpMethod.addHeader(header.key(), header.value());
+			}
+		}
+
+		logger.error("Params: " + params.toString());
 		return httpMethod;
 	}
 
