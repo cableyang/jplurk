@@ -62,7 +62,14 @@ public class PlurkClient {
 
 	}
 
-	public JSONObject login(String user, String password) {
+    /**
+     * /API/Users/login
+     * Login and creat a cookie. This cookie can access other methods.
+     * @param user
+     * @param password
+     * @return The JSONObject of /API/Profile/getOwnProfile
+     */
+    public JSONObject login(String user, String password) {
 
         try {
             HttpGet method = (HttpGet) PlurkActionSheet.getInstance().login(
@@ -79,11 +86,36 @@ public class PlurkClient {
         return null;
     }
 
+    /**
+     * /API/Users/register
+     * Register a new user account.
+     * @param nick_name
+     * @param full_name
+     * @param password
+     * @param gender
+     * @param date_of_birth
+     * @return JSONObject with user info {"id": 42, "nick_name": "frodo_b", ...}
+     */
     public JSONObject register(String nick_name, String full_name,
             String password, Gender gender, String date_of_birth) {
+        return this.register(nick_name, full_name, password, gender, date_of_birth, "");
+    }
+
+    /**
+     * /API/Users/register
+     * Register a new user account. (with optional parameters.)
+     * @param nick_name
+     * @param full_name
+     * @param password
+     * @param gender
+     * @param date_of_birth
+     * @param email (optional)
+     * @return JSONObject with user info {"id": 42, "nick_name": "frodo_b", ...}
+     */
+    public JSONObject register(String nick_name, String full_name,
+            String password, Gender gender, String date_of_birth, String email) {
         final int FLAG = Pattern.DOTALL | Pattern.MULTILINE;
         Matcher m;
-
         // validation of nick_name
         m = Pattern.compile("[\\w]{3,}", FLAG).matcher(nick_name);
         m.reset();
@@ -102,7 +134,6 @@ public class PlurkClient {
         if (!m.find()) {
             return null;
         }
-
         // validation of date_of_birth
         m = Pattern.compile("[0-9]{4}\\-(0[1-9])|(1[0-2])\\-(0[1-9])|(1[0-9])|(2[0-9])|(3[0-1])", FLAG).matcher(date_of_birth);
         m.reset();
@@ -110,20 +141,17 @@ public class PlurkClient {
             return null;
         }
 
-
-        /* TODO
-         * Need add opt param: email. (waiting for PlurkActionSheet finished)
-         */
         try {
-            HttpGet method = (HttpGet) PlurkActionSheet.getInstance().register(
-            	config.createParamMap()
+            MapHelper mapHelper = config.createParamMap()
             		.k("nick_name").v(nick_name)
             		.k("full_name").v(full_name)
             		.k("password").v(password)
             		.k("gender").v(gender.toString())
-            		.k("date_of_birth").v(date_of_birth)
-            		.k("email").v("xd@gmail.com")
-            		.getMap());
+            		.k("date_of_birth").v(date_of_birth);
+            if( email != null && !email.equals(("")) ) {
+                    mapHelper = mapHelper.k("email").v(email);
+            }
+            HttpGet method = (HttpGet) PlurkActionSheet.getInstance().register(mapHelper.getMap());
 
             JSONObject ret = new JSONObject(execute(method));
             return ret;
@@ -132,18 +160,55 @@ public class PlurkClient {
         } catch (JSONException e) {
         	logger.error(e.getMessage(), e);
         }
-
         return null;
     }
 
-    public JSONObject plurkAdd(String content, Qualifier qualifier) {
-    	return plurkAdd(content, qualifier, null);
-    }
-
-	public JSONObject getUnreadPlurks(DateTime offset) {
+    /**
+     * /API/Timeline/getUnreadPlurks
+     * Get unread plurks.
+     * @return JSONObject of unread plurks and their users
+     */
+    public JSONObject getUnreadPlurks() {
+		return this.getUnreadPlurks(null);
+	}
+    /**
+     * /API/Timeline/getUnreadPlurks
+     * Get unread plurks older than offset.
+     * @param offset , formatted as 2009-6-20T21:55:34
+     * @return JSONObject of unread plurks and their users
+     */
+    public JSONObject getUnreadPlurks(DateTime offset) {
+		return this.getUnreadPlurks(offset, 0);
+	}
+    /**
+     * /API/Timeline/getUnreadPlurks
+     * Get the limited unread plurks.
+     * @param limit , Limit the number of plurks
+     * @return JSONObject of unread plurks and their users
+     */
+    public JSONObject getUnreadPlurks(int limit) {
+		return this.getUnreadPlurks(null, limit);
+	}
+    /**
+     * /API/Timeline/getUnreadPlurks 
+     * Get the limited unread plurks older than offset.
+     * @param offset , formatted as 2009-6-20T21:55:34
+     * @param limit , limit the number of plurks. 0 as default, which will get 10 plurks
+     * @return JSONObject of unread plurks and their users
+     */
+    public JSONObject getUnreadPlurks(DateTime offset, int limit) {
 		try {
-			HttpGet method = (HttpGet) PlurkActionSheet.getInstance().getUnreadPlurks(
-				config.createParamMap().k("offset").v(offset.timeOffset()).getMap());
+            MapHelper mapHelper = config.createParamMap();
+            if(offset != null) {
+                mapHelper = mapHelper.k("offset").v(offset.timeOffset());
+            }
+            if(limit > 0) {
+                mapHelper = mapHelper.k("limit").v(Integer.toString(limit));
+            }
+            else if(limit == 0) {
+                mapHelper = mapHelper.k("limit").v("10");
+            }
+			HttpGet method = (HttpGet) PlurkActionSheet.getInstance().getUnreadPlurks(mapHelper.getMap());
 			return new JSONObject(execute(method));
 		} catch (PlurkException e) {
 			logger.error(e.getMessage(), e);
@@ -153,6 +218,9 @@ public class PlurkClient {
 		return null;
 	}
 
+    public JSONObject plurkAdd(String content, Qualifier qualifier) {
+    	return plurkAdd(content, qualifier, null);
+    }
 	public JSONObject plurkAdd(String content, Qualifier qualifier, Lang lang) {
 		try {
 			HttpGet method = (HttpGet) PlurkActionSheet.getInstance()
@@ -170,38 +238,9 @@ public class PlurkClient {
 		return null;
 	}
 
-	public JSONObject responseAdd(String plurkId, String content, Qualifier qualifier, Lang lang) {
-		try {
-			HttpGet method = (HttpGet) PlurkActionSheet.getInstance().responseAdd(
-					config.createParamMap()
-					.k("plurk_id").v(plurkId)
-					.k("content").v(content)
-					.k("qualifier").v(qualifier.toString())
-					.k("lang").v(lang == null ? config.getLang() : lang.toString())
-					.getMap()
-			);
-			return new JSONObject(execute(method));
-		} catch (JSONException e) {
-			logger.error(e.getMessage(), e);
-		} catch (PlurkException e) {
-			logger.error(e.getMessage(), e);
-		}
-		return null;
-	}
-
-	public JSONObject responseGet(String plurkId){
-		try {
-			HttpGet method = (HttpGet) PlurkActionSheet.getInstance().responseGet(
-				config.createParamMap().k("plurk_id").v(plurkId).k("from_response").v("5").getMap());
-			return new JSONObject(execute(method));
-		} catch (PlurkException e) {
-			logger.error(e.getMessage(), e);
-		} catch (JSONException e) {
-			logger.error(e.getMessage(), e);
-		}
-		return null;
-	}
-
+    /*
+     * Execute the HttpRequest to Plurk.
+     */
     private String execute(HttpRequestBase method) throws PlurkException {
         String result = "";
         try {
@@ -230,12 +269,9 @@ public class PlurkClient {
 //        JSONObject oo = pc.plurkAdd("hmmmm", Qualifier.SAYS);
 //        System.out.println(oo);
 
-        JSONObject js = pc.getUnreadPlurks(DateTime.now());
-        System.out.println(js);
-
-//        pc.responseAdd("183178995", "我也不喜歡這樣的人", Qualifier.FEELS, Lang.tr_ch);
-
-        Object ooo = pc.responseGet("183178995");
-        System.out.println(ooo);
+        JSONObject js10 = pc.getUnreadPlurks(DateTime.now(), 1);
+        System.out.println(js10);
+        //JSONObject js = pc.getUnreadPlurks(DateTime.now());
+        //System.out.println(js);
     }
 }
