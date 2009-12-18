@@ -76,6 +76,18 @@
 			</plugin>
 		</plugins>
 	</build>
+    <reporting>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-javadoc-plugin</artifactId>
+                <configuration>
+                    <encoding>UTF-8</encoding>
+                    <charset>UTF-8</charset>
+                </configuration>
+            </plugin>
+        </plugins>
+    </reporting>
 	<repositories>
 		<repository>
 			<id>jboss</id>
