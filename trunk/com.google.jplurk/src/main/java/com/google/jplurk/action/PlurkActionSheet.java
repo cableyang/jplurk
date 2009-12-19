@@ -97,6 +97,12 @@ public final class PlurkActionSheet {
 		return prepare("unmutePlurks", params);
 	}
 
+	@Meta(uri = "/Timeline/markAsRead", require = { "api_key", "ids" })
+	@Validation({@Validators(field = "ids", validator = IDListValidator.class)})
+	public HttpUriRequest markAsRead(Map<String, String> params) throws PlurkException {
+		return prepare("markAsRead", params);
+	}
+
 	private HttpUriRequest prepare(String methodName, Map<String, String> params) throws PlurkException {
 		Method method = MethodUtils.getAccessibleMethod(PlurkActionSheet.class,
 				methodName, new Class[] { Map.class });

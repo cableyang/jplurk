@@ -452,6 +452,20 @@ public class PlurkClient {
 		}.execute(this, ids);
 	}
 
+	/**
+	 * @param ids the plurk ids will mark as read.
+	 * @return JSONObject represent the {"success_text": "ok"}
+	 */
+	public JSONObject markAsRead(String... ids) {
+		return new IdActions() {
+			@Override
+			HttpUriRequest createMethod(Set<Integer> idSet) throws PlurkException {
+				return (HttpGet) PlurkActionSheet.getInstance().markAsRead(
+						config.createParamMap().k("ids").v(new JSONArray(idSet).toString()).getMap());
+			}
+		}.execute(this, ids);
+	}
+
     // <editor-fold defaultstate="collapsed" desc="Execution of HttpRequest">
     private String execute(HttpUriRequest method) throws PlurkException {
         String result = "";
@@ -491,6 +505,7 @@ public class PlurkClient {
 
         JSONObject js10 = pc.getUnreadPlurks(DateTime.now(), 1);
         System.out.println(js10);
+
 
 //        System.out.println(pc.mutePlurks("183559649"));
 //        Scanner scanner = new Scanner(System.in);
