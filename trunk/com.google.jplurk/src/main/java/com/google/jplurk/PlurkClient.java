@@ -65,7 +65,7 @@ public class PlurkClient {
 
     // <editor-fold defaultstate="collapsed" desc="/API/Users/login">
     /**
-     * /API/Users/login<p>
+     * /API/Users/login<br/>
      * Login and creat a cookie. This cookie can access other methods.
      * @param user
      * @param password
@@ -96,7 +96,7 @@ public class PlurkClient {
 
     // <editor-fold defaultstate="collapsed" desc="/API/Users/register">
     /**
-     * /API/Users/register<p>
+     * /API/Users/register<br/>
      * Register a new user account.
      * @param nick_name
      * @param full_name
@@ -111,7 +111,7 @@ public class PlurkClient {
     }
 
     /**
-     * /API/Users/register<p>
+     * /API/Users/register<br/>
      * Register a new user account. (with optional parameters.)
      * @param nick_name
      * @param full_name
@@ -177,7 +177,7 @@ public class PlurkClient {
 
     // <editor-fold defaultstate="collapsed" desc="/API/Timeline/getUnreadPlurks">
     /**
-     * /API/Timeline/getUnreadPlurks<p>
+     * /API/Timeline/getUnreadPlurks<br/>
      * Get unread plurks.
      * @return JSONObject of unread plurks and their users
      */
@@ -186,7 +186,7 @@ public class PlurkClient {
 	}
 
     /**
-     * /API/Timeline/getUnreadPlurks<p>
+     * /API/Timeline/getUnreadPlurks<br/>
      * Get unread plurks older than offset.
      * @param offset (optional), formatted as 2009-6-20T21:55:34
      * @return JSONObject of unread plurks and their users
@@ -196,7 +196,7 @@ public class PlurkClient {
 	}
 
     /**
-     * /API/Timeline/getUnreadPlurks<p>
+     * /API/Timeline/getUnreadPlurks<br/>
      * Get the limited unread plurks.
      * @param limit (optional), Limit the number of plurks
      * @return JSONObject of unread plurks and their users
@@ -206,7 +206,7 @@ public class PlurkClient {
 	}
 
     /**
-     * /API/Timeline/getUnreadPlurks<p>
+     * /API/Timeline/getUnreadPlurks<br/>
      * Get the limited unread plurks older than offset.
      * @param offset (optional), formatted as 2009-6-20T21:55:34
      * @param limit (optional), limit the number of plurks. 0 as default, which will get 10 plurks
@@ -237,7 +237,7 @@ public class PlurkClient {
 
     // <editor-fold defaultstate="collapsed" desc="/API/Timeline/plurkAdd">
     /**
-     * /API/Timeline/plurkAdd<p>
+     * /API/Timeline/plurkAdd<br/>
      * Add new plurk to timeline.
      * @param content
      * @param qualifier
@@ -248,7 +248,7 @@ public class PlurkClient {
     }
 
     /**
-     * /API/Timeline/plurkAdd<p>
+     * /API/Timeline/plurkAdd<br/>
      * Add new plurk to timeline.
      * @param content
      * @param qualifier
@@ -260,7 +260,7 @@ public class PlurkClient {
     }
 
     /**
-     * /API/Timeline/plurkAdd<p>
+     * /API/Timeline/plurkAdd<br/>
      * Add new plurk to timeline.
      * @param content
      * @param qualifier
@@ -272,7 +272,7 @@ public class PlurkClient {
     }
 
     /**
-     * /API/Timeline/plurkAdd<p>
+     * /API/Timeline/plurkAdd<br/>
      * Add new plurk to timeline.
      * @param content
      * @param qualifier
@@ -292,6 +292,54 @@ public class PlurkClient {
                 paramMap = paramMap.k("limited_to").v(limited_to);
             }
 			HttpGet method = (HttpGet) PlurkActionSheet.getInstance().plurkAdd(paramMap.getMap());
+			return new JSONObject(execute(method));
+		} catch (UnsupportedEncodingException e) {
+            logger.error(e.getMessage(), e);
+        } catch (PlurkException e) {
+			logger.error(e.getMessage(), e);
+		} catch (JSONException e) {
+			logger.error(e.getMessage(), e);
+		}
+		return null;
+	}
+    // </editor-fold>
+
+    // <editor-fold defaultstate="collapsed" desc="/API/Timeline/plurkDelete">
+    /**
+     * /API/Timeline/plurkDelete<br/>
+     * Deletes a plurk.
+     * @param plurkId
+     * @return {"success_text": "ok"}
+     */
+    public JSONObject plurkDelete(String plurkId){
+		try {
+			HttpGet method = (HttpGet) PlurkActionSheet.getInstance().plurkDelete(
+				config.createParamMap().k("plurk_id").v(plurkId).getMap());
+			return new JSONObject(execute(method));
+		} catch (PlurkException e) {
+			logger.error(e.getMessage(), e);
+		} catch (JSONException e) {
+			logger.error(e.getMessage(), e);
+		}
+		return null;
+	}
+    // </editor-fold>
+
+    // <editor-fold defaultstate="collapsed" desc="/API/Timeline/plurkEdit">
+    /**
+     * /API/Timeline/plurkEdit<br/>
+     * Edits a plurk.
+     * @param plurkId
+     * @param content
+     * @return JSON object of the updated plurk
+     */
+    public JSONObject plurkEdit(String plurkId, String content){
+		try {
+			HttpGet method = (HttpGet) PlurkActionSheet.getInstance().plurkEdit(
+				config.createParamMap()
+                .k("plurk_id").v(plurkId)
+                .k("content").v(URLEncoder.encode(content,"utf-8"))
+                .getMap());
 			return new JSONObject(execute(method));
 		} catch (UnsupportedEncodingException e) {
             logger.error(e.getMessage(), e);
@@ -365,9 +413,15 @@ public class PlurkClient {
         JSONObject o = pc.login(JOptionPane.showInputDialog("id"), JOptionPane.showInputDialog("password"));
         System.out.println(o);
 
-        JSONObject oo = pc.plurkAdd("只有朋友能回應！", Qualifier.GIVES, NoComments.Friends);
+//        JSONObject oo = pc.plurkAdd("測試 jPlurk 編輯 plruk 功能！！", Qualifier.IS, NoComments.False);
 //        JSONObject oo = pc.plurkAdd("hmmmm", Qualifier.SAYS);
-        System.out.println(oo);
+//        System.out.println(oo);
+
+//        JSONObject oe = pc.plurkEdit("183532425", "早上的 http://code.google.com/p/jplurk/ (jPlurk) 先這樣吧～ by jPlurk v2 plurkEdit");
+//        System.out.println(oe);
+
+//        JSONObject od = pc.plurkDelete("183525435");
+//        System.out.println(od);
 
 //        JSONObject js10 = pc.getUnreadPlurks(DateTime.now(), 1);
 //        System.out.println(js10);
@@ -375,6 +429,7 @@ public class PlurkClient {
 //        JSONObject js = pc.getUnreadPlurks(DateTime.now());
 //        System.out.println(js);
 //
+          
 //        pc.responseAdd("183178995", "我也不喜歡這樣的人", Qualifier.FEELS, Lang.tr_ch);
 //
 //        JSONObject ooo = pc.responseGet("183178995");
