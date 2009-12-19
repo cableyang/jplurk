@@ -198,7 +198,7 @@ public class PlurkClient {
     // <editor-fold defaultstate="collapsed" desc="/API/Users/getPlurk">
     /**
      * /API/Users/getPlurk
-     * @param plurk_id
+     * @param plurkId
      * @return JSON object of the plurk and owner
      */
     public JSONObject getPlurk(String plurkId) {
