@@ -1,6 +1,8 @@
 package com.google.jplurk.action;
 
+import java.io.UnsupportedEncodingException;
 import java.lang.reflect.Method;
+import java.net.URLEncoder;
 import java.util.Map;
 
 import org.apache.commons.beanutils.MethodUtils;
@@ -134,7 +136,11 @@ public final class PlurkActionSheet {
 
 		final StringBuffer buf = new StringBuffer();
 		for (String key : params.keySet()) {
-			buf.append(key).append("=").append(params.get(key)).append("&");
+			try {
+				buf.append(key).append("=").append(URLEncoder.encode(params.get(key), "utf-8")).append("&");
+			} catch (UnsupportedEncodingException e) {
+				logger.error(e.getMessage(), e);
+			}
 		}
 		buf.deleteCharAt(buf.length() - 1);
 
