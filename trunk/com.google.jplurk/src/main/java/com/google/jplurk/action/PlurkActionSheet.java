@@ -50,6 +50,11 @@ public final class PlurkActionSheet {
         return prepare("register", params);
     }
 
+    @Meta(uri = "/Timeline/getPlurk", require = { "api_key", "plurk_id" })
+	public HttpUriRequest getPlurk(Map<String, String> params) throws PlurkException{
+		return prepare("getPlurk", params);
+	}
+
 	@Meta(uri = "/Timeline/plurkAdd", require = { "api_key", "content", "qualifier" })
 	@Validation(value = {
 			@Validators(field = "limited_to", validator = IDListValidator.class),
@@ -74,16 +79,6 @@ public final class PlurkActionSheet {
         return prepare("plurkEdit", params);
     }
 
-	@Meta(uri = "/Responses/get", require = { "api_key", "plurk_id", "from_response" })
-	public HttpUriRequest responseGet(Map<String, String> params) throws PlurkException {
-		return prepare("responseGet", params);
-	}
-
-	@Meta(uri = "/Responses/responseAdd", require = { "api_key", "content", "qualifier", "plurk_id" })
-	@Validation(value = { @Validators(field = "qualifier", validator = QualifierValidator.class) })
-	public HttpUriRequest responseAdd(Map<String, String> params) throws PlurkException {
-		return prepare("responseAdd", params);
-	}
 
 	@Meta(uri = "/Timeline/mutePlurks", require = { "api_key", "ids" })
 	@Validation({@Validators(field = "ids", validator = IDListValidator.class)})
@@ -101,6 +96,22 @@ public final class PlurkActionSheet {
 	@Validation({@Validators(field = "ids", validator = IDListValidator.class)})
 	public HttpUriRequest markAsRead(Map<String, String> params) throws PlurkException {
 		return prepare("markAsRead", params);
+	}
+
+	@Meta(uri = "/Responses/get", require = { "api_key", "plurk_id", "from_response" })
+	public HttpUriRequest responseGet(Map<String, String> params) throws PlurkException {
+		return prepare("responseGet", params);
+	}
+
+	@Meta(uri = "/Responses/responseAdd", require = { "api_key", "content", "qualifier", "plurk_id" })
+	@Validation(value = { @Validators(field = "qualifier", validator = QualifierValidator.class) })
+	public HttpUriRequest responseAdd(Map<String, String> params) throws PlurkException {
+		return prepare("responseAdd", params);
+	}
+
+    @Meta(uri = "/Responses/responseDelete", require = { "api_key", "response_id", "plurk_id" })
+	public HttpUriRequest responseDelete(Map<String, String> params) throws PlurkException {
+		return prepare("responseDelete", params);
 	}
 
 	private HttpUriRequest prepare(String methodName, Map<String, String> params) throws PlurkException {
