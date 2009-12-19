@@ -33,61 +33,69 @@ import com.google.jplurk.exception.PlurkException;
 import com.google.jplurk.net.JPlurkResponseHandler;
 import com.google.jplurk.net.ProxyProvider;
 
+/**
+ *
+ * @author Askeing
+ */
 public class PlurkClient {
 
     // <editor-fold defaultstate="collapsed" desc="Init PlurkClient">
-	static Logger logger = LoggerFactory.getLogger(PlurkClient.class);
-	HttpClient client = new DefaultHttpClient();
-
+    static Logger logger = LoggerFactory.getLogger(PlurkClient.class);
+    HttpClient client = new DefaultHttpClient();
     PlurkSettings config;
 
-	static abstract class IdActions {
+    static abstract class IdActions {
 
-		abstract HttpUriRequest createMethod(Set<Integer> idSet) throws PlurkException;
+        abstract HttpUriRequest createMethod(Set<Integer> idSet) throws PlurkException;
 
-		public JSONObject execute(PlurkClient client, String... ids) {
-			try {
-				Set<Integer> idSet = new HashSet<Integer>();
-				for (String id : ids) {
-					idSet.add(NumberUtils.toInt(id, 0));
-				}
-				idSet.remove(0);
+        public JSONObject execute(PlurkClient client, String... ids) {
+            try {
+                Set<Integer> idSet = new HashSet<Integer>();
+                for (String id : ids) {
+                    idSet.add(NumberUtils.toInt(id, 0));
+                }
+                idSet.remove(0);
 
-				return new JSONObject(client.execute(createMethod(idSet)));
-			} catch (PlurkException e) {
-				logger.error(e.getMessage(), e);
-			} catch (JSONException e) {
-				logger.error(e.getMessage(), e);
-			}
-			return null;
-		}
-	}
+                return new JSONObject(client.execute(createMethod(idSet)));
+            } catch (PlurkException e) {
+                logger.error(e.getMessage(), e);
+            } catch (JSONException e) {
+                logger.error(e.getMessage(), e);
+            }
+            return null;
+        }
+    }
 
+    /**
+     *
+     * @param settings
+     */
     public PlurkClient(PlurkSettings settings) {
         this.config = settings;
         configureHttpClient();
     }
 
-	private void configureHttpClient() {
+    private void configureHttpClient() {
         // Auth Proxy Setting
-		if (StringUtils.isNotBlank(ProxyProvider.getUser())) {
-            ((DefaultHttpClient)client).getCredentialsProvider().setCredentials(
-                new AuthScope(ProxyProvider.getHost(), ProxyProvider.getPort()),
-                new UsernamePasswordCredentials(ProxyProvider.getUser(), ProxyProvider.getPassword()));
-		}
+        if (StringUtils.isNotBlank(ProxyProvider.getUser())) {
+            ((DefaultHttpClient) client).getCredentialsProvider().setCredentials(
+                    new AuthScope(ProxyProvider.getHost(), ProxyProvider.getPort()),
+                    new UsernamePasswordCredentials(ProxyProvider.getUser(), ProxyProvider.getPassword()));
+        }
         // Proxy Host Setting
-		if (StringUtils.isNotBlank(ProxyProvider.getHost())) {
-			HttpHost proxy = new HttpHost(ProxyProvider.getHost(), ProxyProvider.getPort());
-			client.getParams().setParameter(ConnRoutePNames.DEFAULT_PROXY, proxy);
-		}
+        if (StringUtils.isNotBlank(ProxyProvider.getHost())) {
+            HttpHost proxy = new HttpHost(ProxyProvider.getHost(), ProxyProvider.getPort());
+            client.getParams().setParameter(ConnRoutePNames.DEFAULT_PROXY, proxy);
+        }
 
-		Runtime.getRuntime().addShutdownHook(new Thread() {
-			@Override
-			public void run() {
-				client.getConnectionManager().shutdown();
-			}
-		});
-	}
+        Runtime.getRuntime().addShutdownHook(new Thread() {
+
+            @Override
+            public void run() {
+                client.getConnectionManager().shutdown();
+            }
+        });
+    }
     // </editor-fold>
 
     // <editor-fold defaultstate="collapsed" desc="/API/Users/login">
@@ -102,19 +110,16 @@ public class PlurkClient {
 
         try {
             HttpGet method = (HttpGet) PlurkActionSheet.getInstance().login(
-                    config.createParamMap()
-                    .k("username").v(URLEncoder.encode(user,"utf-8"))
-                    .k("password").v(URLEncoder.encode(password,"utf-8"))
-                    .getMap());
+                    config.createParamMap().k("username").v(URLEncoder.encode(user, "utf-8")).k("password").v(URLEncoder.encode(password, "utf-8")).getMap());
 
             JSONObject ret = new JSONObject(execute(method));
             return ret;
         } catch (UnsupportedEncodingException e) {
             logger.error(e.getMessage(), e);
         } catch (PlurkException e) {
-        	logger.error(e.getMessage(), e);
+            logger.error(e.getMessage(), e);
         } catch (JSONException e) {
-        	logger.error(e.getMessage(), e);
+            logger.error(e.getMessage(), e);
         }
 
         return null;
@@ -125,41 +130,41 @@ public class PlurkClient {
     /**
      * /API/Users/register<br/>
      * Register a new user account.
-     * @param nick_name
-     * @param full_name
+     * @param nickName
+     * @param fullName
      * @param password
      * @param gender
-     * @param date_of_birth
+     * @param dateOfBirth
      * @return JSONObject with user info {"id": 42, "nick_name": "frodo_b", ...}
      */
-    public JSONObject register(String nick_name, String full_name,
-            String password, Gender gender, String date_of_birth) {
-        return this.register(nick_name, full_name, password, gender, date_of_birth, "");
+    public JSONObject register(String nickName, String fullName,
+            String password, Gender gender, String dateOfBirth) {
+        return this.register(nickName, fullName, password, gender, dateOfBirth, "");
     }
 
     /**
      * /API/Users/register<br/>
      * Register a new user account. (with optional parameters.)
-     * @param nick_name
-     * @param full_name
+     * @param nickName
+     * @param fullName
      * @param password
      * @param gender
-     * @param date_of_birth
+     * @param dateOfBirth
      * @param email (optional)
      * @return JSONObject with user info {"id": 42, "nick_name": "frodo_b", ...}
      */
-    public JSONObject register(String nick_name, String full_name,
-            String password, Gender gender, String date_of_birth, String email) {
+    public JSONObject register(String nickName, String fullName,
+            String password, Gender gender, String dateOfBirth, String email) {
         final int FLAG = Pattern.DOTALL | Pattern.MULTILINE;
         Matcher m;
         // validation of nick_name
-        m = Pattern.compile("[\\w]{3,}", FLAG).matcher(nick_name);
+        m = Pattern.compile("[\\w]{3,}", FLAG).matcher(nickName);
         m.reset();
         if (!m.find()) {
             return null;
         }
         // validation of full_name
-        m = Pattern.compile(".+", FLAG).matcher(full_name);
+        m = Pattern.compile(".+", FLAG).matcher(fullName);
         m.reset();
         if (!m.find()) {
             return null;
@@ -171,21 +176,16 @@ public class PlurkClient {
             return null;
         }
         // validation of date_of_birth
-        m = Pattern.compile("[0-9]{4}\\-(0[1-9])|(1[0-2])\\-(0[1-9])|(1[0-9])|(2[0-9])|(3[0-1])", FLAG).matcher(date_of_birth);
+        m = Pattern.compile("[0-9]{4}\\-(0[1-9])|(1[0-2])\\-(0[1-9])|(1[0-9])|(2[0-9])|(3[0-1])", FLAG).matcher(dateOfBirth);
         m.reset();
         if (!m.find()) {
             return null;
         }
         // TODO: Check password need URLEncode? I try encode and work fine now...
         try {
-            MapHelper paramMap = config.createParamMap()
-            		.k("nick_name").v(URLEncoder.encode(nick_name,"utf-8"))
-            		.k("full_name").v(URLEncoder.encode(full_name,"utf-8"))
-            		.k("password").v(URLEncoder.encode(password,"utf-8"))
-            		.k("gender").v(gender.toString())
-            		.k("date_of_birth").v(date_of_birth);
-            if( email != null && !email.equals(("")) ) {
-                    paramMap = paramMap.k("email").v(email);
+            MapHelper paramMap = config.createParamMap().k("nick_name").v(URLEncoder.encode(nickName, "utf-8")).k("full_name").v(URLEncoder.encode(fullName, "utf-8")).k("password").v(URLEncoder.encode(password, "utf-8")).k("gender").v(gender.toString()).k("date_of_birth").v(dateOfBirth);
+            if (email != null && !email.equals((""))) {
+                paramMap = paramMap.k("email").v(email);
             }
             HttpGet method = (HttpGet) PlurkActionSheet.getInstance().register(paramMap.getMap());
 
@@ -194,9 +194,29 @@ public class PlurkClient {
         } catch (UnsupportedEncodingException ex) {
             java.util.logging.Logger.getLogger(PlurkClient.class.getName()).log(Level.SEVERE, null, ex);
         } catch (PlurkException e) {
-        	logger.error(e.getMessage(), e);
+            logger.error(e.getMessage(), e);
         } catch (JSONException e) {
-        	logger.error(e.getMessage(), e);
+            logger.error(e.getMessage(), e);
+        }
+        return null;
+    }
+    // </editor-fold>
+
+    // <editor-fold defaultstate="collapsed" desc="/API/Users/getPlurk">
+    /**
+     * /API/Users/getPlurk
+     * @param plurk_id
+     * @return JSON object of the plurk and owner
+     */
+    public JSONObject getPlurk(String plurkId) {
+        try {
+            HttpGet method = (HttpGet) PlurkActionSheet.getInstance().getPlurk(
+                    config.createParamMap().k("plurk_id").v(plurkId).getMap());
+            return new JSONObject(execute(method));
+        } catch (PlurkException e) {
+            logger.error(e.getMessage(), e);
+        } catch (JSONException e) {
+            logger.error(e.getMessage(), e);
         }
         return null;
     }
@@ -209,8 +229,8 @@ public class PlurkClient {
      * @return JSONObject of unread plurks and their users
      */
     public JSONObject getUnreadPlurks() {
-		return this.getUnreadPlurks(null);
-	}
+        return this.getUnreadPlurks(null);
+    }
 
     /**
      * /API/Timeline/getUnreadPlurks<br/>
@@ -219,8 +239,8 @@ public class PlurkClient {
      * @return JSONObject of unread plurks and their users
      */
     public JSONObject getUnreadPlurks(DateTime offset) {
-		return this.getUnreadPlurks(offset, 0);
-	}
+        return this.getUnreadPlurks(offset, 0);
+    }
 
     /**
      * /API/Timeline/getUnreadPlurks<br/>
@@ -229,8 +249,8 @@ public class PlurkClient {
      * @return JSONObject of unread plurks and their users
      */
     public JSONObject getUnreadPlurks(int limit) {
-		return this.getUnreadPlurks(null, limit);
-	}
+        return this.getUnreadPlurks(null, limit);
+    }
 
     /**
      * /API/Timeline/getUnreadPlurks<br/>
@@ -240,26 +260,25 @@ public class PlurkClient {
      * @return JSONObject of unread plurks and their users
      */
     public JSONObject getUnreadPlurks(DateTime offset, int limit) {
-		try {
+        try {
             MapHelper paramMap = config.createParamMap();
-            if(offset != null) {
+            if (offset != null) {
                 paramMap = paramMap.k("offset").v(offset.timeOffset());
             }
-            if(limit > 0) {
+            if (limit > 0) {
                 paramMap = paramMap.k("limit").v(Integer.toString(limit));
-            }
-            else if(limit == 0) {
+            } else if (limit == 0) {
                 paramMap = paramMap.k("limit").v("10");
             }
-			HttpGet method = (HttpGet) PlurkActionSheet.getInstance().getUnreadPlurks(paramMap.getMap());
-			return new JSONObject(execute(method));
-		} catch (PlurkException e) {
-			logger.error(e.getMessage(), e);
-		} catch (JSONException e) {
-			logger.error(e.getMessage(), e);
-		}
-		return null;
-	}
+            HttpGet method = (HttpGet) PlurkActionSheet.getInstance().getUnreadPlurks(paramMap.getMap());
+            return new JSONObject(execute(method));
+        } catch (PlurkException e) {
+            logger.error(e.getMessage(), e);
+        } catch (JSONException e) {
+            logger.error(e.getMessage(), e);
+        }
+        return null;
+    }
     // </editor-fold>
 
     // <editor-fold defaultstate="collapsed" desc="/API/Timeline/plurkAdd">
@@ -271,7 +290,7 @@ public class PlurkClient {
      * @return JSON object of the new plurk
      */
     public JSONObject plurkAdd(String content, Qualifier qualifier) {
-    	return this.plurkAdd(content, qualifier, NoComments.False);
+        return this.plurkAdd(content, qualifier, NoComments.False);
     }
 
     /**
@@ -309,26 +328,22 @@ public class PlurkClient {
      * @return JSON object of the new plurk
      */
     public JSONObject plurkAdd(String content, Qualifier qualifier, String limited_to, NoComments no_comments, Lang lang) {
-		try {
-            MapHelper paramMap = config.createParamMap()
-                    .k("content").v(URLEncoder.encode(content,"utf-8"))
-					.k("qualifier").v(qualifier.toString())
-                    .k("no_comments").v(no_comments.toString())
-					.k("lang").v(lang == null ? config.getLang() : lang.toString());
-            if( limited_to != null && !limited_to.equals("") ) {
+        try {
+            MapHelper paramMap = config.createParamMap().k("content").v(URLEncoder.encode(content, "utf-8")).k("qualifier").v(qualifier.toString()).k("no_comments").v(no_comments.toString()).k("lang").v(lang == null ? config.getLang() : lang.toString());
+            if (limited_to != null && !limited_to.equals("")) {
                 paramMap = paramMap.k("limited_to").v(limited_to);
             }
-			HttpGet method = (HttpGet) PlurkActionSheet.getInstance().plurkAdd(paramMap.getMap());
-			return new JSONObject(execute(method));
-		} catch (UnsupportedEncodingException e) {
+            HttpGet method = (HttpGet) PlurkActionSheet.getInstance().plurkAdd(paramMap.getMap());
+            return new JSONObject(execute(method));
+        } catch (UnsupportedEncodingException e) {
             logger.error(e.getMessage(), e);
         } catch (PlurkException e) {
-			logger.error(e.getMessage(), e);
-		} catch (JSONException e) {
-			logger.error(e.getMessage(), e);
-		}
-		return null;
-	}
+            logger.error(e.getMessage(), e);
+        } catch (JSONException e) {
+            logger.error(e.getMessage(), e);
+        }
+        return null;
+    }
     // </editor-fold>
 
     // <editor-fold defaultstate="collapsed" desc="/API/Timeline/plurkDelete">
@@ -338,18 +353,18 @@ public class PlurkClient {
      * @param plurkId
      * @return {"success_text": "ok"}
      */
-    public JSONObject plurkDelete(String plurkId){
-		try {
-			HttpGet method = (HttpGet) PlurkActionSheet.getInstance().plurkDelete(
-				config.createParamMap().k("plurk_id").v(plurkId).getMap());
-			return new JSONObject(execute(method));
-		} catch (PlurkException e) {
-			logger.error(e.getMessage(), e);
-		} catch (JSONException e) {
-			logger.error(e.getMessage(), e);
-		}
-		return null;
-	}
+    public JSONObject plurkDelete(String plurkId) {
+        try {
+            HttpGet method = (HttpGet) PlurkActionSheet.getInstance().plurkDelete(
+                    config.createParamMap().k("plurk_id").v(plurkId).getMap());
+            return new JSONObject(execute(method));
+        } catch (PlurkException e) {
+            logger.error(e.getMessage(), e);
+        } catch (JSONException e) {
+            logger.error(e.getMessage(), e);
+        }
+        return null;
+    }
     // </editor-fold>
 
     // <editor-fold defaultstate="collapsed" desc="/API/Timeline/plurkEdit">
@@ -360,117 +375,147 @@ public class PlurkClient {
      * @param content
      * @return JSON object of the updated plurk
      */
-    public JSONObject plurkEdit(String plurkId, String content){
-		try {
-			HttpGet method = (HttpGet) PlurkActionSheet.getInstance().plurkEdit(
-				config.createParamMap()
-                .k("plurk_id").v(plurkId)
-                .k("content").v(URLEncoder.encode(content,"utf-8"))
-                .getMap());
-			return new JSONObject(execute(method));
-		} catch (UnsupportedEncodingException e) {
+    public JSONObject plurkEdit(String plurkId, String content) {
+        try {
+            HttpGet method = (HttpGet) PlurkActionSheet.getInstance().plurkEdit(
+                    config.createParamMap().k("plurk_id").v(plurkId).k("content").v(URLEncoder.encode(content, "utf-8")).getMap());
+            return new JSONObject(execute(method));
+        } catch (UnsupportedEncodingException e) {
             logger.error(e.getMessage(), e);
         } catch (PlurkException e) {
-			logger.error(e.getMessage(), e);
-		} catch (JSONException e) {
-			logger.error(e.getMessage(), e);
-		}
-		return null;
-	}
+            logger.error(e.getMessage(), e);
+        } catch (JSONException e) {
+            logger.error(e.getMessage(), e);
+        }
+        return null;
+    }
     // </editor-fold>
 
+    // <editor-fold defaultstate="collapsed" desc="/API/Timeline/mutePlurks">
     /**
+     * /API/Timeline/mutePlurks
+     * @param ids the plurk ids will be muted
+     * @return JSONObject represent the {"success_text": "ok"}
+     */
+    public JSONObject mutePlurks(String... ids) {
+        return new IdActions() {
+
+            @Override
+            HttpUriRequest createMethod(Set<Integer> idSet) throws PlurkException {
+                return (HttpGet) PlurkActionSheet.getInstance().mutePlurks(
+                        config.createParamMap().k("ids").v(new JSONArray(idSet).toString()).getMap());
+            }
+        }.execute(this, ids);
+    }
+    // </editor-fold>
+
+    // <editor-fold defaultstate="collapsed" desc="/API/Timeline/unmutePlurks">
+    /**
+     * /API/Timeline/unmutePlurks
+     * @param ids the plurk ids will be unmuted.
+     * @return JSONObject represent the {"success_text": "ok"}
+     */
+    public JSONObject unmutePlurks(String... ids) {
+        return new IdActions() {
+
+            @Override
+            HttpUriRequest createMethod(Set<Integer> idSet) throws PlurkException {
+                return (HttpGet) PlurkActionSheet.getInstance().unmutePlurks(
+                        config.createParamMap().k("ids").v(new JSONArray(idSet).toString()).getMap());
+            }
+        }.execute(this, ids);
+    }
+    // </editor-fold>
+
+    // <editor-fold defaultstate="collapsed" desc="/API/Timeline/markAsRead">
+    /**
+     * /API/Timeline/markAsRead
+     * @param ids the plurk ids will mark as read.
+     * @return JSONObject represent the {"success_text": "ok"}
+     */
+    public JSONObject markAsRead(String... ids) {
+        return new IdActions() {
+
+            @Override
+            HttpUriRequest createMethod(Set<Integer> idSet) throws PlurkException {
+                return (HttpGet) PlurkActionSheet.getInstance().markAsRead(
+                        config.createParamMap().k("ids").v(new JSONArray(idSet).toString()).getMap());
+            }
+        }.execute(this, ids);
+    }
+    // </editor-fold>
+
+    // <editor-fold defaultstate="collapsed" desc="/API/Responses/responseAdd">
+    /**
+     * /API/Responses/responseAdd
      * @param plurkId which plurk will be response
      * @param content the responsed content
      * @param qualifier
      * @param lang
      * @return JSON object
      */
-    public JSONObject responseAdd(String plurkId, String content, Qualifier qualifier, Lang lang) {
-		try {
-			HttpGet method = (HttpGet) PlurkActionSheet.getInstance().responseAdd(
-					config.createParamMap()
-					.k("plurk_id").v(plurkId)
-					.k("content").v(URLEncoder.encode(content,"utf-8"))
-					.k("qualifier").v(qualifier.toString())
-					.k("lang").v(lang == null ? config.getLang() : lang.toString())
-					.getMap()
-			);
-			return new JSONObject(execute(method));
-		} catch (UnsupportedEncodingException e) {
+    public JSONObject responseAdd(String plurkId, String content, Qualifier qualifier) {
+        try {
+            HttpGet method = (HttpGet) PlurkActionSheet.getInstance().responseAdd(
+                    config.createParamMap().k("plurk_id").v(plurkId).k("content").v(URLEncoder.encode(content, "utf-8")).k("qualifier").v(qualifier.toString()).getMap());
+            return new JSONObject(execute(method));
+        } catch (UnsupportedEncodingException e) {
             logger.error(e.getMessage(), e);
         } catch (JSONException e) {
-			logger.error(e.getMessage(), e);
-		} catch (PlurkException e) {
-			logger.error(e.getMessage(), e);
-		}
-		return null;
-	}
+            logger.error(e.getMessage(), e);
+        } catch (PlurkException e) {
+            logger.error(e.getMessage(), e);
+        }
+        return null;
+    }
+    // </editor-fold>
 
-	/**
-	 * @param plurkId
-	 * @return JSON object
-	 */
-	public JSONObject responseGet(String plurkId){
-		try {
-			HttpGet method = (HttpGet) PlurkActionSheet.getInstance().responseGet(
-				config.createParamMap().k("plurk_id").v(plurkId).k("from_response").v("5").getMap());
-			return new JSONObject(execute(method));
-		} catch (PlurkException e) {
-			logger.error(e.getMessage(), e);
-		} catch (JSONException e) {
-			logger.error(e.getMessage(), e);
-		}
-		return null;
-	}
+    // <editor-fold defaultstate="collapsed" desc="/API/Responses/get">
+    /**
+     * /API/Responses/get
+     * @param plurkId
+     * @return JSON object
+     */
+    public JSONObject responseGet(String plurkId) {
+        try {
+            HttpGet method = (HttpGet) PlurkActionSheet.getInstance().responseGet(
+                    config.createParamMap().k("plurk_id").v(plurkId).k("from_response").v("5").getMap());
+            return new JSONObject(execute(method));
+        } catch (PlurkException e) {
+            logger.error(e.getMessage(), e);
+        } catch (JSONException e) {
+            logger.error(e.getMessage(), e);
+        }
+        return null;
+    }
+    // </editor-fold>
 
-	/**
-	 * @param ids the plurk ids will be muted
-	 * @return JSONObject represent the {"success_text": "ok"}
-	 */
-	public JSONObject mutePlurks(String... ids) {
-		return new IdActions() {
-			@Override
-			HttpUriRequest createMethod(Set<Integer> idSet) throws PlurkException {
-				return (HttpGet) PlurkActionSheet.getInstance().mutePlurks(
-						config.createParamMap().k("ids").v(new JSONArray(idSet).toString()).getMap());
-			}
-		}.execute(this, ids);
-	}
-
-	/**
-	 * @param ids the plurk ids will be unmuted.
-	 * @return JSONObject represent the {"success_text": "ok"}
-	 */
-	public JSONObject unmutePlurks(String... ids) {
-		return new IdActions() {
-			@Override
-			HttpUriRequest createMethod(Set<Integer> idSet) throws PlurkException {
-				return (HttpGet) PlurkActionSheet.getInstance().unmutePlurks(
-						config.createParamMap().k("ids").v(new JSONArray(idSet).toString()).getMap());
-			}
-		}.execute(this, ids);
-	}
-
-	/**
-	 * @param ids the plurk ids will mark as read.
-	 * @return JSONObject represent the {"success_text": "ok"}
-	 */
-	public JSONObject markAsRead(String... ids) {
-		return new IdActions() {
-			@Override
-			HttpUriRequest createMethod(Set<Integer> idSet) throws PlurkException {
-				return (HttpGet) PlurkActionSheet.getInstance().markAsRead(
-						config.createParamMap().k("ids").v(new JSONArray(idSet).toString()).getMap());
-			}
-		}.execute(this, ids);
-	}
+    // <editor-fold defaultstate="collapsed" desc="/API/Responses/responseDelete">
+    /**
+     * /API/Responses/responseDelete
+     * @param plurkId which plurk will be response
+     * @param responseId the responsed id
+     * @return JSON object
+     */
+    public JSONObject responseDelete(String plurkId, String responseId) {
+        try {
+            HttpGet method = (HttpGet) PlurkActionSheet.getInstance().responseDelete(
+                    config.createParamMap().k("plurk_id").v(plurkId).k("response_id").v(responseId).getMap());
+            return new JSONObject(execute(method));
+        } catch (JSONException e) {
+            logger.error(e.getMessage(), e);
+        } catch (PlurkException e) {
+            logger.error(e.getMessage(), e);
+        }
+        return null;
+    }
+    // </editor-fold>
 
     // <editor-fold defaultstate="collapsed" desc="Execution of HttpRequest">
     private String execute(HttpUriRequest method) throws PlurkException {
         String result = "";
         try {
-            result = (String) client.execute(method,  new JPlurkResponseHandler());
+            result = (String) client.execute(method, new JPlurkResponseHandler());
         } catch (Exception e) {
             throw new PlurkException(e);
         }
@@ -478,8 +523,17 @@ public class PlurkClient {
     }
     // </editor-fold>
 
+    /**
+     *
+     * @param args
+     * @throws com.google.jplurk.exception.PlurkException
+     * @throws org.apache.http.client.ClientProtocolException
+     * @throws java.io.IOException
+     * @throws java.lang.InterruptedException
+     */
     public static void main(String[] args) throws PlurkException, ClientProtocolException, IOException, InterruptedException {
 //        ProxyProvider.setProvider("proxyhost", 8080);
+        ProxyProvider.setProvider("twproxy.trendmicro.com", 8080);
 
         PlurkClient pc = new PlurkClient(new PlurkSettings());
 
@@ -491,11 +545,14 @@ public class PlurkClient {
 //                System.out.println(oRegister);
 
         JSONObject o = pc.login(JOptionPane.showInputDialog("id"), JOptionPane.showInputDialog("password"));
-        System.out.println(o);
+//        System.out.println(o);
 
 //        JSONObject oo = pc.plurkAdd("測試 jPlurk 編輯 plruk 功能！！", Qualifier.IS, NoComments.False);
 //        JSONObject oo = pc.plurkAdd("hmmmm", Qualifier.SAYS);
 //        System.out.println(oo);
+
+//        JSONObject ogp = pc.getPlurk("183532425");
+//        System.out.println(ogp);
 
 //        JSONObject oe = pc.plurkEdit("183532425", "早上的 http://code.google.com/p/jplurk/ (jPlurk) 先這樣吧～ by jPlurk v2 plurkEdit");
 //        System.out.println(oe);
@@ -503,8 +560,8 @@ public class PlurkClient {
 //        JSONObject od = pc.plurkDelete("183525435");
 //        System.out.println(od);
 
-        JSONObject js10 = pc.getUnreadPlurks(DateTime.now(), 1);
-        System.out.println(js10);
+//        JSONObject js10 = pc.getUnreadPlurks(DateTime.now(), 1);
+//        System.out.println(js10);
 
 
 //        System.out.println(pc.mutePlurks("183559649"));
@@ -514,13 +571,14 @@ public class PlurkClient {
 
 //        JSONObject js = pc.getUnreadPlurks(DateTime.now());
 //        System.out.println(js);
-//
 
-//        pc.responseAdd("183178995", "我也不喜歡這樣的人", Qualifier.FEELS, Lang.tr_ch);
-//
+//        JSONObject ora = pc.responseAdd("183532425", "測試刪除回應", Qualifier.FEELS);
+//        System.out.println(ora);
+//{"posted":"Sat, 19 Dec 2009 07:57:07 GMT","user_id":3290989,"content_raw":"測試刪除回應","lang":"en","content":"測試刪除回應","qualifier":"feels","id":825994340,"plurk_id":183532425}
+        JSONObject ord = pc.responseDelete("183532425", "825994340");
+        System.out.println(ord);
+
 //        JSONObject ooo = pc.responseGet("183178995");
 //        System.out.println(ooo);
     }
-
-
 }
