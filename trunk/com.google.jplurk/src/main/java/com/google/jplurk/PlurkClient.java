@@ -41,7 +41,7 @@ public class PlurkClient {
 
     PlurkSettings config;
 
-	static abstract class SimpleIdsAction {
+	static abstract class IdActions {
 
 		abstract HttpUriRequest createMethod(Set<Integer> idSet) throws PlurkException;
 
@@ -429,7 +429,7 @@ public class PlurkClient {
 	 * @return JSONObject represent the {"success_text": "ok"}
 	 */
 	public JSONObject mutePlurks(String... ids) {
-		return new SimpleIdsAction() {
+		return new IdActions() {
 			@Override
 			HttpUriRequest createMethod(Set<Integer> idSet) throws PlurkException {
 				return (HttpGet) PlurkActionSheet.getInstance().mutePlurks(
@@ -443,7 +443,7 @@ public class PlurkClient {
 	 * @return JSONObject represent the {"success_text": "ok"}
 	 */
 	public JSONObject unmutePlurks(String... ids) {
-		return new SimpleIdsAction() {
+		return new IdActions() {
 			@Override
 			HttpUriRequest createMethod(Set<Integer> idSet) throws PlurkException {
 				return (HttpGet) PlurkActionSheet.getInstance().unmutePlurks(
