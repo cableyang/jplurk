@@ -90,6 +90,10 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-javadoc-plugin</artifactId>
+                <!--
+                If you go into trobule with javadoc:javadoc, please check the following url:
+                http://maven.apache.org/plugins/maven-javadoc-plugin/faq.html#On_Windows_with_Sun_JDK_why_javadoc:javadoc_goal_blows_up_due_to_an_IllegalArgumentException_in_sun.net.www.ParseUtil.decode
+                -->
                 <configuration>
                     <encoding>UTF-8</encoding>
                     <charset>UTF-8</charset>
