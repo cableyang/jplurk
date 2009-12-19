@@ -11,10 +11,11 @@ package com.google.jplurk.net;
  */
 public class ProxyProvider {
 
-    static String host;
+    // set default value
+    static String host = "";
     static int port = 80;
-    static String user;
-    static String password;
+    static String user = "";
+    static String password = "";
 
     public static void setProvider(String host, int port) {
         setProvider(host);
