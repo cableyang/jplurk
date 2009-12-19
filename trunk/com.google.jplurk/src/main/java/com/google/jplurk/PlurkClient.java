@@ -1,11 +1,8 @@
 package com.google.jplurk;
 
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
 import java.util.HashSet;
 import java.util.Set;
-import java.util.logging.Level;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -110,12 +107,10 @@ public class PlurkClient {
 
         try {
             HttpGet method = (HttpGet) PlurkActionSheet.getInstance().login(
-                    config.createParamMap().k("username").v(URLEncoder.encode(user, "utf-8")).k("password").v(URLEncoder.encode(password, "utf-8")).getMap());
+                    config.createParamMap().k("username").v(user).k("password").v(password).getMap());
 
             JSONObject ret = new JSONObject(execute(method));
             return ret;
-        } catch (UnsupportedEncodingException e) {
-            logger.error(e.getMessage(), e);
         } catch (PlurkException e) {
             logger.error(e.getMessage(), e);
         } catch (JSONException e) {
@@ -183,7 +178,7 @@ public class PlurkClient {
         }
         // TODO: Check password need URLEncode? I try encode and work fine now...
         try {
-            MapHelper paramMap = config.createParamMap().k("nick_name").v(URLEncoder.encode(nickName, "utf-8")).k("full_name").v(URLEncoder.encode(fullName, "utf-8")).k("password").v(URLEncoder.encode(password, "utf-8")).k("gender").v(gender.toString()).k("date_of_birth").v(dateOfBirth);
+            MapHelper paramMap = config.createParamMap().k("nick_name").v(nickName).k("full_name").v(fullName).k("password").v(password).k("gender").v(gender.toString()).k("date_of_birth").v(dateOfBirth);
             if (email != null && !email.equals((""))) {
                 paramMap = paramMap.k("email").v(email);
             }
@@ -191,8 +186,6 @@ public class PlurkClient {
 
             JSONObject ret = new JSONObject(execute(method));
             return ret;
-        } catch (UnsupportedEncodingException ex) {
-            java.util.logging.Logger.getLogger(PlurkClient.class.getName()).log(Level.SEVERE, null, ex);
         } catch (PlurkException e) {
             logger.error(e.getMessage(), e);
         } catch (JSONException e) {
@@ -329,14 +322,12 @@ public class PlurkClient {
      */
     public JSONObject plurkAdd(String content, Qualifier qualifier, String limited_to, NoComments no_comments, Lang lang) {
         try {
-            MapHelper paramMap = config.createParamMap().k("content").v(URLEncoder.encode(content, "utf-8")).k("qualifier").v(qualifier.toString()).k("no_comments").v(no_comments.toString()).k("lang").v(lang == null ? config.getLang() : lang.toString());
+            MapHelper paramMap = config.createParamMap().k("content").v(content).k("qualifier").v(qualifier.toString()).k("no_comments").v(no_comments.toString()).k("lang").v(lang == null ? config.getLang() : lang.toString());
             if (limited_to != null && !limited_to.equals("")) {
                 paramMap = paramMap.k("limited_to").v(limited_to);
             }
             HttpGet method = (HttpGet) PlurkActionSheet.getInstance().plurkAdd(paramMap.getMap());
             return new JSONObject(execute(method));
-        } catch (UnsupportedEncodingException e) {
-            logger.error(e.getMessage(), e);
         } catch (PlurkException e) {
             logger.error(e.getMessage(), e);
         } catch (JSONException e) {
@@ -378,10 +369,8 @@ public class PlurkClient {
     public JSONObject plurkEdit(String plurkId, String content) {
         try {
             HttpGet method = (HttpGet) PlurkActionSheet.getInstance().plurkEdit(
-                    config.createParamMap().k("plurk_id").v(plurkId).k("content").v(URLEncoder.encode(content, "utf-8")).getMap());
+                    config.createParamMap().k("plurk_id").v(plurkId).k("content").v(content).getMap());
             return new JSONObject(execute(method));
-        } catch (UnsupportedEncodingException e) {
-            logger.error(e.getMessage(), e);
         } catch (PlurkException e) {
             logger.error(e.getMessage(), e);
         } catch (JSONException e) {
@@ -451,16 +440,13 @@ public class PlurkClient {
      * @param plurkId which plurk will be response
      * @param content the responsed content
      * @param qualifier
-     * @param lang
      * @return JSON object
      */
     public JSONObject responseAdd(String plurkId, String content, Qualifier qualifier) {
         try {
             HttpGet method = (HttpGet) PlurkActionSheet.getInstance().responseAdd(
-                    config.createParamMap().k("plurk_id").v(plurkId).k("content").v(URLEncoder.encode(content, "utf-8")).k("qualifier").v(qualifier.toString()).getMap());
+                    config.createParamMap().k("plurk_id").v(plurkId).k("content").v(content).k("qualifier").v(qualifier.toString()).getMap());
             return new JSONObject(execute(method));
-        } catch (UnsupportedEncodingException e) {
-            logger.error(e.getMessage(), e);
         } catch (JSONException e) {
             logger.error(e.getMessage(), e);
         } catch (PlurkException e) {
