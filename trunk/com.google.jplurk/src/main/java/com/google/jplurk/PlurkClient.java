@@ -404,7 +404,7 @@ public class PlurkClient {
 
 	/**
 	 * @param ids the plurk ids will be muted
-	 * @return
+	 * @return JSONObject represent the {"success_text": "ok"}
 	 */
 	public JSONObject mutePlurks(String... ids) {
 		try {
@@ -415,6 +415,30 @@ public class PlurkClient {
 			idSet.remove(0);
 
 			HttpGet method = (HttpGet) PlurkActionSheet.getInstance().mutePlurks(
+					config.createParamMap().k("ids").v(new JSONArray(idSet).toString()).getMap());
+
+			return new JSONObject(execute(method));
+		} catch (PlurkException e) {
+			logger.error(e.getMessage(), e);
+		} catch (JSONException e) {
+			logger.error(e.getMessage(), e);
+		}
+		return null;
+	}
+
+	/**
+	 * @param ids the plurk ids will be unmuted.
+	 * @return JSONObject represent the {"success_text": "ok"}
+	 */
+	public JSONObject unmutePlurks(String... ids) {
+		try {
+			Set<Integer> idSet = new HashSet<Integer>();
+			for (String id : ids) {
+				idSet.add(NumberUtils.toInt(id, 0));
+			}
+			idSet.remove(0);
+
+			HttpGet method = (HttpGet) PlurkActionSheet.getInstance().unmutePlurks(
 					config.createParamMap().k("ids").v(new JSONArray(idSet).toString()).getMap());
 
 			return new JSONObject(execute(method));
@@ -466,7 +490,7 @@ public class PlurkClient {
         JSONObject js10 = pc.getUnreadPlurks(DateTime.now(), 1);
         System.out.println(js10);
 
-//        System.out.println(pc.mutePlurks("183559649"));;
+        System.out.println(pc.unmutePlurks("183559649"));;
 
 //        JSONObject js = pc.getUnreadPlurks(DateTime.now());
 //        System.out.println(js);
