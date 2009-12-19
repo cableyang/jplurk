@@ -1,4 +1,5 @@
 #summary jPlurk version 2
+#labels Featured
 
 = 關於 V2  =
 
