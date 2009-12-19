@@ -493,9 +493,9 @@ public class PlurkClient {
     // <editor-fold defaultstate="collapsed" desc="/API/Responses/responseDelete">
     /**
      * /API/Responses/responseDelete
-     * @param plurkId which plurk will be response
-     * @param responseId the responsed id
-     * @return JSON object
+     * @param plurkId the plurk id contains the response
+     * @param responseId the id of the response will be deleted.
+     * @return {"success_text": "ok"} when deletion is success, otherwise null.
      */
     public JSONObject responseDelete(String plurkId, String responseId) {
         try {
@@ -511,6 +511,10 @@ public class PlurkClient {
     }
     // </editor-fold>
 
+	/**
+	 * approval all friend requests
+	 * @return {"success_text": "ok"} when request success, otherwise null
+	 */
 	public JSONObject addAllAsFriends() {
 		try {
 			HttpGet method = (HttpGet) PlurkActionSheet.getInstance()
