@@ -1,5 +1,5 @@
 #summary version 1.1
-#labels Featured,Phase-Implementation
+#labels Deprecated,Phase-Implementation
 
 = JPlurk 1.1 簡介 =
 
