@@ -3,6 +3,8 @@ package com.google.jplurk;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.logging.Level;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -10,6 +12,7 @@ import java.util.regex.Pattern;
 import javax.swing.JOptionPane;
 
 import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang.math.NumberUtils;
 import org.apache.http.HttpHost;
 import org.apache.http.auth.AuthScope;
 import org.apache.http.auth.UsernamePasswordCredentials;
@@ -19,6 +22,7 @@ import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpUriRequest;
 import org.apache.http.conn.params.ConnRoutePNames;
 import org.apache.http.impl.client.DefaultHttpClient;
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.slf4j.Logger;
@@ -353,6 +357,13 @@ public class PlurkClient {
 	}
     // </editor-fold>
 
+    /**
+     * @param plurkId which plurk will be response
+     * @param content the responsed content
+     * @param qualifier
+     * @param lang
+     * @return JSON object
+     */
     public JSONObject responseAdd(String plurkId, String content, Qualifier qualifier, Lang lang) {
 		try {
 			HttpGet method = (HttpGet) PlurkActionSheet.getInstance().responseAdd(
@@ -374,10 +385,38 @@ public class PlurkClient {
 		return null;
 	}
 
+	/**
+	 * @param plurkId
+	 * @return JSON object
+	 */
 	public JSONObject responseGet(String plurkId){
 		try {
 			HttpGet method = (HttpGet) PlurkActionSheet.getInstance().responseGet(
 				config.createParamMap().k("plurk_id").v(plurkId).k("from_response").v("5").getMap());
+			return new JSONObject(execute(method));
+		} catch (PlurkException e) {
+			logger.error(e.getMessage(), e);
+		} catch (JSONException e) {
+			logger.error(e.getMessage(), e);
+		}
+		return null;
+	}
+
+	/**
+	 * @param ids the plurk ids will be muted
+	 * @return
+	 */
+	public JSONObject mutePlurks(String... ids) {
+		try {
+			Set<Integer> idSet = new HashSet<Integer>();
+			for (String id : ids) {
+				idSet.add(NumberUtils.toInt(id, 0));
+			}
+			idSet.remove(0);
+
+			HttpGet method = (HttpGet) PlurkActionSheet.getInstance().mutePlurks(
+					config.createParamMap().k("ids").v(new JSONArray(idSet).toString()).getMap());
+
 			return new JSONObject(execute(method));
 		} catch (PlurkException e) {
 			logger.error(e.getMessage(), e);
@@ -424,8 +463,10 @@ public class PlurkClient {
 //        JSONObject od = pc.plurkDelete("183525435");
 //        System.out.println(od);
 
-//        JSONObject js10 = pc.getUnreadPlurks(DateTime.now(), 1);
-//        System.out.println(js10);
+        JSONObject js10 = pc.getUnreadPlurks(DateTime.now(), 1);
+        System.out.println(js10);
+
+//        System.out.println(pc.mutePlurks("183559649"));;
 
 //        JSONObject js = pc.getUnreadPlurks(DateTime.now());
 //        System.out.println(js);

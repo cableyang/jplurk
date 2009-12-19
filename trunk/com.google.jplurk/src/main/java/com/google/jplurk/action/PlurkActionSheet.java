@@ -85,6 +85,13 @@ public final class PlurkActionSheet {
 		return prepare("responseAdd", params);
 	}
 
+	@Meta(uri = "/Timeline/mutePlurks", require = { "api_key", "ids" })
+	@Validation({@Validators(field = "ids", validator = IDListValidator.class)})
+	public HttpUriRequest mutePlurks(Map<String, String> params) throws PlurkException {
+		return prepare("mutePlurks", params);
+	}
+
+
 	private HttpUriRequest prepare(String methodName, Map<String, String> params) throws PlurkException {
 		Method method = MethodUtils.getAccessibleMethod(PlurkActionSheet.class,
 				methodName, new Class[] { Map.class });
@@ -140,5 +147,6 @@ public final class PlurkActionSheet {
 		logger.info("Params: " + params.toString());
 		return httpMethod;
 	}
+
 
 }
