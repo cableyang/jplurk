@@ -41,6 +41,28 @@ public class PlurkClient {
 
     PlurkSettings config;
 
+	static abstract class SimpleIdsAction {
+
+		abstract HttpUriRequest createMethod(Set<Integer> idSet) throws PlurkException;
+
+		public JSONObject execute(PlurkClient client, String... ids) {
+			try {
+				Set<Integer> idSet = new HashSet<Integer>();
+				for (String id : ids) {
+					idSet.add(NumberUtils.toInt(id, 0));
+				}
+				idSet.remove(0);
+
+				return new JSONObject(client.execute(createMethod(idSet)));
+			} catch (PlurkException e) {
+				logger.error(e.getMessage(), e);
+			} catch (JSONException e) {
+				logger.error(e.getMessage(), e);
+			}
+			return null;
+		}
+	}
+
     public PlurkClient(PlurkSettings settings) {
         this.config = settings;
         configureHttpClient();
@@ -407,23 +429,13 @@ public class PlurkClient {
 	 * @return JSONObject represent the {"success_text": "ok"}
 	 */
 	public JSONObject mutePlurks(String... ids) {
-		try {
-			Set<Integer> idSet = new HashSet<Integer>();
-			for (String id : ids) {
-				idSet.add(NumberUtils.toInt(id, 0));
+		return new SimpleIdsAction() {
+			@Override
+			HttpUriRequest createMethod(Set<Integer> idSet) throws PlurkException {
+				return (HttpGet) PlurkActionSheet.getInstance().mutePlurks(
+						config.createParamMap().k("ids").v(new JSONArray(idSet).toString()).getMap());
 			}
-			idSet.remove(0);
-
-			HttpGet method = (HttpGet) PlurkActionSheet.getInstance().mutePlurks(
-					config.createParamMap().k("ids").v(new JSONArray(idSet).toString()).getMap());
-
-			return new JSONObject(execute(method));
-		} catch (PlurkException e) {
-			logger.error(e.getMessage(), e);
-		} catch (JSONException e) {
-			logger.error(e.getMessage(), e);
-		}
-		return null;
+		}.execute(this, ids);
 	}
 
 	/**
@@ -431,23 +443,13 @@ public class PlurkClient {
 	 * @return JSONObject represent the {"success_text": "ok"}
 	 */
 	public JSONObject unmutePlurks(String... ids) {
-		try {
-			Set<Integer> idSet = new HashSet<Integer>();
-			for (String id : ids) {
-				idSet.add(NumberUtils.toInt(id, 0));
+		return new SimpleIdsAction() {
+			@Override
+			HttpUriRequest createMethod(Set<Integer> idSet) throws PlurkException {
+				return (HttpGet) PlurkActionSheet.getInstance().unmutePlurks(
+						config.createParamMap().k("ids").v(new JSONArray(idSet).toString()).getMap());
 			}
-			idSet.remove(0);
-
-			HttpGet method = (HttpGet) PlurkActionSheet.getInstance().unmutePlurks(
-					config.createParamMap().k("ids").v(new JSONArray(idSet).toString()).getMap());
-
-			return new JSONObject(execute(method));
-		} catch (PlurkException e) {
-			logger.error(e.getMessage(), e);
-		} catch (JSONException e) {
-			logger.error(e.getMessage(), e);
-		}
-		return null;
+		}.execute(this, ids);
 	}
 
     // <editor-fold defaultstate="collapsed" desc="Execution of HttpRequest">
@@ -490,7 +492,10 @@ public class PlurkClient {
         JSONObject js10 = pc.getUnreadPlurks(DateTime.now(), 1);
         System.out.println(js10);
 
-        System.out.println(pc.unmutePlurks("183559649"));;
+//        System.out.println(pc.mutePlurks("183559649"));
+//        Scanner scanner = new Scanner(System.in);
+//        scanner.next();
+//        System.out.println(pc.unmutePlurks("183559649"));
 
 //        JSONObject js = pc.getUnreadPlurks(DateTime.now());
 //        System.out.println(js);
@@ -501,4 +506,6 @@ public class PlurkClient {
 //        JSONObject ooo = pc.responseGet("183178995");
 //        System.out.println(ooo);
     }
+
+
 }
