@@ -25,6 +25,8 @@ import com.google.jplurk.action.PlurkActionSheet;
 import com.google.jplurk.exception.PlurkException;
 import com.google.jplurk.net.JPlurkResponseHandler;
 import com.google.jplurk.net.ProxyProvider;
+import org.apache.http.auth.AuthScope;
+import org.apache.http.auth.UsernamePasswordCredentials;
 
 public class PlurkClient {
 
@@ -40,6 +42,13 @@ public class PlurkClient {
     }
 
 	private void configureHttpClient() {
+        // Auth Proxy Setting
+		if (StringUtils.isNotBlank(ProxyProvider.getUser())) {
+            ((DefaultHttpClient)client).getCredentialsProvider().setCredentials(
+                new AuthScope(ProxyProvider.getHost(), ProxyProvider.getPort()),
+                new UsernamePasswordCredentials(ProxyProvider.getUser(), ProxyProvider.getPassword()));
+		}
+        // Proxy Host Setting
 		if (StringUtils.isNotBlank(ProxyProvider.getHost())) {
 			HttpHost proxy = new HttpHost(ProxyProvider.getHost(), ProxyProvider.getPort());
 			client.getParams().setParameter(ConnRoutePNames.DEFAULT_PROXY, proxy);
@@ -51,17 +60,6 @@ public class PlurkClient {
 				client.getConnectionManager().shutdown();
 			}
 		});
-		/*
-         * TODO Add Proxy of Auth
-         */
-		// if (StringUtils.isNotBlank(ProxyProvider.getUser())) {
-		// HttpState state = new HttpState();
-		// state.setProxyCredentials(
-		// new AuthScope(ProxyProvider.getHost(), ProxyProvider.getPort()),
-		// new UsernamePasswordCredentials(ProxyProvider.getUser(),
-		// ProxyProvider.getPassword()));
-		// client.setState(state);
-		// }
 	}
     // </editor-fold>
 
