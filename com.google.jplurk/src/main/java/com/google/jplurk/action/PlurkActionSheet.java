@@ -122,6 +122,13 @@ public final class PlurkActionSheet {
 		return prepare("responseDelete", params);
 	}
 
+	@Meta(uri = "/Timeline/uploadPicture", require = { "api_key", "image" }, type = Type.POST)
+	@Headers(headers = { @Header(key = "Content-Type", value = "multipart/form-data") })
+	public HttpUriRequest uploadPicture(Map<String, String> params)
+			throws PlurkException {
+		return prepare("uploadPicture", params);
+	}
+
 	private HttpUriRequest prepare(String methodName, Map<String, String> params) throws PlurkException {
 		Method method = MethodUtils.getAccessibleMethod(PlurkActionSheet.class,
 				methodName, new Class[] { Map.class });
