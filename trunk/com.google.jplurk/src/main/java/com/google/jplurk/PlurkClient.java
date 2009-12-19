@@ -511,6 +511,19 @@ public class PlurkClient {
     }
     // </editor-fold>
 
+	public JSONObject addAllAsFriends() {
+		try {
+			HttpGet method = (HttpGet) PlurkActionSheet.getInstance()
+				.addAllAsFriends(config.createParamMap().getMap());
+			return new JSONObject(execute(method));
+		} catch (PlurkException e) {
+			logger.error(e.getMessage(), e);
+		} catch (JSONException e) {
+			logger.error(e.getMessage(), e);
+		}
+		return null;
+	}
+
     // <editor-fold defaultstate="collapsed" desc="Execution of HttpRequest">
     private String execute(HttpUriRequest method) throws PlurkException {
         String result = "";
@@ -533,7 +546,7 @@ public class PlurkClient {
      */
     public static void main(String[] args) throws PlurkException, ClientProtocolException, IOException, InterruptedException {
 //        ProxyProvider.setProvider("proxyhost", 8080);
-        ProxyProvider.setProvider("twproxy.trendmicro.com", 8080);
+//        ProxyProvider.setProvider("twproxy.trendmicro.com", 8080);
 
         PlurkClient pc = new PlurkClient(new PlurkSettings());
 
@@ -545,7 +558,7 @@ public class PlurkClient {
 //                System.out.println(oRegister);
 
         JSONObject o = pc.login(JOptionPane.showInputDialog("id"), JOptionPane.showInputDialog("password"));
-//        System.out.println(o);
+        System.out.println(o);
 
 //        JSONObject oo = pc.plurkAdd("測試 jPlurk 編輯 plruk 功能！！", Qualifier.IS, NoComments.False);
 //        JSONObject oo = pc.plurkAdd("hmmmm", Qualifier.SAYS);
@@ -575,9 +588,10 @@ public class PlurkClient {
 //        JSONObject ora = pc.responseAdd("183532425", "測試刪除回應", Qualifier.FEELS);
 //        System.out.println(ora);
 //{"posted":"Sat, 19 Dec 2009 07:57:07 GMT","user_id":3290989,"content_raw":"測試刪除回應","lang":"en","content":"測試刪除回應","qualifier":"feels","id":825994340,"plurk_id":183532425}
-        JSONObject ord = pc.responseDelete("183532425", "825994340");
-        System.out.println(ord);
+//        JSONObject ord = pc.responseDelete("183532425", "825994340");
+//        System.out.println(ord);
 
+        System.out.println(pc.addAllAsFriends());
 //        JSONObject ooo = pc.responseGet("183178995");
 //        System.out.println(ooo);
     }
