@@ -2,18 +2,21 @@ package com.google.jplurk;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.logging.Level;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import java.net.URLEncoder;
+
 import javax.swing.JOptionPane;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.http.HttpHost;
+import org.apache.http.auth.AuthScope;
+import org.apache.http.auth.UsernamePasswordCredentials;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
-import org.apache.http.client.methods.HttpRequestBase;
+import org.apache.http.client.methods.HttpUriRequest;
 import org.apache.http.conn.params.ConnRoutePNames;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.json.JSONException;
@@ -25,8 +28,6 @@ import com.google.jplurk.action.PlurkActionSheet;
 import com.google.jplurk.exception.PlurkException;
 import com.google.jplurk.net.JPlurkResponseHandler;
 import com.google.jplurk.net.ProxyProvider;
-import org.apache.http.auth.AuthScope;
-import org.apache.http.auth.UsernamePasswordCredentials;
 
 public class PlurkClient {
 
@@ -387,7 +388,7 @@ public class PlurkClient {
 	}
 
     // <editor-fold defaultstate="collapsed" desc="Execution of HttpRequest">
-    private String execute(HttpRequestBase method) throws PlurkException {
+    private String execute(HttpUriRequest method) throws PlurkException {
         String result = "";
         try {
             result = (String) client.execute(method,  new JPlurkResponseHandler());
@@ -429,7 +430,7 @@ public class PlurkClient {
 //        JSONObject js = pc.getUnreadPlurks(DateTime.now());
 //        System.out.println(js);
 //
-          
+
 //        pc.responseAdd("183178995", "我也不喜歡這樣的人", Qualifier.FEELS, Lang.tr_ch);
 //
 //        JSONObject ooo = pc.responseGet("183178995");
