@@ -7,6 +7,7 @@ import org.apache.commons.beanutils.MethodUtils;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.methods.HttpRequestBase;
+import org.apache.http.client.methods.HttpUriRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -36,7 +37,7 @@ public final class PlurkActionSheet {
 	}
 
 	@Meta(uri = "/Users/login", require = { "api_key", "username", "password" })
-	public HttpRequestBase login(Map<String, String> params)
+	public HttpUriRequest login(Map<String, String> params)
 			throws PlurkException {
 		return prepare("login", params);
 	}
@@ -44,7 +45,7 @@ public final class PlurkActionSheet {
 	@Meta(uri = "/Users/register",
 		require = { "api_key", "nick_name", "full_name", "password", "gender", "date_of_birth" })
 	@Validation({ @Validators(field = "email", validator = EmailValidator.class) })
-    public HttpRequestBase register(Map<String, String> params)
+    public HttpUriRequest register(Map<String, String> params)
             throws PlurkException {
         return prepare("register", params);
     }
@@ -53,38 +54,38 @@ public final class PlurkActionSheet {
 	@Validation(value = {
 			@Validators(field = "limited_to", validator = IDListValidator.class),
 			@Validators(field = "qualifier", validator = QualifierValidator.class) })
-	public HttpRequestBase plurkAdd(Map<String, String> params) throws PlurkException{
+	public HttpUriRequest plurkAdd(Map<String, String> params) throws PlurkException{
 		return prepare("plurkAdd", params);
 	}
 
 	@Meta(uri = "/Timeline/getUnreadPlurks", require = { "api_key" })
 	@Validation(value = {@Validators(field = "offset", validator = TimeOffsetValidator.class) })
-	public HttpRequestBase getUnreadPlurks(Map<String, String> params) throws PlurkException{
+	public HttpUriRequest getUnreadPlurks(Map<String, String> params) throws PlurkException{
 		return prepare("getUnreadPlurks", params);
 	}
 
     @Meta(uri = "/Timeline/plurkDelete", require = { "api_key", "plurk_id" })
-    public HttpRequestBase plurkDelete(Map<String, String> params) throws PlurkException {
+    public HttpUriRequest plurkDelete(Map<String, String> params) throws PlurkException {
         return prepare("plurkDelete", params);
     }
 
     @Meta(uri = "/Timeline/plurkEdit", require = { "api_key", "plurk_id", "content" })
-    public HttpRequestBase plurkEdit(Map<String, String> params) throws PlurkException {
+    public HttpUriRequest plurkEdit(Map<String, String> params) throws PlurkException {
         return prepare("plurkEdit", params);
     }
 
 	@Meta(uri = "/Responses/get", require = { "api_key", "plurk_id", "from_response" })
-	public HttpRequestBase responseGet(Map<String, String> params) throws PlurkException {
+	public HttpUriRequest responseGet(Map<String, String> params) throws PlurkException {
 		return prepare("responseGet", params);
 	}
 
 	@Meta(uri = "/Responses/responseAdd", require = { "api_key", "content", "qualifier", "plurk_id" })
 	@Validation(value = { @Validators(field = "qualifier", validator = QualifierValidator.class) })
-	public HttpRequestBase responseAdd(Map<String, String> params) throws PlurkException {
+	public HttpUriRequest responseAdd(Map<String, String> params) throws PlurkException {
 		return prepare("responseAdd", params);
 	}
 
-	private HttpRequestBase prepare(String methodName, Map<String, String> params) throws PlurkException {
+	private HttpUriRequest prepare(String methodName, Map<String, String> params) throws PlurkException {
 		Method method = MethodUtils.getAccessibleMethod(PlurkActionSheet.class,
 				methodName, new Class[] { Map.class });
 		if (method == null) {
