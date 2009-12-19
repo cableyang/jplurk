@@ -63,6 +63,16 @@ public final class PlurkActionSheet {
 		return prepare("getUnreadPlurks", params);
 	}
 
+    @Meta(uri = "/Timeline/plurkDelete", require = { "api_key", "plurk_id" })
+    public HttpRequestBase plurkDelete(Map<String, String> params) throws PlurkException {
+        return prepare("plurkDelete", params);
+    }
+
+    @Meta(uri = "/Timeline/plurkEdit", require = { "api_key", "plurk_id", "content" })
+    public HttpRequestBase plurkEdit(Map<String, String> params) throws PlurkException {
+        return prepare("plurkEdit", params);
+    }
+
 	@Meta(uri = "/Responses/get", require = { "api_key", "plurk_id", "from_response" })
 	public HttpRequestBase responseGet(Map<String, String> params) throws PlurkException {
 		return prepare("responseGet", params);
