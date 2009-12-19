@@ -36,6 +36,12 @@ public final class PlurkActionSheet {
 		return "http://www.plurk.com/API" + uri;
 	}
 
+	@Meta(uri = "/Alerts/addAllAsFriends", require = { "api_key" })
+	public HttpUriRequest addAllAsFriends(Map<String, String> params)
+			throws PlurkException {
+		return prepare("addAllAsFriends", params);
+	}
+
 	@Meta(uri = "/Users/login", require = { "api_key", "username", "password" })
 	public HttpUriRequest login(Map<String, String> params)
 			throws PlurkException {
