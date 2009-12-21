@@ -1,7 +1,7 @@
 #summary jPlurk version 2
 #labels Featured
 
-= 關於 V2  =
+= 關於 Version 2  =
 
 JPlurk v2 正持續進行中，在 Plurk 官方 [http://www.plurk.com/API API] 發佈後，我們決定凍結 v1 的開發。
 並著手新的架構設計。
