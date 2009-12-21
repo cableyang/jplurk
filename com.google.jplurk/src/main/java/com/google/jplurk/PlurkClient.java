@@ -535,8 +535,8 @@ public class PlurkClient {
     	try {
 			entity.addPart("api_key", new StringBody(config.getApiKey()));
 			entity.addPart("image", new FileBody(file));
-		} catch (UnsupportedEncodingException e1) {
-			e1.printStackTrace();
+		} catch (UnsupportedEncodingException e) {
+			logger.error(e.getMessage(), e);
 		}
 		method.setEntity(entity);
 
@@ -589,37 +589,7 @@ public class PlurkClient {
         JSONObject o = pc.login(JOptionPane.showInputDialog("id"), JOptionPane.showInputDialog("password"));
         System.out.println(o);
 
-        System.out.println(pc.uploadPicture(new File("C:/images/image.jpg")));
-
-//        if(true){
-//        	HttpPost post  = (HttpPost) PlurkActionSheet.getInstance().uploadPicture(config.createParamMap().k("image").v("3270-2.jpg").getMap());
-//        	File file = new File("c:/tmp/3270-2.jpg");
-//        	MultipartEntity entity = new MultipartEntity();
-//        	entity.addPart("api_key", new StringBody("K0kIfurPw4TtBk0l5xGSg3l1bgTRjxZF"));
-//            ContentBody cbFile = new FileBody(file, "image/jpeg");
-//            entity.addPart("image", cbFile);
-//        	post.setEntity(entity);
-//        	pc.client.execute(post, new ResponseHandler<String>() {
-//
-//				public String handleResponse(HttpResponse response)
-//						throws ClientProtocolException, IOException {
-//					HttpEntity resEntity  = response.getEntity();
-//					  System.out.println("----------------------------------------");
-//				        System.out.println(response.getStatusLine());
-//				        if (resEntity != null) {
-//				            System.out.println("Response content length: " + resEntity.getContentLength());
-//				            System.out.println("Chunked?: " + resEntity.isChunked());
-//				        }
-//				        if (resEntity != null) {
-//				            resEntity.consumeContent();
-//				        }
-//
-//
-//					return "";
-//				}
-//			});
-//        	return ;
-//        }
+//        System.out.println(pc.uploadPicture(new File("C:/images/image.jpg")));
 
 //        JSONObject oo = pc.plurkAdd("測試 jPlurk 編輯 plruk 功能！！", Qualifier.IS, NoComments.False);
 //        JSONObject oo = pc.plurkAdd("hmmmm", Qualifier.SAYS);
