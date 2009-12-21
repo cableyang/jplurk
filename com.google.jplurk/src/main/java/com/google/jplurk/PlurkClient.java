@@ -1,6 +1,8 @@
 package com.google.jplurk;
 
+import java.io.File;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.regex.Matcher;
@@ -16,8 +18,12 @@ import org.apache.http.auth.UsernamePasswordCredentials;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
+import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.methods.HttpUriRequest;
 import org.apache.http.conn.params.ConnRoutePNames;
+import org.apache.http.entity.mime.MultipartEntity;
+import org.apache.http.entity.mime.content.FileBody;
+import org.apache.http.entity.mime.content.StringBody;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -514,6 +520,37 @@ public class PlurkClient {
 		return null;
 	}
 
+    /**
+     * @param file a image file will be uploaded
+     * @return json with thumbnail url. for example <pre>{"thumbnail":"http://images.plurk.com/tn_3146394_fb04befc28fbca59318f16d83d5c78cc.gif","full":"http://images.plurk.com/3146394_fb04befc28fbca59318f16d83d5c78cc.jpg"}</pre>
+     */
+    public JSONObject uploadPicture(File file){
+		if (file == null || !file.exists() || !file.isFile()) {
+			logger.warn("not a valid file: " + file);
+			return null;
+		}
+
+    	HttpPost method = new HttpPost("http://www.plurk.com/API/Timeline/uploadPicture");
+    	MultipartEntity entity = new MultipartEntity();
+    	try {
+			entity.addPart("api_key", new StringBody(config.getApiKey()));
+			entity.addPart("image", new FileBody(file));
+		} catch (UnsupportedEncodingException e1) {
+			e1.printStackTrace();
+		}
+		method.setEntity(entity);
+
+		try {
+			return new JSONObject(execute(method));
+		} catch (JSONException e) {
+			logger.error(e.getMessage(), e);
+		} catch (PlurkException e) {
+			logger.error(e.getMessage(), e);
+		}
+
+		return null;
+    }
+
     // <editor-fold defaultstate="collapsed" desc="Execution of HttpRequest">
     private String execute(HttpUriRequest method) throws PlurkException {
         String result = "";
@@ -525,6 +562,7 @@ public class PlurkClient {
         return result;
     }
     // </editor-fold>
+
 
     /**
      *
@@ -538,7 +576,8 @@ public class PlurkClient {
 //        ProxyProvider.setProvider("proxyhost", 8080);
 //        ProxyProvider.setProvider("twproxy.trendmicro.com", 8080);
 
-        PlurkClient pc = new PlurkClient(new PlurkSettings());
+    	PlurkSettings config = new PlurkSettings();
+        PlurkClient pc = new PlurkClient(config);
 
 //                JSONObject oRegister = pc.register(JOptionPane.showInputDialog("nick_name"),
 //                        JOptionPane.showInputDialog("full_name"),
@@ -549,6 +588,38 @@ public class PlurkClient {
 
         JSONObject o = pc.login(JOptionPane.showInputDialog("id"), JOptionPane.showInputDialog("password"));
         System.out.println(o);
+
+        System.out.println(pc.uploadPicture(new File("C:/images/image.jpg")));
+
+//        if(true){
+//        	HttpPost post  = (HttpPost) PlurkActionSheet.getInstance().uploadPicture(config.createParamMap().k("image").v("3270-2.jpg").getMap());
+//        	File file = new File("c:/tmp/3270-2.jpg");
+//        	MultipartEntity entity = new MultipartEntity();
+//        	entity.addPart("api_key", new StringBody("K0kIfurPw4TtBk0l5xGSg3l1bgTRjxZF"));
+//            ContentBody cbFile = new FileBody(file, "image/jpeg");
+//            entity.addPart("image", cbFile);
+//        	post.setEntity(entity);
+//        	pc.client.execute(post, new ResponseHandler<String>() {
+//
+//				public String handleResponse(HttpResponse response)
+//						throws ClientProtocolException, IOException {
+//					HttpEntity resEntity  = response.getEntity();
+//					  System.out.println("----------------------------------------");
+//				        System.out.println(response.getStatusLine());
+//				        if (resEntity != null) {
+//				            System.out.println("Response content length: " + resEntity.getContentLength());
+//				            System.out.println("Chunked?: " + resEntity.isChunked());
+//				        }
+//				        if (resEntity != null) {
+//				            resEntity.consumeContent();
+//				        }
+//
+//
+//					return "";
+//				}
+//			});
+//        	return ;
+//        }
 
 //        JSONObject oo = pc.plurkAdd("測試 jPlurk 編輯 plruk 功能！！", Qualifier.IS, NoComments.False);
 //        JSONObject oo = pc.plurkAdd("hmmmm", Qualifier.SAYS);
@@ -581,8 +652,5 @@ public class PlurkClient {
 //        JSONObject ord = pc.responseDelete("183532425", "825994340");
 //        System.out.println(ord);
 
-        System.out.println(pc.addAllAsFriends());
-//        JSONObject ooo = pc.responseGet("183178995");
-//        System.out.println(ooo);
     }
 }

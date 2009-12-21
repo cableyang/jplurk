@@ -24,8 +24,9 @@ public class JPlurkResponseHandler implements ResponseHandler<String> {
 		if (logger.isDebugEnabled()) {
 			Header[] headers = response.getAllHeaders();
 			for (Header header : headers) {
-				logger.debug(header.toString());
+				logger.debug("Response Header: " + header.toString());
 			}
+			logger.info(response.getStatusLine().toString());
 		}
 
         StatusLine statusLine = response.getStatusLine();
