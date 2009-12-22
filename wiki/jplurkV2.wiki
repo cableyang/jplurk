@@ -64,6 +64,11 @@ JSONObject ret = client.login(
 client.plurkAdd("Plurk It with jPlurk http://code.google.com/p/jplurk/w/edit/jplurkV2", Qualifier.SHARES);
 }}}
 
+讀取未讀的噗：
+{{{
+client.getUnreadPlurks();
+}}}
+
 = API 實作狀態表 =
 
 || *功能* || *函式名稱* || *誰在實作* || *狀態* || *備註* ||
