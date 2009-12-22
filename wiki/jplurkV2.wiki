@@ -18,13 +18,39 @@ jPlurk v2 正持續進行中，在 Plurk 官方 [http://www.plurk.com/API API] �
 ~/jplurk.properties
 }}}
 
-它是一個簡單的 Property 檔案，您至少需要包含 api_key 這個屬性：
+它是一個簡單的 Property 檔案，您至少需要包含 api_key 這個屬性。您也能指定發噗時預設的語系：
 {{{
 api_key=[your_api_key]
+lang=tr_ch
 }}}
 
+== 使用 jPlurk ==
 
+{{{
+import javax.swing.JOptionPane;
 
+import org.json.JSONObject;
+
+import com.google.jplurk.PlurkClient;
+import com.google.jplurk.PlurkSettings;
+import com.google.jplurk.Qualifier;
+import com.google.jplurk.exception.PlurkException;
+
+public class PlurkIt {
+	public static void main(String[] args) throws PlurkException {
+		PlurkSettings settings = new PlurkSettings();
+		PlurkClient client = new PlurkClient(settings);
+		JSONObject ret = client.login(
+				JOptionPane.showInputDialog("id"),
+				JOptionPane.showInputDialog("password"));
+		System.out.println(ret);
+
+		ret = client.plurkAdd("Plurk It with jPlurk http://code.google.com/p/jplurk/w/edit/jplurkV2", Qualifier.SHARES);
+		System.out.println(ret);
+	}
+}
+
+}}}
 
 
 = API 實作狀態表 =
