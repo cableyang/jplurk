@@ -49,7 +49,7 @@ public class PlurkIt {
                 JOptionPane.showInputDialog("password"));
         System.out.println(ret);
 
-        ret = client.plurkAdd("Plurk It with jPlurk http://code.google.com/p/jplurk/w/edit/jplurkV2", Qualifier.SHARES);
+        ret = client.plurkAdd("Plurk It with jPlurk http://code.google.com/p/jplurk/wiki/jplurkV2", Qualifier.SHARES);
         System.out.println(ret);
     }
 }
