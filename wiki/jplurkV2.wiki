@@ -37,21 +37,32 @@ import com.google.jplurk.Qualifier;
 import com.google.jplurk.exception.PlurkException;
 
 public class PlurkIt {
-	public static void main(String[] args) throws PlurkException {
-		PlurkSettings settings = new PlurkSettings();
-		PlurkClient client = new PlurkClient(settings);
-		JSONObject ret = client.login(
-				JOptionPane.showInputDialog("id"),
-				JOptionPane.showInputDialog("password"));
-		System.out.println(ret);
+    public static void main(String[] args) throws PlurkException {
+        PlurkSettings settings = new PlurkSettings();
+        PlurkClient client = new PlurkClient(settings);
+        JSONObject ret = client.login(
+                JOptionPane.showInputDialog("id"),
+                JOptionPane.showInputDialog("password"));
+        System.out.println(ret);
 
-		ret = client.plurkAdd("Plurk It with jPlurk http://code.google.com/p/jplurk/w/edit/jplurkV2", Qualifier.SHARES);
-		System.out.println(ret);
-	}
+        ret = client.plurkAdd("Plurk It with jPlurk http://code.google.com/p/jplurk/w/edit/jplurkV2", Qualifier.SHARES);
+        System.out.println(ret);
+    }
 }
 
 }}}
 
+使用 jPlurk 您要先建立 PlurkSettings 供 PlurkClient 初始化之用。PlurkSettings 會讀取 jplurk.properties 檔，將其中的 api_key 提供給 PlurkClient 與 Plurk API 服務互動。多數的 Plurk API 服務是需要登入才能使用的，所以 jPlurk 並無特別區分那些是不需要登入的服務，請您在開始使用 API 服務時，先執行登入的動作：
+{{{
+JSONObject ret = client.login(
+    JOptionPane.showInputDialog("id"),
+    JOptionPane.showInputDialog("password"));
+}}}
+
+一旦登入成功後，您可以開始使用目前已實作的功能，像是 *發噗* ：
+{{{
+client.plurkAdd("Plurk It with jPlurk http://code.google.com/p/jplurk/w/edit/jplurkV2", Qualifier.SHARES);
+}}}
 
 = API 實作狀態表 =
 
