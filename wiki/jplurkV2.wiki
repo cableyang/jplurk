@@ -52,7 +52,7 @@ public class PlurkIt {
 
 }}}
 
-使用 jPlurk 您要先建立 PlurkSettings 供 PlurkClient 初始化之用。PlurkSettings 會讀取 jplurk.properties 檔，將其中的 api_key 提供給 PlurkClient 與 Plurk API 服務互動。多數的 Plurk API 服務是需要登入才能使用的，所以 jPlurk 並無特別區分那些是不需要登入的服務，請您在開始使用 API 服務時，先執行登入的動作：
+使用 jPlurk 您要先建立 !PlurkSettings 供 !PlurkClient 初始化之用。PlurkSettings 會讀取 jplurk.properties 檔，將其中的 api_key 提供給 PlurkClient 與 Plurk API 服務互動。多數的 Plurk API 服務是需要登入才能使用的，所以 jPlurk 並無特別區分那些是不需要登入的服務，請您在開始使用 API 服務時，先執行登入的動作：
 {{{
 JSONObject ret = client.login(
     JOptionPane.showInputDialog("id"),
