@@ -3,12 +3,29 @@
 
 = 關於 Version 2  =
 
-JPlurk v2 正持續進行中，在 Plurk 官方 [http://www.plurk.com/API API] 發佈後，我們決定凍結 v1 的開發。
+jPlurk v2 正持續進行中，在 Plurk 官方 [http://www.plurk.com/API API] 發佈後，我們決定凍結 v1 的開發。
 並著手新的架構設計。
 
 = 快速上手 =
 
-您可以由 http://jplurk.googlecode.com/files/jplurk-v2-r240-with-dependencies.zip 下載最近的版本 (rev 240)
+您可以由 http://jplurk.googlecode.com/files/jplurk-v2-r240-with-dependencies.zip 下載最新的版本 (rev 240, 含原始碼及相依函式庫)。參閱下列的簡易教學使用 jPlurk v2
+
+== 建立 config 檔 ==
+
+您必需準備 jplurk.properties 檔，它預設路徑為：
+
+{{{
+~/jplurk.properties
+}}}
+
+它是一個簡單的 Property 檔案，您至少需要包含 api_key 這個屬性：
+{{{
+api_key=[your_api_key]
+}}}
+
+
+
+
 
 = API 實作狀態表 =
 
