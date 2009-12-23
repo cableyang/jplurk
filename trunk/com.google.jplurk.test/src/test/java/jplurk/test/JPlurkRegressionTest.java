@@ -26,7 +26,7 @@ public class JPlurkRegressionTest extends TestCase {
 	
 	private void gracefulWait(){
 		try {
-			Thread.sleep(500);
+			Thread.sleep(100);
 		} catch (InterruptedException ignored) {
 		}
 	}
@@ -64,7 +64,7 @@ public class JPlurkRegressionTest extends TestCase {
 		assertNotNull(ret);
 		assertEquals(StringUtils.reverse(responsedContent), ret.getString("content_raw"));
 		gracefulWait();
-		
+
 		// do mute plurk
 		ret = client.mutePlurks(new String[]{"" + plurkId});
 		assertNotNull(ret);
@@ -76,6 +76,28 @@ public class JPlurkRegressionTest extends TestCase {
 		assertNotNull(ret);
 		assertEquals("ok", ret.getString("success_text"));
 		gracefulWait();
+
+		// do response
+		int rPlurkId = 0;
+		String rContent = "response_" + RandomStringUtils.random(20, "abcdef");
+		ret = client.responseAdd("" + plurkId, rContent, Qualifier.SAYS);
+		rPlurkId = NumberUtils.toInt("" + ret.get("id"));
+		assertTrue(rPlurkId > 0);
+		assertNotNull(ret);
+		assertEquals(rContent, ret.getString("content_raw"));
+		gracefulWait();
+
+		// do get response
+		ret = client.responseGet("" + plurkId);
+		// TODO: 雖然正常回傳，但是無法得到結果。需要待 plurk api service team 回覆
+		assertNotNull(ret); 
+		gracefulWait();
+
+		// do delete response
+		ret = client.responseDelete("" + plurkId, "" + rPlurkId);
+		assertNotNull(ret);
+		assertEquals("ok", ret.getString("success_text"));
+		gracefulWait();		
 		
 		// do plurk delete
 		ret = client.plurkDelete("" + plurkId);
