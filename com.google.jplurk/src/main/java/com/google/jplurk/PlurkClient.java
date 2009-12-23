@@ -553,6 +553,12 @@ public class PlurkClient {
 
     // <editor-fold defaultstate="collapsed" desc="Execution of HttpRequest">
     private String execute(HttpUriRequest method) throws PlurkException {
+    	if(logger.isInfoEnabled()){
+    		String uri = method.getURI().toString();
+    		uri = uri.replace("api_key", "**********");
+    		uri = uri.replace("password", "**********");
+    		logger.info("execute: " + uri);
+    	}
         String result = "";
         try {
             result = (String) client.execute(method, new JPlurkResponseHandler());
@@ -588,6 +594,8 @@ public class PlurkClient {
 
         JSONObject o = pc.login(JOptionPane.showInputDialog("id"), JOptionPane.showInputDialog("password"));
         System.out.println(o);
+        System.out.println(pc.getUnreadPlurks());
+        System.out.println(pc.responseGet("186567616"));
 
 //        System.out.println(pc.uploadPicture(new File("C:/images/image.jpg")));
 
