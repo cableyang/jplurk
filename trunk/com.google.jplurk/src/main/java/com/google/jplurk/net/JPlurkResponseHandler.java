@@ -35,6 +35,8 @@ public class JPlurkResponseHandler implements ResponseHandler<String> {
             throw new HttpResponseException(statusLine.getStatusCode(),
                     statusLine.getReasonPhrase());
         }
+        
+        logger.debug("Response: " + ret);
 
         return ret;
     }

@@ -3,6 +3,7 @@ package com.google.jplurk.action;
 import java.io.UnsupportedEncodingException;
 import java.lang.reflect.Method;
 import java.net.URLEncoder;
+import java.util.HashMap;
 import java.util.Map;
 
 import org.apache.commons.beanutils.MethodUtils;
@@ -185,7 +186,18 @@ public final class PlurkActionSheet {
 			}
 		}
 
-		logger.info("Params: " + params.toString());
+		if (logger.isInfoEnabled()) {
+			Map<String, String> loggedParams = new HashMap<String, String>(
+					params);
+			if (loggedParams.containsKey("api_key")) {
+				loggedParams.put("api_key", "**********");
+			}
+			if (loggedParams.containsKey("password")) {
+				loggedParams.put("password", "**********");
+			}
+			logger.info("Params: " + loggedParams.toString());
+		}
+		
 		return httpMethod;
 	}
 
