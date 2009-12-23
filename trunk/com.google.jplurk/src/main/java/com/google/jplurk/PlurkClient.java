@@ -555,9 +555,7 @@ public class PlurkClient {
     private String execute(HttpUriRequest method) throws PlurkException {
     	if(logger.isInfoEnabled()){
     		String uri = method.getURI().toString();
-    		uri = uri.replace("api_key", "**********");
-    		uri = uri.replace("password", "**********");
-    		logger.info("execute: " + uri);
+    		logger.info("execute: " + StringUtils.substringBefore(uri, "?"));
     	}
         String result = "";
         try {
