@@ -220,6 +220,37 @@ public class PlurkClient {
         return null;
     }
     // </editor-fold>
+    
+    public JSONObject getPlurks(DateTime offset, int limit, int userId, boolean onlyResponsed, boolean onlyPrivate){
+    	try {
+    		MapHelper mapHelper = config.createParamMap()
+    			.k("offset").v((offset == null ? DateTime.now() : offset).timeOffset())
+    			.k("limit").v("" + (limit <= 0 ? 20 : limit));
+			
+			if (userId > 0) {
+				mapHelper.k("only_user").v("" + userId);
+			}
+    		
+    		if (onlyResponsed) {
+				mapHelper.k("only_responded").v("true");
+			}
+			
+			if (onlyPrivate) {
+				mapHelper.k("only_private").v("true");
+			}
+			
+			HttpGet method = (HttpGet) PlurkActionSheet.getInstance().getPlurks(
+				mapHelper.getMap()
+			);
+			
+			return new JSONObject(execute(method));
+		} catch (PlurkException e) {
+			logger.error(e.getMessage(), e);
+		} catch (JSONException e) {
+			logger.error(e.getMessage(), e);
+		}
+		return null;
+    }
 
     // <editor-fold defaultstate="collapsed" desc="/API/Timeline/getUnreadPlurks">
     /**
@@ -592,8 +623,13 @@ public class PlurkClient {
 
         JSONObject o = pc.login(JOptionPane.showInputDialog("id"), JOptionPane.showInputDialog("password"));
         System.out.println(o);
-        System.out.println(pc.getUnreadPlurks());
-        System.out.println(pc.responseGet("186567616"));
+        System.out.println(pc.getPlurk("186562865"));
+        System.out.println(pc.responseGet("186562865"));
+        
+        
+//        186562865 , 186616350  : fail
+//        186567616 : ok
+
 
 //        System.out.println(pc.uploadPicture(new File("C:/images/image.jpg")));
 
