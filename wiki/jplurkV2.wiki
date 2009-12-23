@@ -80,6 +80,7 @@ client.getUnreadPlurks();
 || /API/Users/login || login || qrtt1 || 完成 || `@since` rev240 ||
 || /API/Users/register || register || Askeing || 完成 || Opt Done by A, `@since` rev240 ||
 || /API/Timeline/getPlurk || getPlurk || Askeing || 完成 || `@since` rev240 ||
+|| /API/Timeline/getPlurks || getPlurks || qrtt1 || 撰寫中 || ||
 || /API/Timeline/plurkAdd || plurkAdd || qrtt1 || 完成 || Opt Done by A, `@since` rev240 ||
 || /API/Timeline/getUnreadPlurks || getUnreadPlurks || qrtt1 || 完成 || Opt Done by A, `@since` rev240 ||
 || /API/Timeline/plurkDelete || plurkDelete || Askeing || 完成 || `@since` rev240 ||
@@ -180,6 +181,7 @@ client.getUnreadPlurks();
 || /API/Users/login || login || qrtt1 || Done || `@since` rev240 ||
 || /API/Users/register || register || Askeing || Done || Opt Done by A, `@since` rev240 ||
 || /API/Timeline/getPlurk || getPlurk || Askeing || Done || `@since` rev240 ||
+|| /API/Timeline/getPlurks || getPlurks || qrtt1 || Working || ||
 || /API/Timeline/plurkAdd || plurkAdd || qrtt1 || Done || Opt Done by A, `@since` rev240 ||
 || /API/Timeline/getUnreadPlurks || getUnreadPlurks || qrtt1 || Done || Opt Done by A, `@since` rev240 ||
 || /API/Timeline/plurkDelete || plurkDelete || Askeing || Done || `@since` rev240 ||
