@@ -68,7 +68,7 @@ JSONObject ret = client.login(
 client.plurkAdd("Plurk It with jPlurk http://code.google.com/p/jplurk/w/edit/jplurkV2", Qualifier.SHARES);
 }}}
 
-讀取未讀的噗：
+或 *讀取未讀的噗* ：
 {{{
 client.getUnreadPlurks();
 }}}
@@ -101,6 +101,77 @@ Java API Doc 也正在持續的成長中。
 jPlurk v2 is developing now.
 
 jPlurk v1 has been frozen because Plurk released the Official [http://www.plurk.com/API Plurk API]. And now, we propose the new architecture of jPlurk.
+
+= Quick Tutorial =
+
+You can get lastest version (rev 240, contains source code and dependencies) from http://jplurk.googlecode.com/files/jplurk-v2-r240-with-dependencies.zip . And we show you the quick tutorial below.
+
+== Creat Config File ==
+
+You must prepare the jplurk.properties file, the path is:
+
+{{{
+~/jplurk.properties
+}}}
+If you using Windows, file path is User Folder, ex:
+{{{
+C:\Documents and Settings\%UserName%\jplurk.properties
+}}}
+
+It is a simple Property File, you need to setup api_key attribute at least.
+You also can setup language if you want:
+{{{
+api_key=[your_api_key]
+lang=tr_ch
+}}}
+
+== Using jPlurk ==
+
+{{{
+import javax.swing.JOptionPane;
+
+import org.json.JSONObject;
+
+import com.google.jplurk.PlurkClient;
+import com.google.jplurk.PlurkSettings;
+import com.google.jplurk.Qualifier;
+import com.google.jplurk.exception.PlurkException;
+
+public class PlurkIt {
+    public static void main(String[] args) throws PlurkException {
+        PlurkSettings settings = new PlurkSettings();
+        PlurkClient client = new PlurkClient(settings);
+        JSONObject ret = client.login(
+                JOptionPane.showInputDialog("id"),
+                JOptionPane.showInputDialog("password"));
+        System.out.println(ret);
+
+        ret = client.plurkAdd("Plurk It with jPlurk http://code.google.com/p/jplurk/wiki/jplurkV2", Qualifier.SHARES);
+        System.out.println(ret);
+    }
+}
+
+}}}
+
+Whan you using jPlurk, you need creat !PlurkSettings to initiate !PlurkClient.
+!PlurkSettings will load api_key by reading jplurk.properties file, and api_key will be used in the interaction between !PlurkClient and Plurk API .
+Almost every Plurk API services require login before, so jPlurk do not checking which service do not need login. Please login before you using Plurk API.
+{{{
+JSONObject ret = client.login(
+    JOptionPane.showInputDialog("id"),
+    JOptionPane.showInputDialog("password"));
+}}}
+
+If login success, you can using jPlurk method, just like *plurkAdd* :
+{{{
+client.plurkAdd("Plurk It with jPlurk http://code.google.com/p/jplurk/w/edit/jplurkV2", Qualifier.SHARES);
+}}}
+
+or *getUnreadPlurks* :
+{{{
+client.getUnreadPlurks();
+}}}
+
 
 = State of Plurk API Implementation =
 
