@@ -11,9 +11,9 @@ import com.google.jplurk.validator.IValidator;
 @Target(ElementType.METHOD)
 public @interface Validation {
 
-	Validators[] value();
+	Validator[] value();
 
-	@interface Validators{
+	@interface Validator{
 		String field();
 		Class<? extends IValidator> validator();
 	}
