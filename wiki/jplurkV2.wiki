@@ -31,7 +31,7 @@ api_key=[your_api_key]
 lang=tr_ch
 }}}
 
-也可以設定預設 Proxy 資訊：
+也可以預設 Proxy 屬性：
 
 {{{
 default_proxy_host = proxy.mydomain.com
