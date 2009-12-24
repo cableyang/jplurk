@@ -93,8 +93,8 @@ client.getUnreadPlurks();
 
 || *功能* || *函式名稱* || *誰在實作* || *狀態* || *備註* ||
 || /API/Alerts/addAllAsFriends || addAllAsFriends || qrtt1 || 完成 || `@since` rev240 ||
-|| /API/FriendsFans/getFriendsByOffset || getFriendsByOffset || qrtt1 || 撰寫中 ||   ||
-|| /API/FriendsFans/getFansByOffset || getFansByOffset || qrtt1 || 撰寫中 ||   ||
+|| /API/FriendsFans/getFriendsByOffset || getFriendsByOffset || qrtt1 || 完成 ||   ||
+|| /API/FriendsFans/getFansByOffset || getFansByOffset || qrtt1 || 完成 ||   ||
 || /API/Users/login || login || qrtt1 || 完成 || `@since` rev240 ||
 || /API/Users/register || register || Askeing || 完成 || Opt Done by A, `@since` rev240 ||
 || /API/Timeline/getPlurk || getPlurk || Askeing || 完成 || `@since` rev240 ||
