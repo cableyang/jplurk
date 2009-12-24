@@ -5,7 +5,7 @@
 
 == 於 config 中預設 Proxy ==
 
-如 [jPlurk_V2] 中的 *建立 config 檔* 一節所述。
+如 [jplurkV2] 中的 *建立 config 檔* 一節所述。
 
 == 動態啟動變數 ==
 jPlurk 是以 Java 開發的函式庫，它能接受 Java 應用程式動態啟動變數。
@@ -73,7 +73,7 @@ public class PlurkIt {
 
 == Set Proxy in Config File ==
 
-Please refer to *Create Config File* in [jPlurk_V2] page.
+Please refer to *Create Config File* in [jplurkV2] page.
 
 == Using Dynamic Property ==
 jPlurk is Java Library.
