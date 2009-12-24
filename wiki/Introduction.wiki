@@ -20,3 +20,10 @@ public HttpUriRequest getFriendsByOffset(Map<String, String> params)
 }}}
 
 利用 @Meta 能組成 Http Request 並簡單驗證必要的欄位；利用 @Validation 做格式驗證。最後，在 !PlurkClient 實作已支援的功能。
+
+
+= jPlurk v2 設計慣例 =
+
+  * 與 Plurk API 功能對應
+  * 所有 PlurkClient 實作的 API 方法都回傳 JSONObject 或 JSONArrayObject
+  * 當發生例外，或 Http 回傳狀態不為 200 OK 時，會傳回 null
