@@ -1,0 +1,198 @@
+#summary jPlurk version 2
+#labels Featured
+
+= 關於 Version 2  =
+
+jPlurk v2 正持續進行中，在 Plurk 官方 [http://www.plurk.com/API API] 發佈後，我們決定凍結 v1 的開發。
+並著手新的架構設計。
+
+= 快速上手 =
+
+您可以由 http://jplurk.googlecode.com/files/jplurk-v2-r240-with-dependencies.zip 下載最新的版本 (rev 240, 含原始碼及相依函式庫)。參閱下列的簡易教學使用 jPlurk v2
+
+== 建立 config 檔 ==
+
+您必需準備 jplurk.properties 檔，它預設路徑為：
+
+{{{
+~/jplurk.properties
+}}}
+Windows 下則位於使用者個人目錄中，例如：
+{{{
+C:\Documents and Settings\%UserName%\jplurk.properties
+}}}
+
+它是一個簡單的 Property 檔案，您至少需要包含 api_key 這個屬性。您也能指定發噗時預設的語系：
+{{{
+api_key=[your_api_key]
+lang=tr_ch
+}}}
+
+== 使用 jPlurk ==
+
+{{{
+import javax.swing.JOptionPane;
+
+import org.json.JSONObject;
+
+import com.google.jplurk.PlurkClient;
+import com.google.jplurk.PlurkSettings;
+import com.google.jplurk.Qualifier;
+import com.google.jplurk.exception.PlurkException;
+
+public class PlurkIt {
+    public static void main(String[] args) throws PlurkException {
+        PlurkSettings settings = new PlurkSettings();
+        PlurkClient client = new PlurkClient(settings);
+        JSONObject ret = client.login(
+                JOptionPane.showInputDialog("id"),
+                JOptionPane.showInputDialog("password"));
+        System.out.println(ret);
+
+        ret = client.plurkAdd("Plurk It with jPlurk http://code.google.com/p/jplurk/wiki/jplurkV2", Qualifier.SHARES);
+        System.out.println(ret);
+    }
+}
+
+}}}
+
+使用 jPlurk 您要先建立 !PlurkSettings 供 !PlurkClient 初始化之用。!PlurkSettings 會讀取 jplurk.properties 檔，將其中的 api_key 提供給 !PlurkClient 與 Plurk API 服務互動。多數的 Plurk API 服務是需要登入才能使用的，所以 jPlurk 並無特別區分那些是不需要登入的服務，請您在開始使用 API 服務時，先執行登入的動作：
+{{{
+JSONObject ret = client.login(
+    JOptionPane.showInputDialog("id"),
+    JOptionPane.showInputDialog("password"));
+}}}
+
+一旦登入成功後，您可以開始使用目前已實作的功能，像是 *發噗* ：
+{{{
+client.plurkAdd("Plurk It with jPlurk http://code.google.com/p/jplurk/w/edit/jplurkV2", Qualifier.SHARES);
+}}}
+
+或 *讀取未讀的噗* ：
+{{{
+client.getUnreadPlurks();
+}}}
+
+= API 實作狀態表 =
+
+|| *功能* || *函式名稱* || *誰在實作* || *狀態* || *備註* ||
+|| /API/Alerts/addAllAsFriends || addAllAsFriends || qrtt1 || 完成 || `@since` rev240 ||
+|| /API/Users/login || login || qrtt1 || 完成 || `@since` rev240 ||
+|| /API/Users/register || register || Askeing || 完成 || Opt Done by A, `@since` rev240 ||
+|| /API/Timeline/getPlurk || getPlurk || Askeing || 完成 || `@since` rev240 ||
+|| /API/Timeline/getPlurks || getPlurks || qrtt1 || 完成 || ||
+|| /API/Timeline/plurkAdd || plurkAdd || qrtt1 || 完成 || Opt Done by A, `@since` rev240 ||
+|| /API/Timeline/getUnreadPlurks || getUnreadPlurks || qrtt1 || 完成 || Opt Done by A, `@since` rev240 ||
+|| /API/Timeline/plurkDelete || plurkDelete || Askeing || 完成 || `@since` rev240 ||
+|| /API/Timeline/plurkEdit || plurkEdit || Askeing || 完成 || `@since` rev240 ||
+|| /API/Timeline/markAsRead || markAsRead || qrtt1  || 完成 || `@since` rev240 ||
+|| /API/Timeline/mutePlurks || mutePlurks  || qrtt1  || 完成 || `@since` rev240 ||
+|| /API/Timeline/unmutePlurks || unmutePlurks  || qrtt1  || 完成 || `@since` rev240 ||
+|| /API/Timeline/uploadPicture|| uploadPicture || qrtt1  || 完成 || `@since` rev240 ||
+|| /API/Responses/responseAdd || responseAdd || qrtt1 || 完成 || `@since` rev240 ||
+|| /API/Responses/get || responseGet || qrtt1 || 完成 || `@since` rev240 ||
+|| /API/Responses/responseDelete || responseDelete || Askeing || 完成 || `@since` rev240 ||
+
+Java API Doc 也正在持續的成長中。
+
+----
+
+= About jPlurk V2  =
+
+jPlurk v2 is developing now.
+
+jPlurk v1 has been frozen because Plurk released the Official [http://www.plurk.com/API Plurk API]. And now, we propose the new architecture of jPlurk.
+
+= Quick Tutorial =
+
+You can get lastest version (rev 240, contains source code and dependencies) from http://jplurk.googlecode.com/files/jplurk-v2-r240-with-dependencies.zip . And we show you the quick tutorial below.
+
+== Create Config File ==
+
+You must prepare the jplurk.properties file, the path is:
+
+{{{
+~/jplurk.properties
+}}}
+If you using Windows, file path is User Folder, ex:
+{{{
+C:\Documents and Settings\%UserName%\jplurk.properties
+}}}
+
+It is a simple Property File, you need to setup api_key attribute at least.
+You also can setup language if you want:
+{{{
+api_key=[your_api_key]
+lang=tr_ch
+}}}
+
+== Using jPlurk ==
+
+{{{
+import javax.swing.JOptionPane;
+
+import org.json.JSONObject;
+
+import com.google.jplurk.PlurkClient;
+import com.google.jplurk.PlurkSettings;
+import com.google.jplurk.Qualifier;
+import com.google.jplurk.exception.PlurkException;
+
+public class PlurkIt {
+    public static void main(String[] args) throws PlurkException {
+        PlurkSettings settings = new PlurkSettings();
+        PlurkClient client = new PlurkClient(settings);
+        JSONObject ret = client.login(
+                JOptionPane.showInputDialog("id"),
+                JOptionPane.showInputDialog("password"));
+        System.out.println(ret);
+
+        ret = client.plurkAdd("Plurk It with jPlurk http://code.google.com/p/jplurk/wiki/jplurkV2", Qualifier.SHARES);
+        System.out.println(ret);
+    }
+}
+
+}}}
+
+Whan you using jPlurk, you need creat !PlurkSettings to initiate !PlurkClient.
+!PlurkSettings will load api_key by reading jplurk.properties file, and api_key will be used in the interaction between !PlurkClient and Plurk API .
+Almost every Plurk API services require login before, so jPlurk do not checking which service do not need login. Please login before you using Plurk API.
+{{{
+JSONObject ret = client.login(
+    JOptionPane.showInputDialog("id"),
+    JOptionPane.showInputDialog("password"));
+}}}
+
+If login success, you can using jPlurk method, just like *plurkAdd* :
+{{{
+client.plurkAdd("Plurk It with jPlurk http://code.google.com/p/jplurk/w/edit/jplurkV2", Qualifier.SHARES);
+}}}
+
+or *getUnreadPlurks* :
+{{{
+client.getUnreadPlurks();
+}}}
+
+
+= State of Plurk API Implementation =
+
+|| *Service* || *Method* || *Owner* || *State* || *Common* ||
+|| /API/Alerts/addAllAsFriends || addAllAsFriends || qrtt1 || Done || `@since` rev240 ||
+|| /API/Users/login || login || qrtt1 || Done || `@since` rev240 ||
+|| /API/Users/register || register || Askeing || Done || Opt Done by A, `@since` rev240 ||
+|| /API/Timeline/getPlurk || getPlurk || Askeing || Done || `@since` rev240 ||
+|| /API/Timeline/getPlurks || getPlurks || qrtt1 || Done || ||
+|| /API/Timeline/plurkAdd || plurkAdd || qrtt1 || Done || Opt Done by A, `@since` rev240 ||
+|| /API/Timeline/getUnreadPlurks || getUnreadPlurks || qrtt1 || Done || Opt Done by A, `@since` rev240 ||
+|| /API/Timeline/plurkDelete || plurkDelete || Askeing || Done || `@since` rev240 ||
+|| /API/Timeline/plurkEdit || plurkEdit || Askeing || Done || `@since` rev240 ||
+|| /API/Timeline/markAsRead || markAsRead || qrtt1  || Done || `@since` rev240 ||
+|| /API/Timeline/mutePlurks || mutePlurks  || qrtt1  || Done || `@since` rev240 ||
+|| /API/Timeline/unmutePlurks || unmutePlurks  || qrtt1  || Done || `@since` rev240 ||
+|| /API/Timeline/uploadPicture|| uploadPicture || qrtt1  || Done || `@since` rev240 ||
+|| /API/Responses/responseAdd || responseAdd || qrtt1 || Done || `@since` rev240 ||
+|| /API/Responses/get || responseGet || qrtt1 || Done || `@since` rev240 ||
+|| /API/Responses/responseDelete || responseDelete || Askeing || Done || `@since` rev240 ||
+
+
+Java API Doc is growing gradually, too.
