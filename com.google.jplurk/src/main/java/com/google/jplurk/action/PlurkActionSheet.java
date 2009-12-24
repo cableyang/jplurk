@@ -15,7 +15,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.google.jplurk.action.Headers.Header;
-import com.google.jplurk.action.Validation.Validators;
+import com.google.jplurk.action.Validation.Validator;
 import com.google.jplurk.exception.PlurkException;
 import com.google.jplurk.validator.EmailValidator;
 import com.google.jplurk.validator.IDListValidator;
@@ -48,14 +48,14 @@ public final class PlurkActionSheet {
 	}
 	
 	@Meta(uri = "/FriendsFans/getFriendsByOffset", require = { "api_key", "user_id" })
-	@Validation({ @Validators(field = "offset", validator = NonNegativeIntegerValidator.class) })
+	@Validation({ @Validator(field = "offset", validator = NonNegativeIntegerValidator.class) })
 	public HttpUriRequest getFriendsByOffset(Map<String, String> params)
 			throws PlurkException {
 		return prepare("getFriendsByOffset", params);
 	}	
 	
 	@Meta(uri = "/FriendsFans/getFansByOffset", require = { "api_key", "user_id" })
-	@Validation({ @Validators(field = "offset", validator = NonNegativeIntegerValidator.class) })
+	@Validation({ @Validator(field = "offset", validator = NonNegativeIntegerValidator.class) })
 	public HttpUriRequest getFansByOffset(Map<String, String> params)
 			throws PlurkException {
 		return prepare("getFansByOffset", params);
@@ -69,7 +69,7 @@ public final class PlurkActionSheet {
 
 	@Meta(uri = "/Users/register",
 		require = { "api_key", "nick_name", "full_name", "password", "gender", "date_of_birth" })
-	@Validation({ @Validators(field = "email", validator = EmailValidator.class) })
+	@Validation({ @Validator(field = "email", validator = EmailValidator.class) })
     public HttpUriRequest register(Map<String, String> params)
             throws PlurkException {
         return prepare("register", params);
@@ -77,7 +77,7 @@ public final class PlurkActionSheet {
 
     @Meta(uri = "/Timeline/getPlurk", require = { "api_key", "plurk_id" })
     @Validation({
-		@Validators(field = "plurk_id", validator = PositiveIntegerValidator.class)
+		@Validator(field = "plurk_id", validator = PositiveIntegerValidator.class)
 	})    
 	public HttpUriRequest getPlurk(Map<String, String> params) throws PlurkException{
 		return prepare("getPlurk", params);
@@ -85,8 +85,8 @@ public final class PlurkActionSheet {
     
     @Meta(uri = "/Timeline/getPlurks", require = { "api_key"})
 	@Validation({ 
-		@Validators(field = "offset", validator = TimeOffsetValidator.class), 
-		@Validators(field = "limit", validator = PositiveIntegerValidator.class)
+		@Validator(field = "offset", validator = TimeOffsetValidator.class), 
+		@Validator(field = "limit", validator = PositiveIntegerValidator.class)
 	})
 	public HttpUriRequest getPlurks(Map<String, String> params) throws PlurkException{
 		return prepare("getPlurks", params);
@@ -94,16 +94,16 @@ public final class PlurkActionSheet {
 
 	@Meta(uri = "/Timeline/plurkAdd", require = { "api_key", "content", "qualifier" })
 	@Validation(value = {
-			@Validators(field = "limited_to", validator = IDListValidator.class),
-			@Validators(field = "qualifier", validator = QualifierValidator.class) })
+			@Validator(field = "limited_to", validator = IDListValidator.class),
+			@Validator(field = "qualifier", validator = QualifierValidator.class) })
 	public HttpUriRequest plurkAdd(Map<String, String> params) throws PlurkException{
 		return prepare("plurkAdd", params);
 	}
 
 	@Meta(uri = "/Timeline/getUnreadPlurks", require = { "api_key" })
 	@Validation({
-		@Validators(field = "offset", validator = TimeOffsetValidator.class),
-		@Validators(field = "limit", validator = PositiveIntegerValidator.class)
+		@Validator(field = "offset", validator = TimeOffsetValidator.class),
+		@Validator(field = "limit", validator = PositiveIntegerValidator.class)
 	})
 	public HttpUriRequest getUnreadPlurks(Map<String, String> params) throws PlurkException{
 		return prepare("getUnreadPlurks", params);
@@ -111,7 +111,7 @@ public final class PlurkActionSheet {
 
     @Meta(uri = "/Timeline/plurkDelete", require = { "api_key", "plurk_id" })
     @Validation({
-		@Validators(field = "plurk_id", validator = PositiveIntegerValidator.class)
+		@Validator(field = "plurk_id", validator = PositiveIntegerValidator.class)
 	})
     public HttpUriRequest plurkDelete(Map<String, String> params) throws PlurkException {
         return prepare("plurkDelete", params);
@@ -119,7 +119,7 @@ public final class PlurkActionSheet {
 
     @Meta(uri = "/Timeline/plurkEdit", require = { "api_key", "plurk_id", "content" })
     @Validation({
-		@Validators(field = "plurk_id", validator = PositiveIntegerValidator.class)
+		@Validator(field = "plurk_id", validator = PositiveIntegerValidator.class)
 	})
     public HttpUriRequest plurkEdit(Map<String, String> params) throws PlurkException {
         return prepare("plurkEdit", params);
@@ -127,26 +127,26 @@ public final class PlurkActionSheet {
 
 
 	@Meta(uri = "/Timeline/mutePlurks", require = { "api_key", "ids" })
-	@Validation({@Validators(field = "ids", validator = IDListValidator.class)})
+	@Validation({@Validator(field = "ids", validator = IDListValidator.class)})
 	public HttpUriRequest mutePlurks(Map<String, String> params) throws PlurkException {
 		return prepare("mutePlurks", params);
 	}
 
 	@Meta(uri = "/Timeline/unmutePlurks", require = { "api_key", "ids" })
-	@Validation({@Validators(field = "ids", validator = IDListValidator.class)})
+	@Validation({@Validator(field = "ids", validator = IDListValidator.class)})
 	public HttpUriRequest unmutePlurks(Map<String, String> params) throws PlurkException {
 		return prepare("unmutePlurks", params);
 	}
 
 	@Meta(uri = "/Timeline/markAsRead", require = { "api_key", "ids" })
-	@Validation({@Validators(field = "ids", validator = IDListValidator.class)})
+	@Validation({@Validator(field = "ids", validator = IDListValidator.class)})
 	public HttpUriRequest markAsRead(Map<String, String> params) throws PlurkException {
 		return prepare("markAsRead", params);
 	}
 
 	@Meta(uri = "/Responses/get", require = { "api_key", "plurk_id", "from_response" })
 	@Validation({
-		@Validators(field = "plurk_id", validator = PositiveIntegerValidator.class)
+		@Validator(field = "plurk_id", validator = PositiveIntegerValidator.class)
 	})
 	public HttpUriRequest responseGet(Map<String, String> params) throws PlurkException {
 		return prepare("responseGet", params);
@@ -154,8 +154,8 @@ public final class PlurkActionSheet {
 
 	@Meta(uri = "/Responses/responseAdd", require = { "api_key", "content", "qualifier", "plurk_id" })
 	@Validation({
-		@Validators(field = "qualifier", validator = QualifierValidator.class),
-		@Validators(field = "plurk_id", validator = PositiveIntegerValidator.class)
+		@Validator(field = "qualifier", validator = QualifierValidator.class),
+		@Validator(field = "plurk_id", validator = PositiveIntegerValidator.class)
 	})
 	public HttpUriRequest responseAdd(Map<String, String> params) throws PlurkException {
 		return prepare("responseAdd", params);
@@ -163,8 +163,8 @@ public final class PlurkActionSheet {
 
     @Meta(uri = "/Responses/responseDelete", require = { "api_key", "response_id", "plurk_id" })
     @Validation({
-		@Validators(field = "response_id", validator = PositiveIntegerValidator.class),
-		@Validators(field = "plurk_id", validator = PositiveIntegerValidator.class)
+		@Validator(field = "response_id", validator = PositiveIntegerValidator.class),
+		@Validator(field = "plurk_id", validator = PositiveIntegerValidator.class)
 	})
 	public HttpUriRequest responseDelete(Map<String, String> params) throws PlurkException {
 		return prepare("responseDelete", params);
@@ -220,7 +220,7 @@ public final class PlurkActionSheet {
 		Validation validation = method.getAnnotation(Validation.class);
 		if (validation != null) {
 			logger.debug("found @Validation");
-			for (Validators v : validation.value()) {
+			for (Validator v : validation.value()) {
 				if (params.containsKey(v.field())) {
 					logger.debug("validate field[" + v.field() + "]");
 					boolean isPass = IValidator.ValidatorUtils.validate(v.validator(), params.get(v.field()));
