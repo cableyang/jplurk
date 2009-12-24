@@ -17,15 +17,27 @@ jPlurk v2 正持續進行中，在 Plurk 官方 [http://www.plurk.com/API API] �
 {{{
 ~/jplurk.properties
 }}}
+
 Windows 下則位於使用者個人目錄中，例如：
+
 {{{
 C:\Documents and Settings\%UserName%\jplurk.properties
 }}}
 
 它是一個簡單的 Property 檔案，您至少需要包含 api_key 這個屬性。您也能指定發噗時預設的語系：
+
 {{{
 api_key=[your_api_key]
 lang=tr_ch
+}}}
+
+也可以設定預設 Proxy 資訊：
+
+{{{
+default_proxy_host = proxy.mydomain.com
+default_proxy_port = 3128
+#default_proxy_user = username
+#default_proxy_password = yourpwd
 }}}
 
 == 使用 jPlurk ==
@@ -73,6 +85,10 @@ client.plurkAdd("Plurk It with jPlurk http://code.google.com/p/jplurk/w/edit/jpl
 client.getUnreadPlurks();
 }}}
 
+== 使用 Proxy ==
+
+請參考 [Using_Proxy_V2] 頁面。
+
 = API 實作狀態表 =
 
 || *功能* || *函式名稱* || *誰在實作* || *狀態* || *備註* ||
@@ -114,16 +130,28 @@ You must prepare the jplurk.properties file, the path is:
 {{{
 ~/jplurk.properties
 }}}
+
 If you using Windows, file path is User Folder, ex:
+
 {{{
 C:\Documents and Settings\%UserName%\jplurk.properties
 }}}
 
 It is a simple Property File, you need to setup api_key attribute at least.
 You also can setup language if you want:
+
 {{{
 api_key=[your_api_key]
 lang=tr_ch
+}}}
+
+And you can set proxy if you want：
+
+{{{
+default_proxy_host = proxy.mydomain.com
+default_proxy_port = 3128
+#default_proxy_user = username
+#default_proxy_password = yourpwd
 }}}
 
 == Using jPlurk ==
@@ -173,6 +201,9 @@ or *getUnreadPlurks* :
 client.getUnreadPlurks();
 }}}
 
+== Use Proxy ==
+
+Please refer to [Using_Proxy_V2] page.
 
 = State of Plurk API Implementation =
 
