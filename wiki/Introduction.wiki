@@ -19,4 +19,4 @@ public HttpUriRequest getFriendsByOffset(Map<String, String> params)
 }
 }}}
 
-利用 @Meta 能組成 Http Request 並簡單驗證必要的欄位；利用 @Validation 做格式驗證。最後，在 PlurkClient 實作已支援的功能。
+利用 @Meta 能組成 Http Request 並簡單驗證必要的欄位；利用 @Validation 做格式驗證。最後，在 !PlurkClient 實作已支援的功能。
