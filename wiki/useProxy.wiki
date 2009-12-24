@@ -1,4 +1,5 @@
 #summary running jPlurk with proxy
+#labels Deprecated
 
 = 如何設定代理伺服器 =
 
