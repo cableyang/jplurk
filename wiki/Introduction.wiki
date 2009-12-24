@@ -1,24 +1,22 @@
 #summary jplurk 簡介
 
-= jplurk 的起源 =
+= jPlurk 的起源 =
 
-jplurk 專案的雛型由 [http://code.google.com/u/askeing/ askeing] 建立，askeing 的開發 jplurk 動機在於 [http://blog.xdite.net/?p=976 xdite 的卡碼代練計劃]。簡單地說，只要 plurk 帳號每天維持一定數量的發文，那就能使卡碼值提昇。基於這個最原始的念頭於是 askeing 貢獻了 jplurk 的雛型。
+jPlurk 專案的雛型由 [http://code.google.com/u/askeing/ askeing] 建立，askeing 的開發 jplurk 動機在於 [http://blog.xdite.net/?p=976 xdite 的卡碼代練計劃]。簡單地說，只要 plurk 帳號每天維持一定數量的發文，那就能使卡碼值提昇。基於這個最原始的念頭於是 askeing 貢獻了 jplurk 的雛型。
 
+= jPlurk 的轉變 =
 
-= jplurk 的使用 =
+[http://www.plurk.com/API Plurk API] 終於在 2009/12/5 千呼萬喚始出來，於是各家非官方實作的 Plurk Library 開始進行內部的修改或重新打造，相同的情況在 jPlurk 亦同。我們將原先的 jPlurk 開發凍結為 1.x 版，並將版號昇為 2.0。設定一個新的架構實作之。
 
-若您在專案開始的時候就使用過 jplurk，那您已經學會 [http://askeing.blogspot.com/2009/03/jplurk-plurk-unofficial-api-in-java.html 使用 jplurk 發佈訊息]：
+相較以往透過解析網頁內容的方式，我們有完整的 Plurk API 訊息。因此，獨立出一個 [http://code.google.com/p/jplurk/source/browse/trunk/com.google.jplurk/src/main/java/com/google/jplurk/action/PlurkActionSheet.java PlurkActionSheet類別] 用來描述實作的 Plurk API。以 getFriendsByOffset 為例，我們用 @Meta 與 @Validation 描述它：
 
 {{{
-AccountModel usr = new AccountModel("[your_nickname]", "[your_password]");
-MessageModel msg = new MessageModel();
-msg.setQualifier("needs");
-msg.setContent("jPlurk's Love!");
-msg.setNo_comments(0);
-if( MessageSender.sendMessage(usr, msg) )
-System.out.println("Send Message Done!");
-else
-System.out.println("Send Message Error!");
+@Meta(uri = "/FriendsFans/getFriendsByOffset", require = { "api_key", "user_id" })
+@Validation({ @Validator(field = "offset", validator = NonNegativeIntegerValidator.class) })
+public HttpUriRequest getFriendsByOffset(Map<String, String> params)
+				throws PlurkException {
+		return prepare("getFriendsByOffset", params);
+}
 }}}
 
-這就是 jplurk 專案的基本雛型。
+利用 @Meta 能組成 Http Request 並簡單驗證必要的欄位；利用 @Validation 做格式驗證。最後，在 PlurkClient 實作已支援的功能。
