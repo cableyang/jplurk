@@ -30,7 +30,7 @@ jPlurk 是以 Java 開發的函式庫，它能接受 Java 應用程式動態啟�
 
 == 於程式中設定 ==
 
-在程式中使用 *ProxyProvider* 設定。
+在程式中使用 Proxy Provider 設定。
 
 {{{
 import javax.swing.JOptionPane;
@@ -97,7 +97,7 @@ If you need authorisation, using *proxyUser* and *proxyPassword* :
 
 == Set Proxy in Program ==
 
-Using ProxyProvider.
+Using Proxy Provider.
 
 {{{
 import javax.swing.JOptionPane;
