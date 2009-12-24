@@ -37,7 +37,7 @@ import com.google.jplurk.net.JPlurkResponseHandler;
 import com.google.jplurk.net.ProxyProvider;
 
 /**
- *
+ * Main Client for Plurk API.
  * @author Askeing
  */
 public class PlurkClient {
@@ -70,11 +70,16 @@ public class PlurkClient {
     }
 
     /**
-     *
+     * Load Setting from property file.
      * @param settings
      */
     public PlurkClient(PlurkSettings settings) {
         this.config = settings;
+        /* ProgrammaticallySetting > Dynamic > Default.
+         * Load Default Proxy Setting, then load Dynamic Proxy Setting.
+         * */
+        ProxyProvider.loadDefaultProxy(config);
+        ProxyProvider.loadDynamicProxy();
         configureHttpClient();
     }
 
@@ -84,13 +89,17 @@ public class PlurkClient {
             ((DefaultHttpClient) client).getCredentialsProvider().setCredentials(
                     new AuthScope(ProxyProvider.getHost(), ProxyProvider.getPort()),
                     new UsernamePasswordCredentials(ProxyProvider.getUser(), ProxyProvider.getPassword()));
-        }
+            logger.debug("Proxy: Auth " + ((UsernamePasswordCredentials)((DefaultHttpClient) client).getCredentialsProvider().getCredentials(AuthScope.ANY)).getUserName());
+            logger.debug("Proxy: Auth " + ((UsernamePasswordCredentials)((DefaultHttpClient) client).getCredentialsProvider().getCredentials(AuthScope.ANY)).getPassword());
+    }
         // Proxy Host Setting
         if (StringUtils.isNotBlank(ProxyProvider.getHost())) {
             HttpHost proxy = new HttpHost(ProxyProvider.getHost(), ProxyProvider.getPort());
             client.getParams().setParameter(ConnRoutePNames.DEFAULT_PROXY, proxy);
+            logger.debug("Proxy: Host " + ((HttpHost)client.getParams().getParameter(ConnRoutePNames.DEFAULT_PROXY)).getHostName());
+            logger.debug("Proxy: Prot " + String.valueOf(((HttpHost)client.getParams().getParameter(ConnRoutePNames.DEFAULT_PROXY)).getPort()));
         }
-
+        
         Runtime.getRuntime().addShutdownHook(new Thread() {
 
             @Override
@@ -201,7 +210,7 @@ public class PlurkClient {
     }
     // </editor-fold>
 
-    // <editor-fold defaultstate="collapsed" desc="/API/Users/getPlurk">
+    // <editor-fold defaultstate="collapsed" desc="/API/Timeline/getPlurk">
     /**
      * /API/Users/getPlurk
      * @param plurkId
@@ -220,37 +229,36 @@ public class PlurkClient {
         return null;
     }
     // </editor-fold>
-    
-    public JSONObject getPlurks(DateTime offset, int limit, int userId, boolean onlyResponsed, boolean onlyPrivate){
-    	try {
-    		MapHelper mapHelper = config.createParamMap()
-    			.k("offset").v((offset == null ? DateTime.now() : offset).timeOffset())
-    			.k("limit").v("" + (limit <= 0 ? 20 : limit));
-			
-			if (userId > 0) {
-				mapHelper.k("only_user").v("" + userId);
-			}
-    		
-    		if (onlyResponsed) {
-				mapHelper.k("only_responded").v("true");
-			}
-			
-			if (onlyPrivate) {
-				mapHelper.k("only_private").v("true");
-			}
-			
-			HttpGet method = (HttpGet) PlurkActionSheet.getInstance().getPlurks(
-				mapHelper.getMap()
-			);
-			
-			return new JSONObject(execute(method));
-		} catch (PlurkException e) {
-			logger.error(e.getMessage(), e);
-		} catch (JSONException e) {
-			logger.error(e.getMessage(), e);
-		}
-		return null;
+
+    // <editor-fold defaultstate="collapsed" desc="API/Timeline/getPlurks">
+    public JSONObject getPlurks(DateTime offset, int limit, int userId, boolean onlyResponsed, boolean onlyPrivate) {
+        try {
+            MapHelper mapHelper = config.createParamMap().k("offset").v((offset == null ? DateTime.now() : offset).timeOffset()).k("limit").v("" + (limit <= 0 ? 20 : limit));
+
+            if (userId > 0) {
+                mapHelper.k("only_user").v("" + userId);
+            }
+
+            if (onlyResponsed) {
+                mapHelper.k("only_responded").v("true");
+            }
+
+            if (onlyPrivate) {
+                mapHelper.k("only_private").v("true");
+            }
+
+            HttpGet method = (HttpGet) PlurkActionSheet.getInstance().getPlurks(
+                    mapHelper.getMap());
+
+            return new JSONObject(execute(method));
+        } catch (PlurkException e) {
+            logger.error(e.getMessage(), e);
+        } catch (JSONException e) {
+            logger.error(e.getMessage(), e);
+        }
+        return null;
     }
+    // </editor-fold>
 
     // <editor-fold defaultstate="collapsed" desc="/API/Timeline/getUnreadPlurks">
     /**
@@ -534,60 +542,59 @@ public class PlurkClient {
     }
     // </editor-fold>
 
-	/**
-	 * approval all friend requests
-	 * @return {"success_text": "ok"} when request success, otherwise null
-	 */
-	public JSONObject addAllAsFriends() {
-		try {
-			HttpGet method = (HttpGet) PlurkActionSheet.getInstance()
-				.addAllAsFriends(config.createParamMap().getMap());
-			return new JSONObject(execute(method));
-		} catch (PlurkException e) {
-			logger.error(e.getMessage(), e);
-		} catch (JSONException e) {
-			logger.error(e.getMessage(), e);
-		}
-		return null;
-	}
+    /**
+     * approval all friend requests
+     * @return {"success_text": "ok"} when request success, otherwise null
+     */
+    public JSONObject addAllAsFriends() {
+        try {
+            HttpGet method = (HttpGet) PlurkActionSheet.getInstance().addAllAsFriends(config.createParamMap().getMap());
+            return new JSONObject(execute(method));
+        } catch (PlurkException e) {
+            logger.error(e.getMessage(), e);
+        } catch (JSONException e) {
+            logger.error(e.getMessage(), e);
+        }
+        return null;
+    }
 
     /**
      * @param file a image file will be uploaded
      * @return json with thumbnail url. for example <pre>{"thumbnail":"http://images.plurk.com/tn_3146394_fb04befc28fbca59318f16d83d5c78cc.gif","full":"http://images.plurk.com/3146394_fb04befc28fbca59318f16d83d5c78cc.jpg"}</pre>
      */
-    public JSONObject uploadPicture(File file){
-		if (file == null || !file.exists() || !file.isFile()) {
-			logger.warn("not a valid file: " + file);
-			return null;
-		}
+    public JSONObject uploadPicture(File file) {
+        if (file == null || !file.exists() || !file.isFile()) {
+            logger.warn("not a valid file: " + file);
+            return null;
+        }
 
-    	HttpPost method = new HttpPost("http://www.plurk.com/API/Timeline/uploadPicture");
-    	MultipartEntity entity = new MultipartEntity();
-    	try {
-			entity.addPart("api_key", new StringBody(config.getApiKey()));
-			entity.addPart("image", new FileBody(file));
-		} catch (UnsupportedEncodingException e) {
-			logger.error(e.getMessage(), e);
-		}
-		method.setEntity(entity);
+        HttpPost method = new HttpPost("http://www.plurk.com/API/Timeline/uploadPicture");
+        MultipartEntity entity = new MultipartEntity();
+        try {
+            entity.addPart("api_key", new StringBody(config.getApiKey()));
+            entity.addPart("image", new FileBody(file));
+        } catch (UnsupportedEncodingException e) {
+            logger.error(e.getMessage(), e);
+        }
+        method.setEntity(entity);
 
-		try {
-			return new JSONObject(execute(method));
-		} catch (JSONException e) {
-			logger.error(e.getMessage(), e);
-		} catch (PlurkException e) {
-			logger.error(e.getMessage(), e);
-		}
+        try {
+            return new JSONObject(execute(method));
+        } catch (JSONException e) {
+            logger.error(e.getMessage(), e);
+        } catch (PlurkException e) {
+            logger.error(e.getMessage(), e);
+        }
 
-		return null;
+        return null;
     }
 
     // <editor-fold defaultstate="collapsed" desc="Execution of HttpRequest">
     private String execute(HttpUriRequest method) throws PlurkException {
-    	if(logger.isInfoEnabled()){
-    		String uri = method.getURI().toString();
-    		logger.info("execute: " + StringUtils.substringBefore(uri, "?"));
-    	}
+        if (logger.isInfoEnabled()) {
+            String uri = method.getURI().toString();
+            logger.info("execute: " + StringUtils.substringBefore(uri, "?"));
+        }
         String result = "";
         try {
             result = (String) client.execute(method, new JPlurkResponseHandler());
@@ -597,7 +604,6 @@ public class PlurkClient {
         return result;
     }
     // </editor-fold>
-
 
     /**
      *
@@ -609,9 +615,8 @@ public class PlurkClient {
      */
     public static void main(String[] args) throws PlurkException, ClientProtocolException, IOException, InterruptedException {
 //        ProxyProvider.setProvider("proxyhost", 8080);
-//        ProxyProvider.setProvider("twproxy.trendmicro.com", 8080);
 
-    	PlurkSettings config = new PlurkSettings();
+        PlurkSettings config = new PlurkSettings();
         PlurkClient pc = new PlurkClient(config);
 
 //                JSONObject oRegister = pc.register(JOptionPane.showInputDialog("nick_name"),
@@ -623,10 +628,10 @@ public class PlurkClient {
 
         JSONObject o = pc.login(JOptionPane.showInputDialog("id"), JOptionPane.showInputDialog("password"));
         System.out.println(o);
-        System.out.println(pc.getPlurk("186562865"));
-        System.out.println(pc.responseGet("186562865"));
-        
-        
+//        System.out.println(pc.getPlurk("186562865"));
+//        System.out.println(pc.responseGet("186562865"));
+
+
 //        186562865 , 186616350  : fail
 //        186567616 : ok
 
