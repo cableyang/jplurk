@@ -210,6 +210,12 @@ public class PlurkClient {
     }
     // </editor-fold>
 
+    /**
+     * /API/FriendsFans/getFriendsByOffset <br/>
+     * @param userId
+     * @param offset
+     * @return
+     */
     public JSONArray getFriendsByOffset(String userId, int offset){
     	try {
 			HttpGet method = (HttpGet) PlurkActionSheet.getInstance()
@@ -226,6 +232,12 @@ public class PlurkClient {
 		return null;
     }
 
+    /**
+     * /API/FriendsFans/getFansByOffset <br />
+     * @param userId
+     * @param offset
+     * @return
+     */
     public JSONArray getFansByOffset(String userId, int offset){
     	try {
 			HttpGet method = (HttpGet) PlurkActionSheet.getInstance()
@@ -665,6 +677,7 @@ public class PlurkClient {
 
         System.out.println(pc.getFansByOffset("3146394", 0));
         System.out.println(pc.getFansByOffset("3146394", 10));
+        pc.getFansByOffset("3146394", 6666);
 
 //        186562865 , 186616350  : fail
 //        186567616 : ok
