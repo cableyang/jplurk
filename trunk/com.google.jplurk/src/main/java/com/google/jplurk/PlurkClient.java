@@ -210,6 +210,38 @@ public class PlurkClient {
     }
     // </editor-fold>
 
+    public JSONArray getFriendsByOffset(String userId, int offset){
+    	try {
+			HttpGet method = (HttpGet) PlurkActionSheet.getInstance()
+				.getFriendsByOffset(config.createParamMap()
+				.k("user_id").v(userId)
+				.k("offset").v("" + (offset < 0 ? 0 : offset))
+				.getMap());
+			return new JSONArray(execute(method));
+		} catch (PlurkException e) {
+			logger.error(e.getMessage(), e);
+		} catch (JSONException e) {
+			logger.error(e.getMessage(), e);
+		}
+		return null;
+    }
+
+    public JSONArray getFansByOffset(String userId, int offset){
+    	try {
+			HttpGet method = (HttpGet) PlurkActionSheet.getInstance()
+				.getFansByOffset(config.createParamMap()
+				.k("user_id").v(userId)
+				.k("offset").v("" + (offset < 0 ? 0 : offset))
+				.getMap());
+			return new JSONArray(execute(method));
+		} catch (PlurkException e) {
+			logger.error(e.getMessage(), e);
+		} catch (JSONException e) {
+			logger.error(e.getMessage(), e);
+		}
+		return null;
+    }
+	
     // <editor-fold defaultstate="collapsed" desc="/API/Timeline/getPlurk">
     /**
      * /API/Users/getPlurk
@@ -631,6 +663,8 @@ public class PlurkClient {
 //        System.out.println(pc.getPlurk("186562865"));
 //        System.out.println(pc.responseGet("186562865"));
 
+        System.out.println(pc.getFansByOffset("3146394", 0));
+        System.out.println(pc.getFansByOffset("3146394", 10));
 
 //        186562865 , 186616350  : fail
 //        186567616 : ok

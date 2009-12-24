@@ -20,6 +20,7 @@ import com.google.jplurk.exception.PlurkException;
 import com.google.jplurk.validator.EmailValidator;
 import com.google.jplurk.validator.IDListValidator;
 import com.google.jplurk.validator.IValidator;
+import com.google.jplurk.validator.NonNegativeIntegerValidator;
 import com.google.jplurk.validator.PositiveIntegerValidator;
 import com.google.jplurk.validator.QualifierValidator;
 import com.google.jplurk.validator.TimeOffsetValidator;
@@ -45,6 +46,20 @@ public final class PlurkActionSheet {
 			throws PlurkException {
 		return prepare("addAllAsFriends", params);
 	}
+	
+	@Meta(uri = "/FriendsFans/getFriendsByOffset", require = { "api_key", "user_id" })
+	@Validation({ @Validators(field = "offset", validator = NonNegativeIntegerValidator.class) })
+	public HttpUriRequest getFriendsByOffset(Map<String, String> params)
+			throws PlurkException {
+		return prepare("getFriendsByOffset", params);
+	}	
+	
+	@Meta(uri = "/FriendsFans/getFansByOffset", require = { "api_key", "user_id" })
+	@Validation({ @Validators(field = "offset", validator = NonNegativeIntegerValidator.class) })
+	public HttpUriRequest getFansByOffset(Map<String, String> params)
+			throws PlurkException {
+		return prepare("getFansByOffset", params);
+	}	
 
 	@Meta(uri = "/Users/login", require = { "api_key", "username", "password" })
 	public HttpUriRequest login(Map<String, String> params)
