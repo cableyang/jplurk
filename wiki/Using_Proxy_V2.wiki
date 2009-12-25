@@ -63,9 +63,14 @@ public class PlurkIt {
 == 優先權 ==
 
 優先權由高到低為：
- # 程式中設定
- # 動態啟動變數
- # Config 檔設定
+  # 程式中設定
+  # 動態啟動變數
+  # Config 檔設定
+
+== 延伸閱讀 ==
+
+  * [http://code.google.com/p/jplurk/wiki/Introduction jPlurk 簡介]
+  * [http://code.google.com/p/jplurk/wiki/jplurkV2 jPlurk v2 使用簡介與實作狀態]
 
 ----
 
@@ -130,6 +135,11 @@ public class PlurkIt {
 == Priority ==
 
 The priority from high to low is:
- # Program Setting
- # Dynamic Property
- # Config File
+  # Program Setting
+  # Dynamic Property
+  # Config File
+
+== More Reading ==
+
+  * [http://code.google.com/p/jplurk/wiki/Introduction jPlurk Introduction]
+  * [http://code.google.com/p/jplurk/wiki/jplurkV2 jPlurk v2 Quick Tutorial and Implementation State]
