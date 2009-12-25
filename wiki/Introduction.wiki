@@ -1,4 +1,4 @@
-#summary jplurk 簡介
+#summary jPlurk Introduction / jPlurk 簡介
 #labels Featured
 
 = jPlurk 的起源 =
