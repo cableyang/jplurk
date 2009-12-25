@@ -113,6 +113,12 @@ client.getUnreadPlurks();
 
 Java API Doc 也正在持續的成長中。
 
+
+== 延伸閱讀 ==
+
+  * [http://code.google.com/p/jplurk/wiki/Introduction jPlurk 簡介]
+  * [http://code.google.com/p/jplurk/wiki/Using_Proxy_V2 在 Proxy 環境使用 jPlurk]
+
 ----
 
 = About jPlurk V2  =
@@ -231,3 +237,9 @@ Please refer to [Using_Proxy_V2] page.
 
 
 Java API Doc is growing gradually, too.
+
+
+== More Reading ==
+
+  * [http://code.google.com/p/jplurk/wiki/Introduction jPlurk Introduction]
+  * [http://code.google.com/p/jplurk/wiki/Using_Proxy_V2 Setting Proxy for jPlurk] 
