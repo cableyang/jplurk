@@ -110,8 +110,8 @@ client.getUnreadPlurks();
 || /API/Responses/responseAdd || responseAdd || qrtt1 || 完成 || `@since` rev240 ||
 || /API/Responses/get || responseGet || qrtt1 || 完成 || `@since` rev240 ||
 || /API/Responses/responseDelete || responseDelete || Askeing || 完成 || `@since` rev240 ||
-|| /API/Profile/getOwnProfile || getOwnProfile || qrtt1 || 撰寫中 || ||
-|| /API/Profile/getPublicProfile || getPublicProfile || qrtt1 || 撰寫中 || ||
+|| /API/Profile/getOwnProfile || getOwnProfile || qrtt1 || 完成 || ||
+|| /API/Profile/getPublicProfile || getPublicProfile || qrtt1 || 完成 || ||
 
 Java API Doc 也正在持續的成長中。
 
@@ -236,8 +236,8 @@ Please refer to [Using_Proxy_V2] page.
 || /API/Responses/responseAdd || responseAdd || qrtt1 || Done || `@since` rev240 ||
 || /API/Responses/get || responseGet || qrtt1 || Done || `@since` rev240 ||
 || /API/Responses/responseDelete || responseDelete || Askeing || Done || `@since` rev240 ||
-|| /API/Profile/getOwnProfile || getOwnProfile || qrtt1 || Working || ||
-|| /API/Profile/getPublicProfile || getPublicProfile || qrtt1 || Working || ||
+|| /API/Profile/getOwnProfile || getOwnProfile || qrtt1 || Done || ||
+|| /API/Profile/getPublicProfile || getPublicProfile || qrtt1 || Done || ||
 
 Java API Doc is growing gradually, too.
 
