@@ -1,4 +1,4 @@
-#summary running jPlurk with proxy
+#summary Running jPlurk with proxy
 #labels Featured
 
 = 如何設定代理伺服器 =
