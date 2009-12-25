@@ -46,20 +46,20 @@ public final class PlurkActionSheet {
 			throws PlurkException {
 		return prepare("addAllAsFriends", params);
 	}
-	
+
 	@Meta(uri = "/FriendsFans/getFriendsByOffset", require = { "api_key", "user_id" })
 	@Validation({ @Validator(field = "offset", validator = NonNegativeIntegerValidator.class) })
 	public HttpUriRequest getFriendsByOffset(Map<String, String> params)
 			throws PlurkException {
 		return prepare("getFriendsByOffset", params);
-	}	
-	
+	}
+
 	@Meta(uri = "/FriendsFans/getFansByOffset", require = { "api_key", "user_id" })
 	@Validation({ @Validator(field = "offset", validator = NonNegativeIntegerValidator.class) })
 	public HttpUriRequest getFansByOffset(Map<String, String> params)
 			throws PlurkException {
 		return prepare("getFansByOffset", params);
-	}	
+	}
 
 	@Meta(uri = "/Users/login", require = { "api_key", "username", "password" })
 	public HttpUriRequest login(Map<String, String> params)
@@ -78,14 +78,14 @@ public final class PlurkActionSheet {
     @Meta(uri = "/Timeline/getPlurk", require = { "api_key", "plurk_id" })
     @Validation({
 		@Validator(field = "plurk_id", validator = PositiveIntegerValidator.class)
-	})    
+	})
 	public HttpUriRequest getPlurk(Map<String, String> params) throws PlurkException{
 		return prepare("getPlurk", params);
 	}
-    
+
     @Meta(uri = "/Timeline/getPlurks", require = { "api_key"})
-	@Validation({ 
-		@Validator(field = "offset", validator = TimeOffsetValidator.class), 
+	@Validation({
+		@Validator(field = "offset", validator = TimeOffsetValidator.class),
 		@Validator(field = "limit", validator = PositiveIntegerValidator.class)
 	})
 	public HttpUriRequest getPlurks(Map<String, String> params) throws PlurkException{
@@ -177,6 +177,18 @@ public final class PlurkActionSheet {
 		return prepare("uploadPicture", params);
 	}
 
+	@Meta(uri = "/Profile/getOwnProfile", require = { "api_key" })
+	public HttpUriRequest getOwnProfile(Map<String, String> params)
+			throws PlurkException {
+		return prepare("getOwnProfile", params);
+	}
+
+	@Meta(uri = "/Profile/getPublicProfile", require = { "api_key", "user_id" })
+	public HttpUriRequest getPublicProfile(Map<String, String> params)
+			throws PlurkException {
+		return prepare("getPublicProfile", params);
+	}
+
 	private HttpUriRequest prepare(String methodName, Map<String, String> params) throws PlurkException {
 		Method method = MethodUtils.getAccessibleMethod(PlurkActionSheet.class,
 				methodName, new Class[] { Map.class });
@@ -244,7 +256,7 @@ public final class PlurkActionSheet {
 			}
 			logger.info("Params: " + loggedParams.toString());
 		}
-		
+
 		return httpMethod;
 	}
 

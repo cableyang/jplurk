@@ -99,7 +99,7 @@ public class PlurkClient {
             logger.debug("Proxy: Host " + ((HttpHost)client.getParams().getParameter(ConnRoutePNames.DEFAULT_PROXY)).getHostName());
             logger.debug("Proxy: Prot " + String.valueOf(((HttpHost)client.getParams().getParameter(ConnRoutePNames.DEFAULT_PROXY)).getPort()));
         }
-        
+
         Runtime.getRuntime().addShutdownHook(new Thread() {
 
             @Override
@@ -253,7 +253,7 @@ public class PlurkClient {
 		}
 		return null;
     }
-	
+
     // <editor-fold defaultstate="collapsed" desc="/API/Timeline/getPlurk">
     /**
      * /API/Users/getPlurk
@@ -602,6 +602,39 @@ public class PlurkClient {
         return null;
     }
 
+	/**
+	 * /API/Profile/getOwnProfile
+	 * @return
+	 */
+	public JSONObject getOwnProfile() {
+		try {
+			HttpGet method = (HttpGet) PlurkActionSheet.getInstance().getOwnProfile(config.createParamMap().getMap());
+			return new JSONObject(execute(method));
+		} catch (PlurkException e) {
+			logger.error(e.getMessage(), e);
+		} catch (JSONException e) {
+			logger.error(e.getMessage(), e);
+		}
+		return null;
+	}
+
+	/**
+	 * /API/Profile/getPublicProfile
+	 * @param userId
+	 * @return
+	 */
+	public JSONObject getPublicProfile(String userId) {
+		try {
+			HttpGet method = (HttpGet) PlurkActionSheet.getInstance().getPublicProfile(config.createParamMap().k("user_id").v(userId).getMap());
+			return new JSONObject(execute(method));
+		} catch (PlurkException e) {
+			logger.error(e.getMessage(), e);
+		} catch (JSONException e) {
+			logger.error(e.getMessage(), e);
+		}
+		return null;
+	}
+
     /**
      * @param file a image file will be uploaded
      * @return json with thumbnail url. for example <pre>{"thumbnail":"http://images.plurk.com/tn_3146394_fb04befc28fbca59318f16d83d5c78cc.gif","full":"http://images.plurk.com/3146394_fb04befc28fbca59318f16d83d5c78cc.jpg"}</pre>
@@ -675,10 +708,11 @@ public class PlurkClient {
 //        System.out.println(pc.getPlurk("186562865"));
 //        System.out.println(pc.responseGet("186562865"));
 
-        System.out.println(pc.getFansByOffset("3146394", 0));
-        System.out.println(pc.getFansByOffset("3146394", 10));
-        pc.getFansByOffset("3146394", 6666);
-
+//        System.out.println(pc.getFansByOffset("3146394", 0));
+//        System.out.println(pc.getFansByOffset("3146394", 10));
+//        pc.getFansByOffset("3146394", 6666);
+        System.out.println(pc.getOwnProfile());
+        System.out.println(pc.getPublicProfile("3146394"));
 //        186562865 , 186616350  : fail
 //        186567616 : ok
 
