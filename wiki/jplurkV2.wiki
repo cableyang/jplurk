@@ -1,4 +1,4 @@
-#summary jPlurk version 2
+#summary jPlurk v2 Quick Tutorial and Implementation State / jPlurk v2 使用簡介與實作狀態
 #labels Featured
 
 = 關於 Version 2  =
