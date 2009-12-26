@@ -82,6 +82,13 @@ public final class PlurkActionSheet {
 		return prepare("update", params);
 	}
 	
+	@Meta(uri = "/Users/updatePicture", require = { "api_key", "profile_image" }, type = Type.POST)
+	@Headers(headers = { @Header(key = "Content-Type", value = "multipart/form-data") })
+	public HttpUriRequest updatePicture(Map<String, String> params)
+			throws PlurkException {
+		return prepare("updatePicture", params);
+	}	
+	
     @Meta(uri = "/Timeline/getPlurk", require = { "api_key", "plurk_id" })
     @Validation({
 		@Validator(field = "plurk_id", validator = PositiveIntegerValidator.class)
@@ -131,7 +138,6 @@ public final class PlurkActionSheet {
     public HttpUriRequest plurkEdit(Map<String, String> params) throws PlurkException {
         return prepare("plurkEdit", params);
     }
-
 
 	@Meta(uri = "/Timeline/mutePlurks", require = { "api_key", "ids" })
 	@Validation({@Validator(field = "ids", validator = IDListValidator.class)})
