@@ -264,6 +264,37 @@ public class PlurkClient {
 	}
 
     /**
+     * /API/Users/updatePicture
+     * @param file a image file will be uploaded
+     */
+    public JSONObject updatePicture(File file) {
+        if (file == null || !file.exists() || !file.isFile()) {
+            logger.warn("not a valid file: " + file);
+            return null;
+        }
+
+        HttpPost method = new HttpPost("http://www.plurk.com/API/Users/updatePicture");
+        MultipartEntity entity = new MultipartEntity();
+        try {
+            entity.addPart("api_key", new StringBody(config.getApiKey()));
+            entity.addPart("profile_image", new FileBody(file));
+        } catch (UnsupportedEncodingException e) {
+            logger.error(e.getMessage(), e);
+        }
+        method.setEntity(entity);
+
+        try {
+            return new JSONObject(execute(method));
+        } catch (JSONException e) {
+            logger.error(e.getMessage(), e);
+        } catch (PlurkException e) {
+            logger.error(e.getMessage(), e);
+        }
+
+        return null;
+    }
+    
+    /**
      * /API/FriendsFans/getFriendsByOffset <br/>
      * @param userId
      * @param offset
@@ -770,6 +801,7 @@ public class PlurkClient {
 //        186567616 : ok
 //        System.out.println(pc.uploadPicture(new File("C:/images/image.jpg")));
 
+        System.out.println(pc.updatePicture(new File("C:/Users/qrtt1/Desktop/4932792-big2.jpg")));
 //        JSONObject oo = pc.plurkAdd("測試 jPlurk 編輯 plruk 功能！！", Qualifier.IS, NoComments.False);
 //        JSONObject oo = pc.plurkAdd("hmmmm", Qualifier.SAYS);
 //        System.out.println(oo);
