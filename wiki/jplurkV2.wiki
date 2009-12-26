@@ -97,6 +97,8 @@ client.getUnreadPlurks();
 || /API/!FriendsFans/getFansByOffset || getFansByOffset || qrtt1 || 完成 ||   ||
 || /API/Users/login || login || qrtt1 || 完成 || `@since` rev240 ||
 || /API/Users/register || register || Askeing || 完成 || Opt Done by A, `@since` rev240 ||
+|| /API/Users/update || update || qrtt1 || 撰寫中 || ||
+|| /API/Users/updatePicture || updatePicture || qrtt1 || 撰寫中 || ||
 || /API/Timeline/getPlurk || getPlurk || Askeing || 完成 || `@since` rev240 ||
 || /API/Timeline/getPlurks || getPlurks || qrtt1 || 完成 || ||
 || /API/Timeline/plurkAdd || plurkAdd || qrtt1 || 完成 || Opt Done by A, `@since` rev240 ||
@@ -223,6 +225,8 @@ Please refer to [Using_Proxy_V2] page.
 || /API/!FriendsFans/getFansByOffset || getFansByOffset || qrtt1 || Done ||   ||
 || /API/Users/login || login || qrtt1 || Done || `@since` rev240 ||
 || /API/Users/register || register || Askeing || Done || Opt Done by A, `@since` rev240 ||
+|| /API/Users/update || update || qrtt1 || Working || ||
+|| /API/Users/updatePicture || updatePicture || qrtt1 || Working || ||
 || /API/Timeline/getPlurk || getPlurk || Askeing || Done || `@since` rev240 ||
 || /API/Timeline/getPlurks || getPlurks || qrtt1 || Done || ||
 || /API/Timeline/plurkAdd || plurkAdd || qrtt1 || Done || Opt Done by A, `@since` rev240 ||
