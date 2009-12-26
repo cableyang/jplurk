@@ -75,6 +75,13 @@ public final class PlurkActionSheet {
         return prepare("register", params);
     }
 
+	@Meta(uri = "/Users/update", require = { "api_key", "current_password" })
+	@Validation( { @Validator(field = "email", validator = EmailValidator.class), })
+	public HttpUriRequest update(Map<String, String> params)
+			throws PlurkException {
+		return prepare("update", params);
+	}
+	
     @Meta(uri = "/Timeline/getPlurk", require = { "api_key", "plurk_id" })
     @Validation({
 		@Validator(field = "plurk_id", validator = PositiveIntegerValidator.class)
@@ -246,13 +253,11 @@ public final class PlurkActionSheet {
 		}
 
 		if (logger.isInfoEnabled()) {
-			Map<String, String> loggedParams = new HashMap<String, String>(
-					params);
-			if (loggedParams.containsKey("api_key")) {
-				loggedParams.put("api_key", "**********");
-			}
-			if (loggedParams.containsKey("password")) {
-				loggedParams.put("password", "**********");
+			Map<String, String> loggedParams = new HashMap<String, String>(params);
+			for (String key : loggedParams.keySet()) {
+				if(key.contains("key") || key.contains("password")){
+					loggedParams.put(key, "**********");
+				}
 			}
 			logger.info("Params: " + loggedParams.toString());
 		}

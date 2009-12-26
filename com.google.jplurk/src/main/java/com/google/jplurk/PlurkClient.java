@@ -43,9 +43,10 @@ import com.google.jplurk.net.ProxyProvider;
 public class PlurkClient {
 
     // <editor-fold defaultstate="collapsed" desc="Init PlurkClient">
-    static Logger logger = LoggerFactory.getLogger(PlurkClient.class);
-    HttpClient client = new DefaultHttpClient();
-    PlurkSettings config;
+	private static Logger logger = LoggerFactory.getLogger(PlurkClient.class);
+    private HttpClient client = new DefaultHttpClient();
+    private PlurkSettings config;
+    
 
     static abstract class IdActions {
 
@@ -209,6 +210,58 @@ public class PlurkClient {
         return null;
     }
     // </editor-fold>
+    
+    
+	/**
+	 * /API/Users/update
+	 * @param currentPassword
+	 * @param fullName
+	 * @param newPassword
+	 * @param email
+	 * @param displayName
+	 * @param privacyPolicy
+	 * @param birth
+	 * @return
+	 */
+	public JSONObject update(String currentPassword, String fullName,
+			String newPassword, String email, String displayName,
+			PrivacyPolicy privacyPolicy, DateTime birth) {
+		if (StringUtils.isBlank(currentPassword)) {
+			logger.warn("current password can not be null.");
+			return null;
+		}
+
+		MapHelper helper = config.createParamMap();
+		helper.k("current_password").v(currentPassword);
+		if (StringUtils.isNotBlank(fullName)) {
+			helper.k("full_name").v(fullName);
+		}
+		if (StringUtils.isNotBlank(newPassword)) {
+			helper.k("new_password").v(newPassword);
+		}
+		if (StringUtils.isNotBlank(displayName)) {
+			helper.k("display_name").v(displayName);
+		}
+		if (StringUtils.isNotBlank(email)) {
+			helper.k("email").v(email);
+		}
+		if (privacyPolicy != null) {
+			helper.k("privacy").v(privacyPolicy.toString());
+		}
+		if (birth != null) {
+			helper.k("privacy").v(birth.birthday());
+		}
+
+		try {
+			return new JSONObject(execute(PlurkActionSheet.getInstance().update(helper.getMap())));
+		} catch (JSONException e) {
+			logger.error(e.getMessage(), e);
+		} catch (PlurkException e) {
+			logger.error(e.getMessage(), e);
+		}
+		
+		return null;
+	}
 
     /**
      * /API/FriendsFans/getFriendsByOffset <br/>
@@ -715,8 +768,6 @@ public class PlurkClient {
         System.out.println(pc.getPublicProfile("3146394"));
 //        186562865 , 186616350  : fail
 //        186567616 : ok
-
-
 //        System.out.println(pc.uploadPicture(new File("C:/images/image.jpg")));
 
 //        JSONObject oo = pc.plurkAdd("測試 jPlurk 編輯 plruk 功能！！", Qualifier.IS, NoComments.False);
