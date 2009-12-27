@@ -114,9 +114,9 @@ public class PlurkClient {
     // <editor-fold defaultstate="collapsed" desc="/API/Users/login">
     /**
      * /API/Users/login<br/>
-     * Login and creat a cookie. This cookie can access other methods.
-     * @param user
-     * @param password
+     * Login an already created user. Login creates a session cookie, which can be used to access the other methods. On success it returns the data returned by /API/Profile/getOwnProfile.
+     * @param user The user's nick name or email.
+     * @param password The user's password.
      * @return The JSONObject of /API/Profile/getOwnProfile
      */
     public JSONObject login(String user, String password) {
@@ -214,13 +214,13 @@ public class PlurkClient {
 
 	/**
 	 * /API/Users/update
-	 * @param currentPassword
-	 * @param fullName
-	 * @param newPassword
-	 * @param email
-	 * @param displayName
-	 * @param privacyPolicy
-	 * @param birth
+	 * @param currentPassword User's current password.
+	 * @param fullName Change full name.
+	 * @param newPassword Change password.
+	 * @param email Change email.
+	 * @param displayName User's display name, can be empty and full unicode. Must be shorter than 15 characters.
+	 * @param privacyPolicy User's privacy settings. The option can be world (whole world can view the profile), only_friends (only friends can view the profile) or only_me (only the user can view own plurks).
+	 * @param birth Should be YYYY-MM-DD, example 1985-05-13.
 	 * @return
 	 */
 	public JSONObject update(String currentPassword, String fullName,
@@ -264,7 +264,7 @@ public class PlurkClient {
 	}
 
     /**
-     * /API/Users/updatePicture
+     * /API/Users/updatePicture <br />
      * @param file a image file will be uploaded
      */
     public JSONObject updatePicture(File file) {
