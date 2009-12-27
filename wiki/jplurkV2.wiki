@@ -95,7 +95,7 @@ client.getUnreadPlurks();
 || /API/Alerts/addAllAsFriends || addAllAsFriends || qrtt1 || 完成 || `@since` rev240 ||
 || /API/!FriendsFans/getFriendsByOffset || getFriendsByOffset || qrtt1 || 完成 ||   ||
 || /API/!FriendsFans/getFansByOffset || getFansByOffset || qrtt1 || 完成 ||   ||
-|| /API/!FriendsFans/getFollowingByOffset || getFollowingByOffset || 撰寫中 || qrtt1 ||
+|| /API/!FriendsFans/getFollowingByOffset || getFollowingByOffset || qrtt1 || 撰寫中 || ||
 || /API/!FriendsFans/becomeFriend || becomeFriend || qrtt1 || 撰寫中 || ||
 || /API/!FriendsFans/removeAsFriend || removeAsFriend || qrtt1 || 撰寫中 || ||
 || /API/!FriendsFans/becomeFan || becomeFan || qrtt1 || 撰寫中 || ||
@@ -227,7 +227,7 @@ Please refer to [Using_Proxy_V2] page.
 || /API/Alerts/addAllAsFriends || addAllAsFriends || qrtt1 || Done || `@since` rev240 ||
 || /API/!FriendsFans/getFriendsByOffset || getFriendsByOffset || qrtt1 || Done ||   ||
 || /API/!FriendsFans/getFansByOffset || getFansByOffset || qrtt1 || Done ||   ||
-|| /API/!FriendsFans/getFollowingByOffset || getFollowingByOffset || qrtt1 || Working ||
+|| /API/!FriendsFans/getFollowingByOffset || getFollowingByOffset || qrtt1 || Working || ||
 || /API/!FriendsFans/becomeFriend || becomeFriend || qrtt1 || Working || ||
 || /API/!FriendsFans/removeAsFriend || removeAsFriend || qrtt1 || Working || ||
 || /API/!FriendsFans/becomeFan || becomeFan || qrtt1 || Working || ||
