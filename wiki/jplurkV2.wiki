@@ -95,10 +95,10 @@ client.getUnreadPlurks();
 || /API/Alerts/addAllAsFriends || addAllAsFriends || qrtt1 || 完成 || `@since` rev240 ||
 || /API/!FriendsFans/getFriendsByOffset || getFriendsByOffset || qrtt1 || 完成 ||   ||
 || /API/!FriendsFans/getFansByOffset || getFansByOffset || qrtt1 || 完成 ||   ||
-|| /API/!FriendsFans/getFollowingByOffset || getFollowingByOffset || qrtt1 || 撰寫中 || ||
-|| /API/!FriendsFans/becomeFriend || becomeFriend || qrtt1 || 撰寫中 || ||
-|| /API/!FriendsFans/removeAsFriend || removeAsFriend || qrtt1 || 撰寫中 || ||
-|| /API/!FriendsFans/becomeFan || becomeFan || qrtt1 || 撰寫中 || ||
+|| /API/!FriendsFans/getFollowingByOffset || getFollowingByOffset || qrtt1 || 完成 || ||
+|| /API/!FriendsFans/becomeFriend || becomeFriend || qrtt1 || 完成 || ||
+|| /API/!FriendsFans/removeAsFriend || removeAsFriend || qrtt1 || 完成 || ||
+|| /API/!FriendsFans/becomeFan || becomeFan || qrtt1 || 完成 || ||
 || /API/Users/login || login || qrtt1 || 完成 || `@since` rev240 ||
 || /API/Users/register || register || Askeing || 完成 || Opt Done by A, `@since` rev240 ||
 || /API/Users/update || update || qrtt1 || 完成 || ||
@@ -227,10 +227,10 @@ Please refer to [Using_Proxy_V2] page.
 || /API/Alerts/addAllAsFriends || addAllAsFriends || qrtt1 || Done || `@since` rev240 ||
 || /API/!FriendsFans/getFriendsByOffset || getFriendsByOffset || qrtt1 || Done ||   ||
 || /API/!FriendsFans/getFansByOffset || getFansByOffset || qrtt1 || Done ||   ||
-|| /API/!FriendsFans/getFollowingByOffset || getFollowingByOffset || qrtt1 || Working || ||
-|| /API/!FriendsFans/becomeFriend || becomeFriend || qrtt1 || Working || ||
-|| /API/!FriendsFans/removeAsFriend || removeAsFriend || qrtt1 || Working || ||
-|| /API/!FriendsFans/becomeFan || becomeFan || qrtt1 || Working || ||
+|| /API/!FriendsFans/getFollowingByOffset || getFollowingByOffset || qrtt1 || Done || ||
+|| /API/!FriendsFans/becomeFriend || becomeFriend || qrtt1 || Done || ||
+|| /API/!FriendsFans/removeAsFriend || removeAsFriend || qrtt1 || Done || ||
+|| /API/!FriendsFans/becomeFan || becomeFan || qrtt1 || Done || ||
 || /API/Users/login || login || qrtt1 || Done || `@since` rev240 ||
 || /API/Users/register || register || Askeing || Done || Opt Done by A, `@since` rev240 ||
 || /API/Users/update || update || qrtt1 || Done || ||
