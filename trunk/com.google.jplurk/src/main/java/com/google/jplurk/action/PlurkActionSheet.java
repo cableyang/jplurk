@@ -61,6 +61,34 @@ public final class PlurkActionSheet {
 		return prepare("getFansByOffset", params);
 	}
 
+	@Meta(uri = "/FriendsFans/getFollowingByOffset", require = { "api_key" })
+	@Validation({ @Validator(field = "offset", validator = NonNegativeIntegerValidator.class) })
+	public HttpUriRequest getFollowingByOffset(Map<String, String> params)
+			throws PlurkException {
+		return prepare("getFollowingByOffset", params);
+	}
+
+	@Meta(uri = "/FriendsFans/becomeFriend", require = { "api_key", "friend_id" })
+	@Validation({ @Validator(field = "friend_id", validator = NonNegativeIntegerValidator.class) })
+	public HttpUriRequest becomeFriend(Map<String, String> params)
+			throws PlurkException {
+		return prepare("becomeFriend", params);
+	}
+
+	@Meta(uri = "/FriendsFans/removeAsFriend", require = { "api_key", "friend_id" })
+	@Validation({ @Validator(field = "friend_id", validator = NonNegativeIntegerValidator.class) })
+	public HttpUriRequest removeAsFriend(Map<String, String> params)
+			throws PlurkException {
+		return prepare("removeAsFriend", params);
+	}
+
+	@Meta(uri = "/FriendsFans/becomeFan", require = { "api_key", "fan_id" })
+	@Validation({ @Validator(field = "fan_id", validator = NonNegativeIntegerValidator.class) })
+	public HttpUriRequest becomeFan(Map<String, String> params)
+			throws PlurkException {
+		return prepare("becomeFan", params);
+	}
+
 	@Meta(uri = "/Users/login", require = { "api_key", "username", "password" })
 	public HttpUriRequest login(Map<String, String> params)
 			throws PlurkException {
