@@ -99,7 +99,7 @@ client.getUnreadPlurks();
 || /API/!FriendsFans/becomeFriend || becomeFriend || qrtt1 || 撰寫中 || ||
 || /API/!FriendsFans/removeAsFriend || removeAsFriend || qrtt1 || 撰寫中 || ||
 || /API/!FriendsFans/becomeFan || becomeFan || qrtt1 || 撰寫中 || ||
-|| /API/Users/login || login || qrtt1 || 完成 || `@since` rev240 || 撰寫中 || ||
+|| /API/Users/login || login || qrtt1 || 完成 || `@since` rev240 ||
 || /API/Users/register || register || Askeing || 完成 || Opt Done by A, `@since` rev240 ||
 || /API/Users/update || update || qrtt1 || 完成 || ||
 || /API/Users/updatePicture || updatePicture || qrtt1 || 完成 || ||
