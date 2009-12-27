@@ -46,7 +46,7 @@ public class PlurkClient {
 	private static Logger logger = LoggerFactory.getLogger(PlurkClient.class);
     private HttpClient client = new DefaultHttpClient();
     private PlurkSettings config;
-    
+
 
     static abstract class IdActions {
 
@@ -210,8 +210,8 @@ public class PlurkClient {
         return null;
     }
     // </editor-fold>
-    
-    
+
+
 	/**
 	 * /API/Users/update
 	 * @param currentPassword
@@ -259,7 +259,7 @@ public class PlurkClient {
 		} catch (PlurkException e) {
 			logger.error(e.getMessage(), e);
 		}
-		
+
 		return null;
 	}
 
@@ -293,7 +293,7 @@ public class PlurkClient {
 
         return null;
     }
-    
+
     /**
      * /API/FriendsFans/getFriendsByOffset <br/>
      * @param userId
@@ -337,6 +337,77 @@ public class PlurkClient {
 		}
 		return null;
     }
+
+	/**
+	 * /API/FriendsFans/getFollowingByOffset
+	 * @param offset The offset, can be 10, 20, 30 etc.
+	 * @return Returns a list of JSON objects users, e.g. [{"id": 3, "nick_name": "alvin", ...}, ...]
+	 */
+	public JSONObject getFollowingByOffset(int offset) {
+		try {
+			HttpGet method = (HttpGet) PlurkActionSheet.getInstance()
+					.getFollowingByOffset(
+							config.createParamMap().k("offset").v(
+									"" + (offset < 0 ? 0 : offset)).getMap());
+			return new JSONObject(execute(method));
+		} catch (PlurkException e) {
+			logger.error(e.getMessage(), e);
+		} catch (JSONException e) {
+			logger.error(e.getMessage(), e);
+		}
+		return null;
+	}
+
+	/**
+	 * /API/FriendsFans/becomeFriend
+	 * @param friendId The ID of the user you want to befriend.
+	 * @return {"success_text": "ok"} if a friend request has been made.
+	 */
+	public JSONObject becomeFriend(int friendId){
+		try {
+			HttpGet method = (HttpGet) PlurkActionSheet.getInstance().becomeFriend(config.createParamMap().k("friend_id").v("" + friendId).getMap());
+			return new JSONObject(execute(method));
+		} catch (PlurkException e) {
+			logger.error(e.getMessage(), e);
+		} catch (JSONException e) {
+			logger.error(e.getMessage(), e);
+		}
+		return null;
+	}
+
+	/**
+	 * /API/FriendsFans/removeAsFriend
+	 * @param friendId The ID of the user you want to remove
+	 * @return {"success_text": "ok"} if friend_id has been removed as friend.
+	 */
+	public JSONObject removeAsFriend(int friendId){
+		try {
+			HttpGet method = (HttpGet) PlurkActionSheet.getInstance().removeAsFriend(config.createParamMap().k("friend_id").v("" + friendId).getMap());
+			return new JSONObject(execute(method));
+		} catch (PlurkException e) {
+			logger.error(e.getMessage(), e);
+		} catch (JSONException e) {
+			logger.error(e.getMessage(), e);
+		}
+		return null;
+	}
+
+	/**
+	 * /API/FriendsFans/becomeFan
+	 * @param fanId The ID of the user you want to become fan of
+	 * @return {"success_text": "ok"} if the current logged in user is a fan of fan_id.
+	 */
+	public JSONObject becomeFan(int fanId){
+		try {
+			HttpGet method = (HttpGet) PlurkActionSheet.getInstance().becomeFan(config.createParamMap().k("fan_id").v("" + fanId).getMap());
+			return new JSONObject(execute(method));
+		} catch (PlurkException e) {
+			logger.error(e.getMessage(), e);
+		} catch (JSONException e) {
+			logger.error(e.getMessage(), e);
+		}
+		return null;
+	}
 
     // <editor-fold defaultstate="collapsed" desc="/API/Timeline/getPlurk">
     /**
