@@ -49,13 +49,17 @@ import com.google.jplurk.PlurkClient;
 import com.google.jplurk.PlurkSettings;
 import com.google.jplurk.Qualifier;
 import com.google.jplurk.exception.PlurkException;
-import com.google.jplurk.net.Result;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 
 public class PlurkIt {
     public static void main(String[] args) throws PlurkException {
         PlurkSettings settings = new PlurkSettings();
         PlurkClient client = new PlurkClient(settings);
-        Result ret = client.login(
+        JSONObject ret = client.login(
                 JOptionPane.showInputDialog("id"),
                 JOptionPane.showInputDialog("password"));
 
@@ -67,9 +71,6 @@ public class PlurkIt {
         ret = client.plurkAdd(
             "Plurk It with jPlurk http://code.google.com/p/jplurk/wiki/jplurkV2",
             Qualifier.SHARES);
-        if (ret.isSuccess()) {
-            System.out.println(ret);
-        }
 
     }
 }
@@ -78,7 +79,7 @@ public class PlurkIt {
 
 使用 jPlurk 您要先建立 !PlurkSettings 供 !PlurkClient 初始化之用。!PlurkSettings 會讀取 jplurk.properties 檔，將其中的 api_key 提供給 !PlurkClient 與 Plurk API 服務互動。多數的 Plurk API 服務是需要登入才能使用的，所以 jPlurk 並無特別區分那些是不需要登入的服務，請您在開始使用 API 服務時，先執行登入的動作：
 {{{
-Result ret = client.login(
+JSONObject ret = client.login(
     JOptionPane.showInputDialog("id"),
     JOptionPane.showInputDialog("password"));
 }}}
@@ -181,19 +182,24 @@ default_proxy_port = 3128
 == Using jPlurk ==
 
 {{{
+
 import javax.swing.JOptionPane;
 
 import com.google.jplurk.PlurkClient;
 import com.google.jplurk.PlurkSettings;
 import com.google.jplurk.Qualifier;
 import com.google.jplurk.exception.PlurkException;
-import com.google.jplurk.net.Result;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 
 public class PlurkIt {
     public static void main(String[] args) throws PlurkException {
         PlurkSettings settings = new PlurkSettings();
         PlurkClient client = new PlurkClient(settings);
-        Result ret = client.login(
+        JSONObject ret = client.login(
                 JOptionPane.showInputDialog("id"),
                 JOptionPane.showInputDialog("password"));
 
@@ -205,9 +211,6 @@ public class PlurkIt {
         ret = client.plurkAdd(
             "Plurk It with jPlurk http://code.google.com/p/jplurk/wiki/jplurkV2",
             Qualifier.SHARES);
-        if (ret.isSuccess()) {
-            System.out.println(ret);
-        }
 
     }
 }
@@ -217,7 +220,7 @@ Whan you using jPlurk, you need creat !PlurkSettings to initiate !PlurkClient.
 !PlurkSettings will load api_key by reading jplurk.properties file, and api_key will be used in the interaction between !PlurkClient and Plurk API .
 Almost every Plurk API services require login before, so jPlurk do not checking which service do not need login. Please login before you using Plurk API.
 {{{
-Result ret = client.login(
+JSONObject ret = client.login(
     JOptionPane.showInputDialog("id"),
     JOptionPane.showInputDialog("password"));
 }}}
