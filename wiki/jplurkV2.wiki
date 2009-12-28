@@ -8,7 +8,7 @@ jPlurk v2 正持續進行中，在 Plurk 官方 [http://www.plurk.com/API API] �
 
 = 快速上手 =
 
-您可以由 [http://code.google.com/p/jplurk/downloads/list 下載頁面] 下載最新發佈版本 (rev 240, 含原始碼及相依函式庫)。參閱下列的簡易教學使用 jPlurk v2
+您可以由 [http://code.google.com/p/jplurk/downloads/list 下載頁面] 下載最新發佈版本 (rev 320, 含原始碼及相依函式庫)。參閱下列的簡易教學使用 jPlurk v2
 
 == 建立 config 檔 ==
 
@@ -145,7 +145,7 @@ jPlurk v1 has been frozen because Plurk released the Official [http://www.plurk.
 
 = Quick Tutorial =
 
-You can get lastest version (rev 240, contains source code and dependencies) from [http://code.google.com/p/jplurk/downloads/list Download Page] . And we show you the quick tutorial below.
+You can get lastest version (rev 320, contains source code and dependencies) from [http://code.google.com/p/jplurk/downloads/list Download Page] . And we show you the quick tutorial below.
 
 == Create Config File ==
 
