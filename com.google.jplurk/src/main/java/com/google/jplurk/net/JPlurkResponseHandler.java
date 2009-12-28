@@ -11,15 +11,15 @@ import org.apache.http.client.ResponseHandler;
 import org.apache.http.util.EntityUtils;
 import org.slf4j.Logger;
 
-public class JPlurkResponseHandler implements ResponseHandler<Result> {
 
-	static Logger logger = org.slf4j.LoggerFactory
-			.getLogger(JPlurkResponseHandler.class);
+public class JPlurkResponseHandler implements ResponseHandler<String> {
 
-	public Result handleResponse(final HttpResponse response)
-			throws HttpResponseException, IOException {
-		HttpEntity entity = response.getEntity();
-		String ret = (entity == null ? null : EntityUtils.toString(entity));
+	static Logger logger = org.slf4j.LoggerFactory.getLogger(JPlurkResponseHandler.class);
+
+    public String handleResponse(final HttpResponse response)
+            throws HttpResponseException, IOException {
+    	HttpEntity entity = response.getEntity();
+    	String ret = (entity == null ? null : EntityUtils.toString(entity));
 
 		if (logger.isDebugEnabled()) {
 			Header[] headers = response.getAllHeaders();
@@ -29,16 +29,16 @@ public class JPlurkResponseHandler implements ResponseHandler<Result> {
 			logger.info(response.getStatusLine().toString());
 		}
 
-		StatusLine statusLine = response.getStatusLine();
-		if (statusLine.getStatusCode() >= 300) {
-			logger.warn("Http Response Body: \n" + ret);
-			return new Result(ret, false);
-		}
+        StatusLine statusLine = response.getStatusLine();
+        if (statusLine.getStatusCode() >= 300) {
+        	logger.warn("Http Response Body: \n" + ret);
+            throw new HttpResponseException(statusLine.getStatusCode(),
+                    statusLine.getReasonPhrase());
+        }
+        
+        logger.debug("Response: " + ret);
 
-		if (logger.isDebugEnabled()) {
-			logger.debug("Response: " + ret);
-		}
-		return new Result(ret, true);
-	}
+        return ret;
+    }
 
 }
