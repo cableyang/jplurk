@@ -8,6 +8,8 @@ import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import javax.swing.JOptionPane;
+
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.math.NumberUtils;
 import org.apache.http.HttpHost;
@@ -848,6 +850,9 @@ public class PlurkClient {
 
         PlurkSettings config = new PlurkSettings();
         PlurkClient pc = new PlurkClient(config);
+
+        JSONObject o = pc.login(JOptionPane.showInputDialog("id"), JOptionPane.showInputDialog("password"));
+        System.out.println(o);
 
 //                JSONObject oRegister = pc.register(JOptionPane.showInputDialog("nick_name"),
 //                        JOptionPane.showInputDialog("full_name"),
