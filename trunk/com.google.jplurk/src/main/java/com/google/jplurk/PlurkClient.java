@@ -802,8 +802,11 @@ public class PlurkClient {
 //                        JOptionPane.showInputDialog("date_of_birth"));
 //                System.out.println(oRegister);
 
-        Result o = pc.login(JOptionPane.showInputDialog("id"), JOptionPane.showInputDialog("password"));
-        System.out.println(o);
+        Result result = pc.login(JOptionPane.showInputDialog("id"), JOptionPane.showInputDialog("password"));
+        if(result.isSuccess()){
+        	System.out.println(result.toJsonObject());
+        }
+        System.out.println(result);
 //        System.out.println(pc.getPlurk("186562865"));
 //        System.out.println(pc.responseGet("186562865"));
 
