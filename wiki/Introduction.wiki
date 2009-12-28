@@ -26,8 +26,16 @@ public HttpUriRequest getFriendsByOffset(Map<String, String> params)
 = jPlurk v2 設計慣例 =
 
   * 與 Plurk API 功能對應
-  * 所有 !PlurkClient 實作的 API 方法都回傳 JSONObject 或 JSONArrayObject
-  * 當發生例外，或 Http 回傳狀態不為 200 OK 時，會傳回 null
+  * 所有 !PlurkClient 實作的 API 方法都回傳 Result 物件
+{{{
+        // 您可以詢問 Result 物件是否執行成功，並將回傳結果轉換成 JsonObject 或 JsonArray
+        Result result = pc.login(JOptionPane.showInputDialog("id"), JOptionPane.showInputDialog("password"));
+        if(result.isSuccess()){
+        	System.out.println(result.toJsonObject());
+        }
+}}}
+
+  * 當發生例外，或 Http 回傳狀態不為 200 OK 時，會傳回 Result.FAILURE
 
 == 延伸閱讀 ==
 
