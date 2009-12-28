@@ -45,24 +45,32 @@ default_proxy_port = 3128
 {{{
 import javax.swing.JOptionPane;
 
-import org.json.JSONObject;
-
 import com.google.jplurk.PlurkClient;
 import com.google.jplurk.PlurkSettings;
 import com.google.jplurk.Qualifier;
 import com.google.jplurk.exception.PlurkException;
+import com.google.jplurk.net.Result;
 
 public class PlurkIt {
     public static void main(String[] args) throws PlurkException {
         PlurkSettings settings = new PlurkSettings();
         PlurkClient client = new PlurkClient(settings);
-        JSONObject ret = client.login(
+        Result ret = client.login(
                 JOptionPane.showInputDialog("id"),
                 JOptionPane.showInputDialog("password"));
-        System.out.println(ret);
 
-        ret = client.plurkAdd("Plurk It with jPlurk http://code.google.com/p/jplurk/wiki/jplurkV2", Qualifier.SHARES);
-        System.out.println(ret);
+        if(!ret.isSuccess()){
+            System.err.println("login failure: " + ret);
+            System.exit(0);
+        }
+
+        ret = client.plurkAdd(
+            "Plurk It with jPlurk http://code.google.com/p/jplurk/wiki/jplurkV2",
+            Qualifier.SHARES);
+        if (ret.isSuccess()) {
+            System.out.println(ret);
+        }
+
     }
 }
 
@@ -175,27 +183,34 @@ default_proxy_port = 3128
 {{{
 import javax.swing.JOptionPane;
 
-import org.json.JSONObject;
-
 import com.google.jplurk.PlurkClient;
 import com.google.jplurk.PlurkSettings;
 import com.google.jplurk.Qualifier;
 import com.google.jplurk.exception.PlurkException;
+import com.google.jplurk.net.Result;
 
 public class PlurkIt {
     public static void main(String[] args) throws PlurkException {
         PlurkSettings settings = new PlurkSettings();
         PlurkClient client = new PlurkClient(settings);
-        JSONObject ret = client.login(
+        Result ret = client.login(
                 JOptionPane.showInputDialog("id"),
                 JOptionPane.showInputDialog("password"));
-        System.out.println(ret);
 
-        ret = client.plurkAdd("Plurk It with jPlurk http://code.google.com/p/jplurk/wiki/jplurkV2", Qualifier.SHARES);
-        System.out.println(ret);
+        if(!ret.isSuccess()){
+            System.err.println("login failure: " + ret);
+            System.exit(0);
+        }
+
+        ret = client.plurkAdd(
+            "Plurk It with jPlurk http://code.google.com/p/jplurk/wiki/jplurkV2",
+            Qualifier.SHARES);
+        if (ret.isSuccess()) {
+            System.out.println(ret);
+        }
+
     }
 }
-
 }}}
 
 Whan you using jPlurk, you need creat !PlurkSettings to initiate !PlurkClient.
