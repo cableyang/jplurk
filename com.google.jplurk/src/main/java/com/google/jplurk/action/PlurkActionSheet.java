@@ -23,6 +23,7 @@ import com.google.jplurk.validator.NonNegativeIntegerValidator;
 import com.google.jplurk.validator.PositiveIntegerValidator;
 import com.google.jplurk.validator.QualifierValidator;
 import com.google.jplurk.validator.TimeOffsetValidator;
+import com.google.jplurk.validator.TrueFalseLiteralValidator;
 import com.google.jplurk.validator.Validation;
 import com.google.jplurk.validator.Validation.Validator;
 
@@ -88,6 +89,15 @@ public final class PlurkActionSheet {
 	public HttpUriRequest becomeFan(Map<String, String> params)
 			throws PlurkException {
 		return prepare("becomeFan", params);
+	}
+	
+	@Meta(uri = "/FriendsFans/setFollowing", require = { "api_key", "user_id", "follow" })
+	@Validation( {
+		@Validator(field = "follow", validator = TrueFalseLiteralValidator.class),
+		@Validator(field = "user_id", validator = NonNegativeIntegerValidator.class) })
+	public HttpUriRequest setFollowing(Map<String, String> params)
+			throws PlurkException {
+		return prepare("setFollowing", params);
 	}
 
 	@Meta(uri = "/Users/login", require = { "api_key", "username", "password" })

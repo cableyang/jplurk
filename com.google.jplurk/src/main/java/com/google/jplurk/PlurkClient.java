@@ -408,6 +408,23 @@ public class PlurkClient {
 		}
 		return null;
 	}
+	
+	public JSONObject setFollowing(int userId, boolean follow){
+		try {
+			Boolean isFollow = follow;
+			HttpGet method = (HttpGet) PlurkActionSheet.getInstance().setFollowing(
+				config.createParamMap()
+					.k("user_id").v("" + userId)
+					.k("follow").v(isFollow.toString())
+					.getMap());
+			return new JSONObject(execute(method));
+		} catch (PlurkException e) {
+			logger.error(e.getMessage(), e);
+		} catch (JSONException e) {
+			logger.error(e.getMessage(), e);
+		}
+		return null;
+	}
 
     // <editor-fold defaultstate="collapsed" desc="/API/Timeline/getPlurk">
     /**
@@ -873,7 +890,7 @@ public class PlurkClient {
 //        186567616 : ok
 //        System.out.println(pc.uploadPicture(new File("C:/images/image.jpg")));
 
-        System.out.println(pc.updatePicture(new File("C:/Users/qrtt1/Desktop/4932792-big2.jpg")));
+//        System.out.println(pc.updatePicture(new File("C:/Users/qrtt1/Desktop/4932792-big2.jpg")));
 //        JSONObject oo = pc.plurkAdd("測試 jPlurk 編輯 plruk 功能！！", Qualifier.IS, NoComments.False);
 //        JSONObject oo = pc.plurkAdd("hmmmm", Qualifier.SAYS);
 //        System.out.println(oo);
