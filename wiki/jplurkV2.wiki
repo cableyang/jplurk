@@ -106,8 +106,8 @@ client.getUnreadPlurks();
 == Polling ==
 
 || *功能* || *函式名稱* || *誰在實作* || *狀態* || *備註* ||
-|| /API/Polling/getPlurks || qrtt1 || 完成 ||  || ||
-|| /API/Polling/getUnreadCount || qrtt1 || 完成 ||  || ||
+|| /API/Polling/getPlurks || getPollingPlurks || qrtt1 || 完成 ||  ||
+|| /API/Polling/getUnreadCount || getUnreadCount || qrtt1 || 完成 ||  ||
 
 == Timeline ==
 
@@ -308,8 +308,8 @@ Please refer to [Using_Proxy_V2] page.
 == Polling ==
 
 || *Service* || *Method* || *Owner* || *State* || *Comments* ||
-|| /API/Polling/getPlurks || qrtt1 || Done ||  || ||
-|| /API/Polling/getUnreadCount || qrtt1 || Done ||  || ||
+|| /API/Polling/getPlurks || getPollingPlurks || qrtt1 || Done ||  ||
+|| /API/Polling/getUnreadCount || getUnreadCount || qrtt1 || Done ||  ||
 
 == Timeline ==
 
