@@ -15,7 +15,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.google.jplurk.action.Headers.Header;
-import com.google.jplurk.action.Validation.Validator;
 import com.google.jplurk.exception.PlurkException;
 import com.google.jplurk.validator.EmailValidator;
 import com.google.jplurk.validator.IDListValidator;
@@ -24,6 +23,8 @@ import com.google.jplurk.validator.NonNegativeIntegerValidator;
 import com.google.jplurk.validator.PositiveIntegerValidator;
 import com.google.jplurk.validator.QualifierValidator;
 import com.google.jplurk.validator.TimeOffsetValidator;
+import com.google.jplurk.validator.Validation;
+import com.google.jplurk.validator.Validation.Validator;
 
 public final class PlurkActionSheet {
 
