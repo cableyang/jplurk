@@ -229,35 +229,73 @@ client.getUnreadPlurks();
 
 Please refer to [Using_Proxy_V2] page.
 
+
+
 = State of Plurk API Implementation =
 
+== Users ==
+
 || *Service* || *Method* || *Owner* || *State* || *Common* ||
-|| /API/Alerts/addAllAsFriends || addAllAsFriends || qrtt1 || Done || `@since` rev240 ||
-|| /API/!FriendsFans/getFriendsByOffset || getFriendsByOffset || qrtt1 || Done || `@since` rev320 ||
-|| /API/!FriendsFans/getFansByOffset || getFansByOffset || qrtt1 || Done || `@since` rev320 ||
-|| /API/!FriendsFans/getFollowingByOffset || getFollowingByOffset || qrtt1 || Done || `@since` rev320 ||
-|| /API/!FriendsFans/becomeFriend || becomeFriend || qrtt1 || Done || `@since` rev320 ||
-|| /API/!FriendsFans/removeAsFriend || removeAsFriend || qrtt1 || Done || `@since` rev320 ||
-|| /API/!FriendsFans/becomeFan || becomeFan || qrtt1 || Done || `@since` rev320 ||
-|| /API/Users/login || login || qrtt1 || Done || `@since` rev240 ||
 || /API/Users/register || register || Askeing || Done || Opt Done by A, `@since` rev240 ||
-|| /API/Users/update || update || qrtt1 || Done || `@since` rev320 ||
-|| /API/Users/updatePicture || updatePicture || qrtt1 || Done || `@since` rev320 ||
+|| /API/Users/login || login || qrtt1 || Done || `@since` rev240 ||
+|| /API/Users/updatePicture || updatePicture || qrtt1 || Done || ||
+|| /API/Users/update || update || qrtt1 || Done || ||
+
+== Polling ==
+
+|| *Service* || *Method* || *Owner* || *State* || *Common* ||
+
+== Timeline ==
+
+|| *Service* || *Method* || *Owner* || *State* || *Common* ||
 || /API/Timeline/getPlurk || getPlurk || Askeing || Done || `@since` rev240 ||
-|| /API/Timeline/getPlurks || getPlurks || qrtt1 || Done || `@since` rev320 ||
-|| /API/Timeline/plurkAdd || plurkAdd || qrtt1 || Done || Opt Done by A, `@since` rev240 ||
+|| /API/Timeline/getPlurks || getPlurks || qrtt1 || Done || ||
 || /API/Timeline/getUnreadPlurks || getUnreadPlurks || qrtt1 || Done || Opt Done by A, `@since` rev240 ||
-|| /API/Timeline/plurkDelete || plurkDelete || Askeing || Done || `@since` rev240 ||
-|| /API/Timeline/plurkEdit || plurkEdit || Askeing || Done || `@since` rev240 ||
-|| /API/Timeline/markAsRead || markAsRead || qrtt1  || Done || `@since` rev240 ||
 || /API/Timeline/mutePlurks || mutePlurks  || qrtt1  || Done || `@since` rev240 ||
 || /API/Timeline/unmutePlurks || unmutePlurks  || qrtt1  || Done || `@since` rev240 ||
+|| /API/Timeline/markAsRead || markAsRead || qrtt1  || Done || `@since` rev240 ||
+|| /API/Timeline/plurkAdd || plurkAdd || qrtt1 || Done || Opt Done by A, `@since` rev240 ||
 || /API/Timeline/uploadPicture|| uploadPicture || qrtt1  || Done || `@since` rev240 ||
-|| /API/Responses/responseAdd || responseAdd || qrtt1 || Done || `@since` rev240 ||
+|| /API/Timeline/plurkDelete || plurkDelete || Askeing || Done || `@since` rev240 ||
+|| /API/Timeline/plurkEdit || plurkEdit || Askeing || Done || `@since` rev240 ||
+
+== Responses ==
+
+|| *Service* || *Method* || *Owner* || *State* || *Common* ||
 || /API/Responses/get || responseGet || qrtt1 || Done || `@since` rev240 ||
+|| /API/Responses/responseAdd || responseAdd || qrtt1 || Done || `@since` rev240 ||
 || /API/Responses/responseDelete || responseDelete || Askeing || Done || `@since` rev240 ||
-|| /API/Profile/getOwnProfile || getOwnProfile || qrtt1 || Done || `@since` rev320 ||
-|| /API/Profile/getPublicProfile || getPublicProfile || qrtt1 || Done || `@since` rev320 ||
+
+== Profile ==
+
+|| *Service* || *Method* || *Owner* || *State* || *Common* ||
+|| /API/Profile/getOwnProfile || getOwnProfile || qrtt1 || Done || ||
+|| /API/Profile/getPublicProfile || getPublicProfile || qrtt1 || Done || ||
+
+== Friends and fans ==
+
+|| *Service* || *Method* || *Owner* || *State* || *Common* ||
+|| /API/!FriendsFans/getFriendsByOffset || getFriendsByOffset || qrtt1 || Done ||   ||
+|| /API/!FriendsFans/getFansByOffset || getFansByOffset || qrtt1 || Done ||   ||
+|| /API/!FriendsFans/getFollowingByOffset || getFollowingByOffset || qrtt1 || Done || ||
+|| /API/!FriendsFans/becomeFriend || becomeFriend || qrtt1 || Done || ||
+|| /API/!FriendsFans/removeAsFriend || removeAsFriend || qrtt1 || Done || ||
+|| /API/!FriendsFans/becomeFan || becomeFan || qrtt1 || Done || ||
+|| /API/!FriendsFans/setFollowing ||  ||  ||  || ||
+|| /API/!FriendsFans/getCompletion ||  ||  ||  || ||
+
+== Alerts ==
+
+|| *Service* || *Method* || *Owner* || *State* || *Common* ||
+|| /API/Alerts/getActive ||  ||  ||  || ||
+|| /API/Alerts/getHistory ||  ||  ||  || ||
+|| /API/Alerts/addAsFan ||  ||  ||  || ||
+|| /API/Alerts/addAllAsFan ||  ||  ||  || ||
+|| /API/Alerts/addAllAsFriends || addAllAsFriends || qrtt1 || Done || `@since` rev240 ||
+|| /API/Alerts/addAsFriend ||  ||  ||  || ||
+|| /API/Alerts/denyFriendship ||  ||  ||  || ||
+|| /API/Alerts/removeNotification ||  ||  ||  || ||
+
 
 Java API Doc is growing gradually, too.
 
