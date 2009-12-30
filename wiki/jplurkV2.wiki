@@ -63,11 +63,6 @@ public class PlurkIt {
                 JOptionPane.showInputDialog("id"),
                 JOptionPane.showInputDialog("password"));
 
-        if(!ret.isSuccess()){
-            System.err.println("login failure: " + ret);
-            System.exit(0);
-        }
-
         ret = client.plurkAdd(
             "Plurk It with jPlurk http://code.google.com/p/jplurk/wiki/jplurkV2",
             Qualifier.SHARES);
@@ -202,11 +197,6 @@ public class PlurkIt {
         JSONObject ret = client.login(
                 JOptionPane.showInputDialog("id"),
                 JOptionPane.showInputDialog("password"));
-
-        if(!ret.isSuccess()){
-            System.err.println("login failure: " + ret);
-            System.exit(0);
-        }
 
         ret = client.plurkAdd(
             "Plurk It with jPlurk http://code.google.com/p/jplurk/wiki/jplurkV2",
