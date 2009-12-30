@@ -244,6 +244,8 @@ Please refer to [Using_Proxy_V2] page.
 == Polling ==
 
 || *Service* || *Method* || *Owner* || *State* || *Comments* ||
+|| /API/Polling/getPlurks ||  ||  ||  || ||
+|| /API/Polling/getUnreadCount ||  ||  ||  || ||
 
 == Timeline ==
 
@@ -296,6 +298,31 @@ Please refer to [Using_Proxy_V2] page.
 || /API/Alerts/denyFriendship ||  ||  ||  || ||
 || /API/Alerts/removeNotification ||  ||  ||  || ||
 
+== Search ==
+
+|| *Service* || *Method* || *Owner* || *State* || *Comments* ||
+|| /API/!PlurkSearch/search ||  ||  ||  || ||
+|| /API/!UserSearch/search ||  ||  ||  || ||
+
+== Emoticons ==
+
+|| *Service* || *Method* || *Owner* || *State* || *Comments* ||
+|| /API/Emoticons/get ||  ||  ||  || ||
+
+== Blocks ==
+
+|| *Service* || *Method* || *Owner* || *State* || *Comments* ||
+|| /API/Blocks/get ||  ||  ||  || ||
+|| /API/Blocks/block ||  ||  ||  || ||
+|| /API/Blocks/unblock ||  ||  ||  || ||
+
+== Cliques ==
+
+|| *Service* || *Method* || *Owner* || *State* || *Comments* ||
+|| /API/Cliques/get_cliques ||  ||  ||  || ||
+|| /API/Cliques/create_clique ||  ||  ||  || ||
+|| /API/Cliques/get_clique ||  ||  ||  || ||
+|| /API/Cliques/rename_clique ||  ||  ||  || ||
 
 Java API Doc is growing gradually, too.
 
