@@ -886,6 +886,8 @@ public class PlurkClient {
 //        pc.getFansByOffset("3146394", 6666);
         System.out.println(pc.getOwnProfile());
         System.out.println(pc.getPublicProfile("3146394"));
+        System.out.println(pc.setFollowing(4932792, false));
+        
 //        186562865 , 186616350  : fail
 //        186567616 : ok
 //        System.out.println(pc.uploadPicture(new File("C:/images/image.jpg")));
