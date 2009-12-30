@@ -408,7 +408,7 @@ public class PlurkClient {
 		}
 		return null;
 	}
-	
+
 	public JSONObject setFollowing(int userId, boolean follow){
 		try {
 			Boolean isFollow = follow;
@@ -838,6 +838,32 @@ public class PlurkClient {
         return null;
     }
 
+    public JSONObject getPollingPlurks(DateTime offset, int limit){
+    	try {
+    		String _offset = (offset == null ? DateTime.now().timeOffset() : offset.timeOffset());
+			HttpGet method = (HttpGet) PlurkActionSheet.getInstance()
+				.getPollingPlurks(config.createParamMap().k("offset").v(_offset).k("limit").v("" + (limit <= 0 ? 20 : limit)).getMap());
+			return new JSONObject(execute(method));
+		} catch (PlurkException e) {
+			logger.error(e.getMessage(), e);
+		} catch (JSONException e) {
+			logger.error(e.getMessage(), e);
+		}
+		return null;
+    }
+
+    public JSONObject getPollingUnreadCount(){
+    	try {
+			HttpGet method = (HttpGet) PlurkActionSheet.getInstance().getPollingUnreadCount(config.createParamMap().getMap());
+			return new JSONObject(execute(method));
+		} catch (PlurkException e) {
+			logger.error(e.getMessage(), e);
+		} catch (JSONException e) {
+			logger.error(e.getMessage(), e);
+		}
+		return null;
+    }
+
     // <editor-fold defaultstate="collapsed" desc="Execution of HttpRequest">
     private String execute(HttpUriRequest method) throws PlurkException {
         if (logger.isInfoEnabled()) {
@@ -884,10 +910,12 @@ public class PlurkClient {
 //        System.out.println(pc.getFansByOffset("3146394", 0));
 //        System.out.println(pc.getFansByOffset("3146394", 10));
 //        pc.getFansByOffset("3146394", 6666);
-        System.out.println(pc.getOwnProfile());
-        System.out.println(pc.getPublicProfile("3146394"));
-        System.out.println(pc.setFollowing(4932792, false));
-        
+//        System.out.println(pc.getOwnProfile());
+//        System.out.println(pc.getPublicProfile("3146394"));
+//        System.out.println(pc.setFollowing(4932792, false));
+
+        System.out.println(pc.getPollingPlurks(null, 10));
+        System.out.println(pc.getPollingUnreadCount());
 //        186562865 , 186616350  : fail
 //        186567616 : ok
 //        System.out.println(pc.uploadPicture(new File("C:/images/image.jpg")));

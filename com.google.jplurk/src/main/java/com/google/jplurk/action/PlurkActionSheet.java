@@ -90,7 +90,7 @@ public final class PlurkActionSheet {
 			throws PlurkException {
 		return prepare("becomeFan", params);
 	}
-	
+
 	@Meta(uri = "/FriendsFans/setFollowing", require = { "api_key", "user_id", "follow" })
 	@Validation( {
 		@Validator(field = "follow", validator = TrueFalseLiteralValidator.class),
@@ -239,6 +239,20 @@ public final class PlurkActionSheet {
 	public HttpUriRequest getPublicProfile(Map<String, String> params)
 			throws PlurkException {
 		return prepare("getPublicProfile", params);
+	}
+
+	@Meta(uri = "/Polling/getPlurks", require = { "api_key", "offset" })
+	@Validation({
+		@Validator(field = "offset", validator = TimeOffsetValidator.class),
+		@Validator(field = "limit", validator = NonNegativeIntegerValidator.class)
+	})
+	public HttpUriRequest getPollingPlurks(Map<String, String> params) throws PlurkException{
+		return prepare("getPollingPlurks", params);
+	}
+
+	@Meta(uri = "/Polling/getUnreadCount", require = { "api_key"})
+	public HttpUriRequest getPollingUnreadCount(Map<String, String> params) throws PlurkException{
+		return prepare("getPollingUnreadCount", params);
 	}
 
 	private HttpUriRequest prepare(String methodName, Map<String, String> params) throws PlurkException {
