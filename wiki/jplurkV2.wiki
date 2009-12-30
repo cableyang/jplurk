@@ -95,33 +95,97 @@ client.getUnreadPlurks();
 
 = API 實作狀態表 =
 
+== Users ==
+
 || *功能* || *函式名稱* || *誰在實作* || *狀態* || *備註* ||
-|| /API/Alerts/addAllAsFriends || addAllAsFriends || qrtt1 || 完成 || `@since` rev240 ||
-|| /API/!FriendsFans/getFriendsByOffset || getFriendsByOffset || qrtt1 || 完成 || `@since` rev320 ||
-|| /API/!FriendsFans/getFansByOffset || getFansByOffset || qrtt1 || 完成 || `@since` rev320 ||
-|| /API/!FriendsFans/getFollowingByOffset || getFollowingByOffset || qrtt1 || 完成 || `@since` rev320 ||
-|| /API/!FriendsFans/becomeFriend || becomeFriend || qrtt1 || 完成 || `@since` rev320 ||
-|| /API/!FriendsFans/removeAsFriend || removeAsFriend || qrtt1 || 完成 || `@since` rev320 ||
-|| /API/!FriendsFans/becomeFan || becomeFan || qrtt1 || 完成 || `@since` rev320 ||
+|| /API/Users/register || register || Askeing || 完成 || Opt done by A, `@since` rev240 ||
 || /API/Users/login || login || qrtt1 || 完成 || `@since` rev240 ||
-|| /API/Users/register || register || Askeing || 完成 || Opt Done by A, `@since` rev240 ||
-|| /API/Users/update || update || qrtt1 || 完成 || `@since` rev320 ||
-|| /API/Users/updatePicture || updatePicture || qrtt1 || 完成 || `@since` rev320 ||
+|| /API/Users/updatePicture || updatePicture || qrtt1 || 完成 || ||
+|| /API/Users/update || update || qrtt1 || 完成 || ||
+
+== Polling ==
+
+|| *功能* || *函式名稱* || *誰在實作* || *狀態* || *備註* ||
+|| /API/Polling/getPlurks ||  ||  ||  || ||
+|| /API/Polling/getUnreadCount ||  ||  ||  || ||
+
+== Timeline ==
+
+|| *功能* || *函式名稱* || *誰在實作* || *狀態* || *備註* ||
 || /API/Timeline/getPlurk || getPlurk || Askeing || 完成 || `@since` rev240 ||
-|| /API/Timeline/getPlurks || getPlurks || qrtt1 || 完成 || `@since` rev320 ||
-|| /API/Timeline/plurkAdd || plurkAdd || qrtt1 || 完成 || Opt Done by A, `@since` rev240 ||
-|| /API/Timeline/getUnreadPlurks || getUnreadPlurks || qrtt1 || 完成 || Opt Done by A, `@since` rev240 ||
-|| /API/Timeline/plurkDelete || plurkDelete || Askeing || 完成 || `@since` rev240 ||
-|| /API/Timeline/plurkEdit || plurkEdit || Askeing || 完成 || `@since` rev240 ||
-|| /API/Timeline/markAsRead || markAsRead || qrtt1  || 完成 || `@since` rev240 ||
+|| /API/Timeline/getPlurks || getPlurks || qrtt1 || 完成 || ||
+|| /API/Timeline/getUnreadPlurks || getUnreadPlurks || qrtt1 || 完成 || Opt done by A, `@since` rev240 ||
 || /API/Timeline/mutePlurks || mutePlurks  || qrtt1  || 完成 || `@since` rev240 ||
 || /API/Timeline/unmutePlurks || unmutePlurks  || qrtt1  || 完成 || `@since` rev240 ||
+|| /API/Timeline/markAsRead || markAsRead || qrtt1  || 完成 || `@since` rev240 ||
+|| /API/Timeline/plurkAdd || plurkAdd || qrtt1 || 完成 || Opt done by A, `@since` rev240 ||
 || /API/Timeline/uploadPicture|| uploadPicture || qrtt1  || 完成 || `@since` rev240 ||
-|| /API/Responses/responseAdd || responseAdd || qrtt1 || 完成 || `@since` rev240 ||
+|| /API/Timeline/plurkDelete || plurkDelete || Askeing || 完成 || `@since` rev240 ||
+|| /API/Timeline/plurkEdit || plurkEdit || Askeing || 完成 || `@since` rev240 ||
+
+== Responses ==
+
+|| *功能* || *函式名稱* || *誰在實作* || *狀態* || *備註* ||
 || /API/Responses/get || responseGet || qrtt1 || 完成 || `@since` rev240 ||
+|| /API/Responses/responseAdd || responseAdd || qrtt1 || 完成 || `@since` rev240 ||
 || /API/Responses/responseDelete || responseDelete || Askeing || 完成 || `@since` rev240 ||
-|| /API/Profile/getOwnProfile || getOwnProfile || qrtt1 || 完成 || `@since` rev320 ||
-|| /API/Profile/getPublicProfile || getPublicProfile || qrtt1 || 完成 || `@since` rev320 ||
+
+== Profile ==
+
+|| *功能* || *函式名稱* || *誰在實作* || *狀態* || *備註* ||
+|| /API/Profile/getOwnProfile || getOwnProfile || qrtt1 || 完成 || ||
+|| /API/Profile/getPublicProfile || getPublicProfile || qrtt1 || 完成 || ||
+
+== Friends and fans ==
+
+|| *功能* || *函式名稱* || *誰在實作* || *狀態* || *備註* ||
+|| /API/!FriendsFans/getFriendsByOffset || getFriendsByOffset || qrtt1 || 完成 ||   ||
+|| /API/!FriendsFans/getFansByOffset || getFansByOffset || qrtt1 || 完成 ||   ||
+|| /API/!FriendsFans/getFollowingByOffset || getFollowingByOffset || qrtt1 || 完成 || ||
+|| /API/!FriendsFans/becomeFriend || becomeFriend || qrtt1 || 完成 || ||
+|| /API/!FriendsFans/removeAsFriend || removeAsFriend || qrtt1 || 完成 || ||
+|| /API/!FriendsFans/becomeFan || becomeFan || qrtt1 || 完成 || ||
+|| /API/!FriendsFans/setFollowing ||  ||  ||  || ||
+|| /API/!FriendsFans/getCompletion ||  ||  ||  || ||
+
+== Alerts ==
+
+|| *功能* || *函式名稱* || *誰在實作* || *狀態* || *備註* ||
+|| /API/Alerts/getActive ||  ||  ||  || ||
+|| /API/Alerts/getHistory ||  ||  ||  || ||
+|| /API/Alerts/addAsFan ||  ||  ||  || ||
+|| /API/Alerts/addAllAsFan ||  ||  ||  || ||
+|| /API/Alerts/addAllAsFriends || addAllAsFriends || qrtt1 || 完成 || `@since` rev240 ||
+|| /API/Alerts/addAsFriend ||  ||  ||  || ||
+|| /API/Alerts/denyFriendship ||  ||  ||  || ||
+|| /API/Alerts/removeNotification ||  ||  ||  || ||
+
+== Search ==
+
+|| *功能* || *函式名稱* || *誰在實作* || *狀態* || *備註* ||
+|| /API/!PlurkSearch/search ||  ||  ||  || ||
+|| /API/!UserSearch/search ||  ||  ||  || ||
+
+== Emoticons ==
+
+|| *功能* || *函式名稱* || *誰在實作* || *狀態* || *備註* ||
+|| /API/Emoticons/get ||  ||  ||  || ||
+
+== Blocks ==
+
+|| *功能* || *函式名稱* || *誰在實作* || *狀態* || *備註* ||
+|| /API/Blocks/get ||  ||  ||  || ||
+|| /API/Blocks/block ||  ||  ||  || ||
+|| /API/Blocks/unblock ||  ||  ||  || ||
+
+== Cliques ==
+
+|| *功能* || *函式名稱* || *誰在實作* || *狀態* || *備註* ||
+|| /API/Cliques/get_cliques ||  ||  ||  || ||
+|| /API/Cliques/create_clique ||  ||  ||  || ||
+|| /API/Cliques/get_clique ||  ||  ||  || ||
+|| /API/Cliques/rename_clique ||  ||  ||  || ||
+
 
 Java API Doc 也正在持續的成長中。
 
