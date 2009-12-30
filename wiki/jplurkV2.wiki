@@ -235,7 +235,7 @@ Please refer to [Using_Proxy_V2] page.
 
 == Users ==
 
-|| *Service* || *Method* || *Owner* || *State* || *Common* ||
+|| *Service* || *Method* || *Owner* || *State* || *Comments* ||
 || /API/Users/register || register || Askeing || Done || Opt Done by A, `@since` rev240 ||
 || /API/Users/login || login || qrtt1 || Done || `@since` rev240 ||
 || /API/Users/updatePicture || updatePicture || qrtt1 || Done || ||
@@ -243,11 +243,11 @@ Please refer to [Using_Proxy_V2] page.
 
 == Polling ==
 
-|| *Service* || *Method* || *Owner* || *State* || *Common* ||
+|| *Service* || *Method* || *Owner* || *State* || *Comments* ||
 
 == Timeline ==
 
-|| *Service* || *Method* || *Owner* || *State* || *Common* ||
+|| *Service* || *Method* || *Owner* || *State* || *Comments* ||
 || /API/Timeline/getPlurk || getPlurk || Askeing || Done || `@since` rev240 ||
 || /API/Timeline/getPlurks || getPlurks || qrtt1 || Done || ||
 || /API/Timeline/getUnreadPlurks || getUnreadPlurks || qrtt1 || Done || Opt Done by A, `@since` rev240 ||
@@ -261,20 +261,20 @@ Please refer to [Using_Proxy_V2] page.
 
 == Responses ==
 
-|| *Service* || *Method* || *Owner* || *State* || *Common* ||
+|| *Service* || *Method* || *Owner* || *State* || *Comments* ||
 || /API/Responses/get || responseGet || qrtt1 || Done || `@since` rev240 ||
 || /API/Responses/responseAdd || responseAdd || qrtt1 || Done || `@since` rev240 ||
 || /API/Responses/responseDelete || responseDelete || Askeing || Done || `@since` rev240 ||
 
 == Profile ==
 
-|| *Service* || *Method* || *Owner* || *State* || *Common* ||
+|| *Service* || *Method* || *Owner* || *State* || *Comments* ||
 || /API/Profile/getOwnProfile || getOwnProfile || qrtt1 || Done || ||
 || /API/Profile/getPublicProfile || getPublicProfile || qrtt1 || Done || ||
 
 == Friends and fans ==
 
-|| *Service* || *Method* || *Owner* || *State* || *Common* ||
+|| *Service* || *Method* || *Owner* || *State* || *Comments* ||
 || /API/!FriendsFans/getFriendsByOffset || getFriendsByOffset || qrtt1 || Done ||   ||
 || /API/!FriendsFans/getFansByOffset || getFansByOffset || qrtt1 || Done ||   ||
 || /API/!FriendsFans/getFollowingByOffset || getFollowingByOffset || qrtt1 || Done || ||
@@ -286,7 +286,7 @@ Please refer to [Using_Proxy_V2] page.
 
 == Alerts ==
 
-|| *Service* || *Method* || *Owner* || *State* || *Common* ||
+|| *Service* || *Method* || *Owner* || *State* || *Comments* ||
 || /API/Alerts/getActive ||  ||  ||  || ||
 || /API/Alerts/getHistory ||  ||  ||  || ||
 || /API/Alerts/addAsFan ||  ||  ||  || ||
