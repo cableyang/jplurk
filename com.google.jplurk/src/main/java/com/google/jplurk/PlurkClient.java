@@ -812,7 +812,7 @@ public class PlurkClient {
     // <editor-fold defaultstate="collapsed" desc="/API/Alerts/getHistory">
     /**
      * /API/Alerts/getHistory <br />
-     * Return a JSON list of current active alerts. 
+     * Return a JSON list of past 30 alerts.  
      * @return
      */
     public JSONObject getHistory(){
@@ -828,10 +828,67 @@ public class PlurkClient {
     }
     // </editor-fold>
     
+    // <editor-fold defaultstate="collapsed" desc="/API/Alerts/addAsFan">
+    /**
+     * /API/Alerts/addAsFan <br />
+     * @param userId Accept user_id as fan. 
+     * @return
+     */
+    public JSONObject addAsFan(int userId){
+        try {
+            HttpGet method = (HttpGet) PlurkActionSheet.getInstance().addAsFan(config.createParamMap().k("").v("user_id" + userId).getMap());
+            return new JSONObject(execute(method));
+        } catch (PlurkException e) {
+            logger.error(e.getMessage(), e);
+        } catch (JSONException e) {
+            logger.error(e.getMessage(), e);
+        }
+        return null;    	
+    }
+    // </editor-fold>
+    
+    // <editor-fold defaultstate="collapsed" desc="/API/Alerts/addAsFriend">
+    /**
+     * /API/Alerts/addAsFriend <br />
+     * @param userId Accept user_id as friend. 
+     * @return
+     */
+    public JSONObject addAsFriend(int userId){
+        try {
+            HttpGet method = (HttpGet) PlurkActionSheet.getInstance().addAsFriend(config.createParamMap().k("").v("user_id" + userId).getMap());
+            return new JSONObject(execute(method));
+        } catch (PlurkException e) {
+            logger.error(e.getMessage(), e);
+        } catch (JSONException e) {
+            logger.error(e.getMessage(), e);
+        }
+        return null;    	
+    }
+    // </editor-fold>
+    
+    // <editor-fold defaultstate="collapsed" desc="/API/Alerts/addAllAsFan">
+    /**
+     * /API/Alerts/addAllAsFan <br />
+     * Accept all friendship requests as fans
+     * @return {"success_text": "ok"} when request success, otherwise null
+     */
+    public JSONObject addAllAsFan() {
+        try {
+            HttpGet method = (HttpGet) PlurkActionSheet.getInstance().addAllAsFan(config.createParamMap().getMap());
+            return new JSONObject(execute(method));
+        } catch (PlurkException e) {
+            logger.error(e.getMessage(), e);
+        } catch (JSONException e) {
+            logger.error(e.getMessage(), e);
+        }
+        return null;
+    }
+    // </editor-fold>
+    
     // <editor-fold defaultstate="collapsed" desc="/API/Alerts/addAllAsFriends">
     /**
      * /API/Alerts/addAllAsFriends <br />
-     * approval all friend requests
+     * Accept all friendship requests as friends. 
      * @return {"success_text": "ok"} when request success, otherwise null
      */
     public JSONObject addAllAsFriends() {
