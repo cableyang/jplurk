@@ -272,6 +272,11 @@ public final class PlurkActionSheet {
 		return prepare("searchUser", params);
 	}
 
+        @Meta(uri = "/Emoticons/get", require= {} )
+        public HttpUriRequest getEmoticons(Map<String, String> params) throws PlurkException{
+		return prepare("getEmoticons", params);
+	}
+
 	private HttpUriRequest prepare(String methodName, Map<String, String> params) throws PlurkException {
 		Method method = null;
 		try {

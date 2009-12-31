@@ -986,6 +986,30 @@ public class PlurkClient {
     }
     // </editor-fold>
 
+    // <editor-fold defaultstate="collapsed" desc="/API/Emoticons/get">
+    /**
+     * /API/Emoticons/get <br/>
+     * This call returns a JSON object that looks like: <br/>
+     * {"karma": {"0": [[":-))", "http:\/\/statics.plurk.com\/XXX.gif"], ...], ...},
+     * "recuited": {"10": [["(bigeyes)", "http:\/\/statics.plurk.com\/XXX.gif"], ...], ...} }  <br/>
+     * emoticons["karma"][25] denotes that the user has to have karma over 25 to use these emoticons.  <br/>
+     * emoticons["recuited"][10] means that the user has to have user.recuited >= 10 to use these emoticons. <br/>
+     * It's important to check for these things on the client as well, since the emoticon levels are checked in the models.
+     * @return
+     */
+    public JSONObject getEmoticons() {
+        try {
+            HttpGet method = (HttpGet) PlurkActionSheet.getInstance().getEmoticons(config.createParamMap().getMap());
+            return new JSONObject(execute(method));
+        } catch (PlurkException e) {
+            logger.error(e.getMessage(), e);
+        } catch (JSONException e) {
+            logger.error(e.getMessage(), e);
+        }
+        return null;
+    }
+    // </editor-fold>
+
     // <editor-fold defaultstate="collapsed" desc="Execution of HttpRequest">
     private String execute(HttpUriRequest method) throws PlurkException {
         if (logger.isInfoEnabled()) {
@@ -1080,5 +1104,6 @@ public class PlurkClient {
          * */
 //        System.out.println(pc.searchUser("qrtt1"));
 
+        System.out.println(pc.getEmoticons());
     }
 }
