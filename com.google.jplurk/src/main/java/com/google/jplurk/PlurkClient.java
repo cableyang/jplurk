@@ -831,7 +831,8 @@ public class PlurkClient {
     // <editor-fold defaultstate="collapsed" desc="/API/Alerts/addAsFan">
     /**
      * /API/Alerts/addAsFan <br />
-     * @param userId Accept user_id as fan. 
+     * Accept user_id as fan.
+     * @param userId The user_id that has asked for friendship. 
      * @return
      */
     public JSONObject addAsFan(int userId){
@@ -850,7 +851,8 @@ public class PlurkClient {
     // <editor-fold defaultstate="collapsed" desc="/API/Alerts/addAsFriend">
     /**
      * /API/Alerts/addAsFriend <br />
-     * @param userId Accept user_id as friend. 
+     * Accept user_id as friend. 
+     * @param userId The user_id that has asked for friendship.
      * @return
      */
     public JSONObject addAsFriend(int userId){
@@ -904,6 +906,46 @@ public class PlurkClient {
     }
     // </editor-fold>
 
+    // <editor-fold defaultstate="collapsed" desc="/API/Alerts/denyFriendship">
+    /**
+     * /API/Alerts/denyFriendship <br />
+     * Deny friendship to user_id. 
+     * @param The user_id that has asked for friendship. 
+     * @return
+     */
+    public JSONObject denyFriendship(int userId){
+        try {
+            HttpGet method = (HttpGet) PlurkActionSheet.getInstance().denyFriendship(config.createParamMap().k("").v("user_id" + userId).getMap());
+            return new JSONObject(execute(method));
+        } catch (PlurkException e) {
+            logger.error(e.getMessage(), e);
+        } catch (JSONException e) {
+            logger.error(e.getMessage(), e);
+        }
+        return null;    	
+    }
+    // </editor-fold>
+    
+    // <editor-fold defaultstate="collapsed" desc="/API/Alerts/removeNotification">
+    /**
+     * /API/Alerts/removeNotification <br />
+     * Remove notification to user with id user_id. 
+     * @param userId The user_id that the current user has requested friendship for.
+     * @return
+     */
+    public JSONObject removeNotification(int userId){
+        try {
+            HttpGet method = (HttpGet) PlurkActionSheet.getInstance().removeNotification(config.createParamMap().k("").v("user_id" + userId).getMap());
+            return new JSONObject(execute(method));
+        } catch (PlurkException e) {
+            logger.error(e.getMessage(), e);
+        } catch (JSONException e) {
+            logger.error(e.getMessage(), e);
+        }
+        return null;    	
+    }
+    // </editor-fold>   
+    
     // <editor-fold defaultstate="collapsed" desc="/API/Profile/getOwnProfile">
     /**
      * /API/Profile/getOwnProfile
