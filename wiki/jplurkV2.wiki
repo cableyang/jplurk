@@ -181,10 +181,13 @@ client.getUnreadPlurks();
 == Cliques ==
 
 || *功能* || *函式名稱* || *誰在實作* || *狀態* || *備註* ||
-|| /API/Cliques/get_cliques ||  ||  ||  || ||
-|| /API/Cliques/create_clique ||  ||  ||  || ||
-|| /API/Cliques/get_clique ||  ||  ||  || ||
-|| /API/Cliques/rename_clique ||  ||  ||  || ||
+|| /API/Cliques/get_cliques || getCliques || Askeing || 完成 || ||
+|| /API/Cliques/create_clique || createClique || Askeing || 完成 || ||
+|| /API/Cliques/get_clique || getClique || Askeing || 完成 || ||
+|| /API/Cliques/rename_clique || renameClique || Askeing || 完成 || ||
+|| /API/Cliques/delete_clique || deleteClique || Askeing || 完成 || ||
+|| /API/Cliques/add || addToClique || Askeing || 完成 || ||
+|| /API/Cliques/remove || removeFromClique || Askeing || 完成 || ||
 
 
 Java API Doc 也正在持續的成長中。
@@ -383,10 +386,14 @@ Please refer to [Using_Proxy_V2] page.
 == Cliques ==
 
 || *Service* || *Method* || *Owner* || *State* || *Comments* ||
-|| /API/Cliques/get_cliques ||  ||  ||  || ||
-|| /API/Cliques/create_clique ||  ||  ||  || ||
-|| /API/Cliques/get_clique ||  ||  ||  || ||
-|| /API/Cliques/rename_clique ||  ||  ||  || ||
+|| /API/Cliques/get_cliques || getCliques || Askeing || Done || ||
+|| /API/Cliques/create_clique || createClique || Askeing || Done || ||
+|| /API/Cliques/get_clique || getClique || Askeing || Done || ||
+|| /API/Cliques/rename_clique || renameClique || Askeing || Done || ||
+|| /API/Cliques/delete_clique || deleteClique || Askeing || Done || ||
+|| /API/Cliques/add || addToClique || Askeing || Done || ||
+|| /API/Cliques/remove || removeFromClique || Askeing || Done || ||
+
 
 Java API Doc is growing gradually, too.
 
