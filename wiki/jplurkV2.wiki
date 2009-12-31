@@ -174,9 +174,9 @@ client.getUnreadPlurks();
 == Blocks ==
 
 || *功能* || *函式名稱* || *誰在實作* || *狀態* || *備註* ||
-|| /API/Blocks/get ||  ||  ||  || ||
-|| /API/Blocks/block ||  ||  ||  || ||
-|| /API/Blocks/unblock ||  ||  ||  || ||
+|| /API/Blocks/get || getBlocks || Askeing || 完成 || ||
+|| /API/Blocks/block || block || Askeing || 完成 || ||
+|| /API/Blocks/unblock || unblock || Askeing || 完成 || ||
 
 == Cliques ==
 
@@ -376,9 +376,10 @@ Please refer to [Using_Proxy_V2] page.
 == Blocks ==
 
 || *Service* || *Method* || *Owner* || *State* || *Comments* ||
-|| /API/Blocks/get ||  ||  ||  || ||
-|| /API/Blocks/block ||  ||  ||  || ||
-|| /API/Blocks/unblock ||  ||  ||  || ||
+|| /API/Blocks/get || getBlocks || Askeing || Done || ||
+|| /API/Blocks/block || block || Askeing || Done || ||
+|| /API/Blocks/unblock || unblock || Askeing || Done || ||
+
 
 == Cliques ==
 
