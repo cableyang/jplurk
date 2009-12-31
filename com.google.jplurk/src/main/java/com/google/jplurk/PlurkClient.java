@@ -1217,6 +1217,156 @@ public class PlurkClient {
     }
     // </editor-fold>
 
+    // <editor-fold defaultstate="collapsed" desc="/API/Cliques/get_cliques">
+    /**
+     * /API/Cliques/get_cliques
+     * @return a JSON list of users current cliques
+     */
+    public JSONArray getCliques() {
+        try {
+            HttpGet method = (HttpGet) PlurkActionSheet.getInstance().getCliques(config.createParamMap().getMap());
+            return new JSONArray(execute(method));
+        } catch (PlurkException e) {
+            logger.error(e.getMessage(), e);
+        } catch (JSONException e) {
+            logger.error(e.getMessage(), e);
+        }
+        return null;
+    }
+    // </editor-fold>
+
+    // <editor-fold defaultstate="collapsed" desc="/API/Cliques/create_clique">
+    /**
+     * /API/Cliques/create_clique <br/>
+     * Create the new clique.
+     * @param cliqueName The name of the new clique
+     * @return
+     */
+    public JSONObject createClique(String cliqueName) {
+        try {
+            HttpGet method = (HttpGet) PlurkActionSheet.getInstance().createClique(config.createParamMap()
+                    .k("clique_name").v(cliqueName).getMap());
+            return new JSONObject(execute(method));
+        } catch (PlurkException e) {
+            logger.error(e.getMessage(), e);
+        } catch (JSONException e) {
+            logger.error(e.getMessage(), e);
+        }
+        return null;
+    }
+    // </editor-fold>
+
+    // <editor-fold defaultstate="collapsed" desc="/API/Cliques/get_clique">
+    /**
+     * /API/Cliques/get_clique <br/>
+     * Get the user in the clique.
+     * @param cliqueName
+     * @return Returns the users in the clique, e.g. [{"display_name": "amix3", "gender": 0, "nick_name": "amix", "has_profile_image": 1, "id": 1, "avatar": null}]
+     */
+    public JSONArray getClique(String cliqueName) {
+        try {
+            HttpGet method = (HttpGet) PlurkActionSheet.getInstance().getClique(config.createParamMap()
+                    .k("clique_name").v(cliqueName).getMap());
+            return new JSONArray(execute(method));
+        } catch (PlurkException e) {
+            logger.error(e.getMessage(), e);
+        } catch (JSONException e) {
+            logger.error(e.getMessage(), e);
+        }
+        return null;
+    }
+    // </editor-fold>
+
+    // <editor-fold defaultstate="collapsed" desc="/API/Cliques/renameClique">
+    /**
+     * /API/Cliques/renameClique <br/>
+     * Rename the clique.
+     * @param cliqueName
+     * @param newName
+     * @return
+     */
+    public JSONObject renameClique(String cliqueName, String newName) {
+        try {
+            HttpGet method = (HttpGet) PlurkActionSheet.getInstance().renameClique(config.createParamMap()
+                    .k("clique_name").v(cliqueName)
+                    .k("new_name").v(newName).getMap());
+            return new JSONObject(execute(method));
+        } catch (PlurkException e) {
+            logger.error(e.getMessage(), e);
+        } catch (JSONException e) {
+            logger.error(e.getMessage(), e);
+        }
+        return null;
+    }
+    // </editor-fold>
+
+    // <editor-fold defaultstate="collapsed" desc="/API/Cliques/delete_clique">
+    /**
+     * /API/Cliques/delete_clique <br/>
+     * Delete the clique.
+     * @param cliqueName
+     * @return
+     */
+    public JSONObject deleteClique(String cliqueName) {
+        try {
+            HttpGet method = (HttpGet) PlurkActionSheet.getInstance().deleteClique(config.createParamMap()
+                    .k("clique_name").v(cliqueName).getMap());
+            return new JSONObject(execute(method));
+        } catch (PlurkException e) {
+            logger.error(e.getMessage(), e);
+        } catch (JSONException e) {
+            logger.error(e.getMessage(), e);
+        }
+        return null;
+    }
+    // </editor-fold>
+
+    // <editor-fold defaultstate="collapsed" desc="/API/Cliques/add">
+    /**
+     * /API/Cliques/add <br/>
+     * Add the user into the clique.
+     * @param cliqueName
+     * @param userId
+     * @return
+     */
+    public JSONObject addToClique(String cliqueName, String userId) {
+        try {
+            HttpGet method = (HttpGet) PlurkActionSheet.getInstance().addToClique(config.createParamMap()
+                    .k("clique_name").v(cliqueName)
+                    .k("user_id").v(userId).getMap());
+            return new JSONObject(execute(method));
+        } catch (PlurkException e) {
+            logger.error(e.getMessage(), e);
+        } catch (JSONException e) {
+            logger.error(e.getMessage(), e);
+        }
+        return null;
+    }
+    // </editor-fold>
+
+    // <editor-fold defaultstate="collapsed" desc="/API/Cliques/remove">
+    /**
+     * /API/Cliques/remove <br/>
+     * Remove user from the clique
+     * @param cliqueName
+     * @param userId
+     * @return
+     */
+    public JSONObject removeFromClique(String cliqueName, String userId) {
+        try {
+            HttpGet method = (HttpGet) PlurkActionSheet.getInstance().removeFromClique(config.createParamMap()
+                    .k("clique_name").v(cliqueName)
+                    .k("user_id").v(userId).getMap());
+            return new JSONObject(execute(method));
+        } catch (PlurkException e) {
+            logger.error(e.getMessage(), e);
+        } catch (JSONException e) {
+            logger.error(e.getMessage(), e);
+        }
+        return null;
+    }
+    // </editor-fold>
+
     // <editor-fold defaultstate="collapsed" desc="Execution of HttpRequest">
     private String execute(HttpUriRequest method) throws PlurkException {
         if (logger.isInfoEnabled()) {
@@ -1312,7 +1462,19 @@ public class PlurkClient {
 //        System.out.println(pc.searchUser("qrtt1"));
 
 //        System.out.println(pc.getEmoticons());
-        System.out.println(pc.getBlocks());
-        System.out.println(pc.getBlocks(10));
+//        System.out.println(pc.getBlocks());
+//        System.out.println(pc.getBlocks(10));
+
+//        System.out.println(pc.createClique("jPlurkTest"));
+//        System.out.println(pc.getCliques());
+//        System.out.println(pc.addToClique("jPlurkTest", "3290989"));
+//        System.out.println(pc.getClique("jPlurkTest"));
+//        System.out.println(pc.removeFromClique("jPlurkTest", "3290989"));
+//        System.out.println(pc.getClique("jPlurkTest"));
+//        System.out.println(pc.renameClique("jPlurkTest", "TestJavaPlurkAPI"));
+//        System.out.println(pc.getCliques());
+//        System.out.println(pc.deleteClique("TestJavaPlurkAPI"));
+//        System.out.println(pc.getCliques());
+
     }
 }

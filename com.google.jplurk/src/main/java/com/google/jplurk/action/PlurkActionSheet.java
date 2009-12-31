@@ -340,45 +340,38 @@ public final class PlurkActionSheet {
 		return prepare("unblock", params);
 	}
 
-        ///API/Cliques/get_cliques
-        @Meta(uri = "Cliques/get_cliques", require= { "api_key" } )
+        @Meta(uri = "/Cliques/get_cliques", require= { "api_key" } )
         public HttpUriRequest getCliques(Map<String, String> params) throws PlurkException{
 		return prepare("getCliques", params);
 	}
 
-        ///API/Cliques/create_clique
-        @Meta(uri = "Cliques/create_clique", require= { "api_key", "clique_name" } )
+        @Meta(uri = "/Cliques/create_clique", require= { "api_key", "clique_name" } )
         public HttpUriRequest createClique(Map<String, String> params) throws PlurkException{
 		return prepare("createClique", params);
 	}
 
-        ///API/Cliques/get_clique
-        @Meta(uri = "Cliques/get_clique", require= { "api_key", "clique_name" } )
+        @Meta(uri = "/Cliques/get_clique", require= { "api_key", "clique_name" } )
         public HttpUriRequest getClique(Map<String, String> params) throws PlurkException{
 		return prepare("getClique", params);
 	}
 
-        ///API/Cliques/rename_clique
-        @Meta(uri = "Cliques/rename_clique", require= { "api_key", "clique_name", "new_name" } )
+        @Meta(uri = "/Cliques/rename_clique", require= { "api_key", "clique_name", "new_name" } )
         public HttpUriRequest renameClique(Map<String, String> params) throws PlurkException{
 		return prepare("renameClique", params);
 	}
 
-        ///API/Cliques/delete_clique
-        @Meta(uri = "Cliques/delete_clique", require= { "api_key", "clique_name" } )
+        @Meta(uri = "/Cliques/delete_clique", require= { "api_key", "clique_name" } )
         public HttpUriRequest deleteClique(Map<String, String> params) throws PlurkException{
 		return prepare("deleteClique", params);
 	}
 
-        ///API/Cliques/add
-        @Meta(uri = "Cliques/add", require= { "api_key", "clique_name", "user_id" } )
+        @Meta(uri = "/Cliques/add", require= { "api_key", "clique_name", "user_id" } )
         @Validation( {@Validator(field = "user_id", validator = NonNegativeIntegerValidator.class) })
         public HttpUriRequest addToClique(Map<String, String> params) throws PlurkException{
 		return prepare("addToClique", params);
 	}
 
-        ///API/Cliques/remove
-        @Meta(uri = "Cliques/remove", require= { "api_key", "clique_name", "user_id" } )
+        @Meta(uri = "/Cliques/remove", require= { "api_key", "clique_name", "user_id" } )
         @Validation( {@Validator(field = "user_id", validator = NonNegativeIntegerValidator.class) })
         public HttpUriRequest removeFromClique(Map<String, String> params) throws PlurkException{
 		return prepare("removeFromClique", params);
