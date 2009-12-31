@@ -49,15 +49,19 @@ public final class PlurkActionSheet {
 	}
 
 	@Meta(uri = "/FriendsFans/getFriendsByOffset", require = { "api_key", "user_id" })
-	@Validation({ @Validator(field = "offset", validator = NonNegativeIntegerValidator.class) })
+        @Validation({
+            @Validator(field = "user_id", validator = NonNegativeIntegerValidator.class),
+            @Validator(field = "offset", validator = NonNegativeIntegerValidator.class) })
 	public HttpUriRequest getFriendsByOffset(Map<String, String> params)
 			throws PlurkException {
 		return prepare("getFriendsByOffset", params);
 	}
 
 	@Meta(uri = "/FriendsFans/getFansByOffset", require = { "api_key", "user_id" })
-	@Validation({ @Validator(field = "offset", validator = NonNegativeIntegerValidator.class) })
-	public HttpUriRequest getFansByOffset(Map<String, String> params)
+	@Validation({
+            @Validator(field = "offset", validator = NonNegativeIntegerValidator.class),
+            @Validator(field = "user_id", validator = NonNegativeIntegerValidator.class) })
+        public HttpUriRequest getFansByOffset(Map<String, String> params)
 			throws PlurkException {
 		return prepare("getFansByOffset", params);
 	}
@@ -241,6 +245,7 @@ public final class PlurkActionSheet {
 	}
 
 	@Meta(uri = "/Profile/getPublicProfile", require = { "api_key", "user_id" })
+        @Validation( {@Validator(field = "user_id", validator = NonNegativeIntegerValidator.class) })
 	public HttpUriRequest getPublicProfile(Map<String, String> params)
 			throws PlurkException {
 		return prepare("getPublicProfile", params);
@@ -255,18 +260,18 @@ public final class PlurkActionSheet {
 		return prepare("getPollingPlurks", params);
 	}
 
-	@Meta(uri = "/Polling/getUnreadCount", require = { "api_key"})
+	@Meta(uri = "/Polling/getUnreadCount", require = { "api_key" })
 	public HttpUriRequest getPollingUnreadCount(Map<String, String> params) throws PlurkException{
 		return prepare("getPollingUnreadCount", params);
 	}
         
-        @Meta(uri = "/PlurkSearch/search", require= {"query"})
+        @Meta(uri = "/PlurkSearch/search", require= { "api_key", "query" })
         @Validation({ @Validator(field = "offset", validator = NonNegativeIntegerValidator.class) })
         public HttpUriRequest searchPlurk(Map<String, String> params) throws PlurkException{
 		return prepare("searchPlurk", params);
 	}
 
-        @Meta(uri = "/UserSearch/search", require= {"query"})
+        @Meta(uri = "/UserSearch/search", require= { "api_key", "query" })
         @Validation({ @Validator(field = "offset", validator = NonNegativeIntegerValidator.class) })
         public HttpUriRequest searchUser(Map<String, String> params) throws PlurkException{
 		return prepare("searchUser", params);
@@ -275,6 +280,22 @@ public final class PlurkActionSheet {
         @Meta(uri = "/Emoticons/get", require= {} )
         public HttpUriRequest getEmoticons(Map<String, String> params) throws PlurkException{
 		return prepare("getEmoticons", params);
+	}
+
+        @Meta(uri = "/Blocks/get", require= { "api_key" } )
+        @Validation({ @Validator(field = "offset", validator = NonNegativeIntegerValidator.class) })
+        public HttpUriRequest getBlocks(Map<String, String> params) throws PlurkException{
+		return prepare("getBlocks", params);
+	}
+        @Meta(uri = "/Blocks/block", require= { "api_key", "user_id" } )
+        @Validation( {@Validator(field = "user_id", validator = NonNegativeIntegerValidator.class) })
+        public HttpUriRequest block(Map<String, String> params) throws PlurkException{
+		return prepare("block", params);
+	}
+        @Meta(uri = "/Blocks/unblock", require= { "api_key", "user_id" } )
+        @Validation( {@Validator(field = "user_id", validator = NonNegativeIntegerValidator.class) })
+        public HttpUriRequest unblock(Map<String, String> params) throws PlurkException{
+		return prepare("unblock", params);
 	}
 
 	private HttpUriRequest prepare(String methodName, Map<String, String> params) throws PlurkException {
