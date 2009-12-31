@@ -6,7 +6,6 @@ import java.net.URLEncoder;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.apache.commons.beanutils.MethodUtils;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.methods.HttpRequestBase;
@@ -256,8 +255,14 @@ public final class PlurkActionSheet {
 	}
 
 	private HttpUriRequest prepare(String methodName, Map<String, String> params) throws PlurkException {
-		Method method = MethodUtils.getAccessibleMethod(PlurkActionSheet.class,
-				methodName, new Class[] { Map.class });
+		Method method = null;
+		try {
+			method = PlurkActionSheet.class.getMethod(methodName,
+					new Class<?>[] { Map.class });
+		} catch (Exception e) {
+			logger.error(e.getMessage(), e);
+		}
+
 		if (method == null) {
 			throw new PlurkException("can not find the method: " + methodName);
 		}
