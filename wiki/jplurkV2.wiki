@@ -151,14 +151,14 @@ client.getUnreadPlurks();
 == Alerts ==
 
 || *功能* || *函式名稱* || *誰在實作* || *狀態* || *備註* ||
-|| /API/Alerts/getActive || getActive || qrtt1 || 撰寫中 || ||
-|| /API/Alerts/getHistory || getHistory || qrtt1 || 撰寫中 || ||
-|| /API/Alerts/addAsFan || addAsFan ||  || qrtt1 || 撰寫中 ||
-|| /API/Alerts/addAllAsFan || addAllAsFan || qrtt1 || 撰寫中 || ||
+|| /API/Alerts/getActive || getActive || qrtt1 || 完成 || ||
+|| /API/Alerts/getHistory || getHistory || qrtt1 || 完成 || ||
+|| /API/Alerts/addAsFan || addAsFan || qrtt1 || 完成 || ||
+|| /API/Alerts/addAllAsFan || addAllAsFan || qrtt1 || 完成 || ||
 || /API/Alerts/addAllAsFriends || addAllAsFriends || qrtt1 || 完成 || `@since` rev240 ||
-|| /API/Alerts/addAsFriend || addAsFriend || qrtt1 || 撰寫中 || ||
-|| /API/Alerts/denyFriendship || denyFriendship || qrtt1 || 撰寫中 || ||
-|| /API/Alerts/removeNotification || removeNotification || qrtt1 || 撰寫中 || ||
+|| /API/Alerts/addAsFriend || addAsFriend || qrtt1 || 完成 || ||
+|| /API/Alerts/denyFriendship || denyFriendship || qrtt1 || 完成 || ||
+|| /API/Alerts/removeNotification || removeNotification || qrtt1 || 完成 || ||
 
 == Search ==
 
@@ -352,14 +352,14 @@ Please refer to [Using_Proxy_V2] page.
 
 == Alerts ==
 
-|| /API/Alerts/getActive || getActive || qrtt1 || Working || ||
-|| /API/Alerts/getHistory || getHistory || qrtt1 || Working || ||
-|| /API/Alerts/addAsFan || addAsFan ||  || qrtt1 || Working ||
-|| /API/Alerts/addAllAsFan || addAllAsFan || qrtt1 || Working || ||
+|| /API/Alerts/getActive || getActive || qrtt1 || Done || ||
+|| /API/Alerts/getHistory || getHistory || qrtt1 || Done || ||
+|| /API/Alerts/addAsFan || addAsFan || qrtt1 || Done || ||
+|| /API/Alerts/addAllAsFan || addAllAsFan || qrtt1 || Done || ||
 || /API/Alerts/addAllAsFriends || addAllAsFriends || qrtt1 || Done || `@since` rev240 ||
-|| /API/Alerts/addAsFriend || addAsFriend || qrtt1 || Working || ||
-|| /API/Alerts/denyFriendship || denyFriendship || qrtt1 || Working || ||
-|| /API/Alerts/removeNotification || removeNotification || qrtt1 || Working || ||
+|| /API/Alerts/addAsFriend || addAsFriend || qrtt1 || Done || ||
+|| /API/Alerts/denyFriendship || denyFriendship || qrtt1 || Done || ||
+|| /API/Alerts/removeNotification || removeNotification || qrtt1 || Done || ||
 
 == Search ==
 
