@@ -259,6 +259,18 @@ public final class PlurkActionSheet {
 	public HttpUriRequest getPollingUnreadCount(Map<String, String> params) throws PlurkException{
 		return prepare("getPollingUnreadCount", params);
 	}
+        
+        @Meta(uri = "/PlurkSearch/search", require= {"query"})
+        @Validation({ @Validator(field = "offset", validator = NonNegativeIntegerValidator.class) })
+        public HttpUriRequest searchPlurk(Map<String, String> params) throws PlurkException{
+		return prepare("searchPlurk", params);
+	}
+
+        @Meta(uri = "/UserSearch/search", require= {"query"})
+        @Validation({ @Validator(field = "offset", validator = NonNegativeIntegerValidator.class) })
+        public HttpUriRequest searchUser(Map<String, String> params) throws PlurkException{
+		return prepare("searchUser", params);
+	}
 
 	private HttpUriRequest prepare(String methodName, Map<String, String> params) throws PlurkException {
 		Method method = null;

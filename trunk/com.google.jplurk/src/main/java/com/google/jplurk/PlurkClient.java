@@ -922,6 +922,70 @@ public class PlurkClient {
     }
     // </editor-fold>
 
+    // <editor-fold defaultstate="collapsed" desc="/API/PlurkSearch/search">
+    /**
+     * /API/PlurkSearch/search <br/>
+     * Returns the latest 20 plurks on a search term.
+     * @param query
+     * @return
+     */
+    public JSONObject searchPlurk(String query) {
+        return searchPlurk(query, 0);
+    }
+
+    /**
+     * /API/PlurkSearch/search <br/>
+     * Returns the latest 20 plurks on a search term.
+     * @param query
+     * @param offset A plurk_id of the oldest Plurk in the last search result.
+     * @return
+     */
+    public JSONObject searchPlurk(String query, int offset) {
+        try {
+            HttpGet method = (HttpGet) PlurkActionSheet.getInstance().searchPlurk(
+                    config.createParamMap().k("query").v(query).k("offset").v("" + (offset < 0 ? 0 : offset)).getMap());
+            return new JSONObject(execute(method));
+        } catch (PlurkException e) {
+            logger.error(e.getMessage(), e);
+        } catch (JSONException e) {
+            logger.error(e.getMessage(), e);
+        }
+        return null;
+    }
+    // </editor-fold>
+
+    // <editor-fold defaultstate="collapsed" desc="/API/UserSearch/search">
+    /**
+     * /API/UserSearch/search <br/>
+     * Returns 10 users that match query, users are sorted by karma.
+     * @param query
+     * @return
+     */
+    public JSONObject searchUser(String query) {
+        return searchPlurk(query, 10);
+    }
+
+    /**
+     * /API/UserSearch/search <br/>
+     * Returns 10 users that match query, users are sorted by karma.
+     * @param query
+     * @param offset Page offset, like 10, 20, 30 etc. .
+     * @return
+     */
+    public JSONObject searchUser(String query, int offset) {
+        try {
+            HttpGet method = (HttpGet) PlurkActionSheet.getInstance().searchUser(
+                    config.createParamMap().k("query").v(query).k("offset").v("" + (offset < 0 ? 0 : offset)).getMap());
+            return new JSONObject(execute(method));
+        } catch (PlurkException e) {
+            logger.error(e.getMessage(), e);
+        } catch (JSONException e) {
+            logger.error(e.getMessage(), e);
+        }
+        return null;
+    }
+    // </editor-fold>
+
     // <editor-fold defaultstate="collapsed" desc="Execution of HttpRequest">
     private String execute(HttpUriRequest method) throws PlurkException {
         if (logger.isInfoEnabled()) {
@@ -955,12 +1019,12 @@ public class PlurkClient {
         JSONObject o = pc.login(JOptionPane.showInputDialog("id"), JOptionPane.showInputDialog("password"));
         System.out.println(o);
 
-//                JSONObject oRegister = pc.register(JOptionPane.showInputDialog("nick_name"),
-//                        JOptionPane.showInputDialog("full_name"),
-//                        JOptionPane.showInputDialog("password"),
-//                        JOptionPane.showInputDialog("gender"),
-//                        JOptionPane.showInputDialog("date_of_birth"));
-//                System.out.println(oRegister);
+//        JSONObject oRegister = pc.register(JOptionPane.showInputDialog("nick_name"),
+//                JOptionPane.showInputDialog("full_name"),
+//                JOptionPane.showInputDialog("password"),
+//                JOptionPane.showInputDialog("gender"),
+//                JOptionPane.showInputDialog("date_of_birth"));
+//        System.out.println(oRegister);
 
 //        System.out.println(pc.getPlurk("186562865"));
 //        System.out.println(pc.responseGet("186562865"));
@@ -972,8 +1036,8 @@ public class PlurkClient {
 //        System.out.println(pc.getPublicProfile("3146394"));
 //        System.out.println(pc.setFollowing(4932792, false));
 
-        System.out.println(pc.getPollingPlurks(null, 10));
-        System.out.println(pc.getPollingUnreadCount());
+//        System.out.println(pc.getPollingPlurks(null, 10));
+//        System.out.println(pc.getPollingUnreadCount());
 //        186562865 , 186616350  : fail
 //        186567616 : ok
 //        System.out.println(pc.uploadPicture(new File("C:/images/image.jpg")));
@@ -1009,6 +1073,12 @@ public class PlurkClient {
 //{"posted":"Sat, 19 Dec 2009 07:57:07 GMT","user_id":3290989,"content_raw":"測試刪除回應","lang":"en","content":"測試刪除回應","qualifier":"feels","id":825994340,"plurk_id":183532425}
 //        JSONObject ord = pc.responseDelete("183532425", "825994340");
 //        System.out.println(ord);
+
+//        System.out.println(pc.searchPlurk("jPlurk"));
+        /* TODO
+         * askeing: I don't know how to use this API (searchUser)?
+         * */
+//        System.out.println(pc.searchUser("qrtt1"));
 
     }
 }
