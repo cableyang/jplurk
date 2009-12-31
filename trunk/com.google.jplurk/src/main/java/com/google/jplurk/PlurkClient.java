@@ -790,6 +790,44 @@ public class PlurkClient {
     }
     // </editor-fold>
 
+    // <editor-fold defaultstate="collapsed" desc="/API/Alerts/getActive">
+    /**
+     * /API/Alerts/getActive <br />
+     * Return a JSON list of current active alerts. 
+     * @return
+     */
+    public JSONObject getActive(){
+        try {
+            HttpGet method = (HttpGet) PlurkActionSheet.getInstance().getActive(config.createParamMap().getMap());
+            return new JSONObject(execute(method));
+        } catch (PlurkException e) {
+            logger.error(e.getMessage(), e);
+        } catch (JSONException e) {
+            logger.error(e.getMessage(), e);
+        }
+        return null;    	
+    }
+    // </editor-fold>
+    
+    // <editor-fold defaultstate="collapsed" desc="/API/Alerts/getHistory">
+    /**
+     * /API/Alerts/getHistory <br />
+     * Return a JSON list of current active alerts. 
+     * @return
+     */
+    public JSONObject getHistory(){
+        try {
+            HttpGet method = (HttpGet) PlurkActionSheet.getInstance().getHistory(config.createParamMap().getMap());
+            return new JSONObject(execute(method));
+        } catch (PlurkException e) {
+            logger.error(e.getMessage(), e);
+        } catch (JSONException e) {
+            logger.error(e.getMessage(), e);
+        }
+        return null;    	
+    }
+    // </editor-fold>
+    
     // <editor-fold defaultstate="collapsed" desc="/API/Alerts/addAllAsFriends">
     /**
      * /API/Alerts/addAllAsFriends <br />
