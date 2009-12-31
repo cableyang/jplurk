@@ -1010,6 +1010,75 @@ public class PlurkClient {
     }
     // </editor-fold>
 
+    // <editor-fold defaultstate="collapsed" desc="/API/Blocks/get">
+    /**
+     * /API/Blocks/get <br/>
+     * default offset 0
+     * @return
+     */
+    public JSONObject getBlocks() {
+        return getBlocks(0);
+    }
+
+    /**
+     * /API/Blocks/get
+     * @param offset
+     * @return
+     */
+    public JSONObject getBlocks(int offset) {
+        try {
+            HttpGet method = (HttpGet) PlurkActionSheet.getInstance().getBlocks(config.createParamMap()
+                    .k("offset").v("" + (offset < 0 ? 0 : offset)).getMap());
+            return new JSONObject(execute(method));
+        } catch (PlurkException e) {
+            logger.error(e.getMessage(), e);
+        } catch (JSONException e) {
+            logger.error(e.getMessage(), e);
+        }
+        return null;
+    }
+    // </editor-fold>
+
+    // <editor-fold defaultstate="collapsed" desc="/API/Blocks/block">
+    /**
+     * /API/Blocks/block
+     * @param userId
+     * @return
+     */
+    public JSONObject block(String userId) {
+        try {
+            HttpGet method = (HttpGet) PlurkActionSheet.getInstance().block(config.createParamMap()
+                    .k("user_id").v(userId).getMap());
+            return new JSONObject(execute(method));
+        } catch (PlurkException e) {
+            logger.error(e.getMessage(), e);
+        } catch (JSONException e) {
+            logger.error(e.getMessage(), e);
+        }
+        return null;
+    }
+    // </editor-fold>
+
+    // <editor-fold defaultstate="collapsed" desc="/API/Blocks/unblock">
+    /**
+     * /API/Blocks/unblock
+     * @param userId
+     * @return
+     */
+    public JSONObject unblock(String userId) {
+        try {
+            HttpGet method = (HttpGet) PlurkActionSheet.getInstance().unblock(config.createParamMap()
+                    .k("user_id").v(userId).getMap());
+            return new JSONObject(execute(method));
+        } catch (PlurkException e) {
+            logger.error(e.getMessage(), e);
+        } catch (JSONException e) {
+            logger.error(e.getMessage(), e);
+        }
+        return null;
+    }
+    // </editor-fold>
+
     // <editor-fold defaultstate="collapsed" desc="Execution of HttpRequest">
     private String execute(HttpUriRequest method) throws PlurkException {
         if (logger.isInfoEnabled()) {
@@ -1104,6 +1173,6 @@ public class PlurkClient {
          * */
 //        System.out.println(pc.searchUser("qrtt1"));
 
-        System.out.println(pc.getEmoticons());
+//        System.out.println(pc.getEmoticons());
     }
 }
