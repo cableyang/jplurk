@@ -1,0 +1,134 @@
+#summary Example Code using jPlurk v2 beta
+
+= Introduction =
+
+Here is the Example Code using jPlurk v2 beta.
+
+
+= Details =
+
+{{{
+/*
+ * Example Code using jPlurk v2 beta
+ */
+package plurkit;
+ 
+import com.google.jplurk.PlurkClient;
+import com.google.jplurk.PlurkSettings;
+import com.google.jplurk.Qualifier;
+import com.google.jplurk.exception.PlurkException;
+import javax.swing.JOptionPane;
+import org.apache.commons.lang.RandomStringUtils;
+import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang.math.NumberUtils;
+import org.json.JSONException;
+import org.json.JSONObject;
+ 
+/**
+ * This PlurkIt just for testing.
+ * @author askeing_yen
+ */
+public class PlurkIt {
+ 
+    private void gracefulWait() {
+        try {
+            Thread.sleep(100);
+        } catch (InterruptedException ignored) {
+        }
+    }
+ 
+    public void testJPlurk() throws Exception {
+        PlurkSettings config = null;
+        try {
+            config = new PlurkSettings();
+        } catch (PlurkException e) {
+            System.out.println(e.getMessage());
+        }
+        PlurkClient client = new PlurkClient(config);
+ 
+        // do login
+        System.out.println("Do Login");
+        JSONObject ret = client.login(JOptionPane.showInputDialog("id"), JOptionPane.showInputDialog("password"));
+        System.out.println(ret);
+        gracefulWait();
+ 
+        // do plurk add
+        System.out.println("Do Plurk Add");
+        String content = RandomStringUtils.random(100, "1234567890abcdef");
+        ret = client.plurkAdd(content, Qualifier.LOVES);
+        int plurkId = 0;
+        String responsedContent = "";
+        try {
+            plurkId = NumberUtils.toInt("" + ret.get("plurk_id"));
+            responsedContent = ret.getString("content_raw");
+            System.out.println("Content Input: " + content);
+            System.out.println(" After Add It: " + responsedContent);
+        } catch (JSONException e) {
+            System.out.println(e.getMessage());
+        }
+        gracefulWait();
+ 
+        // do plurk edit
+        System.out.println("Do Plurk Edit");
+        ret = client.plurkEdit("" + plurkId, StringUtils.reverse(responsedContent));
+        System.out.println(ret);
+        System.out.println("Content Input: " + StringUtils.reverse(responsedContent));
+        System.out.println("After Edit It: " + ret.getString("content_raw"));
+        gracefulWait();
+ 
+        // do mute plurk
+        System.out.println("Do Mute Plurk");
+        ret = client.mutePlurks(new String[]{"" + plurkId});
+        System.out.println(ret);
+        gracefulWait();
+ 
+        // do unmute plurk
+        System.out.println("Do Unmute Plurk");
+        ret = client.unmutePlurks(new String[]{"" + plurkId});
+        System.out.println(ret);
+        gracefulWait();
+ 
+        // do response
+        System.out.println("Do Add Response");
+        int rPlurkId = 0;
+        String rContent = "response_" + RandomStringUtils.random(20, "abcdef");
+        ret = client.responseAdd("" + plurkId, rContent, Qualifier.SAYS);
+        rPlurkId = NumberUtils.toInt("" + ret.get("id"));
+        System.out.println("Plurk ID: " + rPlurkId);
+        System.out.println(ret);
+        System.out.println("Content Raw: " + ret.getString("content_raw"));
+        gracefulWait();
+ 
+        // do get response
+        System.out.println("Do Get Response");
+        ret = client.responseGet("" + plurkId);
+        // TODO: Have some problem, need plurk api service team response.
+        System.out.println(ret);
+        gracefulWait();
+ 
+        // do delete response
+        System.out.println("Do Delete Response");
+        ret = client.responseDelete("" + plurkId, "" + rPlurkId);
+        System.out.println(ret);
+        gracefulWait();
+ 
+        // do plurk delete
+        System.out.println("Do Plurk Delete");
+        ret = client.plurkDelete("" + plurkId);
+        System.out.println(ret);
+    }
+ 
+    /**
+     * @param args the command line arguments
+     */
+    public static void main(String[] args) {
+        PlurkIt myApp = new PlurkIt();
+        try {
+            myApp.testJPlurk();
+        } catch (Exception ex) {
+            System.out.println("Fail: " + ex.getMessage());
+        }
+    }
+}
+
+}}}
