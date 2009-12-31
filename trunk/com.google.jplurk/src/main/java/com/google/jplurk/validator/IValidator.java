@@ -3,8 +3,8 @@ package com.google.jplurk.validator;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Method;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 
 import com.google.jplurk.exception.PlurkException;
 
@@ -14,7 +14,7 @@ public interface IValidator {
 
 	static class ValidatorUtils {
 
-		static Logger logger = LoggerFactory.getLogger(ValidatorUtils.class);
+		static Log logger = LogFactory.getLog(ValidatorUtils.class);
 
 		public static boolean validate(Class<? extends IValidator> validatorClazz, String value) throws PlurkException{
 

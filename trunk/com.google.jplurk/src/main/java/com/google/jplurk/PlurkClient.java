@@ -12,6 +12,8 @@ import javax.swing.JOptionPane;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.math.NumberUtils;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.apache.http.HttpHost;
 import org.apache.http.auth.AuthScope;
 import org.apache.http.auth.UsernamePasswordCredentials;
@@ -28,8 +30,6 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import com.google.jplurk.action.PlurkActionSheet;
 import com.google.jplurk.exception.PlurkException;
@@ -43,7 +43,7 @@ import com.google.jplurk.net.ProxyProvider;
 public class PlurkClient {
 
     // <editor-fold defaultstate="collapsed" desc="Init PlurkClient">
-    private static Logger logger = LoggerFactory.getLogger(PlurkClient.class);
+    private static Log logger = LogFactory.getLog(PlurkClient.class);
     private HttpClient client = new DefaultHttpClient();
     private PlurkSettings config;
 
