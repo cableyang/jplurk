@@ -957,7 +957,8 @@ public class PlurkClient {
     // <editor-fold defaultstate="collapsed" desc="/API/UserSearch/search">
     /**
      * /API/UserSearch/search <br/>
-     * Returns 10 users that match query, users are sorted by karma.
+     * Returns 10 users that match query, users are sorted by karma. <br/>
+     * (Hint: This API seems like do nothing...)
      * @param query
      * @return
      */
@@ -1174,5 +1175,7 @@ public class PlurkClient {
 //        System.out.println(pc.searchUser("qrtt1"));
 
 //        System.out.println(pc.getEmoticons());
+        System.out.println(pc.getBlocks());
+        System.out.println(pc.getBlocks(10));
     }
 }
