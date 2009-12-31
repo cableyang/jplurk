@@ -5,7 +5,7 @@
 Here is the Example Code using jPlurk v2 beta.
 
 
-= Details =
+= Example Code =
 
 {{{
 /*
