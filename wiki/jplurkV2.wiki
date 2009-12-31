@@ -169,7 +169,7 @@ client.getUnreadPlurks();
 == Emoticons ==
 
 || *功能* || *函式名稱* || *誰在實作* || *狀態* || *備註* ||
-|| /API/Emoticons/get ||  ||  ||  || ||
+|| /API/Emoticons/get || getEmoticons || Askeing || 完成 || ||
 
 == Blocks ==
 
@@ -371,7 +371,7 @@ Please refer to [Using_Proxy_V2] page.
 == Emoticons ==
 
 || *Service* || *Method* || *Owner* || *State* || *Comments* ||
-|| /API/Emoticons/get ||  ||  ||  || ||
+|| /API/Emoticons/get || getEmoticons || Askeing || Done || ||
 
 == Blocks ==
 
