@@ -8,7 +8,7 @@ jPlurk v2 正持續進行中，在 Plurk 官方 [http://www.plurk.com/API API] �
 
 = 快速上手 =
 
-您可以由 [http://code.google.com/p/jplurk/downloads/list 下載頁面] 下載最新發佈版本 (rev 320, 含原始碼及相依函式庫)。參閱下列的簡易教學使用 jPlurk v2
+您可以由 [http://code.google.com/p/jplurk/downloads/list 下載頁面] 下載最新發佈版本 (rev 361, 含原始碼及相依函式庫)。參閱下列的簡易教學使用 jPlurk v2
 
 == 建立 config 檔 ==
 
@@ -100,20 +100,20 @@ client.getUnreadPlurks();
 || *功能* || *函式名稱* || *誰在實作* || *狀態* || *備註* ||
 || /API/Users/register || register || Askeing || 完成 || Opt done by A, `@since` rev240 ||
 || /API/Users/login || login || qrtt1 || 完成 || `@since` rev240 ||
-|| /API/Users/updatePicture || updatePicture || qrtt1 || 完成 || ||
-|| /API/Users/update || update || qrtt1 || 完成 || ||
+|| /API/Users/updatePicture || updatePicture || qrtt1 || 完成 || `@since` rev361 ||
+|| /API/Users/update || update || qrtt1 || 完成 || `@since` rev361 ||
 
 == Polling ==
 
 || *功能* || *函式名稱* || *誰在實作* || *狀態* || *備註* ||
-|| /API/Polling/getPlurks || getPollingPlurks || qrtt1 || 完成 ||  ||
-|| /API/Polling/getUnreadCount || getUnreadCount || qrtt1 || 完成 ||  ||
+|| /API/Polling/getPlurks || getPollingPlurks || qrtt1 || 完成 || `@since` rev361 ||
+|| /API/Polling/getUnreadCount || getUnreadCount || qrtt1 || 完成 || `@since` rev361 ||
 
 == Timeline ==
 
 || *功能* || *函式名稱* || *誰在實作* || *狀態* || *備註* ||
 || /API/Timeline/getPlurk || getPlurk || Askeing || 完成 || `@since` rev240 ||
-|| /API/Timeline/getPlurks || getPlurks || qrtt1 || 完成 || ||
+|| /API/Timeline/getPlurks || getPlurks || qrtt1 || 完成 || `@since` rev361 ||
 || /API/Timeline/getUnreadPlurks || getUnreadPlurks || qrtt1 || 完成 || Opt done by A, `@since` rev240 ||
 || /API/Timeline/mutePlurks || mutePlurks  || qrtt1  || 完成 || `@since` rev240 ||
 || /API/Timeline/unmutePlurks || unmutePlurks  || qrtt1  || 完成 || `@since` rev240 ||
@@ -133,61 +133,61 @@ client.getUnreadPlurks();
 == Profile ==
 
 || *功能* || *函式名稱* || *誰在實作* || *狀態* || *備註* ||
-|| /API/Profile/getOwnProfile || getOwnProfile || qrtt1 || 完成 || ||
-|| /API/Profile/getPublicProfile || getPublicProfile || qrtt1 || 完成 || ||
+|| /API/Profile/getOwnProfile || getOwnProfile || qrtt1 || 完成 || `@since` rev361 ||
+|| /API/Profile/getPublicProfile || getPublicProfile || qrtt1 || 完成 || `@since` rev361 ||
 
 == Friends and fans ==
 
 || *功能* || *函式名稱* || *誰在實作* || *狀態* || *備註* ||
-|| /API/!FriendsFans/getFriendsByOffset || getFriendsByOffset || qrtt1 || 完成 ||   ||
-|| /API/!FriendsFans/getFansByOffset || getFansByOffset || qrtt1 || 完成 ||   ||
-|| /API/!FriendsFans/getFollowingByOffset || getFollowingByOffset || qrtt1 || 完成 || ||
-|| /API/!FriendsFans/becomeFriend || becomeFriend || qrtt1 || 完成 || ||
-|| /API/!FriendsFans/removeAsFriend || removeAsFriend || qrtt1 || 完成 || ||
-|| /API/!FriendsFans/becomeFan || becomeFan || qrtt1 || 完成 || ||
-|| /API/!FriendsFans/setFollowing || setFollowing || qrtt1 || 完成 || ||
-|| /API/!FriendsFans/getCompletion || getCompletion || Askeing || 完成 || ||
+|| /API/!FriendsFans/getFriendsByOffset || getFriendsByOffset || qrtt1 || 完成 || `@since` rev361  ||
+|| /API/!FriendsFans/getFansByOffset || getFansByOffset || qrtt1 || 完成 || `@since` rev361  ||
+|| /API/!FriendsFans/getFollowingByOffset || getFollowingByOffset || qrtt1 || 完成 || `@since` rev361 ||
+|| /API/!FriendsFans/becomeFriend || becomeFriend || qrtt1 || 完成 || `@since` rev361 ||
+|| /API/!FriendsFans/removeAsFriend || removeAsFriend || qrtt1 || 完成 || `@since` rev361 ||
+|| /API/!FriendsFans/becomeFan || becomeFan || qrtt1 || 完成 || `@since` rev361 ||
+|| /API/!FriendsFans/setFollowing || setFollowing || qrtt1 || 完成 || `@since` rev361 ||
+|| /API/!FriendsFans/getCompletion || getCompletion || Askeing || 完成 || `@since` rev361 ||
 
 == Alerts ==
 
 || *功能* || *函式名稱* || *誰在實作* || *狀態* || *備註* ||
-|| /API/Alerts/getActive || getActive || qrtt1 || 完成 || ||
-|| /API/Alerts/getHistory || getHistory || qrtt1 || 完成 || ||
-|| /API/Alerts/addAsFan || addAsFan || qrtt1 || 完成 || ||
-|| /API/Alerts/addAllAsFan || addAllAsFan || qrtt1 || 完成 || ||
+|| /API/Alerts/getActive || getActive || qrtt1 || 完成 || `@since` rev361 ||
+|| /API/Alerts/getHistory || getHistory || qrtt1 || 完成 || `@since` rev361 ||
+|| /API/Alerts/addAsFan || addAsFan || qrtt1 || 完成 || `@since` rev361 ||
+|| /API/Alerts/addAllAsFan || addAllAsFan || qrtt1 || 完成 || `@since` rev361 ||
 || /API/Alerts/addAllAsFriends || addAllAsFriends || qrtt1 || 完成 || `@since` rev240 ||
-|| /API/Alerts/addAsFriend || addAsFriend || qrtt1 || 完成 || ||
-|| /API/Alerts/denyFriendship || denyFriendship || qrtt1 || 完成 || ||
-|| /API/Alerts/removeNotification || removeNotification || qrtt1 || 完成 || ||
+|| /API/Alerts/addAsFriend || addAsFriend || qrtt1 || 完成 || `@since` rev361 ||
+|| /API/Alerts/denyFriendship || denyFriendship || qrtt1 || 完成 || `@since` rev361 ||
+|| /API/Alerts/removeNotification || removeNotification || qrtt1 || 完成 || `@since` rev361 ||
 
 == Search ==
 
 || *功能* || *函式名稱* || *誰在實作* || *狀態* || *備註* ||
-|| /API/!PlurkSearch/search || searchPlurk || Askeing || 完成 || ||
-|| /API/!UserSearch/search || searchUser || Askeing || 完成 || ||
+|| /API/!PlurkSearch/search || searchPlurk || Askeing || 完成 || `@since` rev361 ||
+|| /API/!UserSearch/search || searchUser || Askeing || 完成 || `@since` rev361 ||
 
 == Emoticons ==
 
 || *功能* || *函式名稱* || *誰在實作* || *狀態* || *備註* ||
-|| /API/Emoticons/get || getEmoticons || Askeing || 完成 || ||
+|| /API/Emoticons/get || getEmoticons || Askeing || 完成 || `@since` rev361 ||
 
 == Blocks ==
 
 || *功能* || *函式名稱* || *誰在實作* || *狀態* || *備註* ||
-|| /API/Blocks/get || getBlocks || Askeing || 完成 || ||
-|| /API/Blocks/block || block || Askeing || 完成 || ||
-|| /API/Blocks/unblock || unblock || Askeing || 完成 || ||
+|| /API/Blocks/get || getBlocks || Askeing || 完成 || `@since` rev361 ||
+|| /API/Blocks/block || block || Askeing || 完成 || `@since` rev361 ||
+|| /API/Blocks/unblock || unblock || Askeing || 完成 || `@since` rev361 ||
 
 == Cliques ==
 
 || *功能* || *函式名稱* || *誰在實作* || *狀態* || *備註* ||
-|| /API/Cliques/get_cliques || getCliques || Askeing || 完成 || ||
-|| /API/Cliques/create_clique || createClique || Askeing || 完成 || ||
-|| /API/Cliques/get_clique || getClique || Askeing || 完成 || ||
-|| /API/Cliques/rename_clique || renameClique || Askeing || 完成 || ||
-|| /API/Cliques/delete_clique || deleteClique || Askeing || 完成 || ||
-|| /API/Cliques/add || addToClique || Askeing || 完成 || ||
-|| /API/Cliques/remove || removeFromClique || Askeing || 完成 || ||
+|| /API/Cliques/get_cliques || getCliques || Askeing || 完成 || `@since` rev361 ||
+|| /API/Cliques/create_clique || createClique || Askeing || 完成 || `@since` rev361 ||
+|| /API/Cliques/get_clique || getClique || Askeing || 完成 || `@since` rev361 ||
+|| /API/Cliques/rename_clique || renameClique || Askeing || 完成 || `@since` rev361 ||
+|| /API/Cliques/delete_clique || deleteClique || Askeing || 完成 || `@since` rev361 ||
+|| /API/Cliques/add || addToClique || Askeing || 完成 || `@since` rev361 ||
+|| /API/Cliques/remove || removeFromClique || Askeing || 完成 || `@since` rev361 ||
 
 
 Java API Doc 也正在持續的成長中。
@@ -208,7 +208,7 @@ jPlurk v1 has been frozen because Plurk released the Official [http://www.plurk.
 
 = Quick Tutorial =
 
-You can get lastest version (rev 320, contains source code and dependencies) from [http://code.google.com/p/jplurk/downloads/list Download Page] . And we show you the quick tutorial below.
+You can get lastest version (rev 361, contains source code and dependencies) from [http://code.google.com/p/jplurk/downloads/list Download Page] . And we show you the quick tutorial below.
 
 == Create Config File ==
 
@@ -305,20 +305,20 @@ Please refer to [Using_Proxy_V2] page.
 || *Service* || *Method* || *Owner* || *State* || *Comments* ||
 || /API/Users/register || register || Askeing || Done || Opt Done by A, `@since` rev240 ||
 || /API/Users/login || login || qrtt1 || Done || `@since` rev240 ||
-|| /API/Users/updatePicture || updatePicture || qrtt1 || Done || ||
-|| /API/Users/update || update || qrtt1 || Done || ||
+|| /API/Users/updatePicture || updatePicture || qrtt1 || Done || `@since` rev361 ||
+|| /API/Users/update || update || qrtt1 || Done || `@since` rev361 ||
 
 == Polling ==
 
 || *Service* || *Method* || *Owner* || *State* || *Comments* ||
-|| /API/Polling/getPlurks || getPollingPlurks || qrtt1 || Done ||  ||
-|| /API/Polling/getUnreadCount || getUnreadCount || qrtt1 || Done ||  ||
+|| /API/Polling/getPlurks || getPollingPlurks || qrtt1 || Done || `@since` rev361 ||
+|| /API/Polling/getUnreadCount || getUnreadCount || qrtt1 || Done || `@since` rev361 ||
 
 == Timeline ==
 
 || *Service* || *Method* || *Owner* || *State* || *Comments* ||
 || /API/Timeline/getPlurk || getPlurk || Askeing || Done || `@since` rev240 ||
-|| /API/Timeline/getPlurks || getPlurks || qrtt1 || Done || ||
+|| /API/Timeline/getPlurks || getPlurks || qrtt1 || Done || `@since` rev361 ||
 || /API/Timeline/getUnreadPlurks || getUnreadPlurks || qrtt1 || Done || Opt Done by A, `@since` rev240 ||
 || /API/Timeline/mutePlurks || mutePlurks  || qrtt1  || Done || `@since` rev240 ||
 || /API/Timeline/unmutePlurks || unmutePlurks  || qrtt1  || Done || `@since` rev240 ||
@@ -338,61 +338,61 @@ Please refer to [Using_Proxy_V2] page.
 == Profile ==
 
 || *Service* || *Method* || *Owner* || *State* || *Comments* ||
-|| /API/Profile/getOwnProfile || getOwnProfile || qrtt1 || Done || ||
-|| /API/Profile/getPublicProfile || getPublicProfile || qrtt1 || Done || ||
+|| /API/Profile/getOwnProfile || getOwnProfile || qrtt1 || Done || `@since` rev361 ||
+|| /API/Profile/getPublicProfile || getPublicProfile || qrtt1 || Done || `@since` rev361 ||
 
 == Friends and fans ==
 
 || *Service* || *Method* || *Owner* || *State* || *Comments* ||
-|| /API/!FriendsFans/getFriendsByOffset || getFriendsByOffset || qrtt1 || Done ||   ||
-|| /API/!FriendsFans/getFansByOffset || getFansByOffset || qrtt1 || Done ||   ||
-|| /API/!FriendsFans/getFollowingByOffset || getFollowingByOffset || qrtt1 || Done || ||
-|| /API/!FriendsFans/becomeFriend || becomeFriend || qrtt1 || Done || ||
-|| /API/!FriendsFans/removeAsFriend || removeAsFriend || qrtt1 || Done || ||
-|| /API/!FriendsFans/becomeFan || becomeFan || qrtt1 || Done || ||
-|| /API/!FriendsFans/setFollowing || setFollowing || qrtt1 || Done || ||
-|| /API/!FriendsFans/getCompletion || getCompletion || Askeing || Done || ||
+|| /API/!FriendsFans/getFriendsByOffset || getFriendsByOffset || qrtt1 || Done || `@since` rev361  ||
+|| /API/!FriendsFans/getFansByOffset || getFansByOffset || qrtt1 || Done || `@since` rev361  ||
+|| /API/!FriendsFans/getFollowingByOffset || getFollowingByOffset || qrtt1 || Done || `@since` rev361 ||
+|| /API/!FriendsFans/becomeFriend || becomeFriend || qrtt1 || Done || `@since` rev361 ||
+|| /API/!FriendsFans/removeAsFriend || removeAsFriend || qrtt1 || Done || `@since` rev361 ||
+|| /API/!FriendsFans/becomeFan || becomeFan || qrtt1 || Done || `@since` rev361 ||
+|| /API/!FriendsFans/setFollowing || setFollowing || qrtt1 || Done || `@since` rev361 ||
+|| /API/!FriendsFans/getCompletion || getCompletion || Askeing || Done || `@since` rev361 ||
 
 == Alerts ==
 
-|| /API/Alerts/getActive || getActive || qrtt1 || Done || ||
-|| /API/Alerts/getHistory || getHistory || qrtt1 || Done || ||
-|| /API/Alerts/addAsFan || addAsFan || qrtt1 || Done || ||
-|| /API/Alerts/addAllAsFan || addAllAsFan || qrtt1 || Done || ||
+|| /API/Alerts/getActive || getActive || qrtt1 || Done || `@since` rev361 ||
+|| /API/Alerts/getHistory || getHistory || qrtt1 || Done || `@since` rev361 ||
+|| /API/Alerts/addAsFan || addAsFan || qrtt1 || Done || `@since` rev361 ||
+|| /API/Alerts/addAllAsFan || addAllAsFan || qrtt1 || Done || `@since` rev361 ||
 || /API/Alerts/addAllAsFriends || addAllAsFriends || qrtt1 || Done || `@since` rev240 ||
-|| /API/Alerts/addAsFriend || addAsFriend || qrtt1 || Done || ||
-|| /API/Alerts/denyFriendship || denyFriendship || qrtt1 || Done || ||
-|| /API/Alerts/removeNotification || removeNotification || qrtt1 || Done || ||
+|| /API/Alerts/addAsFriend || addAsFriend || qrtt1 || Done || `@since` rev361 ||
+|| /API/Alerts/denyFriendship || denyFriendship || qrtt1 || Done || `@since` rev361 ||
+|| /API/Alerts/removeNotification || removeNotification || qrtt1 || Done || `@since` rev361 ||
 
 == Search ==
 
 || *Service* || *Method* || *Owner* || *State* || *Comments* ||
-|| /API/!PlurkSearch/search || searchPlurk || Askeing || Done || ||
-|| /API/!UserSearch/search || searchUser || Askeing || Done || ||
+|| /API/!PlurkSearch/search || searchPlurk || Askeing || Done || `@since` rev361 ||
+|| /API/!UserSearch/search || searchUser || Askeing || Done || `@since` rev361 ||
 
 == Emoticons ==
 
 || *Service* || *Method* || *Owner* || *State* || *Comments* ||
-|| /API/Emoticons/get || getEmoticons || Askeing || Done || ||
+|| /API/Emoticons/get || getEmoticons || Askeing || Done || `@since` rev361 ||
 
 == Blocks ==
 
 || *Service* || *Method* || *Owner* || *State* || *Comments* ||
-|| /API/Blocks/get || getBlocks || Askeing || Done || ||
-|| /API/Blocks/block || block || Askeing || Done || ||
-|| /API/Blocks/unblock || unblock || Askeing || Done || ||
+|| /API/Blocks/get || getBlocks || Askeing || Done || `@since` rev361 ||
+|| /API/Blocks/block || block || Askeing || Done || `@since` rev361 ||
+|| /API/Blocks/unblock || unblock || Askeing || Done || `@since` rev361 ||
 
 
 == Cliques ==
 
 || *Service* || *Method* || *Owner* || *State* || *Comments* ||
-|| /API/Cliques/get_cliques || getCliques || Askeing || Done || ||
-|| /API/Cliques/create_clique || createClique || Askeing || Done || ||
-|| /API/Cliques/get_clique || getClique || Askeing || Done || ||
-|| /API/Cliques/rename_clique || renameClique || Askeing || Done || ||
-|| /API/Cliques/delete_clique || deleteClique || Askeing || Done || ||
-|| /API/Cliques/add || addToClique || Askeing || Done || ||
-|| /API/Cliques/remove || removeFromClique || Askeing || Done || ||
+|| /API/Cliques/get_cliques || getCliques || Askeing || Done || `@since` rev361 ||
+|| /API/Cliques/create_clique || createClique || Askeing || Done || `@since` rev361 ||
+|| /API/Cliques/get_clique || getClique || Askeing || Done || `@since` rev361 ||
+|| /API/Cliques/rename_clique || renameClique || Askeing || Done || `@since` rev361 ||
+|| /API/Cliques/delete_clique || deleteClique || Askeing || Done || `@since` rev361 ||
+|| /API/Cliques/add || addToClique || Askeing || Done || `@since` rev361 ||
+|| /API/Cliques/remove || removeFromClique || Askeing || Done || `@since` rev361 ||
 
 
 Java API Doc is growing gradually, too.
