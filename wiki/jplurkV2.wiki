@@ -146,7 +146,7 @@ client.getUnreadPlurks();
 || /API/!FriendsFans/removeAsFriend || removeAsFriend || qrtt1 || 完成 || ||
 || /API/!FriendsFans/becomeFan || becomeFan || qrtt1 || 完成 || ||
 || /API/!FriendsFans/setFollowing || setFollowing || qrtt1 || 完成 || ||
-|| /API/!FriendsFans/getCompletion ||  ||  ||  || ||
+|| /API/!FriendsFans/getCompletion || getCompletion || Askeing || 完成 || ||
 
 == Alerts ==
 
@@ -348,7 +348,7 @@ Please refer to [Using_Proxy_V2] page.
 || /API/!FriendsFans/removeAsFriend || removeAsFriend || qrtt1 || Done || ||
 || /API/!FriendsFans/becomeFan || becomeFan || qrtt1 || Done || ||
 || /API/!FriendsFans/setFollowing || setFollowing || qrtt1 || Done || ||
-|| /API/!FriendsFans/getCompletion ||  ||  ||  || ||
+|| /API/!FriendsFans/getCompletion || getCompletion || Askeing || Done || ||
 
 == Alerts ==
 
