@@ -163,8 +163,8 @@ client.getUnreadPlurks();
 == Search ==
 
 || *功能* || *函式名稱* || *誰在實作* || *狀態* || *備註* ||
-|| /API/!PlurkSearch/search ||  ||  ||  || ||
-|| /API/!UserSearch/search ||  ||  ||  || ||
+|| /API/!PlurkSearch/search || searchPlurk || Askeing || 完成 || ||
+|| /API/!UserSearch/search || searchUser || Askeing || 完成 || ||
 
 == Emoticons ==
 
@@ -365,8 +365,8 @@ Please refer to [Using_Proxy_V2] page.
 == Search ==
 
 || *Service* || *Method* || *Owner* || *State* || *Comments* ||
-|| /API/!PlurkSearch/search ||  ||  ||  || ||
-|| /API/!UserSearch/search ||  ||  ||  || ||
+|| /API/!PlurkSearch/search || searchPlurk || Askeing || Done || ||
+|| /API/!UserSearch/search || searchUser || Askeing || Done || ||
 
 == Emoticons ==
 
