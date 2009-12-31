@@ -47,11 +47,51 @@ public final class PlurkActionSheet {
 			throws PlurkException {
 		return prepare("addAllAsFriends", params);
 	}
+	
+	@Meta(uri = "/Alerts/addAllAsFan", require = { "api_key" })
+	public HttpUriRequest addAllAsFan(Map<String, String> params)
+			throws PlurkException {
+		return prepare("addAllAsFan", params);
+	}
+	
+	@Meta(uri = "/Alerts/getActive", require = { "api_key" })
+	public HttpUriRequest getActive(Map<String, String> params) throws PlurkException{
+		return prepare("getActive", params);
+	}
 
+	@Meta(uri = "/Alerts/getHistory", require = { "api_key" })
+	public HttpUriRequest getHistory(Map<String, String> params) throws PlurkException{
+		return prepare("getHistory", params);
+	}
+	
+	@Meta(uri = "/Alerts/addAsFan", require = { "api_key", "user_id" })
+    @Validation({@Validator(field = "user_id", validator = NonNegativeIntegerValidator.class)})
+	public HttpUriRequest addAsFan(Map<String, String> params) throws PlurkException{
+		return prepare("addAsFan", params);
+	}
+	
+	@Meta(uri = "/Alerts/addAsFriend", require = { "api_key", "user_id" })
+    @Validation({@Validator(field = "user_id", validator = NonNegativeIntegerValidator.class)})
+	public HttpUriRequest addAsFriend(Map<String, String> params) throws PlurkException{
+		return prepare("addAsFriend", params);
+	}
+	
+	@Meta(uri = "/Alerts/denyFriendship", require = { "api_key", "user_id" })
+    @Validation({@Validator(field = "user_id", validator = NonNegativeIntegerValidator.class)})
+	public HttpUriRequest denyFriendship(Map<String, String> params) throws PlurkException{
+		return prepare("denyFriendship", params);
+	}	
+
+	@Meta(uri = "/Alerts/removeNotification", require = { "api_key", "user_id" })
+    @Validation({@Validator(field = "user_id", validator = NonNegativeIntegerValidator.class)})
+	public HttpUriRequest removeNotification(Map<String, String> params) throws PlurkException{
+		return prepare("removeNotification", params);
+	}	
+	
 	@Meta(uri = "/FriendsFans/getFriendsByOffset", require = { "api_key", "user_id" })
-        @Validation({
-            @Validator(field = "user_id", validator = NonNegativeIntegerValidator.class),
-            @Validator(field = "offset", validator = NonNegativeIntegerValidator.class) })
+    @Validation({
+        @Validator(field = "user_id", validator = NonNegativeIntegerValidator.class),
+        @Validator(field = "offset", validator = NonNegativeIntegerValidator.class) })
 	public HttpUriRequest getFriendsByOffset(Map<String, String> params)
 			throws PlurkException {
 		return prepare("getFriendsByOffset", params);
@@ -103,7 +143,7 @@ public final class PlurkActionSheet {
 		return prepare("setFollowing", params);
 	}
 
-        @Meta(uri = "/FriendsFans/getCompletion", require = { "api_key" })
+    @Meta(uri = "/FriendsFans/getCompletion", require = { "api_key" })
 	public HttpUriRequest getCompletion(Map<String, String> params)
 			throws PlurkException {
 		return prepare("getCompletion", params);
