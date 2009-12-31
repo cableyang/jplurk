@@ -2,6 +2,8 @@ package com.google.jplurk.net;
 
 import java.io.IOException;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.apache.http.Header;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -9,12 +11,11 @@ import org.apache.http.StatusLine;
 import org.apache.http.client.HttpResponseException;
 import org.apache.http.client.ResponseHandler;
 import org.apache.http.util.EntityUtils;
-import org.slf4j.Logger;
 
 
 public class JPlurkResponseHandler implements ResponseHandler<String> {
 
-	static Logger logger = org.slf4j.LoggerFactory.getLogger(JPlurkResponseHandler.class);
+	private static Log logger = LogFactory.getLog(JPlurkResponseHandler.class);
 
     public String handleResponse(final HttpResponse response)
             throws HttpResponseException, IOException {

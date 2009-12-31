@@ -6,12 +6,12 @@ import java.net.URLEncoder;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.methods.HttpRequestBase;
 import org.apache.http.client.methods.HttpUriRequest;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import com.google.jplurk.action.Headers.Header;
 import com.google.jplurk.exception.PlurkException;
@@ -28,7 +28,7 @@ import com.google.jplurk.validator.Validation.Validator;
 
 public final class PlurkActionSheet {
 
-    static Logger logger = LoggerFactory.getLogger(PlurkActionSheet.class);
+    private static Log logger = LogFactory.getLog(PlurkActionSheet.class);
     private final static PlurkActionSheet self = new PlurkActionSheet();
 
     private PlurkActionSheet() {
