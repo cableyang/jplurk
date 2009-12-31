@@ -6,7 +6,6 @@
 	<packaging>jar</packaging>
 	<version>2.0.0-SNAPSHOT</version>
 	<name>jplurk</name>
-	<url>http://maven.apache.org</url>
 	<dependencies>
 		<dependency>
 			<groupId>org.apache.httpcomponents</groupId>
@@ -30,7 +29,6 @@
 		    <version>20080701</version>
 		</dependency>
 	</dependencies>
-
 	<build>
 		<plugins>
 			<plugin>
