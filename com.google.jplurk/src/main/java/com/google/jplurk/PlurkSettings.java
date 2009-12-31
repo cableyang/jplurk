@@ -48,20 +48,6 @@ public class PlurkSettings {
     }
 
     /**
-     * @return default user read from settings file
-     */
-    public String getDefaultUser() {
-        return prop.getProperty("default_user");
-    }
-
-    /**
-     * @return default password read from settings file
-     */
-    public String getDefaultPassword() {
-        return prop.getProperty("default_password");
-    }
-
-    /**
      * @return
      */
     public String getDefaultProxyHost() {
@@ -98,10 +84,6 @@ public class PlurkSettings {
 
     public String getLang() {
         return prop.getProperty("lang", "en");
-    }
-
-    public MapHelper createParamMapWithDefaultUserInfo() {
-        return createParamMap().k("username").v(getDefaultUser()).k("password").v(getDefaultPassword());
     }
 
     private Properties getSettings() throws PlurkException {
