@@ -151,14 +151,14 @@ client.getUnreadPlurks();
 == Alerts ==
 
 || *功能* || *函式名稱* || *誰在實作* || *狀態* || *備註* ||
-|| /API/Alerts/getActive ||  ||  ||  || ||
-|| /API/Alerts/getHistory ||  ||  ||  || ||
-|| /API/Alerts/addAsFan ||  ||  ||  || ||
-|| /API/Alerts/addAllAsFan ||  ||  ||  || ||
+|| /API/Alerts/getActive || getActive || qrtt1 || 撰寫中 || ||
+|| /API/Alerts/getHistory || getHistory || qrtt1 || 撰寫中 || ||
+|| /API/Alerts/addAsFan || addAsFan ||  || qrtt1 || 撰寫中 ||
+|| /API/Alerts/addAllAsFan || addAllAsFan || qrtt1 || 撰寫中 || ||
 || /API/Alerts/addAllAsFriends || addAllAsFriends || qrtt1 || 完成 || `@since` rev240 ||
-|| /API/Alerts/addAsFriend ||  ||  ||  || ||
-|| /API/Alerts/denyFriendship ||  ||  ||  || ||
-|| /API/Alerts/removeNotification ||  ||  ||  || ||
+|| /API/Alerts/addAsFriend || addAsFriend || qrtt1 || 撰寫中 || ||
+|| /API/Alerts/denyFriendship || denyFriendship || qrtt1 || 撰寫中 || ||
+|| /API/Alerts/removeNotification || removeNotification || qrtt1 || 撰寫中 || ||
 
 == Search ==
 
@@ -352,15 +352,14 @@ Please refer to [Using_Proxy_V2] page.
 
 == Alerts ==
 
-|| *Service* || *Method* || *Owner* || *State* || *Comments* ||
-|| /API/Alerts/getActive ||  ||  ||  || ||
-|| /API/Alerts/getHistory ||  ||  ||  || ||
-|| /API/Alerts/addAsFan ||  ||  ||  || ||
-|| /API/Alerts/addAllAsFan ||  ||  ||  || ||
+|| /API/Alerts/getActive || getActive || qrtt1 || Working || ||
+|| /API/Alerts/getHistory || getHistory || qrtt1 || Working || ||
+|| /API/Alerts/addAsFan || addAsFan ||  || qrtt1 || Working ||
+|| /API/Alerts/addAllAsFan || addAllAsFan || qrtt1 || Working || ||
 || /API/Alerts/addAllAsFriends || addAllAsFriends || qrtt1 || Done || `@since` rev240 ||
-|| /API/Alerts/addAsFriend ||  ||  ||  || ||
-|| /API/Alerts/denyFriendship ||  ||  ||  || ||
-|| /API/Alerts/removeNotification ||  ||  ||  || ||
+|| /API/Alerts/addAsFriend || addAsFriend || qrtt1 || Working || ||
+|| /API/Alerts/denyFriendship || denyFriendship || qrtt1 || Working || ||
+|| /API/Alerts/removeNotification || removeNotification || qrtt1 || Working || ||
 
 == Search ==
 
