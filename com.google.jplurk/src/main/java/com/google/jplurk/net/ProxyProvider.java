@@ -4,7 +4,8 @@
  */
 package com.google.jplurk.net;
 
-import com.google.jplurk.PlurkSettings;
+import com.google.jplurk.ISettings;
+
 import org.apache.commons.lang.StringUtils;
 
 /**
@@ -60,7 +61,7 @@ public class ProxyProvider {
      * Default proxy setting: default_proxy_host, default_proxy_port, default_proxy_user, default_proxy_password in property file.
      * @param config
      */
-    public static void loadDefaultProxy(PlurkSettings config) {
+    public static void loadDefaultProxy(ISettings config) {
         // If Programmer set Proxy Host in code, we do not change it.
         if (!ProxyProvider.isProgrammaticallySetHost) {
             String defaultProxyHost = config.getDefaultProxyHost();

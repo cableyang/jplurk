@@ -16,7 +16,7 @@ import com.google.jplurk.exception.PlurkException;
  *
  * @author qty
  */
-public class PlurkSettings {
+public class PlurkSettings implements ISettings {
 
     public final static String settings = "jplurk.properties";
     private Properties prop;
@@ -40,20 +40,23 @@ public class PlurkSettings {
         prop = getSettings(settingFile);
     }
 
-    /**
-     * @return api key read from settings file
-     */
+    /* (non-Javadoc)
+	 * @see com.google.jplurk.ISettings#getApiKey()
+	 */
     public String getApiKey() {
         return prop.getProperty("api_key");
     }
 
-    /**
-     * @return
-     */
+    /* (non-Javadoc)
+	 * @see com.google.jplurk.ISettings#getDefaultProxyHost()
+	 */
     public String getDefaultProxyHost() {
         return prop.getProperty("default_proxy_host");
     }
 
+    /* (non-Javadoc)
+	 * @see com.google.jplurk.ISettings#getDefaultProxyPort()
+	 */
     public int getDefaultProxyPort() {
         int port = 80;
         try {
@@ -63,14 +66,23 @@ public class PlurkSettings {
         return port;
     }
 
+    /* (non-Javadoc)
+	 * @see com.google.jplurk.ISettings#getDefaultProxyUser()
+	 */
     public String getDefaultProxyUser() {
         return prop.getProperty("default_proxy_user");
     }
 
+    /* (non-Javadoc)
+	 * @see com.google.jplurk.ISettings#getDefaultProxyPassword()
+	 */
     public String getDefaultProxyPassword() {
         return prop.getProperty("default_proxy_password");
     }
 
+    /* (non-Javadoc)
+	 * @see com.google.jplurk.ISettings#createParamMap()
+	 */
     public MapHelper createParamMap() {
         return new MapHelper(new HashMap<String, String>() {
 
@@ -82,6 +94,9 @@ public class PlurkSettings {
         });
     }
 
+    /* (non-Javadoc)
+	 * @see com.google.jplurk.ISettings#getLang()
+	 */
     public String getLang() {
         return prop.getProperty("lang", "en");
     }
@@ -124,7 +139,7 @@ public class PlurkSettings {
     }
 
     public static void main(String[] args) throws PlurkException {
-        PlurkSettings p = new PlurkSettings();
+        ISettings p = new PlurkSettings();
         System.out.println(p);
     }
 }

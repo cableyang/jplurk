@@ -45,7 +45,7 @@ public class PlurkClient {
     // <editor-fold defaultstate="collapsed" desc="Init PlurkClient">
     private static Log logger = LogFactory.getLog(PlurkClient.class);
     private HttpClient client = new DefaultHttpClient();
-    private PlurkSettings config;
+    private ISettings config;
 
     static abstract class IdActions {
 
@@ -73,7 +73,7 @@ public class PlurkClient {
      * Load Setting from property file.
      * @param settings
      */
-    public PlurkClient(PlurkSettings settings) {
+    public PlurkClient(ISettings settings) {
         this.config = settings;
         /* ProgrammaticallySetting > Dynamic > Default.
          * Load Default Proxy Setting, then load Dynamic Proxy Setting.
@@ -1394,7 +1394,7 @@ public class PlurkClient {
     public static void main(String[] args) throws PlurkException, ClientProtocolException, IOException, InterruptedException {
 //        ProxyProvider.setProvider("proxyhost", 8080);
 
-        PlurkSettings config = new PlurkSettings();
+        ISettings config = new PlurkSettings();
         PlurkClient pc = new PlurkClient(config);
 
         JSONObject o = pc.login(JOptionPane.showInputDialog("id"), JOptionPane.showInputDialog("password"));
