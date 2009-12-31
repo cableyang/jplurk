@@ -43,10 +43,9 @@ import com.google.jplurk.net.ProxyProvider;
 public class PlurkClient {
 
     // <editor-fold defaultstate="collapsed" desc="Init PlurkClient">
-	private static Logger logger = LoggerFactory.getLogger(PlurkClient.class);
+    private static Logger logger = LoggerFactory.getLogger(PlurkClient.class);
     private HttpClient client = new DefaultHttpClient();
     private PlurkSettings config;
-
 
     static abstract class IdActions {
 
@@ -90,15 +89,15 @@ public class PlurkClient {
             ((DefaultHttpClient) client).getCredentialsProvider().setCredentials(
                     new AuthScope(ProxyProvider.getHost(), ProxyProvider.getPort()),
                     new UsernamePasswordCredentials(ProxyProvider.getUser(), ProxyProvider.getPassword()));
-            logger.debug("Proxy: Auth " + ((UsernamePasswordCredentials)((DefaultHttpClient) client).getCredentialsProvider().getCredentials(AuthScope.ANY)).getUserName());
-            logger.debug("Proxy: Auth " + ((UsernamePasswordCredentials)((DefaultHttpClient) client).getCredentialsProvider().getCredentials(AuthScope.ANY)).getPassword());
-    }
+            logger.debug("Proxy: Auth " + ((UsernamePasswordCredentials) ((DefaultHttpClient) client).getCredentialsProvider().getCredentials(AuthScope.ANY)).getUserName());
+            logger.debug("Proxy: Auth " + ((UsernamePasswordCredentials) ((DefaultHttpClient) client).getCredentialsProvider().getCredentials(AuthScope.ANY)).getPassword());
+        }
         // Proxy Host Setting
         if (StringUtils.isNotBlank(ProxyProvider.getHost())) {
             HttpHost proxy = new HttpHost(ProxyProvider.getHost(), ProxyProvider.getPort());
             client.getParams().setParameter(ConnRoutePNames.DEFAULT_PROXY, proxy);
-            logger.debug("Proxy: Host " + ((HttpHost)client.getParams().getParameter(ConnRoutePNames.DEFAULT_PROXY)).getHostName());
-            logger.debug("Proxy: Prot " + String.valueOf(((HttpHost)client.getParams().getParameter(ConnRoutePNames.DEFAULT_PROXY)).getPort()));
+            logger.debug("Proxy: Host " + ((HttpHost) client.getParams().getParameter(ConnRoutePNames.DEFAULT_PROXY)).getHostName());
+            logger.debug("Proxy: Prot " + String.valueOf(((HttpHost) client.getParams().getParameter(ConnRoutePNames.DEFAULT_PROXY)).getPort()));
         }
 
         Runtime.getRuntime().addShutdownHook(new Thread() {
@@ -211,61 +210,64 @@ public class PlurkClient {
     }
     // </editor-fold>
 
+    // <editor-fold defaultstate="collapsed" desc="/API/Users/update">
+    /**
+     * /API/Users/update
+     * @param currentPassword User's current password.
+     * @param fullName Change full name.
+     * @param newPassword Change password.
+     * @param email Change email.
+     * @param displayName User's display name, can be empty and full unicode. Must be shorter than 15 characters.
+     * @param privacyPolicy User's privacy settings. The option can be world (whole world can view the profile), only_friends (only friends can view the profile) or only_me (only the user can view own plurks).
+     * @param birth Should be YYYY-MM-DD, example 1985-05-13.
+     * @return
+     */
+    public JSONObject update(String currentPassword, String fullName,
+            String newPassword, String email, String displayName,
+            PrivacyPolicy privacyPolicy, DateTime birth) {
+        if (StringUtils.isBlank(currentPassword)) {
+            logger.warn("current password can not be null.");
+            return null;
+        }
 
-	/**
-	 * /API/Users/update
-	 * @param currentPassword User's current password.
-	 * @param fullName Change full name.
-	 * @param newPassword Change password.
-	 * @param email Change email.
-	 * @param displayName User's display name, can be empty and full unicode. Must be shorter than 15 characters.
-	 * @param privacyPolicy User's privacy settings. The option can be world (whole world can view the profile), only_friends (only friends can view the profile) or only_me (only the user can view own plurks).
-	 * @param birth Should be YYYY-MM-DD, example 1985-05-13.
-	 * @return
-	 */
-	public JSONObject update(String currentPassword, String fullName,
-			String newPassword, String email, String displayName,
-			PrivacyPolicy privacyPolicy, DateTime birth) {
-		if (StringUtils.isBlank(currentPassword)) {
-			logger.warn("current password can not be null.");
-			return null;
-		}
+        MapHelper helper = config.createParamMap();
+        helper.k("current_password").v(currentPassword);
+        if (StringUtils.isNotBlank(fullName)) {
+            helper.k("full_name").v(fullName);
+        }
+        if (StringUtils.isNotBlank(newPassword)) {
+            helper.k("new_password").v(newPassword);
+        }
+        if (StringUtils.isNotBlank(displayName)) {
+            helper.k("display_name").v(displayName);
+        }
+        if (StringUtils.isNotBlank(email)) {
+            helper.k("email").v(email);
+        }
+        if (privacyPolicy != null) {
+            helper.k("privacy").v(privacyPolicy.toString());
+        }
+        if (birth != null) {
+            helper.k("privacy").v(birth.birthday());
+        }
 
-		MapHelper helper = config.createParamMap();
-		helper.k("current_password").v(currentPassword);
-		if (StringUtils.isNotBlank(fullName)) {
-			helper.k("full_name").v(fullName);
-		}
-		if (StringUtils.isNotBlank(newPassword)) {
-			helper.k("new_password").v(newPassword);
-		}
-		if (StringUtils.isNotBlank(displayName)) {
-			helper.k("display_name").v(displayName);
-		}
-		if (StringUtils.isNotBlank(email)) {
-			helper.k("email").v(email);
-		}
-		if (privacyPolicy != null) {
-			helper.k("privacy").v(privacyPolicy.toString());
-		}
-		if (birth != null) {
-			helper.k("privacy").v(birth.birthday());
-		}
+        try {
+            return new JSONObject(execute(PlurkActionSheet.getInstance().update(helper.getMap())));
+        } catch (JSONException e) {
+            logger.error(e.getMessage(), e);
+        } catch (PlurkException e) {
+            logger.error(e.getMessage(), e);
+        }
 
-		try {
-			return new JSONObject(execute(PlurkActionSheet.getInstance().update(helper.getMap())));
-		} catch (JSONException e) {
-			logger.error(e.getMessage(), e);
-		} catch (PlurkException e) {
-			logger.error(e.getMessage(), e);
-		}
+        return null;
+    }
+    // </editor-fold>
 
-		return null;
-	}
-
+    // <editor-fold defaultstate="collapsed" desc="/API/Users/updatePicture">
     /**
      * /API/Users/updatePicture <br />
      * @param file a image file will be uploaded
+     * @return
      */
     public JSONObject updatePicture(File file) {
         if (file == null || !file.exists() || !file.isFile()) {
@@ -293,138 +295,168 @@ public class PlurkClient {
 
         return null;
     }
+    // </editor-fold>
 
+    // <editor-fold defaultstate="collapsed" desc="/API/FriendsFans/getFriendsByOffset">
     /**
      * /API/FriendsFans/getFriendsByOffset <br/>
      * @param userId
      * @param offset
      * @return
      */
-    public JSONArray getFriendsByOffset(String userId, int offset){
-    	try {
-			HttpGet method = (HttpGet) PlurkActionSheet.getInstance()
-				.getFriendsByOffset(config.createParamMap()
-				.k("user_id").v(userId)
-				.k("offset").v("" + (offset < 0 ? 0 : offset))
-				.getMap());
-			return new JSONArray(execute(method));
-		} catch (PlurkException e) {
-			logger.error(e.getMessage(), e);
-		} catch (JSONException e) {
-			logger.error(e.getMessage(), e);
-		}
-		return null;
+    public JSONArray getFriendsByOffset(String userId, int offset) {
+        try {
+            HttpGet method = (HttpGet) PlurkActionSheet.getInstance().getFriendsByOffset(config.createParamMap().k("user_id").v(userId).k("offset").v("" + (offset < 0 ? 0 : offset)).getMap());
+            return new JSONArray(execute(method));
+        } catch (PlurkException e) {
+            logger.error(e.getMessage(), e);
+        } catch (JSONException e) {
+            logger.error(e.getMessage(), e);
+        }
+        return null;
     }
+    // </editor-fold>
 
+    // <editor-fold defaultstate="collapsed" desc="/API/FriendsFans/getFansByOffset">
     /**
      * /API/FriendsFans/getFansByOffset <br />
      * @param userId
      * @param offset
      * @return
      */
-    public JSONArray getFansByOffset(String userId, int offset){
-    	try {
-			HttpGet method = (HttpGet) PlurkActionSheet.getInstance()
-				.getFansByOffset(config.createParamMap()
-				.k("user_id").v(userId)
-				.k("offset").v("" + (offset < 0 ? 0 : offset))
-				.getMap());
-			return new JSONArray(execute(method));
-		} catch (PlurkException e) {
-			logger.error(e.getMessage(), e);
-		} catch (JSONException e) {
-			logger.error(e.getMessage(), e);
-		}
-		return null;
+    public JSONArray getFansByOffset(String userId, int offset) {
+        try {
+            HttpGet method = (HttpGet) PlurkActionSheet.getInstance().getFansByOffset(config.createParamMap().k("user_id").v(userId).k("offset").v("" + (offset < 0 ? 0 : offset)).getMap());
+            return new JSONArray(execute(method));
+        } catch (PlurkException e) {
+            logger.error(e.getMessage(), e);
+        } catch (JSONException e) {
+            logger.error(e.getMessage(), e);
+        }
+        return null;
     }
+    // </editor-fold>
 
-	/**
-	 * /API/FriendsFans/getFollowingByOffset
-	 * @param offset The offset, can be 10, 20, 30 etc.
-	 * @return Returns a list of JSON objects users, e.g. [{"id": 3, "nick_name": "alvin", ...}, ...]
-	 */
-	public JSONObject getFollowingByOffset(int offset) {
-		try {
-			HttpGet method = (HttpGet) PlurkActionSheet.getInstance()
-					.getFollowingByOffset(
-							config.createParamMap().k("offset").v(
-									"" + (offset < 0 ? 0 : offset)).getMap());
-			return new JSONObject(execute(method));
-		} catch (PlurkException e) {
-			logger.error(e.getMessage(), e);
-		} catch (JSONException e) {
-			logger.error(e.getMessage(), e);
-		}
-		return null;
-	}
+    // <editor-fold defaultstate="collapsed" desc="/API/FriendsFans/getFollowingByOffset">
+    /**
+     * /API/FriendsFans/getFollowingByOffset
+     * @param offset The offset, can be 10, 20, 30 etc.
+     * @return Returns a list of JSON objects users, e.g. [{"id": 3, "nick_name": "alvin", ...}, ...]
+     */
+    public JSONObject getFollowingByOffset(int offset) {
+        try {
+            HttpGet method = (HttpGet) PlurkActionSheet.getInstance().getFollowingByOffset(
+                    config.createParamMap().k("offset").v(
+                    "" + (offset < 0 ? 0 : offset)).getMap());
+            return new JSONObject(execute(method));
+        } catch (PlurkException e) {
+            logger.error(e.getMessage(), e);
+        } catch (JSONException e) {
+            logger.error(e.getMessage(), e);
+        }
+        return null;
+    }
+    // </editor-fold>
 
-	/**
-	 * /API/FriendsFans/becomeFriend
-	 * @param friendId The ID of the user you want to befriend.
-	 * @return {"success_text": "ok"} if a friend request has been made.
-	 */
-	public JSONObject becomeFriend(int friendId){
-		try {
-			HttpGet method = (HttpGet) PlurkActionSheet.getInstance().becomeFriend(config.createParamMap().k("friend_id").v("" + friendId).getMap());
-			return new JSONObject(execute(method));
-		} catch (PlurkException e) {
-			logger.error(e.getMessage(), e);
-		} catch (JSONException e) {
-			logger.error(e.getMessage(), e);
-		}
-		return null;
-	}
+    // <editor-fold defaultstate="collapsed" desc="/API/FriendsFans/becomeFriend">
+    /**
+     * /API/FriendsFans/becomeFriend
+     * @param friendId The ID of the user you want to befriend.
+     * @return {"success_text": "ok"} if a friend request has been made.
+     */
+    public JSONObject becomeFriend(int friendId) {
+        try {
+            HttpGet method = (HttpGet) PlurkActionSheet.getInstance().becomeFriend(config.createParamMap().k("friend_id").v("" + friendId).getMap());
+            return new JSONObject(execute(method));
+        } catch (PlurkException e) {
+            logger.error(e.getMessage(), e);
+        } catch (JSONException e) {
+            logger.error(e.getMessage(), e);
+        }
+        return null;
+    }
+    // </editor-fold>
 
-	/**
-	 * /API/FriendsFans/removeAsFriend
-	 * @param friendId The ID of the user you want to remove
-	 * @return {"success_text": "ok"} if friend_id has been removed as friend.
-	 */
-	public JSONObject removeAsFriend(int friendId){
-		try {
-			HttpGet method = (HttpGet) PlurkActionSheet.getInstance().removeAsFriend(config.createParamMap().k("friend_id").v("" + friendId).getMap());
-			return new JSONObject(execute(method));
-		} catch (PlurkException e) {
-			logger.error(e.getMessage(), e);
-		} catch (JSONException e) {
-			logger.error(e.getMessage(), e);
-		}
-		return null;
-	}
+    // <editor-fold defaultstate="collapsed" desc="/API/FriendsFans/removeAsFriend">
+    /**
+     * /API/FriendsFans/removeAsFriend
+     * @param friendId The ID of the user you want to remove
+     * @return {"success_text": "ok"} if friend_id has been removed as friend.
+     */
+    public JSONObject removeAsFriend(int friendId) {
+        try {
+            HttpGet method = (HttpGet) PlurkActionSheet.getInstance().removeAsFriend(config.createParamMap().k("friend_id").v("" + friendId).getMap());
+            return new JSONObject(execute(method));
+        } catch (PlurkException e) {
+            logger.error(e.getMessage(), e);
+        } catch (JSONException e) {
+            logger.error(e.getMessage(), e);
+        }
+        return null;
+    }
+    // </editor-fold>
 
-	/**
-	 * /API/FriendsFans/becomeFan
-	 * @param fanId The ID of the user you want to become fan of
-	 * @return {"success_text": "ok"} if the current logged in user is a fan of fan_id.
-	 */
-	public JSONObject becomeFan(int fanId){
-		try {
-			HttpGet method = (HttpGet) PlurkActionSheet.getInstance().becomeFan(config.createParamMap().k("fan_id").v("" + fanId).getMap());
-			return new JSONObject(execute(method));
-		} catch (PlurkException e) {
-			logger.error(e.getMessage(), e);
-		} catch (JSONException e) {
-			logger.error(e.getMessage(), e);
-		}
-		return null;
-	}
+    // <editor-fold defaultstate="collapsed" desc="/API/FriendsFans/becomeFan">
+    /**
+     * /API/FriendsFans/becomeFan
+     * @param fanId The ID of the user you want to become fan of
+     * @return {"success_text": "ok"} if the current logged in user is a fan of fan_id.
+     */
+    public JSONObject becomeFan(int fanId) {
+        try {
+            HttpGet method = (HttpGet) PlurkActionSheet.getInstance().becomeFan(config.createParamMap().k("fan_id").v("" + fanId).getMap());
+            return new JSONObject(execute(method));
+        } catch (PlurkException e) {
+            logger.error(e.getMessage(), e);
+        } catch (JSONException e) {
+            logger.error(e.getMessage(), e);
+        }
+        return null;
+    }
+    // </editor-fold>
 
-	public JSONObject setFollowing(int userId, boolean follow){
-		try {
-			Boolean isFollow = follow;
-			HttpGet method = (HttpGet) PlurkActionSheet.getInstance().setFollowing(
-				config.createParamMap()
-					.k("user_id").v("" + userId)
-					.k("follow").v(isFollow.toString())
-					.getMap());
-			return new JSONObject(execute(method));
-		} catch (PlurkException e) {
-			logger.error(e.getMessage(), e);
-		} catch (JSONException e) {
-			logger.error(e.getMessage(), e);
-		}
-		return null;
-	}
+    // <editor-fold defaultstate="collapsed" desc="/API/FriendsFans/setFollowing">
+    /**
+     * /API/FriendsFans/setFollowing
+     * @param userId
+     * @param follow true if the user should be followed, and false if the user should be unfollowed.
+     * @return
+     */
+    public JSONObject setFollowing(int userId, boolean follow) {
+        try {
+            Boolean isFollow = follow;
+            HttpGet method = (HttpGet) PlurkActionSheet.getInstance().setFollowing(
+                    config.createParamMap().k("user_id").v("" + userId).k("follow").v(isFollow.toString()).getMap());
+            return new JSONObject(execute(method));
+        } catch (PlurkException e) {
+            logger.error(e.getMessage(), e);
+        } catch (JSONException e) {
+            logger.error(e.getMessage(), e);
+        }
+        return null;
+    }
+    // </editor-fold>
+
+    // <editor-fold defaultstate="collapsed" desc="/API/FriendsFans/getCompletion">
+    /**
+     * /API/FriendsFans/getCompletion <br/>
+     * Returns a JSON object of the logged in users friends (nick name and full name).
+     * This information can be used to construct auto-completion for private plurking.
+     * Notice that a friend list can be big, depending on how many friends a user has, so this list should be lazy-loaded in your application.
+     * @return
+     */
+    public JSONObject getCompletion() {
+        try {
+            HttpGet method = (HttpGet) PlurkActionSheet.getInstance().getCompletion(config.createParamMap().getMap());
+            return new JSONObject(execute(method));
+        } catch (PlurkException e) {
+            logger.error(e.getMessage(), e);
+        } catch (JSONException e) {
+            logger.error(e.getMessage(), e);
+        }
+        return null;
+    }
+    // </editor-fold>
 
     // <editor-fold defaultstate="collapsed" desc="/API/Timeline/getPlurk">
     /**
@@ -758,7 +790,9 @@ public class PlurkClient {
     }
     // </editor-fold>
 
+    // <editor-fold defaultstate="collapsed" desc="/API/Alerts/addAllAsFriends">
     /**
+     * /API/Alerts/addAllAsFriends <br />
      * approval all friend requests
      * @return {"success_text": "ok"} when request success, otherwise null
      */
@@ -773,41 +807,48 @@ public class PlurkClient {
         }
         return null;
     }
+    // </editor-fold>
 
-	/**
-	 * /API/Profile/getOwnProfile
-	 * @return
-	 */
-	public JSONObject getOwnProfile() {
-		try {
-			HttpGet method = (HttpGet) PlurkActionSheet.getInstance().getOwnProfile(config.createParamMap().getMap());
-			return new JSONObject(execute(method));
-		} catch (PlurkException e) {
-			logger.error(e.getMessage(), e);
-		} catch (JSONException e) {
-			logger.error(e.getMessage(), e);
-		}
-		return null;
-	}
-
-	/**
-	 * /API/Profile/getPublicProfile
-	 * @param userId
-	 * @return
-	 */
-	public JSONObject getPublicProfile(String userId) {
-		try {
-			HttpGet method = (HttpGet) PlurkActionSheet.getInstance().getPublicProfile(config.createParamMap().k("user_id").v(userId).getMap());
-			return new JSONObject(execute(method));
-		} catch (PlurkException e) {
-			logger.error(e.getMessage(), e);
-		} catch (JSONException e) {
-			logger.error(e.getMessage(), e);
-		}
-		return null;
-	}
-
+    // <editor-fold defaultstate="collapsed" desc="/API/Profile/getOwnProfile">
     /**
+     * /API/Profile/getOwnProfile
+     * @return
+     */
+    public JSONObject getOwnProfile() {
+        try {
+            HttpGet method = (HttpGet) PlurkActionSheet.getInstance().getOwnProfile(config.createParamMap().getMap());
+            return new JSONObject(execute(method));
+        } catch (PlurkException e) {
+            logger.error(e.getMessage(), e);
+        } catch (JSONException e) {
+            logger.error(e.getMessage(), e);
+        }
+        return null;
+    }
+    // </editor-fold>
+
+    // <editor-fold defaultstate="collapsed" desc="/API/Profile/getPublicProfile">
+    /**
+     * /API/Profile/getPublicProfile
+     * @param userId
+     * @return
+     */
+    public JSONObject getPublicProfile(String userId) {
+        try {
+            HttpGet method = (HttpGet) PlurkActionSheet.getInstance().getPublicProfile(config.createParamMap().k("user_id").v(userId).getMap());
+            return new JSONObject(execute(method));
+        } catch (PlurkException e) {
+            logger.error(e.getMessage(), e);
+        } catch (JSONException e) {
+            logger.error(e.getMessage(), e);
+        }
+        return null;
+    }
+    // </editor-fold>
+
+    // <editor-fold defaultstate="collapsed" desc="/API/Timeline/uploadPicture">
+    /**
+     * /API/Timeline/uploadPicture
      * @param file a image file will be uploaded
      * @return json with thumbnail url. for example <pre>{"thumbnail":"http://images.plurk.com/tn_3146394_fb04befc28fbca59318f16d83d5c78cc.gif","full":"http://images.plurk.com/3146394_fb04befc28fbca59318f16d83d5c78cc.jpg"}</pre>
      */
@@ -837,32 +878,49 @@ public class PlurkClient {
 
         return null;
     }
+    // </editor-fold>
 
-    public JSONObject getPollingPlurks(DateTime offset, int limit){
-    	try {
-    		String _offset = (offset == null ? DateTime.now().timeOffset() : offset.timeOffset());
-			HttpGet method = (HttpGet) PlurkActionSheet.getInstance()
-				.getPollingPlurks(config.createParamMap().k("offset").v(_offset).k("limit").v("" + (limit <= 0 ? 20 : limit)).getMap());
-			return new JSONObject(execute(method));
-		} catch (PlurkException e) {
-			logger.error(e.getMessage(), e);
-		} catch (JSONException e) {
-			logger.error(e.getMessage(), e);
-		}
-		return null;
+    // <editor-fold defaultstate="collapsed" desc="/API/Polling/getPlurks">
+    /**
+     * /API/Polling/getPlurks <br/>
+     * You should use this call to find out if there any new plurks posted to the user's timeline.
+     * It's much more efficient than doing it with /API/Timeline/getPlurks, so please use it :)
+     * @param offset
+     * @param limit
+     * @return
+     */
+    public JSONObject getPollingPlurks(DateTime offset, int limit) {
+        try {
+            String _offset = (offset == null ? DateTime.now().timeOffset() : offset.timeOffset());
+            HttpGet method = (HttpGet) PlurkActionSheet.getInstance().getPollingPlurks(config.createParamMap().k("offset").v(_offset).k("limit").v("" + (limit <= 0 ? 20 : limit)).getMap());
+            return new JSONObject(execute(method));
+        } catch (PlurkException e) {
+            logger.error(e.getMessage(), e);
+        } catch (JSONException e) {
+            logger.error(e.getMessage(), e);
+        }
+        return null;
     }
+    // </editor-fold>
 
-    public JSONObject getPollingUnreadCount(){
-    	try {
-			HttpGet method = (HttpGet) PlurkActionSheet.getInstance().getPollingUnreadCount(config.createParamMap().getMap());
-			return new JSONObject(execute(method));
-		} catch (PlurkException e) {
-			logger.error(e.getMessage(), e);
-		} catch (JSONException e) {
-			logger.error(e.getMessage(), e);
-		}
-		return null;
+    // <editor-fold defaultstate="collapsed" desc="/API/Polling/getUnreadCount">
+    /**
+     * /API/Polling/getUnreadCount <br/>
+     * Use this call to find out if there are unread plurks on a user's timeline.
+     * @return
+     */
+    public JSONObject getPollingUnreadCount() {
+        try {
+            HttpGet method = (HttpGet) PlurkActionSheet.getInstance().getPollingUnreadCount(config.createParamMap().getMap());
+            return new JSONObject(execute(method));
+        } catch (PlurkException e) {
+            logger.error(e.getMessage(), e);
+        } catch (JSONException e) {
+            logger.error(e.getMessage(), e);
+        }
+        return null;
     }
+    // </editor-fold>
 
     // <editor-fold defaultstate="collapsed" desc="Execution of HttpRequest">
     private String execute(HttpUriRequest method) throws PlurkException {
