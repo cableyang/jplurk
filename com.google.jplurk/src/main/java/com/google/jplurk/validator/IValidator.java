@@ -1,7 +1,8 @@
 package com.google.jplurk.validator;
 
-import org.apache.commons.beanutils.ConstructorUtils;
-import org.apache.commons.beanutils.MethodUtils;
+import java.lang.reflect.Constructor;
+import java.lang.reflect.Method;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -23,15 +24,17 @@ public interface IValidator {
 
 			Object v = null;
 			try {
-				v = ConstructorUtils.invokeConstructor(validatorClazz, new Object[0]);
+				Constructor<?> ctor = validatorClazz.getConstructor(new Class<?>[0]);
+				v = ctor.newInstance(new Object[0]);
 			} catch (Exception e) {
 				throw new PlurkException(
-					"cannot create validator from [" + validatorClazz + "]", e);
+					"cannot create validator from [" + validatorClazz + "], please check validator has the default constructor.", e);
 			}
 
 			Boolean passValidation = false;
 			try {
-				passValidation = (Boolean) MethodUtils.invokeMethod(v, "validate", value);
+				Method method = validatorClazz.getMethod("validate", new Class<?>[]{String.class});
+				passValidation = (Boolean) method.invoke(v, value);
 			} catch (Exception e) {
 				throw new PlurkException(
 					"cannot invoke method from [" + validatorClazz + "]", e);
