@@ -12,6 +12,8 @@
 			<artifactId>httpclient</artifactId>
 			<version>4.0</version>
 		</dependency>
+
+<!--
 		<dependency>
 			<groupId>org.apache.httpcomponents</groupId>
 			<artifactId>httpmime</artifactId>
@@ -22,6 +24,8 @@
             <artifactId>jcip-annotations</artifactId>
             <version>1.0</version>
         </dependency>
+-->
+
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
