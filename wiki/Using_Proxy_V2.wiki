@@ -1,4 +1,4 @@
-#summary 在 Proxy 環境使用 jPlurk
+#summary Setting Proxy for jPlurk / 在 Proxy 環境使用 jPlurk
 #labels Featured
 
 = 如何設定代理伺服器 =

@@ -1,4 +1,4 @@
-#summary Setting Proxy for jPlurk
+#summary Setting Proxy for jPlurk / 在 Proxy 環境使用 jPlurk
 #labels Featured
 
 = How to Setup Proxy =

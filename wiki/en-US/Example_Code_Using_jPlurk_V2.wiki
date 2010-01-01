@@ -1,4 +1,4 @@
-#summary Example Code using jPlurk v2 beta
+#summary Example Code using jPlurk v2 beta / 使用 jPlurk v2 beta 的範例程式
 
 = Introduction =
 
