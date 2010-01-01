@@ -69,5 +69,5 @@ public class PlurkIt {
 
 == 延伸閱讀 ==
 
-  * [http://code.google.com/p/jplurk/wiki/Introduction jPlurk 簡介]
-  * [http://code.google.com/p/jplurk/wiki/jplurkV2 jPlurk v2 使用簡介與實作狀態]
+  * [Introduction jPlurk 簡介]
+  * [jplurkV2 jPlurk v2 使用簡介與實作狀態]
