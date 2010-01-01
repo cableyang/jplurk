@@ -35,5 +35,5 @@ public HttpUriRequest getFriendsByOffset(Map<String, String> params)
 
 == 延伸閱讀 ==
 
-  * [http://code.google.com/p/jplurk/wiki/jplurkV2 jPlurk v2 使用簡介與實作狀態]
-  * [http://code.google.com/p/jplurk/wiki/Using_Proxy_V2 在 Proxy 環境使用 jPlurk] 
+  * [jplurkV2 jPlurk v2 使用簡介與實作狀態]
+  * [Using_Proxy_V2 在 Proxy 環境使用 jPlurk] 

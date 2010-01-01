@@ -201,5 +201,5 @@ Java API Doc is growing gradually, too.
 
 == More Reading ==
 
-  * [http://code.google.com/p/jplurk/wiki/Introduction jPlurk Introduction]
-  * [http://code.google.com/p/jplurk/wiki/Using_Proxy_V2 Setting Proxy for jPlurk]
+  * [Introduction jPlurk Introduction]
+  * [Using_Proxy_V2 Setting Proxy for jPlurk]
