@@ -195,5 +195,5 @@ Java API Doc 也正在持續的成長中。
 
 == 延伸閱讀 ==
 
-  * [http://code.google.com/p/jplurk/wiki/Introduction jPlurk 簡介]
-  * [http://code.google.com/p/jplurk/wiki/Using_Proxy_V2 在 Proxy 環境使用 jPlurk]
+  * [Introduction jPlurk 簡介]
+  * [Using_Proxy_V2 在 Proxy 環境使用 jPlurk]
