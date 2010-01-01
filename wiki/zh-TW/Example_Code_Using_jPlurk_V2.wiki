@@ -1,8 +1,8 @@
-#summary ¨Ï¥Î jPlurk v2 beta ªº½d¨Òµ{¦¡
+#summary ä½¿ç”¨ jPlurk v2 beta çš„ç¯„ä¾‹ç¨‹å¼
 
 = Introduction =
 
-³o¬O¤@¥÷¨Ï¥Î jPlurk v2 beta ªº½d¨Òµ{¦¡¡C
+é€™æ˜¯å€‹ä½¿ç”¨ jPlurk v2 beta çš„ç¯„ä¾‹ç¨‹å¼ã€‚
 
 
 = Example Code =
