@@ -1,4 +1,4 @@
-#summary Setting Proxy for jPlurk / ¦b Proxy Àô¹Ò¨Ï¥Î jPlurk
+#summary Setting Proxy for jPlurk / åœ¨ Proxy ç’°å¢ƒä½¿ç”¨ jPlurk
 #labels Featured
 
 = How to Setup Proxy =
