@@ -1,6 +1,9 @@
 #summary jPlurk Introduction / jPlurk 簡介
 #labels Featured
 
+= Note =
+Need Translation!
+
 = jPlurk 的起源 =
 
 jPlurk 專案的雛型於 2009/2 ~ 2009/3 之間由 [http://code.google.com/u/askeing/ askeing] 建立，askeing 的開發 jplurk 動機在於 [http://blog.xdite.net/?p=976 xdite 的卡碼代練計劃]。簡單地說，只要 plurk 帳號每天維持一定數量的發文，那就能使卡碼值提昇。基於這個最原始的念頭於是 askeing 貢獻了 jplurk 的雛型。後續經 [http://code.google.com/u/ChingYiChan.tw/ ChingYiChan.tw] 的調整設計架構，持續發展至今。
