@@ -1,0 +1,36 @@
+#summary jPlurk Introduction / jPlurk 簡介
+#labels Featured
+
+= jPlurk 的起源 =
+
+jPlurk 專案的雛型於 2009/2 ~ 2009/3 之間由 [http://code.google.com/u/askeing/ askeing] 建立，askeing 的開發 jplurk 動機在於 [http://blog.xdite.net/?p=976 xdite 的卡碼代練計劃]。簡單地說，只要 plurk 帳號每天維持一定數量的發文，那就能使卡碼值提昇。基於這個最原始的念頭於是 askeing 貢獻了 jplurk 的雛型。後續經 [http://code.google.com/u/ChingYiChan.tw/ ChingYiChan.tw] 的調整設計架構，持續發展至今。
+
+= jPlurk 的轉變 =
+
+[http://www.plurk.com/API Plurk API] 終於在 2009/12/5 千呼萬喚始出來，於是各家非官方實作的 Plurk Library 開始進行內部的修改或重新打造，相同的情況在 jPlurk 亦同。我們於 2009/12/16 將原先的 jPlurk 開發凍結為 1.x 版，並將版號昇為 2.0。設定一個新的架構實作之。
+
+相較以往透過解析網頁內容的方式，我們有完整的 Plurk API 訊息。因此，獨立出一個 [http://code.google.com/p/jplurk/source/browse/trunk/com.google.jplurk/src/main/java/com/google/jplurk/action/PlurkActionSheet.java PlurkActionSheet類別] 用來描述實作的 Plurk API。以 getFriendsByOffset 為例，我們用 @Meta 與 @Validation 描述它：
+
+{{{
+@Meta(uri = "/FriendsFans/getFriendsByOffset", require = { "api_key", "user_id" })
+@Validation({ @Validator(field = "offset", validator = NonNegativeIntegerValidator.class) })
+public HttpUriRequest getFriendsByOffset(Map<String, String> params)
+				throws PlurkException {
+		return prepare("getFriendsByOffset", params);
+}
+}}}
+
+利用 @Meta 能組成 Http Request 並簡單驗證必要的欄位；利用 @Validation 做格式驗證。最後，在 !PlurkClient 實作已支援的功能。
+
+
+= jPlurk v2 設計慣例 =
+
+  * 與 Plurk API 功能對應
+  * 所有 !PlurkClient 實作的 API 方法都回傳 JSONObject 或 JSONArrayObject
+  * 當發生例外，或 Http 回傳狀態不為 200 OK 時，會傳回 null
+
+
+== 延伸閱讀 ==
+
+  * [http://code.google.com/p/jplurk/wiki/jplurkV2 jPlurk v2 使用簡介與實作狀態]
+  * [http://code.google.com/p/jplurk/wiki/Using_Proxy_V2 在 Proxy 環境使用 jPlurk] 
