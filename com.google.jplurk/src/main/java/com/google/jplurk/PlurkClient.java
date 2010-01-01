@@ -7,8 +7,6 @@ import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import javax.swing.JOptionPane;
-
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.math.NumberUtils;
 import org.apache.commons.logging.Log;
@@ -1410,8 +1408,8 @@ public class PlurkClient {
         ISettings config = new PlurkSettings();
         PlurkClient pc = new PlurkClient(config);
 
-        JSONObject o = pc.login(JOptionPane.showInputDialog("id"), JOptionPane.showInputDialog("password"));
-        System.out.println(o);
+//        JSONObject o = pc.login(JOptionPane.showInputDialog("id"), JOptionPane.showInputDialog("password"));
+//        System.out.println(o);
 
 //        JSONObject oRegister = pc.register(JOptionPane.showInputDialog("nick_name"),
 //                JOptionPane.showInputDialog("full_name"),
@@ -1434,7 +1432,7 @@ public class PlurkClient {
 //        System.out.println(pc.getPollingUnreadCount());
 //        186562865 , 186616350  : fail
 //        186567616 : ok
-        System.out.println(pc.uploadPicture(new File("C:/images/image.jpg")));
+//        System.out.println(pc.uploadPicture(new File("C:/images/image.jpg")));
 
 //        System.out.println(pc.updatePicture(new File("C:/Users/qrtt1/Desktop/4932792-big2.jpg")));
 //        JSONObject oo = pc.plurkAdd("測試 jPlurk 編輯 plruk 功能！！", Qualifier.IS, NoComments.False);
