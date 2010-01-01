@@ -2,7 +2,6 @@ package com.google.jplurk;
 
 import java.io.File;
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.regex.Matcher;
@@ -23,9 +22,6 @@ import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.methods.HttpUriRequest;
 import org.apache.http.conn.params.ConnRoutePNames;
-import org.apache.http.entity.mime.MultipartEntity;
-import org.apache.http.entity.mime.content.FileBody;
-import org.apache.http.entity.mime.content.StringBody;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -35,6 +31,7 @@ import com.google.jplurk.action.PlurkActionSheet;
 import com.google.jplurk.exception.PlurkException;
 import com.google.jplurk.net.JPlurkResponseHandler;
 import com.google.jplurk.net.ProxyProvider;
+import com.google.jplurk.net.ThinMultipartEntity;
 
 /**
  * Main Client for Plurk API.
@@ -276,14 +273,22 @@ public class PlurkClient {
         }
 
         HttpPost method = new HttpPost("http://www.plurk.com/API/Users/updatePicture");
-        MultipartEntity entity = new MultipartEntity();
+//        MultipartEntity entity = new MultipartEntity();
+//        try {
+//            entity.addPart("api_key", new StringBody(config.getApiKey()));
+//            entity.addPart("profile_image", new FileBody(file));
+//        } catch (UnsupportedEncodingException e) {
+//            logger.error(e.getMessage(), e);
+//        }
+
         try {
-            entity.addPart("api_key", new StringBody(config.getApiKey()));
-            entity.addPart("profile_image", new FileBody(file));
-        } catch (UnsupportedEncodingException e) {
-            logger.error(e.getMessage(), e);
-        }
-        method.setEntity(entity);
+            ThinMultipartEntity entity = new ThinMultipartEntity();
+            entity.addPart("api_key", config.getApiKey());
+            entity.addPart("profile_image", file);
+            method.setEntity(entity);
+		} catch (Exception e) {
+			logger.error(e.getMessage(), e);
+		}
 
         try {
             return new JSONObject(execute(method));
@@ -793,7 +798,7 @@ public class PlurkClient {
     // <editor-fold defaultstate="collapsed" desc="/API/Alerts/getActive">
     /**
      * /API/Alerts/getActive <br />
-     * Return a JSON list of current active alerts. 
+     * Return a JSON list of current active alerts.
      * @return
      */
     public JSONObject getActive(){
@@ -805,14 +810,14 @@ public class PlurkClient {
         } catch (JSONException e) {
             logger.error(e.getMessage(), e);
         }
-        return null;    	
+        return null;
     }
     // </editor-fold>
-    
+
     // <editor-fold defaultstate="collapsed" desc="/API/Alerts/getHistory">
     /**
      * /API/Alerts/getHistory <br />
-     * Return a JSON list of past 30 alerts.  
+     * Return a JSON list of past 30 alerts.
      * @return
      */
     public JSONObject getHistory(){
@@ -824,15 +829,15 @@ public class PlurkClient {
         } catch (JSONException e) {
             logger.error(e.getMessage(), e);
         }
-        return null;    	
+        return null;
     }
     // </editor-fold>
-    
+
     // <editor-fold defaultstate="collapsed" desc="/API/Alerts/addAsFan">
     /**
      * /API/Alerts/addAsFan <br />
      * Accept user_id as fan.
-     * @param userId The user_id that has asked for friendship. 
+     * @param userId The user_id that has asked for friendship.
      * @return
      */
     public JSONObject addAsFan(int userId){
@@ -844,14 +849,14 @@ public class PlurkClient {
         } catch (JSONException e) {
             logger.error(e.getMessage(), e);
         }
-        return null;    	
+        return null;
     }
     // </editor-fold>
-    
+
     // <editor-fold defaultstate="collapsed" desc="/API/Alerts/addAsFriend">
     /**
      * /API/Alerts/addAsFriend <br />
-     * Accept user_id as friend. 
+     * Accept user_id as friend.
      * @param userId The user_id that has asked for friendship.
      * @return
      */
@@ -864,10 +869,10 @@ public class PlurkClient {
         } catch (JSONException e) {
             logger.error(e.getMessage(), e);
         }
-        return null;    	
+        return null;
     }
     // </editor-fold>
-    
+
     // <editor-fold defaultstate="collapsed" desc="/API/Alerts/addAllAsFan">
     /**
      * /API/Alerts/addAllAsFan <br />
@@ -886,11 +891,11 @@ public class PlurkClient {
         return null;
     }
     // </editor-fold>
-    
+
     // <editor-fold defaultstate="collapsed" desc="/API/Alerts/addAllAsFriends">
     /**
      * /API/Alerts/addAllAsFriends <br />
-     * Accept all friendship requests as friends. 
+     * Accept all friendship requests as friends.
      * @return {"success_text": "ok"} when request success, otherwise null
      */
     public JSONObject addAllAsFriends() {
@@ -909,8 +914,8 @@ public class PlurkClient {
     // <editor-fold defaultstate="collapsed" desc="/API/Alerts/denyFriendship">
     /**
      * /API/Alerts/denyFriendship <br />
-     * Deny friendship to user_id. 
-     * @param The user_id that has asked for friendship. 
+     * Deny friendship to user_id.
+     * @param The user_id that has asked for friendship.
      * @return
      */
     public JSONObject denyFriendship(int userId){
@@ -922,14 +927,14 @@ public class PlurkClient {
         } catch (JSONException e) {
             logger.error(e.getMessage(), e);
         }
-        return null;    	
+        return null;
     }
     // </editor-fold>
-    
+
     // <editor-fold defaultstate="collapsed" desc="/API/Alerts/removeNotification">
     /**
      * /API/Alerts/removeNotification <br />
-     * Remove notification to user with id user_id. 
+     * Remove notification to user with id user_id.
      * @param userId The user_id that the current user has requested friendship for.
      * @return
      */
@@ -942,10 +947,10 @@ public class PlurkClient {
         } catch (JSONException e) {
             logger.error(e.getMessage(), e);
         }
-        return null;    	
+        return null;
     }
-    // </editor-fold>   
-    
+    // </editor-fold>
+
     // <editor-fold defaultstate="collapsed" desc="/API/Profile/getOwnProfile">
     /**
      * /API/Profile/getOwnProfile
@@ -996,14 +1001,22 @@ public class PlurkClient {
         }
 
         HttpPost method = new HttpPost("http://www.plurk.com/API/Timeline/uploadPicture");
-        MultipartEntity entity = new MultipartEntity();
+//        MultipartEntity entity = new MultipartEntity();
+//        try {
+//            entity.addPart("api_key", new StringBody(config.getApiKey()));
+//            entity.addPart("image", new FileBody(file));
+//        } catch (UnsupportedEncodingException e) {
+//            logger.error(e.getMessage(), e);
+//        }
+
         try {
-            entity.addPart("api_key", new StringBody(config.getApiKey()));
-            entity.addPart("image", new FileBody(file));
-        } catch (UnsupportedEncodingException e) {
-            logger.error(e.getMessage(), e);
-        }
-        method.setEntity(entity);
+            ThinMultipartEntity entity = new ThinMultipartEntity();
+            entity.addPart("api_key", config.getApiKey());
+            entity.addPart("image", file);
+            method.setEntity(entity);
+		} catch (Exception e) {
+			logger.error(e.getMessage(), e);
+		}
 
         try {
             return new JSONObject(execute(method));
@@ -1421,7 +1434,7 @@ public class PlurkClient {
 //        System.out.println(pc.getPollingUnreadCount());
 //        186562865 , 186616350  : fail
 //        186567616 : ok
-//        System.out.println(pc.uploadPicture(new File("C:/images/image.jpg")));
+        System.out.println(pc.uploadPicture(new File("C:/images/image.jpg")));
 
 //        System.out.println(pc.updatePicture(new File("C:/Users/qrtt1/Desktop/4932792-big2.jpg")));
 //        JSONObject oo = pc.plurkAdd("測試 jPlurk 編輯 plruk 功能！！", Qualifier.IS, NoComments.False);
