@@ -8,6 +8,9 @@ import java.util.HashMap;
 import java.util.Properties;
 
 import org.apache.commons.lang.StringUtils;
+import org.apache.http.client.CookieStore;
+import org.apache.http.impl.client.BasicCookieStore;
+import org.json.JSONArray;
 
 import com.google.jplurk.exception.PlurkException;
 
@@ -20,6 +23,7 @@ public class PlurkSettings implements ISettings {
 
     public final static String settings = "jplurk.properties";
     private Properties prop;
+    private BasicCookieStore cookieStore = new BasicCookieStore();
 
     /**
      * Create settings object from ~/jplurk.properties file
@@ -142,4 +146,16 @@ public class PlurkSettings implements ISettings {
         ISettings p = new PlurkSettings();
         System.out.println(p);
     }
+
+	public CookieStore getCookieStore() {
+		return cookieStore;
+	}
+
+	public JSONArray exportCookies() {
+		return CookieUtil.exportCookies(cookieStore);
+	}
+
+	public void importCookies(JSONArray cookies) {
+		CookieUtil.importCookies(cookieStore, cookies);
+	}
 }
