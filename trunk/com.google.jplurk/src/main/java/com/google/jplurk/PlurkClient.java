@@ -15,12 +15,14 @@ import org.apache.http.HttpHost;
 import org.apache.http.auth.AuthScope;
 import org.apache.http.auth.UsernamePasswordCredentials;
 import org.apache.http.client.ClientProtocolException;
-import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.methods.HttpUriRequest;
+import org.apache.http.client.protocol.ClientContext;
 import org.apache.http.conn.params.ConnRoutePNames;
 import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.protocol.BasicHttpContext;
+import org.apache.http.protocol.HttpContext;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -39,7 +41,7 @@ public class PlurkClient {
 
     // <editor-fold defaultstate="collapsed" desc="Init PlurkClient">
     private static Log logger = LogFactory.getLog(PlurkClient.class);
-    private HttpClient client = new DefaultHttpClient();
+    private DefaultHttpClient client = new DefaultHttpClient();
     private ISettings config;
 
     static abstract class IdActions {
@@ -1386,7 +1388,9 @@ public class PlurkClient {
         }
         String result = "";
         try {
-            result = (String) client.execute(method, new JPlurkResponseHandler());
+        	HttpContext ctx = new BasicHttpContext();
+        	ctx.setAttribute(ClientContext.COOKIE_STORE, config.getCookieStore());
+            result = (String) client.execute(method, new JPlurkResponseHandler(), ctx);
         } catch (Exception e) {
             throw new PlurkException(e);
         }
@@ -1406,10 +1410,15 @@ public class PlurkClient {
 //        ProxyProvider.setProvider("proxyhost", 8080);
 
         ISettings config = new PlurkSettings();
+        
         PlurkClient pc = new PlurkClient(config);
-
+        JSONObject o = null;
 //        JSONObject o = pc.login(JOptionPane.showInputDialog("id"), JOptionPane.showInputDialog("password"));
 //        System.out.println(o);
+        
+		
+        
+        
 
 //        JSONObject oRegister = pc.register(JOptionPane.showInputDialog("nick_name"),
 //                JOptionPane.showInputDialog("full_name"),
