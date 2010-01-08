@@ -1460,10 +1460,6 @@ public class PlurkClient {
 //        o = pc.login(JOptionPane.showInputDialog("id"), JOptionPane.showInputDialog("password"));
 //        System.out.println(o);
 
-
-
-
-
 //        JSONObject oRegister = pc.register(JOptionPane.showInputDialog("nick_name"),
 //                JOptionPane.showInputDialog("full_name"),
 //                JOptionPane.showInputDialog("password"),
