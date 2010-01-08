@@ -2,6 +2,7 @@ package com.google.jplurk;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.regex.Matcher;
@@ -273,18 +274,41 @@ public class PlurkClient {
         }
 
         HttpPost method = new HttpPost("http://www.plurk.com/API/Users/updatePicture");
-//        MultipartEntity entity = new MultipartEntity();
-//        try {
-//            entity.addPart("api_key", new StringBody(config.getApiKey()));
-//            entity.addPart("profile_image", new FileBody(file));
-//        } catch (UnsupportedEncodingException e) {
-//            logger.error(e.getMessage(), e);
-//        }
-
         try {
             ThinMultipartEntity entity = new ThinMultipartEntity();
             entity.addPart("api_key", config.getApiKey());
             entity.addPart("profile_image", file);
+            method.setEntity(entity);
+		} catch (Exception e) {
+			logger.error(e.getMessage(), e);
+		}
+
+        try {
+            return new JSONObject(execute(method));
+        } catch (JSONException e) {
+            logger.error(e.getMessage(), e);
+        } catch (PlurkException e) {
+            logger.error(e.getMessage(), e);
+        }
+
+        return null;
+    }
+    // </editor-fold>
+
+    // <editor-fold defaultstate="collapsed" desc="/API/Users/updatePicture">
+    /**
+     * /API/Users/updatePicture <br />
+     * @param fileName a image file will be uploaded
+     * @param inputStream a input stream can read image data
+     * @return
+     */
+    public JSONObject updatePicture(String fileName, InputStream inputStream) {
+
+        HttpPost method = new HttpPost("http://www.plurk.com/API/Users/updatePicture");
+        try {
+            ThinMultipartEntity entity = new ThinMultipartEntity();
+            entity.addPart("api_key", config.getApiKey());
+            entity.addPart("profile_image", fileName, inputStream);
             method.setEntity(entity);
 		} catch (Exception e) {
 			logger.error(e.getMessage(), e);
@@ -1001,18 +1025,40 @@ public class PlurkClient {
         }
 
         HttpPost method = new HttpPost("http://www.plurk.com/API/Timeline/uploadPicture");
-//        MultipartEntity entity = new MultipartEntity();
-//        try {
-//            entity.addPart("api_key", new StringBody(config.getApiKey()));
-//            entity.addPart("image", new FileBody(file));
-//        } catch (UnsupportedEncodingException e) {
-//            logger.error(e.getMessage(), e);
-//        }
-
         try {
             ThinMultipartEntity entity = new ThinMultipartEntity();
             entity.addPart("api_key", config.getApiKey());
             entity.addPart("image", file);
+            method.setEntity(entity);
+		} catch (Exception e) {
+			logger.error(e.getMessage(), e);
+		}
+
+        try {
+            return new JSONObject(execute(method));
+        } catch (JSONException e) {
+            logger.error(e.getMessage(), e);
+        } catch (PlurkException e) {
+            logger.error(e.getMessage(), e);
+        }
+
+        return null;
+    }
+    // </editor-fold>
+
+    // <editor-fold defaultstate="collapsed" desc="/API/Timeline/uploadPicture">
+    /**
+     * /API/Timeline/uploadPicture
+     * @param file a image file will be uploaded
+     * @return json with thumbnail url. for example <pre>{"thumbnail":"http://images.plurk.com/tn_3146394_fb04befc28fbca59318f16d83d5c78cc.gif","full":"http://images.plurk.com/3146394_fb04befc28fbca59318f16d83d5c78cc.jpg"}</pre>
+     */
+    public JSONObject uploadPicture(String fileName, InputStream inputStream) {
+
+        HttpPost method = new HttpPost("http://www.plurk.com/API/Timeline/uploadPicture");
+        try {
+            ThinMultipartEntity entity = new ThinMultipartEntity();
+            entity.addPart("api_key", config.getApiKey());
+            entity.addPart("image", fileName, inputStream);
             method.setEntity(entity);
 		} catch (Exception e) {
 			logger.error(e.getMessage(), e);
@@ -1413,7 +1459,7 @@ public class PlurkClient {
 
         PlurkClient pc = new PlurkClient(config);
         JSONObject o = null;
-//        JSONObject o = pc.login(JOptionPane.showInputDialog("id"), JOptionPane.showInputDialog("password"));
+//        o = pc.login(JOptionPane.showInputDialog("id"), JOptionPane.showInputDialog("password"));
 //        System.out.println(o);
 
 
@@ -1442,6 +1488,7 @@ public class PlurkClient {
 //        186562865 , 186616350  : fail
 //        186567616 : ok
 //        System.out.println(pc.uploadPicture(new File("C:/images/image.jpg")));
+//        System.out.println(pc.uploadPicture("fooo", new FileInputStream(new File("C:/images/image.jpg"))));
 
 //        System.out.println(pc.updatePicture(new File("C:/Users/qrtt1/Desktop/4932792-big2.jpg")));
 //        JSONObject oo = pc.plurkAdd("測試 jPlurk 編輯 plruk 功能！！", Qualifier.IS, NoComments.False);
