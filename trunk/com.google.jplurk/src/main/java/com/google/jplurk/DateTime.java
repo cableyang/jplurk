@@ -5,10 +5,20 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
+import sun.util.logging.resources.logging;
+
 public class DateTime {
+
+	private static Log logger = LogFactory.getLog(DateTime.class);
 
 	public final static SimpleDateFormat OFFSET_OUTPUT_FORMAT =
 		new SimpleDateFormat("yyyy-M-d'T'HH:mm:ss", Locale.US);
+
+	public final static SimpleDateFormat JS_INPUT_FORMAT =
+		new SimpleDateFormat("E, dd MMM yyyy HH:mm:ss z", Locale.US);
 
 	private int year;
 	private int month;
@@ -32,6 +42,49 @@ public class DateTime {
 		this.hour = hour;
 		this.minute = minute;
 		this.second = second;
+	}
+
+	public static DateTime create(String offset){
+		DateTime dateTime = null;
+		Date date = null;
+
+		try {
+			date = OFFSET_OUTPUT_FORMAT.parse(offset);
+			logger.info("create date time by: " + OFFSET_OUTPUT_FORMAT);
+		} catch (Exception e) {
+		}
+
+		if (date == null) {
+			try {
+				date = JS_INPUT_FORMAT.parse(offset);
+				logger.info("create date time by: " + JS_INPUT_FORMAT);
+			} catch (Exception e) {
+			}
+		}
+
+		if(date == null){
+			logger.warn("cannot parse date string: " + offset + ". we will use now instead");
+			return DateTime.now();
+		}
+
+		try {
+			Calendar c = Calendar.getInstance();
+			c.clear();
+			c.setTime(date);
+			dateTime = new DateTime(
+				c.get(Calendar.YEAR),
+				c.get(Calendar.MONTH + 1),
+				c.get(Calendar.DAY_OF_MONTH),
+				c.get(Calendar.HOUR_OF_DAY),
+				c.get(Calendar.MINUTE),
+				c.get(Calendar.SECOND));
+		} catch (Exception e) {
+			logger.error(e.getMessage(), e);
+			dateTime = now();
+		}
+
+		logger.info("create date time from string: " + dateTime.timeOffset());
+		return dateTime;
 	}
 
 	public static DateTime create(int year, int month, int day){
