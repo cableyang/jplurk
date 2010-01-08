@@ -763,7 +763,7 @@ public class PlurkClient {
     public JSONObject responseGet(String plurkId) {
         try {
             HttpGet method = (HttpGet) PlurkActionSheet.getInstance().responseGet(
-                    config.createParamMap().k("plurk_id").v(plurkId).k("from_response").v("5").getMap());
+                    config.createParamMap().k("plurk_id").v(plurkId).k("from_response").v("0").getMap());
             return new JSONObject(execute(method));
         } catch (PlurkException e) {
             logger.error(e.getMessage(), e);
@@ -1410,15 +1410,15 @@ public class PlurkClient {
 //        ProxyProvider.setProvider("proxyhost", 8080);
 
         ISettings config = new PlurkSettings();
-        
+
         PlurkClient pc = new PlurkClient(config);
         JSONObject o = null;
 //        JSONObject o = pc.login(JOptionPane.showInputDialog("id"), JOptionPane.showInputDialog("password"));
 //        System.out.println(o);
-        
-		
-        
-        
+
+
+
+
 
 //        JSONObject oRegister = pc.register(JOptionPane.showInputDialog("nick_name"),
 //                JOptionPane.showInputDialog("full_name"),
