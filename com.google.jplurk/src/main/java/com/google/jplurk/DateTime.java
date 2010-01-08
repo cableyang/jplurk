@@ -8,8 +8,6 @@ import java.util.Locale;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-import sun.util.logging.resources.logging;
-
 public class DateTime {
 
 	private static Log logger = LogFactory.getLog(DateTime.class);
