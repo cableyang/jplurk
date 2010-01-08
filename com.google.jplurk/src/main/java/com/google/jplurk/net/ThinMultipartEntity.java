@@ -4,6 +4,7 @@ package com.google.jplurk.net;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -78,14 +79,13 @@ public class ThinMultipartEntity implements HttpEntity {
 		}
 	}
 
-	public void addPart(String key, File value) {
+	public void addPart(String key, String fileName, InputStream fin){
 		writeFirstBoundary();
 		try {
-			out.write(("Content-Disposition: form-data; name=\""+ key+"\"; filename=\"" + value.getName()+ "\"\r\n").getBytes());
+			out.write(("Content-Disposition: form-data; name=\""+ key+"\"; filename=\"" + fileName + "\"\r\n").getBytes());
 			out.write("Content-Type: application/octet-stream\r\n".getBytes());
 			out.write("Content-Transfer-Encoding: binary\r\n\r\n".getBytes());
 
-			FileInputStream fin = new FileInputStream(value);
 			int data = fin.read();
 			while(data !=-1){
 				out.write(data);
@@ -93,6 +93,36 @@ public class ThinMultipartEntity implements HttpEntity {
 			}
 
 		} catch (IOException e) {
+			logger.error(e.getMessage(), e);
+		} finally {
+			try {
+				fin.close();
+			} catch (IOException e) {
+				logger.error(e.getMessage(), e);
+			}
+		}
+	}
+
+	public void addPart(String key, File value) {
+//		writeFirstBoundary();
+//		try {
+//			out.write(("Content-Disposition: form-data; name=\""+ key+"\"; filename=\"" + value.getName()+ "\"\r\n").getBytes());
+//			out.write("Content-Type: application/octet-stream\r\n".getBytes());
+//			out.write("Content-Transfer-Encoding: binary\r\n\r\n".getBytes());
+//
+//			FileInputStream fin = new FileInputStream(value);
+//			int data = fin.read();
+//			while(data !=-1){
+//				out.write(data);
+//				data = fin.read();
+//			}
+//
+//		} catch (IOException e) {
+//			logger.error(e.getMessage(), e);
+//		}
+		try {
+			addPart(key, value.getName(), new FileInputStream(value));
+		} catch (FileNotFoundException e) {
 			logger.error(e.getMessage(), e);
 		}
 	}
