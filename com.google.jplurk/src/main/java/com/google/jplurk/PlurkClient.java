@@ -293,9 +293,7 @@ public class PlurkClient {
 
         return null;
     }
-    // </editor-fold>
 
-    // <editor-fold defaultstate="collapsed" desc="/API/Users/updatePicture">
     /**
      * /API/Users/updatePicture <br />
      * @param fileName a image file will be uploaded
@@ -1478,7 +1476,7 @@ public class PlurkClient {
 
 //        System.out.println(pc.getFansByOffset("3146394", 0));
 //        System.out.println(pc.getFansByOffset("3146394", 10));
-//        pc.getFansByOffset("3146394", 6666);
+//        System.out.println(pc.getFansByOffset("3146394", 6666));
 //        System.out.println(pc.getOwnProfile());
 //        System.out.println(pc.getPublicProfile("3146394"));
 //        System.out.println(pc.setFollowing(4932792, false));
@@ -1491,36 +1489,25 @@ public class PlurkClient {
 //        System.out.println(pc.uploadPicture("fooo", new FileInputStream(new File("C:/images/image.jpg"))));
 
 //        System.out.println(pc.updatePicture(new File("C:/Users/qrtt1/Desktop/4932792-big2.jpg")));
-//        JSONObject oo = pc.plurkAdd("測試 jPlurk 編輯 plruk 功能！！", Qualifier.IS, NoComments.False);
-//        JSONObject oo = pc.plurkAdd("hmmmm", Qualifier.SAYS);
-//        System.out.println(oo);
+//        System.out.println(pc.plurkAdd("hmmmm", Qualifier.SAYS));
+//        System.out.println(pc.plurkAdd("測試 jPlurk 編輯 plruk 功能！！", Qualifier.IS, NoComments.False));
 
-//        JSONObject ogp = pc.getPlurk("183532425");
-//        System.out.println(ogp);
+//        System.out.println(pc.getPlurk("183532425"));
 
-//        JSONObject oe = pc.plurkEdit("183532425", "早上的 http://code.google.com/p/jplurk/ (jPlurk) 先這樣吧～ by jPlurk v2 plurkEdit");
-//        System.out.println(oe);
+//        System.out.println(pc.plurkEdit("183532425", "早上的 http://code.google.com/p/jplurk/ (jPlurk) 先這樣吧～ by jPlurk v2 plurkEdit"));
 
-//        JSONObject od = pc.plurkDelete("183525435");
-//        System.out.println(od);
+//        System.out.println(pc.plurkDelete("183525435"));
 
-//        JSONObject js10 = pc.getUnreadPlurks(DateTime.now(), 1);
-//        System.out.println(js10);
-
+//        System.out.println(pc.getUnreadPlurks(DateTime.now(), 1));
 
 //        System.out.println(pc.mutePlurks("183559649"));
-//        Scanner scanner = new Scanner(System.in);
-//        scanner.next();
 //        System.out.println(pc.unmutePlurks("183559649"));
 
-//        JSONObject js = pc.getUnreadPlurks(DateTime.now());
-//        System.out.println(js);
+//        System.out.println(pc.getUnreadPlurks(DateTime.now()));
 
-//        JSONObject ora = pc.responseAdd("183532425", "測試刪除回應", Qualifier.FEELS);
-//        System.out.println(ora);
+//        System.out.println(pc.responseAdd("183532425", "測試刪除回應", Qualifier.FEELS));
 //{"posted":"Sat, 19 Dec 2009 07:57:07 GMT","user_id":3290989,"content_raw":"測試刪除回應","lang":"en","content":"測試刪除回應","qualifier":"feels","id":825994340,"plurk_id":183532425}
-//        JSONObject ord = pc.responseDelete("183532425", "825994340");
-//        System.out.println(ord);
+//        System.out.println(pc.responseDelete("183532425", "825994340"));
 
 //        System.out.println(pc.searchPlurk("jPlurk"));
         /* TODO
@@ -1542,6 +1529,9 @@ public class PlurkClient {
 //        System.out.println(pc.getCliques());
 //        System.out.println(pc.deleteClique("TestJavaPlurkAPI"));
 //        System.out.println(pc.getCliques());
+
+//        Scanner scanner = new Scanner(System.in);
+//        scanner.next();
 
     }
 }
