@@ -142,11 +142,6 @@ public class PlurkSettings implements ISettings {
         return prop;
     }
 
-    public static void main(String[] args) throws PlurkException {
-        ISettings p = new PlurkSettings();
-        System.out.println(p);
-    }
-
 	public CookieStore getCookieStore() {
 		return cookieStore;
 	}

@@ -39,13 +39,9 @@ public class ThinMultipartEntity implements HttpEntity {
 
 	}
 
-	public void writeFirstBoundary(){
+	public void writeFirstBoundaryIfNeeds(){
 		if(!isSetFirst){
 			try {
-//				out.write(("Content-Type: multipart/form-data; boundary=" + boundary +"\r\n").getBytes());
-//				out.write("Connection: Keep-Alive\r\n".getBytes());
-//				out.write("Expect: 100-Continue\r\n".getBytes());
-//				out.write("\r\n".getBytes());
 				out.write(("--" + boundary + "\r\n").getBytes());
 			} catch (IOException e) {
 				logger.error(e.getMessage(), e);
@@ -54,7 +50,7 @@ public class ThinMultipartEntity implements HttpEntity {
 		isSetFirst = true;
 	}
 
-	public void writeLastBoundary() {
+	public void writeLastBoundaryIfNeeds() {
 		if(isSetLast){
 			return ;
 		}
@@ -67,7 +63,7 @@ public class ThinMultipartEntity implements HttpEntity {
 	}
 
 	public void addPart(String key, String value) {
-		writeFirstBoundary();
+		writeFirstBoundaryIfNeeds();
 		try {
 			out.write(("Content-Disposition: form-data; name=\"" +key+"\"\r\n").getBytes());
 			out.write("Content-Type: text/plain; charset=UTF-8\r\n".getBytes());
@@ -80,7 +76,7 @@ public class ThinMultipartEntity implements HttpEntity {
 	}
 
 	public void addPart(String key, String fileName, InputStream fin){
-		writeFirstBoundary();
+		writeFirstBoundaryIfNeeds();
 		try {
 			out.write(("Content-Disposition: form-data; name=\""+ key+"\"; filename=\"" + fileName + "\"\r\n").getBytes());
 			out.write("Content-Type: application/octet-stream\r\n".getBytes());
@@ -104,22 +100,6 @@ public class ThinMultipartEntity implements HttpEntity {
 	}
 
 	public void addPart(String key, File value) {
-//		writeFirstBoundary();
-//		try {
-//			out.write(("Content-Disposition: form-data; name=\""+ key+"\"; filename=\"" + value.getName()+ "\"\r\n").getBytes());
-//			out.write("Content-Type: application/octet-stream\r\n".getBytes());
-//			out.write("Content-Transfer-Encoding: binary\r\n\r\n".getBytes());
-//
-//			FileInputStream fin = new FileInputStream(value);
-//			int data = fin.read();
-//			while(data !=-1){
-//				out.write(data);
-//				data = fin.read();
-//			}
-//
-//		} catch (IOException e) {
-//			logger.error(e.getMessage(), e);
-//		}
 		try {
 			addPart(key, value.getName(), new FileInputStream(value));
 		} catch (FileNotFoundException e) {
@@ -128,7 +108,7 @@ public class ThinMultipartEntity implements HttpEntity {
 	}
 
 	public long getContentLength() {
-		writeLastBoundary();
+		writeLastBoundaryIfNeeds();
 		return out.toByteArray().length;
 	}
 
