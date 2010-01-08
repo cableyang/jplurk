@@ -11,6 +11,8 @@ package com.google.jplurk;
  * @author Askeing
  */
 public enum NoComments {
+	// TODO rename CommentBy with {All, None, Friends}
+
     False("0"), True("1"), Friends("2");
 
 	private String noComments;
