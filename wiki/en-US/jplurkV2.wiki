@@ -9,7 +9,7 @@ jPlurk v1 has been frozen because Plurk released the Official [http://www.plurk.
 
 = Quick Tutorial =
 
-You can get lastest version (rev 361, contains source code and dependencies) from [http://code.google.com/p/jplurk/downloads/list Download Page] . And we show you the quick tutorial below.
+You can get lastest version (rev 405, contains source code and dependencies) from [http://code.google.com/p/jplurk/downloads/list Download Page] . And we show you the quick tutorial below.
 
 == Create Config File ==
 
