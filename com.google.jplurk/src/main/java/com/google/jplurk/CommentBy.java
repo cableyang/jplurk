@@ -10,14 +10,13 @@ package com.google.jplurk;
  *
  * @author Askeing
  */
-public enum NoComments {
-	// TODO rename CommentBy with {All, None, Friends}
+public enum CommentBy {
 
-    False("0"), True("1"), Friends("2");
+    All("0"), None("1"), Friends("2");
 
 	private String noComments;
 
-	private NoComments(String noComments) {
+	private CommentBy(String noComments) {
 		this.noComments = noComments;
 	}
 

@@ -603,7 +603,7 @@ public class PlurkClient {
      * @return JSON object of the new plurk
      */
     public JSONObject plurkAdd(String content, Qualifier qualifier) {
-        return this.plurkAdd(content, qualifier, NoComments.False);
+        return this.plurkAdd(content, qualifier, CommentBy.All);
     }
 
     /**
@@ -611,11 +611,11 @@ public class PlurkClient {
      * Add new plurk to timeline.
      * @param content
      * @param qualifier
-     * @param no_comments (optional), true or false
+     * @param commentBy (optional), true or false
      * @return JSON object of the new plurk
      */
-    public JSONObject plurkAdd(String content, Qualifier qualifier, NoComments no_comments) {
-        return this.plurkAdd(content, qualifier, null, no_comments, null);
+    public JSONObject plurkAdd(String content, Qualifier qualifier, CommentBy commentBy) {
+        return this.plurkAdd(content, qualifier, null, commentBy, null);
     }
 
     /**
@@ -627,7 +627,7 @@ public class PlurkClient {
      * @return JSON object of the new plurk
      */
     public JSONObject plurkAdd(String content, Qualifier qualifier, Lang lang) {
-        return this.plurkAdd(content, qualifier, null, NoComments.False, lang);
+        return this.plurkAdd(content, qualifier, null, CommentBy.All, lang);
     }
 
     /**
@@ -636,13 +636,13 @@ public class PlurkClient {
      * @param content
      * @param qualifier
      * @param limited_to (optional), JSON Array contains friends ids
-     * @param no_comments (optional), true or false
+     * @param commentBy (optional), true or false
      * @param lang (optional)
      * @return JSON object of the new plurk
      */
-    public JSONObject plurkAdd(String content, Qualifier qualifier, String limited_to, NoComments no_comments, Lang lang) {
+    public JSONObject plurkAdd(String content, Qualifier qualifier, String limited_to, CommentBy commentBy, Lang lang) {
         try {
-            MapHelper paramMap = config.createParamMap().k("content").v(content).k("qualifier").v(qualifier.toString()).k("no_comments").v(no_comments.toString()).k("lang").v(lang == null ? config.getLang() : lang.toString());
+            MapHelper paramMap = config.createParamMap().k("content").v(content).k("qualifier").v(qualifier.toString()).k("no_comments").v(commentBy.toString()).k("lang").v(lang == null ? config.getLang() : lang.toString());
             if (limited_to != null && !limited_to.equals("")) {
                 paramMap = paramMap.k("limited_to").v(limited_to);
             }
@@ -1459,6 +1459,11 @@ public class PlurkClient {
         JSONObject o = null;
 //        o = pc.login(JOptionPane.showInputDialog("id"), JOptionPane.showInputDialog("password"));
 //        System.out.println(o);
+
+//        System.out.println(pc.plurkAdd("今天睡到下午一點，真爽耶.", Qualifier.SAYS, CommentBy.All));
+//        System.out.println(pc.plurkAdd("不知不覺就到下午四點多了", Qualifier.SAYS, CommentBy.None));
+//        System.out.println(pc.plurkAdd("測試只有朋友能回應", Qualifier.SAYS, CommentBy.Friends));
+
 
 //        JSONObject oRegister = pc.register(JOptionPane.showInputDialog("nick_name"),
 //                JOptionPane.showInputDialog("full_name"),
