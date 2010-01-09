@@ -13,6 +13,14 @@
 			<version>4.0</version>
 		</dependency>
 
+		<!--
+		net.jcip use for maven in netbenas ide
+		-->
+        <dependency>
+            <groupId>net.jcip</groupId>
+            <artifactId>jcip-annotations</artifactId>
+            <version>1.0</version>
+        </dependency>
 <!--
 		<dependency>
 			<groupId>org.apache.httpcomponents</groupId>
