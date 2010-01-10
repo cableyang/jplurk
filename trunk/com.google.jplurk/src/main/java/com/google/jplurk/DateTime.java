@@ -69,13 +69,7 @@ public class DateTime {
 			Calendar c = Calendar.getInstance();
 			c.clear();
 			c.setTime(date);
-			dateTime = new DateTime(
-				c.get(Calendar.YEAR),
-				c.get(Calendar.MONTH + 1),
-				c.get(Calendar.DAY_OF_MONTH),
-				c.get(Calendar.HOUR_OF_DAY),
-				c.get(Calendar.MINUTE),
-				c.get(Calendar.SECOND));
+			dateTime = create(c);
 		} catch (Exception e) {
 			logger.error(e.getMessage(), e);
 			dateTime = now();
@@ -94,16 +88,20 @@ public class DateTime {
 		return new DateTime(year, month, day, hour, minute, second);
 	}
 
+	public static DateTime create(Calendar calendar){
+		return new DateTime(
+				calendar.get(Calendar.YEAR),
+				calendar.get(Calendar.MONTH + 1),
+				calendar.get(Calendar.DAY_OF_MONTH),
+				calendar.get(Calendar.HOUR_OF_DAY),
+				calendar.get(Calendar.MINUTE),
+				calendar.get(Calendar.SECOND));
+	}
+
 	public static DateTime now() {
 		Calendar c = Calendar.getInstance();
 		c.setTime(new Date());
-		return new DateTime(
-			c.get(Calendar.YEAR),
-			c.get(Calendar.MONTH + 1),
-			c.get(Calendar.DAY_OF_MONTH),
-			c.get(Calendar.HOUR_OF_DAY),
-			c.get(Calendar.MINUTE),
-			c.get(Calendar.SECOND));
+		return create(c);
 	}
 
 	protected String birthday() {
@@ -117,6 +115,10 @@ public class DateTime {
 	}
 
 	protected String timeOffset() {
+		return OFFSET_OUTPUT_FORMAT.format(toCalendar().getTime());
+	}
+
+	public Calendar toCalendar() {
 		Calendar c = Calendar.getInstance();
 		c.clear();
 		c.set(Calendar.YEAR, year);
@@ -125,7 +127,7 @@ public class DateTime {
 		c.set(Calendar.HOUR_OF_DAY, hour);
 		c.set(Calendar.MINUTE, minute);
 		c.set(Calendar.SECOND, second);
-		return OFFSET_OUTPUT_FORMAT.format(c.getTime());
+		return c;
 	}
 
 	public static boolean isValidTimeOffset(String offset) {
