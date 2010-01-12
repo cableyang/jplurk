@@ -42,6 +42,15 @@ public class DateTime {
 		this.second = second;
 	}
 
+	public static DateTime create(long offset){
+		Date date = new Date();
+		date = new Date(date.getTime() + offset);
+		Calendar calendar = Calendar.getInstance();
+		calendar.clear();
+		calendar.setTime(date);
+		return create(calendar);
+	}
+
 	public static DateTime create(String offset){
 		DateTime dateTime = null;
 		Date date = null;
