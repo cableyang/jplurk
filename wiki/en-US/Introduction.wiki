@@ -1,6 +1,52 @@
 #summary jPlurk Introduction / jPlurk 簡介
 #labels Featured
 
+
+= The origination of jPlurk =
+
+jPlurk v1 is created by askeing (about Feb, 2009). 
+The motivation is that plurk's user need a tool can support a daily `plurk' 
+to prevent the karma from reducing (inspiring by xdite's karma keeping plan).
+ChingYiChan.tw join this project later. He provides some design suggestion for jPlurk development.
+
+= The evolution of jPlurk =
+
+The jPlurk v1 and other unofficial plurk api implement plurk function 
+by parsing html and pretend the web browser (submiting forms, keeping cookies, etc).
+Until plurk official api is released (5, Dec, 2009), we decide to renew our project to using the stardard ways.
+Stop the jPlurk v1 and propose the new architecture of jPlurk.
+
+jPlurk v2 use official api, all implementation can be found in the PlurkActionSheet class.
+We use this class to map official api and java source code. 
+It keep the metadata for uri, required fields, request method, connection type. All are the annotation of a method:
+
+{{{
+@Meta(uri = "/FriendsFans/getFriendsByOffset", require = { "api_key", "user_id" })
+@Validation({ @Validator(field = "offset", validator = NonNegativeIntegerValidator.class) })
+public HttpUriRequest getFriendsByOffset(Map<String, String> params)
+                                throws PlurkException {
+                return prepare("getFriendsByOffset", params);
+}
+}}}
+
+= The convention of jPlurk v2 design =
+
+ * naming are almost mapping to official api 
+ * PlurkClient will return either JSONObject or JSONArrayObject
+ * null is returned, if any excpetions raising or http status is not 200 OK
+
+== Read More ==
+
+ * [jplurkV2 jPlurk v2 使用簡介與實作狀態]
+ * [Using_Proxy_V2 在 Proxy 環境使用 jPlurk] 
+ 
+ 
+--------
+
+
+
+
+
 = Note =
 Need Translation!
 
