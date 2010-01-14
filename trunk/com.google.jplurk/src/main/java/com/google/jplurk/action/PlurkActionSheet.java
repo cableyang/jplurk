@@ -38,20 +38,24 @@ public final class PlurkActionSheet {
         return self;
     }
 
+    private static String getSecuredApiUri(String uri) {
+        return "https://www.plurk.com/API" + uri;
+    }
+    
     private static String getApiUri(String uri) {
         return "http://www.plurk.com/API" + uri;
     }
 
     // <editor-fold defaultstate="collapsed" desc="Users">
     @Meta(uri = "/Users/register",
-    require = {"api_key", "nick_name", "full_name", "password", "gender", "date_of_birth"})
+    require = {"api_key", "nick_name", "full_name", "password", "gender", "date_of_birth"}, isHttps = true)
     @Validation({@Validator(field = "email", validator = EmailValidator.class)})
     public HttpUriRequest register(Map<String, String> params)
             throws PlurkException {
         return prepare("register", params);
     }
 
-    @Meta(uri = "/Users/login", require = {"api_key", "username", "password"})
+	@Meta(uri = "/Users/login", require = { "api_key", "username", "password" }, isHttps = true)
     public HttpUriRequest login(Map<String, String> params)
             throws PlurkException {
         return prepare("login", params);
@@ -64,7 +68,7 @@ public final class PlurkActionSheet {
         return prepare("updatePicture", params);
     }
 
-    @Meta(uri = "/Users/update", require = {"api_key", "current_password"})
+    @Meta(uri = "/Users/update", require = {"api_key", "current_password"}, isHttps = true)
     @Validation({@Validator(field = "email", validator = EmailValidator.class)})
     public HttpUriRequest update(Map<String, String> params)
             throws PlurkException {
@@ -401,6 +405,7 @@ public final class PlurkActionSheet {
     // </editor-fold>
 
     private HttpUriRequest prepare(String methodName, Map<String, String> params) throws PlurkException {
+    	// create method object from action sheet
         Method method = null;
         try {
             method = PlurkActionSheet.class.getMethod(methodName,
@@ -413,11 +418,13 @@ public final class PlurkActionSheet {
             throw new PlurkException("can not find the method: " + methodName);
         }
 
+        // get metadata to validate the user supplied data
         Meta meta = method.getAnnotation(Meta.class);
         if (meta == null) {
             throw new PlurkException("can not find the meta annotation");
         }
 
+        // assemble the query string (the param-value will be url-encoded)
         final StringBuffer buf = new StringBuffer();
         for (String key : params.keySet()) {
             try {
@@ -428,7 +435,9 @@ public final class PlurkActionSheet {
         }
         buf.deleteCharAt(buf.length() - 1);
 
-        final String uri = getApiUri(meta.uri() + "?" + buf.toString());
+        // make the request url
+        final String queryString = meta.uri() + "?" + buf.toString();
+        final String uri = meta.isHttps() ? getSecuredApiUri(queryString) : getApiUri(queryString);
         final HttpRequestBase httpMethod = meta.type().equals(Type.GET) ? new HttpGet(uri) : new HttpPost(uri);
 
         for (String key : meta.require()) {

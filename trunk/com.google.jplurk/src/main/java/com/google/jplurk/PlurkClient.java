@@ -44,7 +44,7 @@ public class PlurkClient {
     private static Log logger = LogFactory.getLog(PlurkClient.class);
     private DefaultHttpClient client = new DefaultHttpClient();
     private ISettings config;
-
+    
     static abstract class IdActions {
 
         abstract HttpUriRequest createMethod(Set<Integer> idSet) throws PlurkException;
@@ -82,6 +82,15 @@ public class PlurkClient {
     }
 
     private void configureHttpClient() {
+    	// client 4.x have the default schema for https, we do not need to add ours.
+//		try {
+//			// register https 
+//	    	Scheme https = new Scheme("https", SSLSocketFactory.getSocketFactory(), 443);
+//	    	client.getConnectionManager().getSchemeRegistry().register(https);
+//		} catch (Exception e) {
+//			logger.error(e.getMessage(), e);
+//		}
+    	
         // Auth Proxy Setting
         if (StringUtils.isNotBlank(ProxyProvider.getUser())) {
             ((DefaultHttpClient) client).getCredentialsProvider().setCredentials(
@@ -1460,6 +1469,7 @@ public class PlurkClient {
 //        o = pc.login(JOptionPane.showInputDialog("id"), JOptionPane.showInputDialog("password"));
 //        System.out.println(o);
 
+//        System.out.println(pc.plurkAdd("用 https 似乎真的慢很多啊 orz", Qualifier.SAYS, CommentBy.All));
 //        System.out.println(pc.plurkAdd("今天睡到下午一點，真爽耶.", Qualifier.SAYS, CommentBy.All));
 //        System.out.println(pc.plurkAdd("不知不覺就到下午四點多了", Qualifier.SAYS, CommentBy.None));
 //        System.out.println(pc.plurkAdd("測試只有朋友能回應", Qualifier.SAYS, CommentBy.Friends));
