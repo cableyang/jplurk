@@ -4,21 +4,21 @@
 
 = The origination of jPlurk =
 
-jPlurk v1 is created by askeing (about Feb, 2009). 
+jPlurk v1 is created by [http://code.google.com/u/askeing/ askeing] (about Feb, 2009). 
 The motivation is that plurk's user need a tool can support a daily `plurk' 
-to prevent the karma from reducing (inspiring by xdite's karma keeping plan).
-ChingYiChan.tw join this project later. He provides some design suggestion for jPlurk development.
+to prevent the karma from reducing (inspiring by [http://blog.xdite.net/?p=976 xdite's karma keeping plan]). 
+[http://code.google.com/u/ChingYiChan.tw/ ChingYiChan.tw] join this project later. He provides lots of design suggestion for jPlurk development. 
 
 = The evolution of jPlurk =
 
-The jPlurk v1 and other unofficial plurk api implement plurk function 
-by parsing html and pretend the web browser (submiting forms, keeping cookies, etc).
-Until plurk official api is released (5, Dec, 2009), we decide to renew our project to using the stardard ways.
+The jPlurk v1 and other unofficial plurk api implement plurk function by parsing html and pretend the web browser (submiting forms, keeping cookies, etc). 
+Until [http://www.plurk.com/API Plurk Official API] is released (5, Dec, 2009), we decide to renew our project to following the stardard. 
 Stop the jPlurk v1 and propose the new architecture of jPlurk.
 
-jPlurk v2 use official api, all implementation can be found in the PlurkActionSheet class.
-We use this class to map official api and java source code. 
-It keep the metadata for uri, required fields, request method, connection type. All are the annotation of a method:
+jPlurk v2 use Plurk Official API, all implementation can be found in the [http://code.google.com/p/jplurk/source/browse/trunk/com.google.jplurk/src/main/java/com/google/jplurk/action/PlurkActionSheet.java PlurkActionSheet class]. 
+We use this class to map Plurk Official API and java source code. 
+It keep the metadata for uri, required fields, request method, connection type. We use @Meta and @Validation to describe the functions. 
+Here is the sample of getFriendsByOffset method:
 
 {{{
 @Meta(uri = "/FriendsFans/getFriendsByOffset", require = { "api_key", "user_id" })
