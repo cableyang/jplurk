@@ -31,9 +31,9 @@ public HttpUriRequest getFriendsByOffset(Map<String, String> params)
 
 = The convention of jPlurk v2 design =
 
- * naming are almost mapping to official api 
- * PlurkClient will return either JSONObject or JSONArrayObject
- * null is returned, if any excpetions raising or http status is not 200 OK
+ * The nameing are almost mapping to Plurk Official API.
+ * !PlurkClient will return either JSONObject or JSONArrayObject.
+ * It will return null, if any excpetions raising or http status is not 200 OK.
 
 == Read More ==
 
