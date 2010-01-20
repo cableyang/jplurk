@@ -7,10 +7,10 @@ import junit.framework.TestCase;
 import org.apache.commons.lang.RandomStringUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.math.NumberUtils;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import com.google.jplurk.PlurkClient;
 import com.google.jplurk.PlurkSettings;
@@ -22,8 +22,9 @@ import com.google.jplurk.exception.PlurkException;
  */
 public class JPlurkRegressionTest extends TestCase {
 
-	static Logger logger = LoggerFactory.getLogger(JPlurkRegressionTest.class);
-	
+//	static Logger logger = LoggerFactory.getLogger(JPlurkRegressionTest.class);
+	static Log logger = LogFactory.getLog(JPlurkRegressionTest.class);
+
 	private void gracefulWait(){
 		try {
 			Thread.sleep(100);
@@ -44,7 +45,7 @@ public class JPlurkRegressionTest extends TestCase {
 		JSONObject ret = client.login(JOptionPane.showInputDialog("id"), JOptionPane.showInputDialog("password"));
 		assertNotNull(ret);
 		gracefulWait();
-		
+
 		// do plurk add
 		String content = RandomStringUtils.random(100, "1234567890abcdef");
 		ret = client.plurkAdd(content, Qualifier.LOVES);
@@ -56,9 +57,9 @@ public class JPlurkRegressionTest extends TestCase {
 			assertEquals(content, responsedContent);
 		} catch (JSONException e) {
 			logger.error(e.getMessage(), e);
-		}		
+		}
 		gracefulWait();
-		
+
 		// do plurk edit
 		ret = client.plurkEdit("" + plurkId, StringUtils.reverse(responsedContent));
 		assertNotNull(ret);
@@ -70,7 +71,7 @@ public class JPlurkRegressionTest extends TestCase {
 		assertNotNull(ret);
 		assertEquals("ok", ret.getString("success_text"));
 		gracefulWait();
-		
+
 		// do unmute plurk
 		ret = client.unmutePlurks(new String[]{"" + plurkId});
 		assertNotNull(ret);
@@ -90,25 +91,25 @@ public class JPlurkRegressionTest extends TestCase {
 		// do get response
 		ret = client.responseGet("" + plurkId);
 		// TODO: 雖然正常回傳，但是無法得到結果。需要待 plurk api service team 回覆
-		assertNotNull(ret); 
+		assertNotNull(ret);
 		gracefulWait();
 
 		// do delete response
 		ret = client.responseDelete("" + plurkId, "" + rPlurkId);
 		assertNotNull(ret);
 		assertEquals("ok", ret.getString("success_text"));
-		gracefulWait();		
-		
+		gracefulWait();
+
 		// do plurk delete
 		ret = client.plurkDelete("" + plurkId);
 		assertNotNull(ret);
 		assertEquals("ok", ret.getString("success_text"));
 		gracefulWait();
-		
+
 		// do get plurks
 		ret = client.getPlurks(null, 0, 0, true, false);
 		assertNotNull(ret);
-		
+
 	}
 
 }
