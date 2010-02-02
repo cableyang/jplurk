@@ -61,7 +61,7 @@ public class DateTime {
 					+ OFFSET_OUTPUT_FORMAT);
 			logger.info("date is " + date);
 		} catch (Exception e) {
-			logger.warn(e.getMessage());
+			logger.debug(e.getMessage());
 		}
 
 		if (date == null) {
@@ -71,7 +71,7 @@ public class DateTime {
 						+ JS_INPUT_FORMAT);
 				logger.info("date is " + date);
 			} catch (Exception e) {
-				logger.warn(e.getMessage());
+				logger.debug(e.getMessage());
 			}
 		}
 
