@@ -57,15 +57,21 @@ public class DateTime {
 
 		try {
 			date = OFFSET_OUTPUT_FORMAT.parse(offset);
-			logger.info("create date time by: " + OFFSET_OUTPUT_FORMAT);
+			logger.info("create date time from[" + offset + "] by: "
+					+ OFFSET_OUTPUT_FORMAT);
+			logger.info("date is " + date);
 		} catch (Exception e) {
+			logger.warn(e.getMessage());
 		}
 
 		if (date == null) {
 			try {
 				date = JS_INPUT_FORMAT.parse(offset);
-				logger.info("create date time by: " + JS_INPUT_FORMAT);
+				logger.info("create date time from[" + offset + "] by: "
+						+ JS_INPUT_FORMAT);
+				logger.info("date is " + date);
 			} catch (Exception e) {
+				logger.warn(e.getMessage());
 			}
 		}
 
@@ -98,9 +104,10 @@ public class DateTime {
 	}
 
 	public static DateTime create(Calendar calendar){
+		logger.info("create DateTime from Calendar: " + calendar.getTime());
 		return new DateTime(
 				calendar.get(Calendar.YEAR),
-				calendar.get(Calendar.MONTH + 1),
+				calendar.get(Calendar.MONTH) + 1,
 				calendar.get(Calendar.DAY_OF_MONTH),
 				calendar.get(Calendar.HOUR_OF_DAY),
 				calendar.get(Calendar.MINUTE),
@@ -132,7 +139,7 @@ public class DateTime {
 		c.clear();
 		c.set(Calendar.YEAR, year);
 		c.set(Calendar.MONTH, month - 1);
-		c.set(Calendar.DAY_OF_MONTH, day);
+		c.set(Calendar.DATE, day);
 		c.set(Calendar.HOUR_OF_DAY, hour);
 		c.set(Calendar.MINUTE, minute);
 		c.set(Calendar.SECOND, second);
