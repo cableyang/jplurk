@@ -107,5 +107,21 @@ public class Entry implements Comparable<Entry> {
                 posted != null ? posted.getTime() : "null", 
                         contentRaw);
     }
+    
+    @Override
+    public int hashCode() {
+        int cr = contentRaw == null ? 0 : contentRaw.hashCode();
+        int po = posted == null ? 0 : posted.hashCode();
+        return (cr << 16) + (po);
+    }
+    
+    @Override
+    public boolean equals(Object obj) {
+        if(obj == null){
+            return false;
+        }
+
+        return hashCode() == obj.hashCode();
+    }
 
 }
