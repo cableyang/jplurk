@@ -517,7 +517,7 @@ public class PlurkClient {
     // <editor-fold defaultstate="collapsed" desc="API/Timeline/getPlurks">
     public JSONObject getPlurks(DateTime offset, int limit, int userId, boolean onlyResponsed, boolean onlyPrivate) {
         try {
-            MapHelper mapHelper = config.createParamMap().k("offset").v((offset == null ? DateTime.now() : offset).timeOffset()).k("limit").v("" + (limit <= 0 ? 20 : limit));
+            MapHelper mapHelper = config.createParamMap().k("offset").v((offset == null ? DateTime.now() : offset).toTimeOffset()).k("limit").v("" + (limit <= 0 ? 20 : limit));
 
             if (userId > 0) {
                 mapHelper.k("only_user").v("" + userId);
@@ -585,7 +585,7 @@ public class PlurkClient {
         try {
             MapHelper paramMap = config.createParamMap();
             if (offset != null) {
-                paramMap = paramMap.k("offset").v(offset.timeOffset());
+                paramMap = paramMap.k("offset").v(offset.toTimeOffset());
             }
             if (limit > 0) {
                 paramMap = paramMap.k("limit").v(Integer.toString(limit));
@@ -1094,7 +1094,7 @@ public class PlurkClient {
      */
     public JSONObject getPollingPlurks(DateTime offset, int limit) {
         try {
-            String _offset = (offset == null ? DateTime.now().timeOffset() : offset.timeOffset());
+            String _offset = (offset == null ? DateTime.now().toTimeOffset() : offset.toTimeOffset());
             HttpGet method = (HttpGet) PlurkActionSheet.getInstance().getPollingPlurks(config.createParamMap().k("offset").v(_offset).k("limit").v("" + (limit <= 0 ? 20 : limit)).getMap());
             return new JSONObject(execute(method));
         } catch (PlurkException e) {

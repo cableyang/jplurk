@@ -90,7 +90,7 @@ public class DateTime {
 			dateTime = now();
 		}
 
-		logger.info("create date time from string: " + dateTime.timeOffset());
+		logger.info("create date time from string: " + dateTime.toTimeOffset());
 		return dateTime;
 	}
 
@@ -130,7 +130,7 @@ public class DateTime {
 		return df.format(c.getTime());
 	}
 
-	protected String timeOffset() {
+	public String toTimeOffset() {
 		return OFFSET_OUTPUT_FORMAT.format(toCalendar().getTime());
 	}
 

@@ -9,7 +9,7 @@ public class PlurkUtilsTest extends TestCase {
 	}
 
 	public void testOffset() throws Exception {
-		assertEquals("2009-6-20T21:55:34", DateTime.create(2009, 6, 20, 21, 55, 34).timeOffset());
+		assertEquals("2009-6-20T21:55:34", DateTime.create(2009, 6, 20, 21, 55, 34).toTimeOffset());
 	}
 
 }
