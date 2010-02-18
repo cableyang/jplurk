@@ -141,7 +141,7 @@ client.getUnreadPlurks();
 || *功能* || *函式名稱* || *誰在實作* || *狀態* || *備註* ||
 || /API/!FriendsFans/getFriendsByOffset || getFriendsByOffset || qrtt1 || 完成 || `@since` rev361  ||
 || /API/!FriendsFans/getFansByOffset || getFansByOffset || qrtt1 || 完成 || `@since` rev361  ||
-|| /API/!FriendsFans/getFollowingByOffset || getFollowingByOffset || qrtt1 || 完成 || `@since` rev361 ||
+|| /API/!FriendsFans/getFollowingByOffset || getFollowingByOffset || qrtt1 || 完成 || Fix by A, `@since` rev431 ||
 || /API/!FriendsFans/becomeFriend || becomeFriend || qrtt1 || 完成 || `@since` rev361 ||
 || /API/!FriendsFans/removeAsFriend || removeAsFriend || qrtt1 || 完成 || `@since` rev361 ||
 || /API/!FriendsFans/becomeFan || becomeFan || qrtt1 || 完成 || `@since` rev361 ||
