@@ -516,20 +516,45 @@ public class PlurkClient {
     // </editor-fold>
 
     // <editor-fold defaultstate="collapsed" desc="API/Timeline/getPlurks">
-    public JSONObject getPlurks(DateTime offset, int limit, int userId, boolean onlyResponsed, boolean onlyPrivate) {
+    /**
+     * /API/Timeline/getPlurks
+     * @param offset (optional) Return plurks older than offset, formatted as 2009-6-20T21:55:34.
+     * @param limit (optional) How many plurks should be returned? Default is 20. 
+     * @param onlyUser (optional) filter of My Plurks
+     * @param onlyResponsed (optional) filter of Private
+     * @param onlyPrivate (optional) filter of Responded
+     * @return
+     */
+    public JSONObject getPlurks(DateTime offset, int limit, boolean onlyUser, boolean onlyResponsed, boolean onlyPrivate) {
+        return getPlurks(offset, limit, onlyUser, onlyResponsed, onlyPrivate, false);
+    }
+
+    /**
+     * /API/Timeline/getPlurks
+     * Add new function: filter of Liked.
+     * @param offset (optional) Return plurks older than offset, formatted as 2009-6-20T21:55:34.
+     * @param limit (optional) How many plurks should be returned? Default is 20. 
+     * @param onlyUser (optional) filter of My Plurks
+     * @param onlyResponsed (optional) filter of Private
+     * @param onlyPrivate (optional) filter of Responded
+     * @param onlyFavorite (optional) filter of Liked
+     * @return
+     */
+    public JSONObject getPlurks(DateTime offset, int limit, boolean onlyUser, boolean onlyResponsed, boolean onlyPrivate, boolean onlyFavorite) {
         try {
             MapHelper mapHelper = config.createParamMap().k("offset").v((offset == null ? DateTime.now() : offset).toTimeOffset()).k("limit").v("" + (limit <= 0 ? 20 : limit));
 
-            if (userId > 0) {
-                mapHelper.k("only_user").v("" + userId);
+            if (onlyUser) {
+                mapHelper.k("only_user").v("true");
             }
-
             if (onlyResponsed) {
                 mapHelper.k("only_responded").v("true");
             }
-
             if (onlyPrivate) {
                 mapHelper.k("only_private").v("true");
+            }
+            if (onlyFavorite) {
+                mapHelper.k("only_favorite").v("true");
             }
 
             HttpGet method = (HttpGet) PlurkActionSheet.getInstance().getPlurks(
