@@ -1192,7 +1192,7 @@ public class PlurkClient {
      * @return
      */
     public JSONObject searchUser(String query) {
-        return searchPlurk(query, 10);
+        return searchUser(query, 10);
     }
 
     /**
