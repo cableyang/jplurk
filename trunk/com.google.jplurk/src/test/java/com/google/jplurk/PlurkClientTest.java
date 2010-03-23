@@ -27,5 +27,11 @@ public class PlurkClientTest extends TestCase {
 		JSONObject ret = client.searchUser("plurkbuddy");
 		assertNotNull(ret);
 	}
+	
+	public void testGetPublicProfile() throws Exception {
+		JSONObject ret = client.getPublicProfile("qrtt1");
+		assertNotNull(ret);
+		assertEquals("qrtt1", ret.getJSONObject("user_info").getString("nick_name"));
+	}
 
 }

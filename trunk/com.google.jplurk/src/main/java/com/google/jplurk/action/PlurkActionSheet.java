@@ -18,6 +18,7 @@ import com.google.jplurk.exception.PlurkException;
 import com.google.jplurk.validator.EmailValidator;
 import com.google.jplurk.validator.IDListValidator;
 import com.google.jplurk.validator.IValidator;
+import com.google.jplurk.validator.NicknameValidator;
 import com.google.jplurk.validator.NonNegativeIntegerValidator;
 import com.google.jplurk.validator.PositiveIntegerValidator;
 import com.google.jplurk.validator.QualifierValidator;
@@ -206,7 +207,7 @@ public final class PlurkActionSheet {
     }
 
     @Meta(uri = "/Profile/getPublicProfile", require = {"api_key", "user_id"})
-    @Validation({@Validator(field = "user_id", validator = NonNegativeIntegerValidator.class)})
+    @Validation({@Validator(field = "user_id", validator = NicknameValidator.class)})
     public HttpUriRequest getPublicProfile(Map<String, String> params)
             throws PlurkException {
         return prepare("getPublicProfile", params);
