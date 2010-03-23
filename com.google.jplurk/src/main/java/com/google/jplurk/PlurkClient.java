@@ -33,7 +33,6 @@ import com.google.jplurk.exception.PlurkException;
 import com.google.jplurk.net.JPlurkResponseHandler;
 import com.google.jplurk.net.ProxyProvider;
 import com.google.jplurk.net.ThinMultipartEntity;
-import javax.swing.JOptionPane;
 
 /**
  * Main Client for Plurk API.
