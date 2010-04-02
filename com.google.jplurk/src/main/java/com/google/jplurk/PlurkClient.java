@@ -42,7 +42,7 @@ public class PlurkClient {
 
     // <editor-fold defaultstate="collapsed" desc="Init PlurkClient">
     private static Log logger = LogFactory.getLog(PlurkClient.class);
-    private DefaultHttpClient client = new DefaultHttpClient();
+    protected DefaultHttpClient client = new DefaultHttpClient();
     private ISettings config;
 
     static abstract class IdActions {
@@ -1043,6 +1043,31 @@ public class PlurkClient {
         return null;
     }
     // </editor-fold>
+    
+	/**
+	 * Get instant notifications when there are new plurks and responses on a
+	 * user's timeline. This is much more efficient and faster than polling so
+	 * please use it!
+	 * 
+	 * This API works like this:
+	 * 
+	 * <li /> A request is sent to /API/Realtime/getUserChannel and in it you get
+	 * an unique channel to currnetly logged in user's timeline 
+	 * <li />You do requests to this unqiue channel in order to get notifications
+	 * 
+	 * @return
+	 */
+	public JSONObject getUserChannel() {
+        try {
+            HttpGet method = (HttpGet) PlurkActionSheet.getInstance().getUserChannel(config.createParamMap().getMap());
+            return new JSONObject(execute(method));
+        } catch (PlurkException e) {
+            logger.error(e.getMessage(), e);
+        } catch (JSONException e) {
+            logger.error(e.getMessage(), e);
+        }		
+		return null;
+	}
 
     // <editor-fold defaultstate="collapsed" desc="/API/Timeline/uploadPicture">
     /**
