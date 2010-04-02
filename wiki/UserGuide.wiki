@@ -35,7 +35,7 @@ ISettings.Simple settings = new Simple("[api_key]", Lang.tr_ch);
 
     please refer to: http://code.google.com/p/jplurk/wiki/Using_Proxy_V2
     
-= Using Timeline API =
+= Using Realtime API =
 
     In r440, we implement the [http://www.plurk.com/API#realtime Realtime notifications] api.
     The /API/Realtime/getUserChannel api will return a comet server url and inovke HTTP GET to get notifications.
