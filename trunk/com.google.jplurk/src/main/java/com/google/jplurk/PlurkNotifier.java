@@ -100,7 +100,7 @@ public class PlurkNotifier extends TimerTask {
 		}
 	}
 
-	static interface NotificationListener {
+	public static interface NotificationListener {
 		public void onNotification(JSONObject message) throws Exception;
 	}
 
