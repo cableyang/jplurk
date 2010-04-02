@@ -82,15 +82,6 @@ public class PlurkClient {
     }
 
     private void configureHttpClient() {
-        // client 4.x have the default schema for https, we do not need to add ours.
-//		try {
-//			// register https 
-//	    	Scheme https = new Scheme("https", SSLSocketFactory.getSocketFactory(), 443);
-//	    	client.getConnectionManager().getSchemeRegistry().register(https);
-//		} catch (Exception e) {
-//			logger.error(e.getMessage(), e);
-//		}
-
         // Auth Proxy Setting
         if (StringUtils.isNotBlank(ProxyProvider.getUser())) {
             ((DefaultHttpClient) client).getCredentialsProvider().setCredentials(
@@ -108,10 +99,12 @@ public class PlurkClient {
         }
 
         Runtime.getRuntime().addShutdownHook(new Thread() {
-
             @Override
             public void run() {
-                client.getConnectionManager().shutdown();
+            	try {
+            		client.getConnectionManager().shutdown();
+				} catch (Exception ignored) {
+				}
             }
         });
     }
@@ -126,7 +119,6 @@ public class PlurkClient {
      * @return The JSONObject of /API/Profile/getOwnProfile
      */
     public JSONObject login(String user, String password) {
-
         try {
             HttpGet method = (HttpGet) PlurkActionSheet.getInstance().login(
                     config.createParamMap().k("username").v(user).k("password").v(password).getMap());
@@ -138,7 +130,6 @@ public class PlurkClient {
         } catch (JSONException e) {
             logger.error(e.getMessage(), e);
         }
-
         return null;
     }
     // </editor-fold>
@@ -198,7 +189,6 @@ public class PlurkClient {
         if (!m.find()) {
             return null;
         }
-        // TODO: Check password need URLEncode? I try encode and work fine now...
         try {
             MapHelper paramMap = config.createParamMap().k("nick_name").v(nickName).k("full_name").v(fullName).k("password").v(password).k("gender").v(gender.toString()).k("date_of_birth").v(dateOfBirth);
             if (email != null && !email.equals((""))) {
