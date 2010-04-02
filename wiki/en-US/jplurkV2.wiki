@@ -109,6 +109,11 @@ Please refer to [Using_Proxy_V2] page.
 || /API/Users/updatePicture || updatePicture || qrtt1 || Done || `@since` rev361 ||
 || /API/Users/update || update || qrtt1 || Done || `@since` rev361 ||
 
+== Real time notifications ==
+
+|| *Service* || *Method* || *Owner* || *State* || *Comments* ||
+|| /API/Realtime/getUserChannel || getUserChannel || qrtt1 || Done || `@since` rev440 ||
+
 == Polling ==
 
 || *Service* || *Method* || *Owner* || *State* || *Comments* ||

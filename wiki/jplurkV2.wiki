@@ -103,6 +103,11 @@ client.getUnreadPlurks();
 || /API/Users/updatePicture || updatePicture || qrtt1 || 完成 || `@since` rev361 ||
 || /API/Users/update || update || qrtt1 || 完成 || `@since` rev361 ||
 
+== Real time notifications ==
+
+|| *功能* || *函式名稱* || *誰在實作* || *狀態* || *備註* ||
+|| /API/Realtime/getUserChannel || getUserChannel || qrtt1 || 完成 || `@since` rev440 ||
+
 == Polling ==
 
 || *功能* || *函式名稱* || *誰在實作* || *狀態* || *備註* ||

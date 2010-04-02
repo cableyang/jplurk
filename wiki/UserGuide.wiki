@@ -30,3 +30,28 @@ ISettings.Simple instantiates by arguments:
 {{{
 ISettings.Simple settings = new Simple("[api_key]", Lang.tr_ch);
 }}}
+
+= Using jPlurk with Proxy =
+
+    please refer to: http://code.google.com/p/jplurk/wiki/Using_Proxy_V2
+    
+= Using Timeline API =
+
+    In r440, we implement the [http://www.plurk.com/API#realtime Realtime notifications] api.
+    The /API/Realtime/getUserChannel api will return a comet server url and inovke HTTP GET to get notifications.
+    In jPlurk, we use event-listener model to design it.
+    
+{{{
+PlurkNotifier notifier = client.getUserChannel();
+notifier.addNotificationListener(new NotificationListener() {
+    @Override
+    public void onNotification(JSONObject message) throws Exception {
+        // do something with notification
+    }
+});
+
+// PlurkNotifer is a subclass of TimerTask.
+// You can schedule it in Timer Thread.
+Timer timer = new Timer();
+timer.schedule(notifier, new Date(), 10 * 1000);
+}}}
