@@ -4,8 +4,8 @@
 = Hello jPlurk =
 
 There is a simple example to get the user's profile:
- * creates the ISettings instance used by PlurkClient
- * does login user before use other api commands the PlurkClient provided
+ * creates the ISettings instance used by !PlurkClient
+ * does login user before use other api commands the !PlurkClient provided
  * executes getownProfile() for example 
 
 {{{
@@ -22,9 +22,9 @@ JSONObject profile = client.getOwnProfile();
 
 == About ISettings ==
 
-ISettings is an interface which provides the information about the api key, default lang, etc. PlurkClient will pick up ISettings to initialize itself.
-We provide com.google.jplurk.PlurkSettings and com.google.jplurk.ISettings.Simple classes. 
-PlurkSettings instantiates from a external property file. 
+ISettings is an interface which provides the information about the api key, default lang, etc. !PlurkClient will pick up ISettings to initialize itself.
+We provide com.google.jplurk.!PlurkSettings and com.google.jplurk.ISettings.Simple classes. 
+!PlurkSettings instantiates from a external property file. 
 ISettings.Simple instantiates by arguments:
 
 {{{
