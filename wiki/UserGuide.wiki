@@ -1,0 +1,16 @@
+#summary User Guide for jPlurk version 2.x / jPlurk version 2.x 使用指引
+#labels Featured
+
+= Hello jPlurk =
+
+{{{
+// create settings from ${USER_HOME}/jplurk.properties
+ISettings settings = new PlurkSettings();
+PlurkClient client = new PlurkClient(settings);
+
+// sign in the plurk account
+client.login("[user_id]", "[user_password]");
+
+// get user's profile
+JSONObject profile = client.getOwnProfile();
+}}}
