@@ -213,6 +213,12 @@ public final class PlurkActionSheet {
         return prepare("getPublicProfile", params);
     }
     // </editor-fold>
+    
+    @Meta(uri = "/Realtime/getUserChannel", require = {"api_key"})
+    public HttpUriRequest getUserChannel(Map<String, String> params)
+            throws PlurkException {
+        return prepare("getUserChannel", params);
+    }    
 
     // <editor-fold defaultstate="collapsed" desc="FriendsFans">
     @Meta(uri = "/FriendsFans/getFriendsByOffset", require = {"api_key", "user_id"})
