@@ -42,7 +42,7 @@ public class PlurkClient {
 
     // <editor-fold defaultstate="collapsed" desc="Init PlurkClient">
     private static Log logger = LogFactory.getLog(PlurkClient.class);
-    protected DefaultHttpClient client = new DefaultHttpClient();
+    private DefaultHttpClient client = new DefaultHttpClient();
     private ISettings config;
 
     static abstract class IdActions {
@@ -1047,10 +1047,12 @@ public class PlurkClient {
 	 * 
 	 * @return
 	 */
-	public JSONObject getUserChannel() {
+	public PlurkNotifier getUserChannel() {
+		JSONObject obj = new JSONObject();
         try {
             HttpGet method = (HttpGet) PlurkActionSheet.getInstance().getUserChannel(config.createParamMap().getMap());
-            return new JSONObject(execute(method));
+            obj = new JSONObject(execute(method));
+            return new PlurkNotifier(client, obj);
         } catch (PlurkException e) {
             logger.error(e.getMessage(), e);
         } catch (JSONException e) {
@@ -1493,8 +1495,11 @@ public class PlurkClient {
         ISettings config = new PlurkSettings();
 
         PlurkClient pc = new PlurkClient(config);
-        JSONObject o = null;
-        //System.out.println( pc.login(JOptionPane.showInputDialog("id"), JOptionPane.showInputDialog("password")) );
+//        JSONObject o = null;
+//        System.out.println( pc.login(JOptionPane.showInputDialog("id"), JOptionPane.showInputDialog("password")) );
+//        
+//        Timer timer = new Timer();
+//        timer.schedule(pc.getUserChannel(), new Date(), 15000);
 
 //        System.out.println(pc.plurkAdd("用 https 似乎真的慢很多啊 orz", Qualifier.SAYS, CommentBy.All));
 //        System.out.println(pc.plurkAdd("今天睡到下午一點，真爽耶.", Qualifier.SAYS, CommentBy.All));
