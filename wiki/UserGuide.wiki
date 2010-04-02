@@ -37,7 +37,7 @@ ISettings.Simple settings = new Simple("[api_key]", Lang.tr_ch);
     
 = Using Realtime API =
 
-    In r440, we implement the [http://www.plurk.com/API#realtime Realtime notifications] api.
+    In r443, we implement the [http://www.plurk.com/API#realtime Realtime notifications] api.
     The /API/Realtime/getUserChannel api will return a comet server url and inovke HTTP GET to get notifications.
     In jPlurk, we use event-listener model to design it.
     
