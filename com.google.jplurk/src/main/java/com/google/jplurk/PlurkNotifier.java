@@ -52,54 +52,62 @@ public class PlurkNotifier extends TimerTask {
 	public void run() {
 		try {
 			logger.info("query: " + cometQueryUrl);
-			HttpResponse resp = client.execute(new HttpGet(cometQueryUrl
-					.toString()));
-			JSONObject ret = new JSONObject(EntityUtils.toString(resp
-					.getEntity()));
+			HttpResponse resp = client.execute(new HttpGet(cometQueryUrl.toString()));
+			JSONObject ret = new JSONObject(EntityUtils.toString(resp.getEntity()));
 			logger.info("response: " + ret);
-			try {
-				if (ret.has("data")) {
-					JSONArray data = ret.getJSONArray("data");
-					for (int i = 0; i < data.length(); i++) {
-						try {
-							if (listeners.isEmpty()) {
-								NOOP.onNotification(data.getJSONObject(i));
-								continue;
-							}
-							for (NotificationListener listener : listeners) {
-								try {
-									listener.onNotification(data
-											.getJSONObject(i));
-								} catch (Exception e) {
-									logger.error(e.getMessage(), e);
-								}
-							}
-						} catch (Exception e) {
-							logger.error(e.getMessage(), e);
-						}
-					}
-				}
-			} catch (Exception e) {
-				logger.error(e.getMessage(), e);
-			}
-
-			try {
-				if (ret.has("new_offset")) {
-					int offset = ret.getInt("new_offset");
-					cometQueryUrl.setLength(cometQueryUrl.indexOf("offset="));
-					cometQueryUrl.append("offset=");
-					cometQueryUrl.append(offset);
-					logger.info("new offset is " + offset);
-				}
-			} catch (Exception e) {
-				logger.error(e.getMessage(), e);
-			}
+			
+			dispatchNotifications(ret);
+			updateNextOffset(ret);
 
 		} catch (Exception e) {
 			logger.error(e.getMessage(), e);
 		}
 	}
 
+	private void dispatchNotifications(JSONObject ret) {
+		try {
+			if (!ret.has("data")) {
+				return;
+			}
+			
+			JSONArray data = ret.getJSONArray("data");
+			for (int i = 0; i < data.length(); i++) {
+				try {
+					if (listeners.isEmpty()) {
+						NOOP.onNotification(data.getJSONObject(i));
+						continue;
+					}
+					
+					for (NotificationListener listener : listeners) {
+						try {
+							listener.onNotification(data.getJSONObject(i));
+						} catch (Exception e) {
+							logger.error(e.getMessage(), e);
+						}
+					}
+				} catch (Exception e) {
+					logger.error(e.getMessage(), e);
+				}
+			}
+		} catch (Exception e) {
+			logger.error(e.getMessage(), e);
+		}
+	}
+	
+	private void updateNextOffset(JSONObject ret) {
+		try {
+			if (!ret.has("new_offset")) {
+				return;
+			}
+			int offset = ret.getInt("new_offset");
+			cometQueryUrl.setLength(cometQueryUrl.indexOf("offset="));
+			cometQueryUrl.append("offset=");
+			cometQueryUrl.append(offset);
+			logger.info("new offset is " + offset);
+		} catch (Exception e) {
+			logger.error(e.getMessage(), e);
+		}
+	}
 	public static interface NotificationListener {
 		public void onNotification(JSONObject message) throws Exception;
 	}
