@@ -1,6 +1,6 @@
 package com.google.jplurk.validator;
 
-import org.apache.commons.lang.StringUtils;
+import com.google.jplurk.org.apache.commons.lang.StringUtils;
 
 public class TrueFalseLiteralValidator implements IValidator {
 

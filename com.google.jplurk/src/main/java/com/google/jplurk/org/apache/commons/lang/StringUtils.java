@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-package org.apache.commons.lang;
+package com.google.jplurk.org.apache.commons.lang;
 
 public class StringUtils {
 	

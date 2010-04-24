@@ -1,6 +1,6 @@
 package com.google.jplurk.validator;
 
-import org.apache.commons.lang.math.NumberUtils;
+import com.google.jplurk.org.apache.commons.lang.math.NumberUtils;
 
 public class NonNegativeIntegerValidator implements IValidator {
 
