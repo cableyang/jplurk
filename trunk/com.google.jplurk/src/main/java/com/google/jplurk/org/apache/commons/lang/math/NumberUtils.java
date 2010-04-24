@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-package org.apache.commons.lang.math;
+package com.google.jplurk.org.apache.commons.lang.math;
 
 public class NumberUtils {
     /**

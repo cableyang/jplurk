@@ -8,8 +8,6 @@ import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import org.apache.commons.lang.StringUtils;
-import org.apache.commons.lang.math.NumberUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.http.HttpHost;
@@ -33,6 +31,8 @@ import com.google.jplurk.exception.PlurkException;
 import com.google.jplurk.net.JPlurkResponseHandler;
 import com.google.jplurk.net.ProxyProvider;
 import com.google.jplurk.net.ThinMultipartEntity;
+import com.google.jplurk.org.apache.commons.lang.StringUtils;
+import com.google.jplurk.org.apache.commons.lang.math.NumberUtils;
 
 /**
  * Main Client for Plurk API.

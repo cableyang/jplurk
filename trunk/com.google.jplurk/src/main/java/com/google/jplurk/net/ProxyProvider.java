@@ -5,8 +5,8 @@
 package com.google.jplurk.net;
 
 import com.google.jplurk.ISettings;
+import com.google.jplurk.org.apache.commons.lang.StringUtils;
 
-import org.apache.commons.lang.StringUtils;
 
 /**
  * Provide the setting of proxy.

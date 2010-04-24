@@ -7,12 +7,12 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Properties;
 
-import org.apache.commons.lang.StringUtils;
 import org.apache.http.client.CookieStore;
 import org.apache.http.impl.client.BasicCookieStore;
 import org.json.JSONArray;
 
 import com.google.jplurk.exception.PlurkException;
+import com.google.jplurk.org.apache.commons.lang.StringUtils;
 
 /**
  * PlurkSettings class will read a property file which contains plurk api key at least.
