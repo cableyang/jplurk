@@ -99,12 +99,13 @@ public class PlurkClient {
         }
 
         Runtime.getRuntime().addShutdownHook(new Thread() {
+
             @Override
             public void run() {
-            	try {
-            		client.getConnectionManager().shutdown();
-				} catch (Exception ignored) {
-				}
+                try {
+                    client.getConnectionManager().shutdown();
+                } catch (Exception ignored) {
+                }
             }
         });
     }
@@ -659,7 +660,7 @@ public class PlurkClient {
      * Add new plurk to timeline.
      * @param content
      * @param qualifier
-     * @param limited_to (optional), JSON Array contains friends ids
+     * @param limited_to (optional), JSON Array contains friends ids. If limited_to is [0], then the Plurk is privatley posted to the poster's friends.
      * @param commentBy (optional), true or false
      * @param lang (optional)
      * @return JSON object of the new plurk
@@ -775,6 +776,70 @@ public class PlurkClient {
                         config.createParamMap().k("ids").v(new JSONArray(idSet).toString()).getMap());
             }
         }.execute(this, ids);
+    }
+    // </editor-fold>
+
+    // <editor-fold defaultstate="collapsed" desc="/API/Timeline/uploadPicture">
+    /**
+     * /API/Timeline/uploadPicture
+     * @param file a image file will be uploaded
+     * @return json with thumbnail url. for example <pre>{"thumbnail":"http://images.plurk.com/tn_3146394_fb04befc28fbca59318f16d83d5c78cc.gif","full":"http://images.plurk.com/3146394_fb04befc28fbca59318f16d83d5c78cc.jpg"}</pre>
+     */
+    public JSONObject uploadPicture(File file) {
+        if (file == null || !file.exists() || !file.isFile()) {
+            logger.warn("not a valid file: " + file);
+            return null;
+        }
+
+        HttpPost method = new HttpPost("http://www.plurk.com/API/Timeline/uploadPicture");
+        try {
+            ThinMultipartEntity entity = new ThinMultipartEntity();
+            entity.addPart("api_key", config.getApiKey());
+            entity.addPart("image", file);
+            method.setEntity(entity);
+        } catch (Exception e) {
+            logger.error(e.getMessage(), e);
+        }
+
+        try {
+            return new JSONObject(execute(method));
+        } catch (JSONException e) {
+            logger.error(e.getMessage(), e);
+        } catch (PlurkException e) {
+            logger.error(e.getMessage(), e);
+        }
+
+        return null;
+    }
+    // </editor-fold>
+
+    // <editor-fold defaultstate="collapsed" desc="/API/Timeline/uploadPicture">
+    /**
+     * /API/Timeline/uploadPicture
+     * @param file a image file will be uploaded
+     * @return json with thumbnail url. for example <pre>{"thumbnail":"http://images.plurk.com/tn_3146394_fb04befc28fbca59318f16d83d5c78cc.gif","full":"http://images.plurk.com/3146394_fb04befc28fbca59318f16d83d5c78cc.jpg"}</pre>
+     */
+    public JSONObject uploadPicture(String fileName, InputStream inputStream) {
+
+        HttpPost method = new HttpPost("http://www.plurk.com/API/Timeline/uploadPicture");
+        try {
+            ThinMultipartEntity entity = new ThinMultipartEntity();
+            entity.addPart("api_key", config.getApiKey());
+            entity.addPart("image", fileName, inputStream);
+            method.setEntity(entity);
+        } catch (Exception e) {
+            logger.error(e.getMessage(), e);
+        }
+
+        try {
+            return new JSONObject(execute(method));
+        } catch (JSONException e) {
+            logger.error(e.getMessage(), e);
+        } catch (PlurkException e) {
+            logger.error(e.getMessage(), e);
+        }
+
+        return null;
     }
     // </editor-fold>
 
@@ -1033,22 +1098,23 @@ public class PlurkClient {
         return null;
     }
     // </editor-fold>
-    
-	/**
-	 * Get instant notifications when there are new plurks and responses on a
-	 * user's timeline. This is much more efficient and faster than polling so
-	 * please use it!
-	 * 
-	 * This API works like this:
-	 * 
-	 * <li /> A request is sent to /API/Realtime/getUserChannel and in it you get
-	 * an unique channel to currnetly logged in user's timeline 
-	 * <li />You do requests to this unqiue channel in order to get notifications
-	 * 
-	 * @return
-	 */
-	public PlurkNotifier getUserChannel() {
-		JSONObject obj = new JSONObject();
+
+    // <editor-fold defaultstate="collapsed" desc="/API/Realtime/getUserChannel">
+    /**
+     * Get instant notifications when there are new plurks and responses on a
+     * user's timeline. This is much more efficient and faster than polling so
+     * please use it!
+     *
+     * This API works like this:
+     *
+     * <li /> A request is sent to /API/Realtime/getUserChannel and in it you get
+     * an unique channel to currnetly logged in user's timeline
+     * <li />You do requests to this unqiue channel in order to get notifications
+     *
+     * @return
+     */
+    public PlurkNotifier getUserChannel() {
+        JSONObject obj = new JSONObject();
         try {
             HttpGet method = (HttpGet) PlurkActionSheet.getInstance().getUserChannel(config.createParamMap().getMap());
             obj = new JSONObject(execute(method));
@@ -1057,70 +1123,7 @@ public class PlurkClient {
             logger.error(e.getMessage(), e);
         } catch (JSONException e) {
             logger.error(e.getMessage(), e);
-        }		
-		return null;
-	}
-
-    // <editor-fold defaultstate="collapsed" desc="/API/Timeline/uploadPicture">
-    /**
-     * /API/Timeline/uploadPicture
-     * @param file a image file will be uploaded
-     * @return json with thumbnail url. for example <pre>{"thumbnail":"http://images.plurk.com/tn_3146394_fb04befc28fbca59318f16d83d5c78cc.gif","full":"http://images.plurk.com/3146394_fb04befc28fbca59318f16d83d5c78cc.jpg"}</pre>
-     */
-    public JSONObject uploadPicture(File file) {
-        if (file == null || !file.exists() || !file.isFile()) {
-            logger.warn("not a valid file: " + file);
-            return null;
         }
-
-        HttpPost method = new HttpPost("http://www.plurk.com/API/Timeline/uploadPicture");
-        try {
-            ThinMultipartEntity entity = new ThinMultipartEntity();
-            entity.addPart("api_key", config.getApiKey());
-            entity.addPart("image", file);
-            method.setEntity(entity);
-        } catch (Exception e) {
-            logger.error(e.getMessage(), e);
-        }
-
-        try {
-            return new JSONObject(execute(method));
-        } catch (JSONException e) {
-            logger.error(e.getMessage(), e);
-        } catch (PlurkException e) {
-            logger.error(e.getMessage(), e);
-        }
-
-        return null;
-    }
-    // </editor-fold>
-
-    // <editor-fold defaultstate="collapsed" desc="/API/Timeline/uploadPicture">
-    /**
-     * /API/Timeline/uploadPicture
-     * @param file a image file will be uploaded
-     * @return json with thumbnail url. for example <pre>{"thumbnail":"http://images.plurk.com/tn_3146394_fb04befc28fbca59318f16d83d5c78cc.gif","full":"http://images.plurk.com/3146394_fb04befc28fbca59318f16d83d5c78cc.jpg"}</pre>
-     */
-    public JSONObject uploadPicture(String fileName, InputStream inputStream) {
-
-        HttpPost method = new HttpPost("http://www.plurk.com/API/Timeline/uploadPicture");
-        try {
-            ThinMultipartEntity entity = new ThinMultipartEntity();
-            entity.addPart("api_key", config.getApiKey());
-            entity.addPart("image", fileName, inputStream);
-            method.setEntity(entity);
-        } catch (Exception e) {
-            logger.error(e.getMessage(), e);
-        }
-
-        try {
-            return new JSONObject(execute(method));
-        } catch (JSONException e) {
-            logger.error(e.getMessage(), e);
-        } catch (PlurkException e) {
-            logger.error(e.getMessage(), e);
-        }
-
         return null;
     }
     // </editor-fold>
