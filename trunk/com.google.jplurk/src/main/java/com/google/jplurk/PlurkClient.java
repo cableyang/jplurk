@@ -816,7 +816,8 @@ public class PlurkClient {
     // <editor-fold defaultstate="collapsed" desc="/API/Timeline/uploadPicture">
     /**
      * /API/Timeline/uploadPicture
-     * @param file a image file will be uploaded
+     * @param fileName a image file will be uploaded
+     * @param inputStream
      * @return json with thumbnail url. for example <pre>{"thumbnail":"http://images.plurk.com/tn_3146394_fb04befc28fbca59318f16d83d5c78cc.gif","full":"http://images.plurk.com/3146394_fb04befc28fbca59318f16d83d5c78cc.jpg"}</pre>
      */
     public JSONObject uploadPicture(String fileName, InputStream inputStream) {
@@ -1026,7 +1027,7 @@ public class PlurkClient {
     /**
      * /API/Alerts/denyFriendship <br />
      * Deny friendship to user_id.
-     * @param The user_id that has asked for friendship.
+     * @param userId The user_id that has asked for friendship.
      * @return
      */
     public JSONObject denyFriendship(int userId) {
