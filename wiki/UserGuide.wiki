@@ -31,6 +31,8 @@ ISettings.Simple instantiates by arguments:
 ISettings.Simple settings = new Simple("[api_key]", Lang.tr_ch);
 }}}
 
+ISettings.Simple is useful for programming without the config file (~/jplurk.properties), especially in *Android*
+
 = Using jPlurk with Proxy =
 
     please refer to: http://code.google.com/p/jplurk/wiki/Using_Proxy_V2
