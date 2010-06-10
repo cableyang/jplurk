@@ -8,6 +8,8 @@ import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import javax.swing.JOptionPane;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.http.HttpHost;
@@ -28,6 +30,7 @@ import org.json.JSONObject;
 
 import com.google.jplurk.action.PlurkActionSheet;
 import com.google.jplurk.exception.PlurkException;
+import com.google.jplurk.net.HttpClientFactory;
 import com.google.jplurk.net.JPlurkResponseHandler;
 import com.google.jplurk.net.ProxyProvider;
 import com.google.jplurk.net.ThinMultipartEntity;
@@ -42,7 +45,8 @@ public class PlurkClient {
 
     // <editor-fold defaultstate="collapsed" desc="Init PlurkClient">
     private static Log logger = LogFactory.getLog(PlurkClient.class);
-    private DefaultHttpClient client = new DefaultHttpClient();
+    private DefaultHttpClient client = HttpClientFactory.createThreadSafeHttpClient();
+    
     private ISettings config;
 
     static abstract class IdActions {
@@ -1497,11 +1501,10 @@ public class PlurkClient {
 //        ProxyProvider.setProvider("proxyhost", 8080);
 
         ISettings config = new PlurkSettings();
-
         PlurkClient pc = new PlurkClient(config);
-//        JSONObject o = null;
-//        System.out.println( pc.login(JOptionPane.showInputDialog("id"), JOptionPane.showInputDialog("password")) );
-//        
+        JSONObject o = null;
+        System.out.println( pc.login(JOptionPane.showInputDialog("id"), JOptionPane.showInputDialog("password")) );
+        pc.plurkAdd("把忘了加的 multithread connection manager 加上去了", Qualifier.SAYS);
 //        Timer timer = new Timer();
 //        timer.schedule(pc.getUserChannel(), new Date(), 15000);
 
