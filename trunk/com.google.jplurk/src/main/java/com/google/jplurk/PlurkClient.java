@@ -8,8 +8,6 @@ import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import javax.swing.JOptionPane;
-
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.http.HttpHost;
@@ -1500,11 +1498,11 @@ public class PlurkClient {
     public static void main(String[] args) throws PlurkException, ClientProtocolException, IOException, InterruptedException {
 //        ProxyProvider.setProvider("proxyhost", 8080);
 
-        ISettings config = new PlurkSettings();
-        PlurkClient pc = new PlurkClient(config);
-        JSONObject o = null;
-        System.out.println( pc.login(JOptionPane.showInputDialog("id"), JOptionPane.showInputDialog("password")) );
-        pc.plurkAdd("把忘了加的 multithread connection manager 加上去了", Qualifier.SAYS);
+//        ISettings config = new PlurkSettings();
+//        PlurkClient pc = new PlurkClient(config);
+//        JSONObject o = null;
+//        System.out.println( pc.login(JOptionPane.showInputDialog("id"), JOptionPane.showInputDialog("password")) );
+//        pc.plurkAdd("把忘了加的 multithread connection manager 加上去了", Qualifier.SAYS);
 //        Timer timer = new Timer();
 //        timer.schedule(pc.getUserChannel(), new Date(), 15000);
 
