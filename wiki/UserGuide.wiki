@@ -31,7 +31,7 @@ ISettings.Simple instantiates by arguments:
 ISettings.Simple settings = new Simple("[api_key]", Lang.tr_ch);
 }}}
 
-ISettings.Simple is useful for programming without the config file (~/jplurk.properties), especially in *Android* . There is an Activity example:
+ISettings.Simple is useful for programming without the config file (~/jplurk.properties), especially in *Android* . There is an Android Activity example:
 {{{
 package android.jplurk;
 
