@@ -31,7 +31,81 @@ ISettings.Simple instantiates by arguments:
 ISettings.Simple settings = new Simple("[api_key]", Lang.tr_ch);
 }}}
 
-ISettings.Simple is useful for programming without the config file (~/jplurk.properties), especially in *Android*
+ISettings.Simple is useful for programming without the config file (~/jplurk.properties), especially in *Android* . There is an Activity example:
+{{{
+package android.jplurk;
+
+import android.app.Activity;
+import android.os.AsyncTask;
+import android.os.Bundle;
+import android.util.Log;
+import android.widget.Toast;
+
+import com.google.jplurk.ISettings;
+import com.google.jplurk.Lang;
+import com.google.jplurk.PlurkClient;
+
+public class JPluroidActivity extends Activity {
+
+    private final static String API_KEY = "[your-api-key]";
+    private final static String TAG = "JPluroid";
+    //
+    private String __user = "[your-plurk-account]";
+    private String __passwd = "[your-plurk-password]";
+    //
+    private PlurkClient mPlurkClient;
+    private boolean mHasLogin;
+
+    class PlurkAsync extends AsyncTask<PlurkClient, Void, Boolean> {
+
+        @Override
+        protected Boolean doInBackground(PlurkClient... params) {
+            Log.i(TAG, "start to login");
+            PlurkClient client = params[0];
+            try {
+                Object result = client.login(__user, __passwd);
+                Log.i(TAG, "logging result: " + result);
+                return result != null;
+            } catch (Exception e) {
+                Log.e(TAG, e.getMessage());
+                return false;
+            }
+
+        }
+
+        @Override
+        protected void onPostExecute(Boolean result) {
+            Log.i(TAG, "finish logging task");
+            toast("logging is " + (result ? "success" : "failed"));
+            if (result) {
+                mHasLogin = true;
+                Log.i(TAG, "mark plurk-client has logined");
+            } 
+        }
+    }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        mPlurkClient = new PlurkClient(new ISettings.Simple(API_KEY, Lang.tr_ch));
+        setContentView(R.layout.main);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (!mHasLogin) {
+            toast("do logging ...");
+            new PlurkAsync().execute(mPlurkClient);
+        }
+    }
+
+    private void toast(Object message) {
+        Toast.makeText(this, "" + message, Toast.LENGTH_LONG).show();
+    }
+}
+
+}}}
 
 = Using jPlurk with Proxy =
 
