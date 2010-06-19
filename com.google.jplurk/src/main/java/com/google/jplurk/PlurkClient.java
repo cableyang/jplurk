@@ -45,6 +45,7 @@ public class PlurkClient {
     // <editor-fold defaultstate="collapsed" desc="Init PlurkClient">
     private static Log logger = LogFactory.getLog(PlurkClient.class);
     private DefaultHttpClient client = HttpClientFactory.createThreadSafeHttpClient();
+    private LazyIdleConnectionMonitor monitor = new LazyIdleConnectionMonitor();
     
     private ISettings config;
 
@@ -1484,7 +1485,7 @@ public class PlurkClient {
         } catch (Exception e) {
             throw new PlurkException(e);
         } finally {
-            LazyIdleConnectionMonitor.cleanIdleConnections(client.getConnectionManager());
+            monitor.cleanIdleConnections(client.getConnectionManager());
         }
         return result;
     }
