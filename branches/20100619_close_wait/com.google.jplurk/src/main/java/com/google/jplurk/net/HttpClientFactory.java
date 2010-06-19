@@ -17,7 +17,7 @@ import org.apache.http.params.HttpProtocolParams;
 public class HttpClientFactory {
     
     public final static long SECOND = 1000L;
-    public final static long TIMEOUT = 30 * SECOND;
+    public final static int TIMEOUT = (int) (30 * SECOND);
 
     public static DefaultHttpClient createThreadSafeHttpClient() {
         // Create and initialize HTTP parameters
