@@ -30,6 +30,7 @@ import com.google.jplurk.action.PlurkActionSheet;
 import com.google.jplurk.exception.PlurkException;
 import com.google.jplurk.net.HttpClientFactory;
 import com.google.jplurk.net.JPlurkResponseHandler;
+import com.google.jplurk.net.LazyIdleConnectionMonitor;
 import com.google.jplurk.net.ProxyProvider;
 import com.google.jplurk.net.ThinMultipartEntity;
 import com.google.jplurk.org.apache.commons.lang.StringUtils;
@@ -44,6 +45,7 @@ public class PlurkClient {
     // <editor-fold defaultstate="collapsed" desc="Init PlurkClient">
     private static Log logger = LogFactory.getLog(PlurkClient.class);
     private DefaultHttpClient client = HttpClientFactory.createThreadSafeHttpClient();
+    private LazyIdleConnectionMonitor monitor = new LazyIdleConnectionMonitor();
     
     private ISettings config;
 
@@ -1482,6 +1484,8 @@ public class PlurkClient {
             result = (String) client.execute(method, new JPlurkResponseHandler(), ctx);
         } catch (Exception e) {
             throw new PlurkException(e);
+        } finally {
+            monitor.cleanIdleConnections(client.getConnectionManager());
         }
         return result;
     }
