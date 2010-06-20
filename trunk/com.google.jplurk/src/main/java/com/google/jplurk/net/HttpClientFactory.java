@@ -10,14 +10,21 @@ import org.apache.http.conn.ssl.SSLSocketFactory;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.impl.conn.tsccm.ThreadSafeClientConnManager;
 import org.apache.http.params.BasicHttpParams;
+import org.apache.http.params.CoreConnectionPNames;
 import org.apache.http.params.HttpParams;
 import org.apache.http.params.HttpProtocolParams;
 
 public class HttpClientFactory {
+    
+    public final static long SECOND = 1000L;
+    public final static int TIMEOUT = (int) (30 * SECOND);
 
     public static DefaultHttpClient createThreadSafeHttpClient() {
         // Create and initialize HTTP parameters
         HttpParams params = new BasicHttpParams();
+        params.setParameter(CoreConnectionPNames.CONNECTION_TIMEOUT, TIMEOUT);
+        params.setParameter(CoreConnectionPNames.SO_TIMEOUT, TIMEOUT);
+        
         ConnManagerParams.setMaxTotalConnections(params, 100);
         HttpProtocolParams.setVersion(params, HttpVersion.HTTP_1_1);
 
