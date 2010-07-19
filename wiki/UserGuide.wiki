@@ -138,7 +138,7 @@ public class HelloJPlurk {
 		final PlurkClient client = new PlurkClient(settings);
 
 		// sign in the plurk account
-		client.login("qrtt1", "reader");
+		client.login("your_id", "your_password");
 
 		PlurkNotifier notifier = client.getUserChannel();
 		notifier.addNotificationListener(new NotificationListener() {
