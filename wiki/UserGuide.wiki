@@ -118,16 +118,38 @@ public class JPluroidActivity extends Activity {
     In jPlurk, we use event-listener model to design it.
     
 {{{
-PlurkNotifier notifier = client.getUserChannel();
-notifier.addNotificationListener(new NotificationListener() {
-    @Override
-    public void onNotification(JSONObject message) throws Exception {
-        // do something with notification
-    }
-});
+import java.util.Date;
+import java.util.Timer;
 
-// PlurkNotifer is a subclass of TimerTask.
-// You can schedule it in Timer Thread.
-Timer timer = new Timer();
-timer.schedule(notifier, new Date(), 10 * 1000);
+import org.json.JSONObject;
+
+import com.google.jplurk.ISettings;
+import com.google.jplurk.PlurkClient;
+import com.google.jplurk.PlurkNotifier;
+import com.google.jplurk.PlurkSettings;
+import com.google.jplurk.PlurkNotifier.NotificationListener;
+import com.google.jplurk.exception.PlurkException;
+
+public class HelloJPlurk {
+	public static void main(String[] args) throws PlurkException {
+
+		// create settings from ${USER_HOME}/jplurk.properties
+		ISettings settings = new PlurkSettings();
+		final PlurkClient client = new PlurkClient(settings);
+
+		// sign in the plurk account
+		client.login("qrtt1", "reader");
+
+		PlurkNotifier notifier = client.getUserChannel();
+		notifier.addNotificationListener(new NotificationListener() {
+			@Override
+			public void onNotification(JSONObject message) throws Exception {
+				// do something with notification
+				System.out.println(message);
+			}
+		});
+		Timer timer = new Timer();
+		timer.schedule(notifier, new Date(), 10 * 1000);
+	}
+}
 }}}
