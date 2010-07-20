@@ -3,6 +3,7 @@ package com.google.jplurk;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.SocketTimeoutException;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.regex.Matcher;
@@ -1473,6 +1474,7 @@ public class PlurkClient {
 
     // <editor-fold defaultstate="collapsed" desc="Execution of HttpRequest">
     private String execute(HttpUriRequest method) throws PlurkException {
+        boolean isTimeOut = false;
         if (logger.isInfoEnabled()) {
             String uri = method.getURI().toString();
             logger.info("execute: " + StringUtils.substringBefore(uri, "?"));
@@ -1481,13 +1483,17 @@ public class PlurkClient {
         try {
             HttpContext ctx = new BasicHttpContext();
             ctx.setAttribute(ClientContext.COOKIE_STORE, config.getCookieStore());
-            result = (String) client.execute(method, new JPlurkResponseHandler(), ctx);
+            result = (String) client.execute(method,
+                    new JPlurkResponseHandler(), ctx);
+        } catch (SocketTimeoutException e) {
+            isTimeOut = true;
+            logger.debug("need timeout retry.");
         } catch (Exception e) {
             throw new PlurkException(e);
         } finally {
             monitor.cleanIdleConnections(client.getConnectionManager());
         }
-        return result;
+        return isTimeOut ? execute(method) : result;
     }
     // </editor-fold>
 
