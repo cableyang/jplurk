@@ -1,5 +1,6 @@
 package com.google.jplurk;
 
+import java.net.SocketTimeoutException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.TimerTask;
@@ -50,6 +51,7 @@ public class PlurkNotifier extends TimerTask {
 
     @Override
     public void run() {
+        boolean isTimeOut = false;
         try {
             logger.info("query: " + cometQueryUrl);
             HttpResponse resp = client.execute(new HttpGet(cometQueryUrl
@@ -61,8 +63,14 @@ public class PlurkNotifier extends TimerTask {
             dispatchNotifications(ret);
             updateNextOffset(ret);
 
+        } catch (SocketTimeoutException e) {
+            isTimeOut = true;
+            logger.debug("need timeout retry.");
         } catch (Exception e) {
             logger.error(e.getMessage(), e);
+        }
+        if (isTimeOut) {
+            run();
         }
     }
 
