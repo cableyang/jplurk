@@ -18,16 +18,20 @@ public class Args {
         this.map = map;
     }
 
-    public Args k(String key) {
+    public Args name(String key) {
         this.key = key;
         checkAndPush();
         return this;
     }
 
-    public Args v(String value) {
+    public Args value(String value) {
         this.value = value;
         checkAndPush();
         return this;
+    }
+    
+    public Args add(String key, String value){
+        return name(key).value(value);
     }
 
     private void checkAndPush() {

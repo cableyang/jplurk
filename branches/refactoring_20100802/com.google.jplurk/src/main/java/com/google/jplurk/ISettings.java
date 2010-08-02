@@ -24,7 +24,7 @@ public interface ISettings {
 
 	public abstract String getDefaultProxyPassword();
 
-	public abstract Args createParamMap();
+	public abstract Args args();
 
 	public abstract String getLang();
 	
@@ -91,9 +91,9 @@ public interface ISettings {
 			this.lang = (lang == null ? Lang.en : lang);
 		}
 
-		public Args createParamMap() {
+		public Args args() {
 			Args m = new Args();
-			m.k("api_key").v(getApiKey());
+			m.name("api_key").value(getApiKey());
 			return m;
 		}
 
