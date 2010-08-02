@@ -89,7 +89,7 @@ public class PlurkSettings implements ISettings {
      * 
      * @see com.google.jplurk.ISettings#createParamMap()
      */
-    public Args createParamMap() {
+    public Args args() {
         return new Args(new HashMap<String, String>() {
             private static final long serialVersionUID = -5306686629368927936L;
             {
