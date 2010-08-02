@@ -15,6 +15,7 @@ import org.apache.http.HttpHost;
 import org.apache.http.auth.AuthScope;
 import org.apache.http.auth.UsernamePasswordCredentials;
 import org.apache.http.client.ClientProtocolException;
+import org.apache.http.client.ResponseHandler;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.methods.HttpUriRequest;
@@ -1472,19 +1473,19 @@ public class PlurkClient {
     }
     // </editor-fold>
 
-    // <editor-fold defaultstate="collapsed" desc="Execution of HttpRequest">
-    private String execute(HttpUriRequest method) throws PlurkException {
+    @SuppressWarnings("unchecked")
+    protected <T> T execute(HttpUriRequest method, Class<? extends ResponseHandler<T>> clazz)
+            throws PlurkException {
         boolean isTimeOut = false;
         if (logger.isInfoEnabled()) {
             String uri = method.getURI().toString();
             logger.info("execute: " + StringUtils.substringBefore(uri, "?"));
         }
-        String result = "";
+        T result = null;
         try {
             HttpContext ctx = new BasicHttpContext();
             ctx.setAttribute(ClientContext.COOKIE_STORE, config.getCookieStore());
-            result = (String) client.execute(method,
-                    new JPlurkResponseHandler(), ctx);
+            result = (T) client.execute(method, clazz.newInstance(), ctx);
         } catch (SocketTimeoutException e) {
             isTimeOut = true;
             logger.debug("need timeout retry.");
@@ -1493,7 +1494,13 @@ public class PlurkClient {
         } finally {
             monitor.cleanIdleConnections(client.getConnectionManager());
         }
-        return isTimeOut ? execute(method) : result;
+        return (T) (isTimeOut ? execute(method) : result);
+
+    }
+
+    // <editor-fold defaultstate="collapsed" desc="Execution of HttpRequest">
+    private String execute(HttpUriRequest method) throws PlurkException {
+        return execute(method, JPlurkResponseHandler.class);
     }
     // </editor-fold>
 
