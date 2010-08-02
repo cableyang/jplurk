@@ -522,21 +522,6 @@ public class PlurkClient {
      * @return
      */
     public JSONObject getPlurks(DateTime offset, int limit, boolean onlyUser, boolean onlyResponsed, boolean onlyPrivate) {
-        return getPlurks(offset, limit, onlyUser, onlyResponsed, onlyPrivate, false);
-    }
-
-    /**
-     * /API/Timeline/getPlurks
-     * Add new function: filter of Liked.
-     * @param offset (optional) Return plurks older than offset, formatted as 2009-6-20T21:55:34.
-     * @param limit (optional) How many plurks should be returned? Default is 20. 
-     * @param onlyUser (optional) filter of My Plurks
-     * @param onlyResponsed (optional) filter of Private
-     * @param onlyPrivate (optional) filter of Responded
-     * @param onlyFavorite (optional) filter of Liked
-     * @return
-     */
-    public JSONObject getPlurks(DateTime offset, int limit, boolean onlyUser, boolean onlyResponsed, boolean onlyPrivate, boolean onlyFavorite) {
         try {
             Args args = config.args().name("offset").value((offset == null ? DateTime.now() : offset).toTimeOffset()).name("limit").value("" + (limit <= 0 ? 20 : limit));
 
@@ -548,9 +533,6 @@ public class PlurkClient {
             }
             if (onlyPrivate) {
                 args.name("only_private").value("true");
-            }
-            if (onlyFavorite) {
-                args.name("only_favorite").value("true");
             }
 
             HttpGet method = (HttpGet) PlurkActionSheet.getInstance().getPlurks(
@@ -1472,6 +1454,71 @@ public class PlurkClient {
         return null;
     }
     // </editor-fold>
+
+
+    /**
+     * [Non-Offical API]
+     * /API/Timeline/getPlurks
+     * Add new function: filter of Liked.
+     * Function getFavoritePlurks() also use getPlurks API, because onlyFavorite can NOT using with onlyUser, onlyResponsed, and onlyPrivate, so this function is split out.
+     * @param offset (optional) Return plurks older than offset, formatted as 2009-6-20T21:55:34.
+     * @param limit (optional) How many plurks should be returned? Default is 20.
+     * @param onlyFavorite (optional) filter of Liked.
+     * @return
+     */
+    public JSONObject getFavoritePlurks(DateTime offset, int limit, boolean onlyFavorite) {
+        try {
+            Args args = config.args().name("offset").value((offset == null ? DateTime.now() : offset).toTimeOffset()).name("limit").value("" + (limit <= 0 ? 20 : limit));
+
+            if (onlyFavorite) {
+                args.name("only_favorite").value("true");
+            }
+            // Function getFavoritePlurks() also use getPlurks API,
+            // because onlyFavorite can NOT using with onlyUser, onlyResponsed, and onlyPrivate, so this function is split out.
+            HttpGet method = (HttpGet) PlurkActionSheet.getInstance().getPlurks(
+                    args.getMap());
+
+            return new JSONObject(execute(method));
+        } catch (PlurkException e) {
+            logger.error(e.getMessage(), e);
+        } catch (JSONException e) {
+            logger.error(e.getMessage(), e);
+        }
+        return null;
+    }
+
+    /**
+     * [Non-Offical API]
+     * /API/Timeline/getPlurks
+     * //@param plurkId
+     * //@param favorite true or false
+     * //@return
+     */
+    /* This API do NOT work now!!
+     * HTTP/1.1 500 INTERNAL SERVER ERROR
+    public JSONObject setFavoritePlurk(String plurkId, boolean favorite) {
+        try {
+            Args args = config.args().name("plurk_id").value(plurkId);
+
+            if (favorite) {
+                args.name("favorite").value("true");
+            }
+            else {
+                args.name("favorite").value("false");
+            }
+            // Function getFavoritePlurks() also use getPlurks API,
+            // because onlyFavorite can NOT using with onlyUser, onlyResponsed, and onlyPrivate, so this function is split out.
+            HttpPost method = (HttpPost) PlurkActionSheet.getInstance().setFavorites(
+                    args.getMap());
+            HttpResponse hp = execute(method , HttpResponseHandler.class );
+            //logger.info( "setFavoritePlurk() HttpResponse Status: " + hp.getStatusLine().toString() );
+            return null;
+        } catch (PlurkException e) {
+            logger.error(e.getMessage(), e);
+        }
+        return null;
+    }
+     * */
 
     @SuppressWarnings("unchecked")
     protected <T> T execute(HttpUriRequest method, Class<? extends ResponseHandler<T>> clazz)

@@ -213,12 +213,14 @@ public final class PlurkActionSheet {
         return prepare("getPublicProfile", params);
     }
     // </editor-fold>
-    
+
+    // <editor-fold defaultstate="collapsed" desc="Realtime">
     @Meta(uri = "/Realtime/getUserChannel", require = {"api_key"})
     public HttpUriRequest getUserChannel(Map<String, String> params)
             throws PlurkException {
         return prepare("getUserChannel", params);
-    }    
+    }
+    // </editor-fold>
 
     // <editor-fold defaultstate="collapsed" desc="FriendsFans">
     @Meta(uri = "/FriendsFans/getFriendsByOffset", require = {"api_key", "user_id"})
@@ -410,6 +412,20 @@ public final class PlurkActionSheet {
         return prepare("removeFromClique", params);
     }
     // </editor-fold>
+
+    /*
+     * [Non-Offical API]
+     * /Favorites/set
+     * two parameters: plurk_id , favorite (true/false)
+     * */
+    /* This API do NOT work now!!
+     * HTTP/1.1 500 INTERNAL SERVER ERROR
+    @Meta(uri = "/Favorites/set", require = {"api_key"}, type = Type.POST)
+    public HttpUriRequest setFavorites(Map<String, String> params) throws PlurkException {
+        return prepare("setFavorites", params);
+    }
+
+     * */
 
     private HttpUriRequest prepare(String methodName, Map<String, String> params) throws PlurkException {
     	// create method object from action sheet
