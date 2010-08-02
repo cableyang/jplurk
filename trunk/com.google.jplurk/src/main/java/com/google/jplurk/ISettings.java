@@ -1,7 +1,6 @@
 package com.google.jplurk;
 
 import java.util.Date;
-import java.util.HashMap;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -25,7 +24,7 @@ public interface ISettings {
 
 	public abstract String getDefaultProxyPassword();
 
-	public abstract MapHelper createParamMap();
+	public abstract Args args();
 
 	public abstract String getLang();
 	
@@ -92,9 +91,9 @@ public interface ISettings {
 			this.lang = (lang == null ? Lang.en : lang);
 		}
 
-		public MapHelper createParamMap() {
-			MapHelper m = new MapHelper(new HashMap<String, String>());
-			m.k("api_key").v(getApiKey());
+		public Args args() {
+			Args m = new Args();
+			m.name("api_key").value(getApiKey());
 			return m;
 		}
 

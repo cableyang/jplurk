@@ -164,5 +164,22 @@ public class DateTime {
         }
         return true;
     }
+    
+    @Override
+    public int hashCode() {
+        return time.hashCode();
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        if (other == null) {
+            return false;
+        }
+        if (other instanceof DateTime) {
+            DateTime time = (DateTime) other;
+            return time.toCalendar().equals(((DateTime) other).toCalendar());
+        }
+        return false;
+    }
 
 }
