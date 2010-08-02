@@ -196,7 +196,7 @@ public class PlurkClient {
             return null;
         }
         try {
-            MapHelper paramMap = config.createParamMap().k("nick_name").v(nickName).k("full_name").v(fullName).k("password").v(password).k("gender").v(gender.toString()).k("date_of_birth").v(dateOfBirth);
+            Args paramMap = config.createParamMap().k("nick_name").v(nickName).k("full_name").v(fullName).k("password").v(password).k("gender").v(gender.toString()).k("date_of_birth").v(dateOfBirth);
             if (email != null && !email.equals((""))) {
                 paramMap = paramMap.k("email").v(email);
             }
@@ -233,7 +233,7 @@ public class PlurkClient {
             return null;
         }
 
-        MapHelper helper = config.createParamMap();
+        Args helper = config.createParamMap();
         helper.k("current_password").v(currentPassword);
         if (StringUtils.isNotBlank(fullName)) {
             helper.k("full_name").v(fullName);
@@ -537,7 +537,7 @@ public class PlurkClient {
      */
     public JSONObject getPlurks(DateTime offset, int limit, boolean onlyUser, boolean onlyResponsed, boolean onlyPrivate, boolean onlyFavorite) {
         try {
-            MapHelper mapHelper = config.createParamMap().k("offset").v((offset == null ? DateTime.now() : offset).toTimeOffset()).k("limit").v("" + (limit <= 0 ? 20 : limit));
+            Args mapHelper = config.createParamMap().k("offset").v((offset == null ? DateTime.now() : offset).toTimeOffset()).k("limit").v("" + (limit <= 0 ? 20 : limit));
 
             if (onlyUser) {
                 mapHelper.k("only_user").v("true");
@@ -604,7 +604,7 @@ public class PlurkClient {
      */
     public JSONObject getUnreadPlurks(DateTime offset, int limit) {
         try {
-            MapHelper paramMap = config.createParamMap();
+            Args paramMap = config.createParamMap();
             if (offset != null) {
                 paramMap = paramMap.k("offset").v(offset.toTimeOffset());
             }
@@ -672,7 +672,7 @@ public class PlurkClient {
      */
     public JSONObject plurkAdd(String content, Qualifier qualifier, String limited_to, CommentBy commentBy, Lang lang) {
         try {
-            MapHelper paramMap = config.createParamMap().k("content").v(content).k("qualifier").v(qualifier.toString()).k("no_comments").v(commentBy.toString()).k("lang").v(lang == null ? config.getLang() : lang.toString());
+            Args paramMap = config.createParamMap().k("content").v(content).k("qualifier").v(qualifier.toString()).k("no_comments").v(commentBy.toString()).k("lang").v(lang == null ? config.getLang() : lang.toString());
             if (limited_to != null && !limited_to.equals("")) {
                 paramMap = paramMap.k("limited_to").v(limited_to);
             }

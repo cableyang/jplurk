@@ -84,14 +84,14 @@ public class PlurkSettings implements ISettings {
         return prop.getProperty("default_proxy_password");
     }
 
-    /* (non-Javadoc)
-	 * @see com.google.jplurk.ISettings#createParamMap()
-	 */
-    public MapHelper createParamMap() {
-        return new MapHelper(new HashMap<String, String>() {
-
+    /*
+     * (non-Javadoc)
+     * 
+     * @see com.google.jplurk.ISettings#createParamMap()
+     */
+    public Args createParamMap() {
+        return new Args(new HashMap<String, String>() {
             private static final long serialVersionUID = -5306686629368927936L;
-
             {
                 put("api_key", getApiKey());
             }
