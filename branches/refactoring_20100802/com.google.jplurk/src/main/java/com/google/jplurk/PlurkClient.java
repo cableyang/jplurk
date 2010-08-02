@@ -233,29 +233,29 @@ public class PlurkClient {
             return null;
         }
 
-        Args helper = config.args();
-        helper.name("current_password").value(currentPassword);
+        Args args = config.args();
+        args.name("current_password").value(currentPassword);
         if (StringUtils.isNotBlank(fullName)) {
-            helper.name("full_name").value(fullName);
+            args.name("full_name").value(fullName);
         }
         if (StringUtils.isNotBlank(newPassword)) {
-            helper.name("new_password").value(newPassword);
+            args.name("new_password").value(newPassword);
         }
         if (StringUtils.isNotBlank(displayName)) {
-            helper.name("display_name").value(displayName);
+            args.name("display_name").value(displayName);
         }
         if (StringUtils.isNotBlank(email)) {
-            helper.name("email").value(email);
+            args.name("email").value(email);
         }
         if (privacyPolicy != null) {
-            helper.name("privacy").value(privacyPolicy.toString());
+            args.name("privacy").value(privacyPolicy.toString());
         }
         if (birth != null) {
-            helper.name("privacy").value(birth.birthday());
+            args.name("privacy").value(birth.birthday());
         }
 
         try {
-            return new JSONObject(execute(PlurkActionSheet.getInstance().update(helper.getMap())));
+            return new JSONObject(execute(PlurkActionSheet.getInstance().update(args.getMap())));
         } catch (JSONException e) {
             logger.error(e.getMessage(), e);
         } catch (PlurkException e) {
@@ -537,23 +537,23 @@ public class PlurkClient {
      */
     public JSONObject getPlurks(DateTime offset, int limit, boolean onlyUser, boolean onlyResponsed, boolean onlyPrivate, boolean onlyFavorite) {
         try {
-            Args mapHelper = config.args().name("offset").value((offset == null ? DateTime.now() : offset).toTimeOffset()).name("limit").value("" + (limit <= 0 ? 20 : limit));
+            Args args = config.args().name("offset").value((offset == null ? DateTime.now() : offset).toTimeOffset()).name("limit").value("" + (limit <= 0 ? 20 : limit));
 
             if (onlyUser) {
-                mapHelper.name("only_user").value("true");
+                args.name("only_user").value("true");
             }
             if (onlyResponsed) {
-                mapHelper.name("only_responded").value("true");
+                args.name("only_responded").value("true");
             }
             if (onlyPrivate) {
-                mapHelper.name("only_private").value("true");
+                args.name("only_private").value("true");
             }
             if (onlyFavorite) {
-                mapHelper.name("only_favorite").value("true");
+                args.name("only_favorite").value("true");
             }
 
             HttpGet method = (HttpGet) PlurkActionSheet.getInstance().getPlurks(
-                    mapHelper.getMap());
+                    args.getMap());
 
             return new JSONObject(execute(method));
         } catch (PlurkException e) {
@@ -604,16 +604,16 @@ public class PlurkClient {
      */
     public JSONObject getUnreadPlurks(DateTime offset, int limit) {
         try {
-            Args paramMap = config.args();
+            Args args = config.args();
             if (offset != null) {
-                paramMap = paramMap.name("offset").value(offset.toTimeOffset());
+                args = args.name("offset").value(offset.toTimeOffset());
             }
             if (limit > 0) {
-                paramMap = paramMap.name("limit").value(Integer.toString(limit));
+                args = args.name("limit").value(Integer.toString(limit));
             } else if (limit == 0) {
-                paramMap = paramMap.name("limit").value("10");
+                args = args.name("limit").value("10");
             }
-            HttpGet method = (HttpGet) PlurkActionSheet.getInstance().getUnreadPlurks(paramMap.getMap());
+            HttpGet method = (HttpGet) PlurkActionSheet.getInstance().getUnreadPlurks(args.getMap());
             return new JSONObject(execute(method));
         } catch (PlurkException e) {
             logger.error(e.getMessage(), e);
@@ -672,11 +672,11 @@ public class PlurkClient {
      */
     public JSONObject plurkAdd(String content, Qualifier qualifier, String limited_to, CommentBy commentBy, Lang lang) {
         try {
-            Args paramMap = config.args().name("content").value(content).name("qualifier").value(qualifier.toString()).name("no_comments").value(commentBy.toString()).name("lang").value(lang == null ? config.getLang() : lang.toString());
+            Args args = config.args().name("content").value(content).name("qualifier").value(qualifier.toString()).name("no_comments").value(commentBy.toString()).name("lang").value(lang == null ? config.getLang() : lang.toString());
             if (limited_to != null && !limited_to.equals("")) {
-                paramMap = paramMap.name("limited_to").value(limited_to);
+                args = args.name("limited_to").value(limited_to);
             }
-            HttpGet method = (HttpGet) PlurkActionSheet.getInstance().plurkAdd(paramMap.getMap());
+            HttpGet method = (HttpGet) PlurkActionSheet.getInstance().plurkAdd(args.getMap());
             return new JSONObject(execute(method));
         } catch (PlurkException e) {
             logger.error(e.getMessage(), e);
