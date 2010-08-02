@@ -127,7 +127,7 @@ public class PlurkClient {
     public JSONObject login(String user, String password) {
         try {
             HttpGet method = (HttpGet) PlurkActionSheet.getInstance().login(
-                    config.createParamMap().k("username").v(user).k("password").v(password).getMap());
+                    config.args().name("username").value(user).name("password").value(password).getMap());
 
             JSONObject ret = new JSONObject(execute(method));
             return ret;
@@ -196,9 +196,9 @@ public class PlurkClient {
             return null;
         }
         try {
-            MapHelper paramMap = config.createParamMap().k("nick_name").v(nickName).k("full_name").v(fullName).k("password").v(password).k("gender").v(gender.toString()).k("date_of_birth").v(dateOfBirth);
+            Args paramMap = config.args().name("nick_name").value(nickName).name("full_name").value(fullName).name("password").value(password).name("gender").value(gender.toString()).name("date_of_birth").value(dateOfBirth);
             if (email != null && !email.equals((""))) {
-                paramMap = paramMap.k("email").v(email);
+                paramMap = paramMap.name("email").value(email);
             }
             HttpGet method = (HttpGet) PlurkActionSheet.getInstance().register(paramMap.getMap());
 
@@ -233,29 +233,29 @@ public class PlurkClient {
             return null;
         }
 
-        MapHelper helper = config.createParamMap();
-        helper.k("current_password").v(currentPassword);
+        Args args = config.args();
+        args.name("current_password").value(currentPassword);
         if (StringUtils.isNotBlank(fullName)) {
-            helper.k("full_name").v(fullName);
+            args.name("full_name").value(fullName);
         }
         if (StringUtils.isNotBlank(newPassword)) {
-            helper.k("new_password").v(newPassword);
+            args.name("new_password").value(newPassword);
         }
         if (StringUtils.isNotBlank(displayName)) {
-            helper.k("display_name").v(displayName);
+            args.name("display_name").value(displayName);
         }
         if (StringUtils.isNotBlank(email)) {
-            helper.k("email").v(email);
+            args.name("email").value(email);
         }
         if (privacyPolicy != null) {
-            helper.k("privacy").v(privacyPolicy.toString());
+            args.name("privacy").value(privacyPolicy.toString());
         }
         if (birth != null) {
-            helper.k("privacy").v(birth.birthday());
+            args.name("privacy").value(birth.birthday());
         }
 
         try {
-            return new JSONObject(execute(PlurkActionSheet.getInstance().update(helper.getMap())));
+            return new JSONObject(execute(PlurkActionSheet.getInstance().update(args.getMap())));
         } catch (JSONException e) {
             logger.error(e.getMessage(), e);
         } catch (PlurkException e) {
@@ -338,7 +338,7 @@ public class PlurkClient {
      */
     public JSONArray getFriendsByOffset(String userId, int offset) {
         try {
-            HttpGet method = (HttpGet) PlurkActionSheet.getInstance().getFriendsByOffset(config.createParamMap().k("user_id").v(userId).k("offset").v("" + (offset < 0 ? 0 : offset)).getMap());
+            HttpGet method = (HttpGet) PlurkActionSheet.getInstance().getFriendsByOffset(config.args().name("user_id").value(userId).name("offset").value("" + (offset < 0 ? 0 : offset)).getMap());
             return new JSONArray(execute(method));
         } catch (PlurkException e) {
             logger.error(e.getMessage(), e);
@@ -358,7 +358,7 @@ public class PlurkClient {
      */
     public JSONArray getFansByOffset(String userId, int offset) {
         try {
-            HttpGet method = (HttpGet) PlurkActionSheet.getInstance().getFansByOffset(config.createParamMap().k("user_id").v(userId).k("offset").v("" + (offset < 0 ? 0 : offset)).getMap());
+            HttpGet method = (HttpGet) PlurkActionSheet.getInstance().getFansByOffset(config.args().name("user_id").value(userId).name("offset").value("" + (offset < 0 ? 0 : offset)).getMap());
             return new JSONArray(execute(method));
         } catch (PlurkException e) {
             logger.error(e.getMessage(), e);
@@ -378,7 +378,7 @@ public class PlurkClient {
     public JSONArray getFollowingByOffset(int offset) {
         try {
             HttpGet method = (HttpGet) PlurkActionSheet.getInstance().getFollowingByOffset(
-                    config.createParamMap().k("offset").v(
+                    config.args().name("offset").value(
                     "" + (offset < 0 ? 0 : offset)).getMap());
             return new JSONArray(execute(method));
         } catch (PlurkException e) {
@@ -398,7 +398,7 @@ public class PlurkClient {
      */
     public JSONObject becomeFriend(int friendId) {
         try {
-            HttpGet method = (HttpGet) PlurkActionSheet.getInstance().becomeFriend(config.createParamMap().k("friend_id").v("" + friendId).getMap());
+            HttpGet method = (HttpGet) PlurkActionSheet.getInstance().becomeFriend(config.args().name("friend_id").value("" + friendId).getMap());
             return new JSONObject(execute(method));
         } catch (PlurkException e) {
             logger.error(e.getMessage(), e);
@@ -417,7 +417,7 @@ public class PlurkClient {
      */
     public JSONObject removeAsFriend(int friendId) {
         try {
-            HttpGet method = (HttpGet) PlurkActionSheet.getInstance().removeAsFriend(config.createParamMap().k("friend_id").v("" + friendId).getMap());
+            HttpGet method = (HttpGet) PlurkActionSheet.getInstance().removeAsFriend(config.args().name("friend_id").value("" + friendId).getMap());
             return new JSONObject(execute(method));
         } catch (PlurkException e) {
             logger.error(e.getMessage(), e);
@@ -436,7 +436,7 @@ public class PlurkClient {
      */
     public JSONObject becomeFan(int fanId) {
         try {
-            HttpGet method = (HttpGet) PlurkActionSheet.getInstance().becomeFan(config.createParamMap().k("fan_id").v("" + fanId).getMap());
+            HttpGet method = (HttpGet) PlurkActionSheet.getInstance().becomeFan(config.args().name("fan_id").value("" + fanId).getMap());
             return new JSONObject(execute(method));
         } catch (PlurkException e) {
             logger.error(e.getMessage(), e);
@@ -458,7 +458,7 @@ public class PlurkClient {
         try {
             Boolean isFollow = follow;
             HttpGet method = (HttpGet) PlurkActionSheet.getInstance().setFollowing(
-                    config.createParamMap().k("user_id").v("" + userId).k("follow").v(isFollow.toString()).getMap());
+                    config.args().name("user_id").value("" + userId).name("follow").value(isFollow.toString()).getMap());
             return new JSONObject(execute(method));
         } catch (PlurkException e) {
             logger.error(e.getMessage(), e);
@@ -479,7 +479,7 @@ public class PlurkClient {
      */
     public JSONObject getCompletion() {
         try {
-            HttpGet method = (HttpGet) PlurkActionSheet.getInstance().getCompletion(config.createParamMap().getMap());
+            HttpGet method = (HttpGet) PlurkActionSheet.getInstance().getCompletion(config.args().getMap());
             return new JSONObject(execute(method));
         } catch (PlurkException e) {
             logger.error(e.getMessage(), e);
@@ -499,7 +499,7 @@ public class PlurkClient {
     public JSONObject getPlurk(String plurkId) {
         try {
             HttpGet method = (HttpGet) PlurkActionSheet.getInstance().getPlurk(
-                    config.createParamMap().k("plurk_id").v(plurkId).getMap());
+                    config.args().name("plurk_id").value(plurkId).getMap());
             return new JSONObject(execute(method));
         } catch (PlurkException e) {
             logger.error(e.getMessage(), e);
@@ -537,23 +537,23 @@ public class PlurkClient {
      */
     public JSONObject getPlurks(DateTime offset, int limit, boolean onlyUser, boolean onlyResponsed, boolean onlyPrivate, boolean onlyFavorite) {
         try {
-            MapHelper mapHelper = config.createParamMap().k("offset").v((offset == null ? DateTime.now() : offset).toTimeOffset()).k("limit").v("" + (limit <= 0 ? 20 : limit));
+            Args args = config.args().name("offset").value((offset == null ? DateTime.now() : offset).toTimeOffset()).name("limit").value("" + (limit <= 0 ? 20 : limit));
 
             if (onlyUser) {
-                mapHelper.k("only_user").v("true");
+                args.name("only_user").value("true");
             }
             if (onlyResponsed) {
-                mapHelper.k("only_responded").v("true");
+                args.name("only_responded").value("true");
             }
             if (onlyPrivate) {
-                mapHelper.k("only_private").v("true");
+                args.name("only_private").value("true");
             }
             if (onlyFavorite) {
-                mapHelper.k("only_favorite").v("true");
+                args.name("only_favorite").value("true");
             }
 
             HttpGet method = (HttpGet) PlurkActionSheet.getInstance().getPlurks(
-                    mapHelper.getMap());
+                    args.getMap());
 
             return new JSONObject(execute(method));
         } catch (PlurkException e) {
@@ -604,16 +604,16 @@ public class PlurkClient {
      */
     public JSONObject getUnreadPlurks(DateTime offset, int limit) {
         try {
-            MapHelper paramMap = config.createParamMap();
+            Args args = config.args();
             if (offset != null) {
-                paramMap = paramMap.k("offset").v(offset.toTimeOffset());
+                args = args.name("offset").value(offset.toTimeOffset());
             }
             if (limit > 0) {
-                paramMap = paramMap.k("limit").v(Integer.toString(limit));
+                args = args.name("limit").value(Integer.toString(limit));
             } else if (limit == 0) {
-                paramMap = paramMap.k("limit").v("10");
+                args = args.name("limit").value("10");
             }
-            HttpGet method = (HttpGet) PlurkActionSheet.getInstance().getUnreadPlurks(paramMap.getMap());
+            HttpGet method = (HttpGet) PlurkActionSheet.getInstance().getUnreadPlurks(args.getMap());
             return new JSONObject(execute(method));
         } catch (PlurkException e) {
             logger.error(e.getMessage(), e);
@@ -672,11 +672,11 @@ public class PlurkClient {
      */
     public JSONObject plurkAdd(String content, Qualifier qualifier, String limited_to, CommentBy commentBy, Lang lang) {
         try {
-            MapHelper paramMap = config.createParamMap().k("content").v(content).k("qualifier").v(qualifier.toString()).k("no_comments").v(commentBy.toString()).k("lang").v(lang == null ? config.getLang() : lang.toString());
+            Args args = config.args().name("content").value(content).name("qualifier").value(qualifier.toString()).name("no_comments").value(commentBy.toString()).name("lang").value(lang == null ? config.getLang() : lang.toString());
             if (limited_to != null && !limited_to.equals("")) {
-                paramMap = paramMap.k("limited_to").v(limited_to);
+                args = args.name("limited_to").value(limited_to);
             }
-            HttpGet method = (HttpGet) PlurkActionSheet.getInstance().plurkAdd(paramMap.getMap());
+            HttpGet method = (HttpGet) PlurkActionSheet.getInstance().plurkAdd(args.getMap());
             return new JSONObject(execute(method));
         } catch (PlurkException e) {
             logger.error(e.getMessage(), e);
@@ -697,7 +697,7 @@ public class PlurkClient {
     public JSONObject plurkDelete(String plurkId) {
         try {
             HttpGet method = (HttpGet) PlurkActionSheet.getInstance().plurkDelete(
-                    config.createParamMap().k("plurk_id").v(plurkId).getMap());
+                    config.args().name("plurk_id").value(plurkId).getMap());
             return new JSONObject(execute(method));
         } catch (PlurkException e) {
             logger.error(e.getMessage(), e);
@@ -719,7 +719,7 @@ public class PlurkClient {
     public JSONObject plurkEdit(String plurkId, String content) {
         try {
             HttpGet method = (HttpGet) PlurkActionSheet.getInstance().plurkEdit(
-                    config.createParamMap().k("plurk_id").v(plurkId).k("content").v(content).getMap());
+                    config.args().name("plurk_id").value(plurkId).name("content").value(content).getMap());
             return new JSONObject(execute(method));
         } catch (PlurkException e) {
             logger.error(e.getMessage(), e);
@@ -742,7 +742,7 @@ public class PlurkClient {
             @Override
             HttpUriRequest createMethod(Set<Integer> idSet) throws PlurkException {
                 return (HttpGet) PlurkActionSheet.getInstance().mutePlurks(
-                        config.createParamMap().k("ids").v(new JSONArray(idSet).toString()).getMap());
+                        config.args().name("ids").value(new JSONArray(idSet).toString()).getMap());
             }
         }.execute(this, ids);
     }
@@ -760,7 +760,7 @@ public class PlurkClient {
             @Override
             HttpUriRequest createMethod(Set<Integer> idSet) throws PlurkException {
                 return (HttpGet) PlurkActionSheet.getInstance().unmutePlurks(
-                        config.createParamMap().k("ids").v(new JSONArray(idSet).toString()).getMap());
+                        config.args().name("ids").value(new JSONArray(idSet).toString()).getMap());
             }
         }.execute(this, ids);
     }
@@ -778,7 +778,7 @@ public class PlurkClient {
             @Override
             HttpUriRequest createMethod(Set<Integer> idSet) throws PlurkException {
                 return (HttpGet) PlurkActionSheet.getInstance().markAsRead(
-                        config.createParamMap().k("ids").v(new JSONArray(idSet).toString()).getMap());
+                        config.args().name("ids").value(new JSONArray(idSet).toString()).getMap());
             }
         }.execute(this, ids);
     }
@@ -860,7 +860,7 @@ public class PlurkClient {
     public JSONObject responseAdd(String plurkId, String content, Qualifier qualifier) {
         try {
             HttpGet method = (HttpGet) PlurkActionSheet.getInstance().responseAdd(
-                    config.createParamMap().k("plurk_id").v(plurkId).k("content").v(content).k("qualifier").v(qualifier.toString()).getMap());
+                    config.args().name("plurk_id").value(plurkId).name("content").value(content).name("qualifier").value(qualifier.toString()).getMap());
             return new JSONObject(execute(method));
         } catch (JSONException e) {
             logger.error(e.getMessage(), e);
@@ -880,7 +880,7 @@ public class PlurkClient {
     public JSONObject responseGet(String plurkId) {
         try {
             HttpGet method = (HttpGet) PlurkActionSheet.getInstance().responseGet(
-                    config.createParamMap().k("plurk_id").v(plurkId).k("from_response").v("0").getMap());
+                    config.args().name("plurk_id").value(plurkId).name("from_response").value("0").getMap());
             return new JSONObject(execute(method));
         } catch (PlurkException e) {
             logger.error(e.getMessage(), e);
@@ -901,7 +901,7 @@ public class PlurkClient {
     public JSONObject responseDelete(String plurkId, String responseId) {
         try {
             HttpGet method = (HttpGet) PlurkActionSheet.getInstance().responseDelete(
-                    config.createParamMap().k("plurk_id").v(plurkId).k("response_id").v(responseId).getMap());
+                    config.args().name("plurk_id").value(plurkId).name("response_id").value(responseId).getMap());
             return new JSONObject(execute(method));
         } catch (JSONException e) {
             logger.error(e.getMessage(), e);
@@ -920,7 +920,7 @@ public class PlurkClient {
      */
     public JSONObject getActive() {
         try {
-            HttpGet method = (HttpGet) PlurkActionSheet.getInstance().getActive(config.createParamMap().getMap());
+            HttpGet method = (HttpGet) PlurkActionSheet.getInstance().getActive(config.args().getMap());
             return new JSONObject(execute(method));
         } catch (PlurkException e) {
             logger.error(e.getMessage(), e);
@@ -939,7 +939,7 @@ public class PlurkClient {
      */
     public JSONObject getHistory() {
         try {
-            HttpGet method = (HttpGet) PlurkActionSheet.getInstance().getHistory(config.createParamMap().getMap());
+            HttpGet method = (HttpGet) PlurkActionSheet.getInstance().getHistory(config.args().getMap());
             return new JSONObject(execute(method));
         } catch (PlurkException e) {
             logger.error(e.getMessage(), e);
@@ -959,7 +959,7 @@ public class PlurkClient {
      */
     public JSONObject addAsFan(int userId) {
         try {
-            HttpGet method = (HttpGet) PlurkActionSheet.getInstance().addAsFan(config.createParamMap().k("").v("user_id" + userId).getMap());
+            HttpGet method = (HttpGet) PlurkActionSheet.getInstance().addAsFan(config.args().name("").value("user_id" + userId).getMap());
             return new JSONObject(execute(method));
         } catch (PlurkException e) {
             logger.error(e.getMessage(), e);
@@ -979,7 +979,7 @@ public class PlurkClient {
      */
     public JSONObject addAsFriend(int userId) {
         try {
-            HttpGet method = (HttpGet) PlurkActionSheet.getInstance().addAsFriend(config.createParamMap().k("").v("user_id" + userId).getMap());
+            HttpGet method = (HttpGet) PlurkActionSheet.getInstance().addAsFriend(config.args().name("").value("user_id" + userId).getMap());
             return new JSONObject(execute(method));
         } catch (PlurkException e) {
             logger.error(e.getMessage(), e);
@@ -998,7 +998,7 @@ public class PlurkClient {
      */
     public JSONObject addAllAsFan() {
         try {
-            HttpGet method = (HttpGet) PlurkActionSheet.getInstance().addAllAsFan(config.createParamMap().getMap());
+            HttpGet method = (HttpGet) PlurkActionSheet.getInstance().addAllAsFan(config.args().getMap());
             return new JSONObject(execute(method));
         } catch (PlurkException e) {
             logger.error(e.getMessage(), e);
@@ -1017,7 +1017,7 @@ public class PlurkClient {
      */
     public JSONObject addAllAsFriends() {
         try {
-            HttpGet method = (HttpGet) PlurkActionSheet.getInstance().addAllAsFriends(config.createParamMap().getMap());
+            HttpGet method = (HttpGet) PlurkActionSheet.getInstance().addAllAsFriends(config.args().getMap());
             return new JSONObject(execute(method));
         } catch (PlurkException e) {
             logger.error(e.getMessage(), e);
@@ -1037,7 +1037,7 @@ public class PlurkClient {
      */
     public JSONObject denyFriendship(int userId) {
         try {
-            HttpGet method = (HttpGet) PlurkActionSheet.getInstance().denyFriendship(config.createParamMap().k("").v("user_id" + userId).getMap());
+            HttpGet method = (HttpGet) PlurkActionSheet.getInstance().denyFriendship(config.args().name("").value("user_id" + userId).getMap());
             return new JSONObject(execute(method));
         } catch (PlurkException e) {
             logger.error(e.getMessage(), e);
@@ -1057,7 +1057,7 @@ public class PlurkClient {
      */
     public JSONObject removeNotification(int userId) {
         try {
-            HttpGet method = (HttpGet) PlurkActionSheet.getInstance().removeNotification(config.createParamMap().k("").v("user_id" + userId).getMap());
+            HttpGet method = (HttpGet) PlurkActionSheet.getInstance().removeNotification(config.args().name("").value("user_id" + userId).getMap());
             return new JSONObject(execute(method));
         } catch (PlurkException e) {
             logger.error(e.getMessage(), e);
@@ -1075,7 +1075,7 @@ public class PlurkClient {
      */
     public JSONObject getOwnProfile() {
         try {
-            HttpGet method = (HttpGet) PlurkActionSheet.getInstance().getOwnProfile(config.createParamMap().getMap());
+            HttpGet method = (HttpGet) PlurkActionSheet.getInstance().getOwnProfile(config.args().getMap());
             return new JSONObject(execute(method));
         } catch (PlurkException e) {
             logger.error(e.getMessage(), e);
@@ -1094,7 +1094,7 @@ public class PlurkClient {
      */
     public JSONObject getPublicProfile(String userId) {
         try {
-            HttpGet method = (HttpGet) PlurkActionSheet.getInstance().getPublicProfile(config.createParamMap().k("user_id").v(userId).getMap());
+            HttpGet method = (HttpGet) PlurkActionSheet.getInstance().getPublicProfile(config.args().name("user_id").value(userId).getMap());
             return new JSONObject(execute(method));
         } catch (PlurkException e) {
             logger.error(e.getMessage(), e);
@@ -1122,7 +1122,7 @@ public class PlurkClient {
     public PlurkNotifier getUserChannel() {
         JSONObject obj = new JSONObject();
         try {
-            HttpGet method = (HttpGet) PlurkActionSheet.getInstance().getUserChannel(config.createParamMap().getMap());
+            HttpGet method = (HttpGet) PlurkActionSheet.getInstance().getUserChannel(config.args().getMap());
             obj = new JSONObject(execute(method));
             return new PlurkNotifier(client, obj);
         } catch (PlurkException e) {
@@ -1146,7 +1146,7 @@ public class PlurkClient {
     public JSONObject getPollingPlurks(DateTime offset, int limit) {
         try {
             String _offset = (offset == null ? DateTime.now().toTimeOffset() : offset.toTimeOffset());
-            HttpGet method = (HttpGet) PlurkActionSheet.getInstance().getPollingPlurks(config.createParamMap().k("offset").v(_offset).k("limit").v("" + (limit <= 0 ? 20 : limit)).getMap());
+            HttpGet method = (HttpGet) PlurkActionSheet.getInstance().getPollingPlurks(config.args().name("offset").value(_offset).name("limit").value("" + (limit <= 0 ? 20 : limit)).getMap());
             return new JSONObject(execute(method));
         } catch (PlurkException e) {
             logger.error(e.getMessage(), e);
@@ -1165,7 +1165,7 @@ public class PlurkClient {
      */
     public JSONObject getPollingUnreadCount() {
         try {
-            HttpGet method = (HttpGet) PlurkActionSheet.getInstance().getPollingUnreadCount(config.createParamMap().getMap());
+            HttpGet method = (HttpGet) PlurkActionSheet.getInstance().getPollingUnreadCount(config.args().getMap());
             return new JSONObject(execute(method));
         } catch (PlurkException e) {
             logger.error(e.getMessage(), e);
@@ -1197,7 +1197,7 @@ public class PlurkClient {
     public JSONObject searchPlurk(String query, int offset) {
         try {
             HttpGet method = (HttpGet) PlurkActionSheet.getInstance().searchPlurk(
-                    config.createParamMap().k("query").v(query).k("offset").v("" + (offset < 0 ? 0 : offset)).getMap());
+                    config.args().name("query").value(query).name("offset").value("" + (offset < 0 ? 0 : offset)).getMap());
             return new JSONObject(execute(method));
         } catch (PlurkException e) {
             logger.error(e.getMessage(), e);
@@ -1230,7 +1230,7 @@ public class PlurkClient {
     public JSONObject searchUser(String query, int offset) {
         try {
             HttpGet method = (HttpGet) PlurkActionSheet.getInstance().searchUser(
-                    config.createParamMap().k("query").v(query).k("offset").v("" + (offset < 0 ? 0 : offset)).getMap());
+                    config.args().name("query").value(query).name("offset").value("" + (offset < 0 ? 0 : offset)).getMap());
             return new JSONObject(execute(method));
         } catch (PlurkException e) {
             logger.error(e.getMessage(), e);
@@ -1254,7 +1254,7 @@ public class PlurkClient {
      */
     public JSONObject getEmoticons() {
         try {
-            HttpGet method = (HttpGet) PlurkActionSheet.getInstance().getEmoticons(config.createParamMap().getMap());
+            HttpGet method = (HttpGet) PlurkActionSheet.getInstance().getEmoticons(config.args().getMap());
             return new JSONObject(execute(method));
         } catch (PlurkException e) {
             logger.error(e.getMessage(), e);
@@ -1282,7 +1282,7 @@ public class PlurkClient {
      */
     public JSONObject getBlocks(int offset) {
         try {
-            HttpGet method = (HttpGet) PlurkActionSheet.getInstance().getBlocks(config.createParamMap().k("offset").v("" + (offset < 0 ? 0 : offset)).getMap());
+            HttpGet method = (HttpGet) PlurkActionSheet.getInstance().getBlocks(config.args().name("offset").value("" + (offset < 0 ? 0 : offset)).getMap());
             return new JSONObject(execute(method));
         } catch (PlurkException e) {
             logger.error(e.getMessage(), e);
@@ -1301,7 +1301,7 @@ public class PlurkClient {
      */
     public JSONObject block(String userId) {
         try {
-            HttpGet method = (HttpGet) PlurkActionSheet.getInstance().block(config.createParamMap().k("user_id").v(userId).getMap());
+            HttpGet method = (HttpGet) PlurkActionSheet.getInstance().block(config.args().name("user_id").value(userId).getMap());
             return new JSONObject(execute(method));
         } catch (PlurkException e) {
             logger.error(e.getMessage(), e);
@@ -1320,7 +1320,7 @@ public class PlurkClient {
      */
     public JSONObject unblock(String userId) {
         try {
-            HttpGet method = (HttpGet) PlurkActionSheet.getInstance().unblock(config.createParamMap().k("user_id").v(userId).getMap());
+            HttpGet method = (HttpGet) PlurkActionSheet.getInstance().unblock(config.args().name("user_id").value(userId).getMap());
             return new JSONObject(execute(method));
         } catch (PlurkException e) {
             logger.error(e.getMessage(), e);
@@ -1338,7 +1338,7 @@ public class PlurkClient {
      */
     public JSONArray getCliques() {
         try {
-            HttpGet method = (HttpGet) PlurkActionSheet.getInstance().getCliques(config.createParamMap().getMap());
+            HttpGet method = (HttpGet) PlurkActionSheet.getInstance().getCliques(config.args().getMap());
             return new JSONArray(execute(method));
         } catch (PlurkException e) {
             logger.error(e.getMessage(), e);
@@ -1358,7 +1358,7 @@ public class PlurkClient {
      */
     public JSONObject createClique(String cliqueName) {
         try {
-            HttpGet method = (HttpGet) PlurkActionSheet.getInstance().createClique(config.createParamMap().k("clique_name").v(cliqueName).getMap());
+            HttpGet method = (HttpGet) PlurkActionSheet.getInstance().createClique(config.args().name("clique_name").value(cliqueName).getMap());
             return new JSONObject(execute(method));
         } catch (PlurkException e) {
             logger.error(e.getMessage(), e);
@@ -1378,7 +1378,7 @@ public class PlurkClient {
      */
     public JSONArray getClique(String cliqueName) {
         try {
-            HttpGet method = (HttpGet) PlurkActionSheet.getInstance().getClique(config.createParamMap().k("clique_name").v(cliqueName).getMap());
+            HttpGet method = (HttpGet) PlurkActionSheet.getInstance().getClique(config.args().name("clique_name").value(cliqueName).getMap());
             return new JSONArray(execute(method));
         } catch (PlurkException e) {
             logger.error(e.getMessage(), e);
@@ -1399,7 +1399,7 @@ public class PlurkClient {
      */
     public JSONObject renameClique(String cliqueName, String newName) {
         try {
-            HttpGet method = (HttpGet) PlurkActionSheet.getInstance().renameClique(config.createParamMap().k("clique_name").v(cliqueName).k("new_name").v(newName).getMap());
+            HttpGet method = (HttpGet) PlurkActionSheet.getInstance().renameClique(config.args().name("clique_name").value(cliqueName).name("new_name").value(newName).getMap());
             return new JSONObject(execute(method));
         } catch (PlurkException e) {
             logger.error(e.getMessage(), e);
@@ -1419,7 +1419,7 @@ public class PlurkClient {
      */
     public JSONObject deleteClique(String cliqueName) {
         try {
-            HttpGet method = (HttpGet) PlurkActionSheet.getInstance().deleteClique(config.createParamMap().k("clique_name").v(cliqueName).getMap());
+            HttpGet method = (HttpGet) PlurkActionSheet.getInstance().deleteClique(config.args().name("clique_name").value(cliqueName).getMap());
             return new JSONObject(execute(method));
         } catch (PlurkException e) {
             logger.error(e.getMessage(), e);
@@ -1440,7 +1440,7 @@ public class PlurkClient {
      */
     public JSONObject addToClique(String cliqueName, String userId) {
         try {
-            HttpGet method = (HttpGet) PlurkActionSheet.getInstance().addToClique(config.createParamMap().k("clique_name").v(cliqueName).k("user_id").v(userId).getMap());
+            HttpGet method = (HttpGet) PlurkActionSheet.getInstance().addToClique(config.args().name("clique_name").value(cliqueName).name("user_id").value(userId).getMap());
             return new JSONObject(execute(method));
         } catch (PlurkException e) {
             logger.error(e.getMessage(), e);
@@ -1461,7 +1461,7 @@ public class PlurkClient {
      */
     public JSONObject removeFromClique(String cliqueName, String userId) {
         try {
-            HttpGet method = (HttpGet) PlurkActionSheet.getInstance().removeFromClique(config.createParamMap().k("clique_name").v(cliqueName).k("user_id").v(userId).getMap());
+            HttpGet method = (HttpGet) PlurkActionSheet.getInstance().removeFromClique(config.args().name("clique_name").value(cliqueName).name("user_id").value(userId).getMap());
             return new JSONObject(execute(method));
         } catch (PlurkException e) {
             logger.error(e.getMessage(), e);
