@@ -749,6 +749,40 @@ public class PlurkClient {
     }
     // </editor-fold>
 
+    // <editor-fold defaultstate="collapsed" desc="/API/Timeline/favoritePlurks">
+    /**
+     * /API/Timeline/favoritePlurks
+     * @param ids The plurk ids, formated as JSON, e.g. [342,23242,2323]
+     * @return JSONObject represent the {"success_text": "ok"}
+     */
+    public JSONObject favoritePlurks(String... ids) {
+        return new IdActions() {
+            @Override
+            HttpUriRequest createMethod(Set<Integer> idSet) throws PlurkException {
+                return (HttpGet) PlurkActionSheet.getInstance().favoritePlurks(
+                        config.args().name("ids").value(new JSONArray(idSet).toString()).getMap());
+            }
+        }.execute(this, ids);
+    }
+    // </editor-fold>
+
+    // <editor-fold defaultstate="collapsed" desc="/API/Timeline/unfavoritePlurks">
+    /**
+     * /API/Timeline/unfavoritePlurks
+     * @param ids The plurk ids, formated as JSON, e.g. [342,23242,2323]
+     * @return JSONObject represent the {"success_text": "ok"}
+     */
+    public JSONObject unfavoritePlurks(String... ids) {
+        return new IdActions() {
+            @Override
+            HttpUriRequest createMethod(Set<Integer> idSet) throws PlurkException {
+                return (HttpGet) PlurkActionSheet.getInstance().unfavoritePlurks(
+                        config.args().name("ids").value(new JSONArray(idSet).toString()).getMap());
+            }
+        }.execute(this, ids);
+    }
+    // </editor-fold>
+
     // <editor-fold defaultstate="collapsed" desc="/API/Timeline/markAsRead">
     /**
      * /API/Timeline/markAsRead
@@ -1487,38 +1521,6 @@ public class PlurkClient {
         return null;
     }
 
-    /**
-     * [Non-Offical API]
-     * /API/Timeline/getPlurks
-     * //@param plurkId
-     * //@param favorite true or false
-     * //@return
-     */
-    /* This API do NOT work now!!
-     * HTTP/1.1 500 INTERNAL SERVER ERROR
-    public JSONObject setFavoritePlurk(String plurkId, boolean favorite) {
-        try {
-            Args args = config.args().name("plurk_id").value(plurkId);
-
-            if (favorite) {
-                args.name("favorite").value("true");
-            }
-            else {
-                args.name("favorite").value("false");
-            }
-            // Function getFavoritePlurks() also use getPlurks API,
-            // because onlyFavorite can NOT using with onlyUser, onlyResponsed, and onlyPrivate, so this function is split out.
-            HttpPost method = (HttpPost) PlurkActionSheet.getInstance().setFavorites(
-                    args.getMap());
-            HttpResponse hp = execute(method , HttpResponseHandler.class );
-            //logger.info( "setFavoritePlurk() HttpResponse Status: " + hp.getStatusLine().toString() );
-            return null;
-        } catch (PlurkException e) {
-            logger.error(e.getMessage(), e);
-        }
-        return null;
-    }
-     * */
 
     @SuppressWarnings("unchecked")
     protected <T> T execute(HttpUriRequest method, Class<? extends ResponseHandler<T>> clazz)
@@ -1611,6 +1613,11 @@ public class PlurkClient {
 
 //        System.out.println(pc.mutePlurks("183559649"));
 //        System.out.println(pc.unmutePlurks("183559649"));
+
+//        System.out.println(pc.getFavoritePlurks(null, 1, true));
+//        System.out.println(pc.favoritePlurks("408253903"));
+//        System.out.println(pc.getFavoritePlurks(null, 1, true));
+//        System.out.println(pc.unfavoritePlurks("408253903"));
 
 //        System.out.println(pc.responseAdd("183532425", "測試刪除回應", Qualifier.FEELS));
 //{"posted":"Sat, 19 Dec 2009 07:57:07 GMT","user_id":3290989,"content_raw":"測試刪除回應","lang":"en","content":"測試刪除回應","qualifier":"feels","id":825994340,"plurk_id":183532425}

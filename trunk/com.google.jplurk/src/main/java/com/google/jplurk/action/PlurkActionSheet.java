@@ -132,6 +132,16 @@ public final class PlurkActionSheet {
         return prepare("unmutePlurks", params);
     }
 
+    @Meta(uri = "/Timeline/favoritePlurks", require = {"api_key", "ids"})
+    public HttpUriRequest favoritePlurks(Map<String, String> params) throws PlurkException {
+        return prepare("favoritePlurks", params);
+    }
+
+    @Meta(uri = "/Timeline/unfavoritePlurks", require = {"api_key", "ids"})
+    public HttpUriRequest unfavoritePlurks(Map<String, String> params) throws PlurkException {
+        return prepare("unfavoritePlurks", params);
+    }
+
     @Meta(uri = "/Timeline/markAsRead", require = {"api_key", "ids"})
     @Validation({@Validator(field = "ids", validator = IDListValidator.class)})
     public HttpUriRequest markAsRead(Map<String, String> params) throws PlurkException {
@@ -412,20 +422,6 @@ public final class PlurkActionSheet {
         return prepare("removeFromClique", params);
     }
     // </editor-fold>
-
-    /*
-     * [Non-Offical API]
-     * /Favorites/set
-     * two parameters: plurk_id , favorite (true/false)
-     * */
-    /* This API do NOT work now!!
-     * HTTP/1.1 500 INTERNAL SERVER ERROR
-    @Meta(uri = "/Favorites/set", require = {"api_key"}, type = Type.POST)
-    public HttpUriRequest setFavorites(Map<String, String> params) throws PlurkException {
-        return prepare("setFavorites", params);
-    }
-
-     * */
 
     private HttpUriRequest prepare(String methodName, Map<String, String> params) throws PlurkException {
     	// create method object from action sheet
