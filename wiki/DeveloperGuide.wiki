@@ -1,0 +1,39 @@
+#summary how to set up the environment for developing.
+#labels Phase-QA
+
+This page is for someone who wants to compile the jPlurk from svn repository. We will brief where to get the source and how to build it.
+
+== Prerequisites ==
+
+To build jPlurk requires a Java JDK and Apache Maven 2.x to be installed. 
+
+== Get Source ==
+
+jPlurk source is located at the svn repository of google code project hosting. You can get the source by check out command:
+{{{
+svn co https://jplurk.googlecode.com/svn/trunk/com.google.jplurk jPlurk
+}}}
+
+This command will get a copy of jplurk into the jPlurk directory.
+
+== Build core library ==
+
+There is a pom.xml file in the jPlurk directory. That file is used to describe our project use what libraries. Well Maven will use the dependencies to build a JAR. you can run Maven package in the same directory:
+{{{
+mvn -DskipTests=true package
+}}}
+
+We suggest to add the property -- skipTests, if you just want to build a JAR in the trunk. After packaging, you can find the jplurk-2.0.0-SNAPSHOT.jar in the target directory. You can copy dependencies as well:
+{{{
+mvn dependency:copy-dependencies
+}}}
+
+That command will copy all dependencies to target/dependency directory.
+
+== For advenced developers ==
+What's an advanced developer? Our definition is the developer who needs to write some code and/or runs some test cases. This section will tell you how to set up your environment to run test cases. Some of test cases should run by a loggin-ed user. However, we should put the user's credential out of source code. We have a tool to help you store the private data: com.google.jplurk.AbstractJPlurkSessionTestCase.
+
+You can run AbstractJPlurkSessionTestCase and it will prompt two dialog. Input your username and password in trun, it will create the .jplurkCookies in the USER_HOME. The file store the cookies only and no username or password in it. After the .jplurkCookies created, you can run test cases or run a stardard build without the 'skipTests':
+{{{
+mvn package
+}}}
