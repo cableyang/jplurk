@@ -31,7 +31,7 @@ mvn dependency:copy-dependencies
 That command will copy all dependencies to target/dependency directory.
 
 == For advenced developers ==
-What's an advanced developer? Our definition is the developer who needs to write some code and/or runs some test cases. This section will tell you how to set up your environment to run test cases. Some of test cases should run by a loggin-ed user. However, we should put the user's credential out of source code. We have a tool to help you store the private data: com.google.jplurk.AbstractJPlurkSessionTestCase.
+Who is an advanced developer? Our definition is the developer who needs to write some code and/or runs some test cases. This section will tell you how to set up your environment to run test cases. Some of test cases should run by a loggin-ed user. However, we should put the user's credential out of source code. We have a tool to help you store the private data: com.google.jplurk.AbstractJPlurkSessionTestCase.
 
 You can run AbstractJPlurkSessionTestCase and it will prompt two dialog. Input your username and password in trun, it will create the .jplurkCookies in the USER_HOME. The file store the cookies only and no username or password in it. After the .jplurkCookies created, you can run test cases or run a stardard build without the 'skipTests':
 {{{
