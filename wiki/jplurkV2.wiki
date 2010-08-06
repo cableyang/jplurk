@@ -127,6 +127,9 @@ client.getUnreadPlurks();
 || /API/Timeline/uploadPicture|| uploadPicture || qrtt1  || 完成 || `@since` rev240 ||
 || /API/Timeline/plurkDelete || plurkDelete || Askeing || 完成 || `@since` rev240 ||
 || /API/Timeline/plurkEdit || plurkEdit || Askeing || 完成 || `@since` rev240 ||
+|| /API/Timeline/favoritePlurks || favoritePlurks || Askeing || 完成 || `@since` rev474 ||
+|| /API/Timeline/unfavoritePlurks || unfavoritePlurks || Askeing || 完成 || `@since` rev474 ||
+|| /API/Timeline/getPlurks (Only Favorite) || getFavoritePlurks || Askeing || 完成(Unoffical) || `@since` rev474 ||
 
 == Responses ==
 

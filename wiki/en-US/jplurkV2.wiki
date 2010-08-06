@@ -133,6 +133,9 @@ Please refer to [Using_Proxy_V2] page.
 || /API/Timeline/uploadPicture|| uploadPicture || qrtt1  || Done || `@since` rev240 ||
 || /API/Timeline/plurkDelete || plurkDelete || Askeing || Done || `@since` rev240 ||
 || /API/Timeline/plurkEdit || plurkEdit || Askeing || Done || `@since` rev240 ||
+|| /API/Timeline/favoritePlurks || favoritePlurks || Askeing || Done || `@since` rev474 ||
+|| /API/Timeline/unfavoritePlurks || unfavoritePlurks || Askeing || Done || `@since` rev474 ||
+|| /API/Timeline/getPlurks (Only Favorite) || getFavoritePlurks || Askeing || Done(Unoffical) || `@since` rev474 ||
 
 == Responses ==
 
