@@ -11,7 +11,7 @@ To build jPlurk requires a Java JDK and Apache Maven 2.x to be installed.
 
 jPlurk source is located at the svn repository of google code project hosting. You can get the source by check out command:
 {{{
-svn co https://jplurk.googlecode.com/svn/trunk/com.google.jplurk jPlurk
+svn co http://jplurk.googlecode.com/svn/trunk/com.google.jplurk jPlurk
 }}}
 
 This command will get a copy of jplurk into the jPlurk directory.
