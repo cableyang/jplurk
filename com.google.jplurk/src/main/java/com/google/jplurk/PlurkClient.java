@@ -4,8 +4,6 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.SocketTimeoutException;
-import java.util.HashSet;
-import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -36,7 +34,6 @@ import com.google.jplurk.net.LazyIdleConnectionMonitor;
 import com.google.jplurk.net.ProxyProvider;
 import com.google.jplurk.net.ThinMultipartEntity;
 import com.google.jplurk.org.apache.commons.lang.StringUtils;
-import com.google.jplurk.org.apache.commons.lang.math.NumberUtils;
 
 /**
  * Main Client for Plurk API.
@@ -50,28 +47,6 @@ public class PlurkClient {
     private LazyIdleConnectionMonitor monitor = new LazyIdleConnectionMonitor();
     
     private ISettings config;
-
-    static abstract class IdActions {
-
-        abstract HttpUriRequest createMethod(Set<Integer> idSet) throws PlurkException;
-
-        public JSONObject execute(PlurkClient client, String... ids) {
-            try {
-                Set<Integer> idSet = new HashSet<Integer>();
-                for (String id : ids) {
-                    idSet.add(NumberUtils.toInt(id, 0));
-                }
-                idSet.remove(0);
-
-                return new JSONObject(client.execute(createMethod(idSet)));
-            } catch (PlurkException e) {
-                logger.error(e.getMessage(), e);
-            } catch (JSONException e) {
-                logger.error(e.getMessage(), e);
-            }
-            return null;
-        }
-    }
 
     /**
      * Load Setting from property file.
@@ -720,14 +695,16 @@ public class PlurkClient {
      * @return JSONObject represent the {"success_text": "ok"}
      */
     public JSONObject mutePlurks(String... ids) {
-        return new IdActions() {
-
-            @Override
-            HttpUriRequest createMethod(Set<Integer> idSet) throws PlurkException {
-                return (HttpGet) PlurkActionSheet.getInstance().mutePlurks(
-                        config.args().name("ids").value(new JSONArray(idSet).toString()).getMap());
-            }
-        }.execute(this, ids);
+        try {
+            HttpUriRequest method = PlurkActionSheet.getInstance().mutePlurks(
+                    config.args().name("ids").value(Utils.toIds(ids).toString()).getMap());
+            return new JSONObject(execute(method));
+        } catch (PlurkException e) {
+            logger.error(e.getMessage(), e);
+        } catch (JSONException e) {
+            logger.error(e.getMessage(), e);
+        }
+        return null;
     }
     // </editor-fold>
 
@@ -738,14 +715,16 @@ public class PlurkClient {
      * @return JSONObject represent the {"success_text": "ok"}
      */
     public JSONObject unmutePlurks(String... ids) {
-        return new IdActions() {
-
-            @Override
-            HttpUriRequest createMethod(Set<Integer> idSet) throws PlurkException {
-                return (HttpGet) PlurkActionSheet.getInstance().unmutePlurks(
-                        config.args().name("ids").value(new JSONArray(idSet).toString()).getMap());
-            }
-        }.execute(this, ids);
+        try {
+            HttpUriRequest method = PlurkActionSheet.getInstance().unmutePlurks(
+                    config.args().name("ids").value(Utils.toIds(ids).toString()).getMap());
+            return new JSONObject(execute(method));
+        } catch (PlurkException e) {
+            logger.error(e.getMessage(), e);
+        } catch (JSONException e) {
+            logger.error(e.getMessage(), e);
+        }
+        return null;        
     }
     // </editor-fold>
 
@@ -756,13 +735,16 @@ public class PlurkClient {
      * @return JSONObject represent the {"success_text": "ok"}
      */
     public JSONObject favoritePlurks(String... ids) {
-        return new IdActions() {
-            @Override
-            HttpUriRequest createMethod(Set<Integer> idSet) throws PlurkException {
-                return (HttpGet) PlurkActionSheet.getInstance().favoritePlurks(
-                        config.args().name("ids").value(new JSONArray(idSet).toString()).getMap());
-            }
-        }.execute(this, ids);
+        try {
+            HttpUriRequest method = PlurkActionSheet.getInstance().favoritePlurks(
+                    config.args().name("ids").value(Utils.toIds(ids).toString()).getMap());
+            return new JSONObject(execute(method));
+        } catch (PlurkException e) {
+            logger.error(e.getMessage(), e);
+        } catch (JSONException e) {
+            logger.error(e.getMessage(), e);
+        }        
+        return null;
     }
     // </editor-fold>
 
@@ -773,13 +755,16 @@ public class PlurkClient {
      * @return JSONObject represent the {"success_text": "ok"}
      */
     public JSONObject unfavoritePlurks(String... ids) {
-        return new IdActions() {
-            @Override
-            HttpUriRequest createMethod(Set<Integer> idSet) throws PlurkException {
-                return (HttpGet) PlurkActionSheet.getInstance().unfavoritePlurks(
-                        config.args().name("ids").value(new JSONArray(idSet).toString()).getMap());
-            }
-        }.execute(this, ids);
+        try {
+            HttpUriRequest method = PlurkActionSheet.getInstance().unfavoritePlurks(
+                    config.args().name("ids").value(Utils.toIds(ids).toString()).getMap());
+            return new JSONObject(execute(method));
+        } catch (PlurkException e) {
+            logger.error(e.getMessage(), e);
+        } catch (JSONException e) {
+            logger.error(e.getMessage(), e);
+        }        
+        return null;        
     }
     // </editor-fold>
 
@@ -790,14 +775,16 @@ public class PlurkClient {
      * @return JSONObject represent the {"success_text": "ok"}
      */
     public JSONObject markAsRead(String... ids) {
-        return new IdActions() {
-
-            @Override
-            HttpUriRequest createMethod(Set<Integer> idSet) throws PlurkException {
-                return (HttpGet) PlurkActionSheet.getInstance().markAsRead(
-                        config.args().name("ids").value(new JSONArray(idSet).toString()).getMap());
-            }
-        }.execute(this, ids);
+        try {
+            HttpUriRequest method = PlurkActionSheet.getInstance().markAsRead(
+                    config.args().name("ids").value(Utils.toIds(ids).toString()).getMap());
+            return new JSONObject(execute(method));
+        } catch (PlurkException e) {
+            logger.error(e.getMessage(), e);
+        } catch (JSONException e) {
+            logger.error(e.getMessage(), e);
+        }        
+        return null;   
     }
     // </editor-fold>
 
