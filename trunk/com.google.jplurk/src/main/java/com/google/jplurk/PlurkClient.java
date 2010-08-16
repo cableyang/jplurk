@@ -912,7 +912,7 @@ public class PlurkClient {
      */
     public JSONObject addAsFan(int userId) {
         try {
-            HttpGet method = (HttpGet) PlurkActionSheet.getInstance().addAsFan(config.args().name("").value("user_id" + userId).getMap());
+            HttpGet method = (HttpGet) PlurkActionSheet.getInstance().addAsFan(config.args().name("user_id").value(Integer.toString(userId)).getMap());
             return new JSONObject(executor.execute(method));
         } catch (PlurkException e) {
             logger.error(e.getMessage(), e);
@@ -932,7 +932,7 @@ public class PlurkClient {
      */
     public JSONObject addAsFriend(int userId) {
         try {
-            HttpGet method = (HttpGet) PlurkActionSheet.getInstance().addAsFriend(config.args().name("").value("user_id" + userId).getMap());
+            HttpGet method = (HttpGet) PlurkActionSheet.getInstance().addAsFriend(config.args().name("user_id").value(Integer.toString(userId)).getMap());
             return new JSONObject(executor.execute(method));
         } catch (PlurkException e) {
             logger.error(e.getMessage(), e);
@@ -990,7 +990,7 @@ public class PlurkClient {
      */
     public JSONObject denyFriendship(int userId) {
         try {
-            HttpGet method = (HttpGet) PlurkActionSheet.getInstance().denyFriendship(config.args().name("").value("user_id" + userId).getMap());
+            HttpGet method = (HttpGet) PlurkActionSheet.getInstance().denyFriendship(config.args().name("user_id").value(Integer.toString(userId)).getMap());
             return new JSONObject(executor.execute(method));
         } catch (PlurkException e) {
             logger.error(e.getMessage(), e);
@@ -1010,7 +1010,7 @@ public class PlurkClient {
      */
     public JSONObject removeNotification(int userId) {
         try {
-            HttpGet method = (HttpGet) PlurkActionSheet.getInstance().removeNotification(config.args().name("").value("user_id" + userId).getMap());
+            HttpGet method = (HttpGet) PlurkActionSheet.getInstance().removeNotification(config.args().name("user_id").value(Integer.toString(userId)).getMap());
             return new JSONObject(executor.execute(method));
         } catch (PlurkException e) {
             logger.error(e.getMessage(), e);
