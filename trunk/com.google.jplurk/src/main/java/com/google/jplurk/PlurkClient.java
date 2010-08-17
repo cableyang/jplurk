@@ -29,7 +29,7 @@ public class PlurkClient {
 
     // <editor-fold defaultstate="collapsed" desc="Init PlurkClient">
     private static Log logger = LogFactory.getLog(PlurkClient.class);
-    private HttpExecutor executor;
+    protected HttpExecutor executor;
     private ISettings config;
 
     /**

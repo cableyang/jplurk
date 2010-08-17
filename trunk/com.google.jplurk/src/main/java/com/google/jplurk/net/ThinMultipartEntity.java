@@ -1,6 +1,7 @@
 package com.google.jplurk.net;
 
 
+import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
@@ -144,10 +145,9 @@ public class ThinMultipartEntity implements HttpEntity {
 		}
 	}
 
-	public InputStream getContent() throws IOException,
-			UnsupportedOperationException {
-		throw new UnsupportedOperationException(
-				"Multipart form entity does not implement #getContent()");
-	}
+    public InputStream getContent() throws IOException,
+            UnsupportedOperationException {
+        return new ByteArrayInputStream(out.toByteArray());
+    }
 
 }
