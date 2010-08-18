@@ -23,6 +23,10 @@ public class Args {
         checkAndPush();
         return this;
     }
+    
+    public Args value(int value) {
+        return value(Integer.toString(value));
+    }
 
     public Args value(String value) {
         this.value = value;

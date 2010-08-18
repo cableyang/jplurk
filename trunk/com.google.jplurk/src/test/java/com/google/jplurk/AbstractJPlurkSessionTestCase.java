@@ -26,7 +26,7 @@ import com.google.jplurk.exception.PlurkException;
  */
 public abstract class AbstractJPlurkSessionTestCase extends TestCase {
 
-    protected static Log logger = LogFactory.getLog(PlurkClientTest.class);
+    protected static Log logger = LogFactory.getLog(PlurkClientTestCase.class);
     protected PlurkClient client;
     protected PlurkSettings settings;
 
