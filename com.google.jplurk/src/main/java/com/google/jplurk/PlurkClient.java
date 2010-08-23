@@ -907,10 +907,10 @@ public class PlurkClient {
      * Return a JSON list of current active alerts.
      * @return
      */
-    public JSONObject getActive() {
+    public JSONArray getActive() {
         try {
             HttpGet method = (HttpGet) PlurkActionSheet.getInstance().getActive(config.args().getMap());
-            return new JSONObject(executor.execute(method));
+            return new JSONArray(executor.execute(method));
         } catch (PlurkException e) {
             logger.error(e.getMessage(), e);
         } catch (JSONException e) {
@@ -926,10 +926,10 @@ public class PlurkClient {
      * Return a JSON list of past 30 alerts.
      * @return
      */
-    public JSONObject getHistory() {
+    public JSONArray getHistory() {
         try {
             HttpGet method = (HttpGet) PlurkActionSheet.getInstance().getHistory(config.args().getMap());
-            return new JSONObject(executor.execute(method));
+            return new JSONArray(executor.execute(method));
         } catch (PlurkException e) {
             logger.error(e.getMessage(), e);
         } catch (JSONException e) {
@@ -1542,7 +1542,12 @@ public class PlurkClient {
 //        PlurkClient pc = new PlurkClient(config);
 //        JSONObject o = null;
 //        System.out.println( pc.login(JOptionPane.showInputDialog("id"), JOptionPane.showInputDialog("password")) );
+
 //        pc.plurkAdd("把忘了加的 multithread connection manager 加上去了", Qualifier.SAYS);
+
+//        System.out.println(pc.getActive());
+//        System.out.println(pc.getHistory());
+
 //        Timer timer = new Timer();
 //        timer.schedule(pc.getUserChannel(), new Date(), 15000);
 
