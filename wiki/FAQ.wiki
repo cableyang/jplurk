@@ -1,0 +1,145 @@
+#summary FAQ gathered from ISSUEs
+
+== How to get plurks more than limit ==
+
+jPlurk provides the plurk of java implementation. Plurk api behaves something differently such the limit parameter of getPlurks. ISSUE 28
+
+We sholud get more plurks with the offset parameter. The steps will like:
+ # get plurks start at some offset
+ # get the oldest offset from result
+ # use the new offset to run step 1
+
+There is a PlurkHelper which can deal with it:
+{{{
+JSONObject ret = client.login("id", "password");
+PlurkHelper helper = new PlurkHelper(client); // create it with a loggin-ed client
+ret = helper.getPlurks(DateTime.now(), 80, false, false, false);
+}}}
+
+{{{
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import com.google.jplurk.DateTime;
+import com.google.jplurk.PlurkClient;
+import com.google.jplurk.exception.PlurkException;
+
+public class PlurkHelper {
+    protected static final int LIMIT = 30;
+    PlurkClient client;
+    
+    static interface FetchStrategy {
+        public JSONObject fetch(int number);
+    }
+
+    public PlurkHelper(PlurkClient client) throws PlurkException {
+        this.client = client;
+        if (client.getOwnProfile() == null) {
+            throw new PlurkException("need to login first");
+        }
+    }
+
+    public JSONObject getPollingPlurks(final DateTime offset, int number)
+            throws JSONException {
+        return execute(new FetchStrategy() {
+            @Override
+            public JSONObject fetch(int number) {
+                return client.getPollingPlurks(offset, LIMIT);
+            }
+        }, number);
+    }
+
+    public JSONObject getFavoritePlurks(final DateTime offset, int number)
+            throws JSONException {
+        return execute(new FetchStrategy() {
+
+            @Override
+            public JSONObject fetch(int number) {
+                return client.getFavoritePlurks(offset, LIMIT, true);
+            }
+        }, number);
+
+    }
+
+    protected JSONObject execute(FetchStrategy strategy, int number)
+            throws JSONException {
+        @SuppressWarnings("unused")
+        DateTime time = DateTime.now();
+        List<JSONObject> result = new ArrayList<JSONObject>();
+        int plurks = 0;
+        while (true) {
+            JSONObject json = strategy.fetch(number);
+            if (json == null) {
+                break;
+            }
+            try {
+                int len = json.getJSONArray("plurks").length();
+                plurks += len;
+
+                // get the previous offset
+                JSONObject entry = (JSONObject) json.getJSONArray("plurks")
+                        .get(len - 1);
+                time = DateTime.create(entry.getString("posted"));
+
+                result.add(json);
+            } catch (Exception e) {
+                break;
+            }
+            if (plurks >= number) {
+                break;
+            }
+
+        }
+        return cut(result, number);
+
+    }
+
+    public JSONObject getPlurks(final DateTime offset, int number,
+            final boolean onlyUser, final boolean onlyResponsed,
+            final boolean onlyPrivate) throws JSONException {
+        return execute(new FetchStrategy() {
+            @Override
+            public JSONObject fetch(int number) {
+                return client.getPlurks(offset, LIMIT, onlyUser, onlyResponsed,
+                        onlyPrivate);
+            }
+        }, number);
+    }
+
+    @SuppressWarnings("unchecked")
+    private JSONObject cut(List<JSONObject> results, int number)
+            throws JSONException {
+        JSONObject ret = new JSONObject();
+        JSONArray plurksList = new JSONArray();
+        JSONObject users = new JSONObject();
+
+        for (JSONObject plurks : results) {
+            JSONObject part = plurks.getJSONObject("plurk_users");
+            for (Iterator it = part.keys(); it.hasNext();) {
+                Object key = it.next();
+                users.put((String) key, part.get((String) key));
+            }
+        }
+
+        for (JSONObject plurks : results) {
+            JSONArray part = plurks.getJSONArray("plurks");
+            for (int i = 0; i < part.length(); i++) {
+                if (plurksList.length() < number) {
+                    plurksList.put(part.get(i));
+                }
+            }
+        }
+
+        ret.put("plurk_users", users);
+        ret.put("plurks", plurksList);
+        return ret;
+    }
+
+}
+
+}}}
