@@ -10,7 +10,7 @@ We sholud get more plurks with the offset parameter. The steps will like:
  # get the oldest offset from result
  # use the new offset to run step 1
 
-There is a PlurkHelper! which can deal with it:
+There is a !PlurkHelper which can deal with it:
 {{{
 JSONObject ret = client.login("id", "password");
 PlurkHelper helper = new PlurkHelper(client); // create it with a loggin-ed client
