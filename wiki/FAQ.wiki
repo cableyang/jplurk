@@ -1,15 +1,16 @@
 #summary FAQ gathered from ISSUEs
+#labels Featured
 
 == How to get plurks more than limit ==
 
-jPlurk provides the plurk of java implementation. Plurk api behaves something differently such the limit parameter of getPlurks. ISSUE 28
+jPlurk provides the plurk of java implementation. Plurk api behaves something differently such the limit parameter of getPlurks. (ISSUE 28)
 
 We sholud get more plurks with the offset parameter. The steps will like:
  # get plurks start at some offset
  # get the oldest offset from result
  # use the new offset to run step 1
 
-There is a PlurkHelper which can deal with it:
+There is a PlurkHelper! which can deal with it:
 {{{
 JSONObject ret = client.login("id", "password");
 PlurkHelper helper = new PlurkHelper(client); // create it with a loggin-ed client
