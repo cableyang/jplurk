@@ -1,7 +1,7 @@
 #summary FAQ gathered from ISSUEs
 #labels Featured
 
-== How to get plurks more than limit you set==
+== How to get plurks more than the limit you set==
 
 jPlurk provides the plurk of java implementation. Plurk api behaves something differently such the limit parameter of getPlurks. (ISSUE 28)
 
