@@ -35,7 +35,7 @@ public class PlurkHelper {
     PlurkClient client;
     
     static interface FetchStrategy {
-        public JSONObject fetch(int number);
+        public JSONObject fetch(DateTime time, int number);
     }
 
     public PlurkHelper(PlurkClient client) throws PlurkException {
@@ -45,36 +45,52 @@ public class PlurkHelper {
         }
     }
 
-    public JSONObject getPollingPlurks(final DateTime offset, int number)
+    public JSONObject getPollingPlurks(final DateTime before, int number)
             throws JSONException {
         return execute(new FetchStrategy() {
             @Override
-            public JSONObject fetch(int number) {
+            public JSONObject fetch(DateTime offset, int number) {
                 return client.getPollingPlurks(offset, LIMIT);
             }
-        }, number);
+        }, before, number);
     }
 
-    public JSONObject getFavoritePlurks(final DateTime offset, int number)
+    public JSONObject getFavoritePlurks(final DateTime before, int number)
             throws JSONException {
         return execute(new FetchStrategy() {
 
             @Override
-            public JSONObject fetch(int number) {
+            public JSONObject fetch(DateTime offset, int number) {
                 return client.getFavoritePlurks(offset, LIMIT, true);
             }
-        }, number);
+        }, before, number);
 
     }
 
-    protected JSONObject execute(FetchStrategy strategy, int number)
+    public JSONObject getPlurks(final DateTime before, int number,
+            final boolean onlyUser, final boolean onlyResponsed,
+            final boolean onlyPrivate) throws JSONException {
+        return execute(new FetchStrategy() {
+            @Override
+            public JSONObject fetch(DateTime offset, int number) {
+                return client.getPlurks(offset, LIMIT, onlyUser, onlyResponsed,
+                        onlyPrivate);
+            }
+        }, before, number);
+    }
+
+    protected JSONObject execute(FetchStrategy strategy, DateTime before, int number)
             throws JSONException {
-        @SuppressWarnings("unused")
-        DateTime time = DateTime.now();
+        DateTime time = before == null ? DateTime.now() : before;
         List<JSONObject> result = new ArrayList<JSONObject>();
         int plurks = 0;
         while (true) {
-            JSONObject json = strategy.fetch(number);
+            JSONObject json = null;
+            try {
+                json = strategy.fetch(time, number);
+            } catch (Exception ignored) {
+                continue;
+            }
             if (json == null) {
                 break;
             }
@@ -98,18 +114,6 @@ public class PlurkHelper {
         }
         return cut(result, number);
 
-    }
-
-    public JSONObject getPlurks(final DateTime offset, int number,
-            final boolean onlyUser, final boolean onlyResponsed,
-            final boolean onlyPrivate) throws JSONException {
-        return execute(new FetchStrategy() {
-            @Override
-            public JSONObject fetch(int number) {
-                return client.getPlurks(offset, LIMIT, onlyUser, onlyResponsed,
-                        onlyPrivate);
-            }
-        }, number);
     }
 
     @SuppressWarnings("unchecked")
