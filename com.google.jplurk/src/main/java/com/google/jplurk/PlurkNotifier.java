@@ -52,14 +52,15 @@ public class PlurkNotifier extends TimerTask {
     @Override
     public void run() {
         boolean isTimeOut = false;
+        HttpResponse resp = null;
+        String rawContent = null;
         try {
             logger.info("query: " + cometQueryUrl);
-            HttpResponse resp = client.execute(new HttpGet(cometQueryUrl
-                    .toString()));
-            JSONObject ret = new JSONObject(EntityUtils.toString(resp
-                    .getEntity()));
+            resp = client.execute(new HttpGet(cometQueryUrl.toString()));
+            rawContent = EntityUtils.toString(resp.getEntity());
+            rawContent = checkAndFix(rawContent);
+            JSONObject ret = new JSONObject(rawContent);
             logger.info("response: " + ret);
-
             dispatchNotifications(ret);
             updateNextOffset(ret);
 
@@ -68,10 +69,22 @@ public class PlurkNotifier extends TimerTask {
             logger.debug("need timeout retry.");
         } catch (Exception e) {
             logger.error(e.getMessage(), e);
+            logger.error("HttpResponse: " + resp);
+            logger.error("RawContent: " + rawContent);
         }
         if (isTimeOut) {
             run();
         }
+    }
+
+    private String checkAndFix(String jsonRaw) {
+        String jsonText = jsonRaw.trim();
+        if(jsonText.startsWith("CometChannel.scriptCallback(") && jsonText.endsWith(");"))
+        {
+            jsonText = jsonText.substring("CometChannel.scriptCallback(".length());
+            jsonText = jsonText.substring(0, jsonText.length() -2);
+        }
+        return jsonText;
     }
 
     private void dispatchNotifications(JSONObject ret) {
