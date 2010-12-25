@@ -1,5 +1,6 @@
 package com.google.jplurk;
 
+
 public class PlurkBlocksTest extends PlurkClientTestCase {
 
     public void testBlocks() throws Exception {
