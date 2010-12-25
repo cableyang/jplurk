@@ -1,5 +1,6 @@
 package com.google.jplurk;
 
+import java.awt.HeadlessException;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
@@ -52,11 +53,11 @@ public abstract class AbstractJPlurkSessionTestCase extends TestCase {
         return new File(dir, ".jplurkCookies");
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws Exception {
         exportCookieStore();
     }
 
-    private static void exportCookieStore() {
+    private static void exportCookieStore() throws Exception {
         PlurkSettings settings;
         try {
             settings = new PlurkSettings();
