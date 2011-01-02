@@ -26,18 +26,13 @@
 			<version>1.0</version>
 		</dependency>
 
-<!--
-		<dependency>
-			<groupId>org.apache.httpcomponents</groupId>
-			<artifactId>httpmime</artifactId>
-			<version>4.0</version>
-		</dependency>
-        <dependency>
-            <groupId>net.jcip</groupId>
-            <artifactId>jcip-annotations</artifactId>
-            <version>1.0</version>
-        </dependency>
--->
+		<!--
+			<dependency> <groupId>org.apache.httpcomponents</groupId>
+			<artifactId>httpmime</artifactId> <version>4.0</version>
+			</dependency> <dependency> <groupId>net.jcip</groupId>
+			<artifactId>jcip-annotations</artifactId> <version>1.0</version>
+			</dependency>
+		-->
 
 		<dependency>
 			<groupId>junit</groupId>
@@ -46,9 +41,15 @@
 			<scope>test</scope>
 		</dependency>
 		<dependency>
-		    <groupId>org.json</groupId>
-		    <artifactId>json</artifactId>
-		    <version>20080701</version>
+			<groupId>log4j</groupId>
+			<artifactId>log4j</artifactId>
+			<version>1.2.4</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.json</groupId>
+			<artifactId>json</artifactId>
+			<version>20080701</version>
 		</dependency>
 	</dependencies>
 	<build>
@@ -85,22 +86,23 @@
 			</plugin>
 		</plugins>
 	</build>
-    <reporting>
-        <plugins>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-javadoc-plugin</artifactId>
-                <!--
-                If you go into trobule with javadoc:javadoc, please check the following url:
-                http://maven.apache.org/plugins/maven-javadoc-plugin/faq.html#On_Windows_with_Sun_JDK_why_javadoc:javadoc_goal_blows_up_due_to_an_IllegalArgumentException_in_sun.net.www.ParseUtil.decode
-                -->
-                <configuration>
-                    <encoding>UTF-8</encoding>
-                    <charset>UTF-8</charset>
-                </configuration>
-            </plugin>
-        </plugins>
-    </reporting>
+	<reporting>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-javadoc-plugin</artifactId>
+				<!--
+					If you go into trobule with javadoc:javadoc, please check the
+					following url:
+					http://maven.apache.org/plugins/maven-javadoc-plugin/faq.html#On_Windows_with_Sun_JDK_why_javadoc:javadoc_goal_blows_up_due_to_an_IllegalArgumentException_in_sun.net.www.ParseUtil.decode
+				-->
+				<configuration>
+					<encoding>UTF-8</encoding>
+					<charset>UTF-8</charset>
+				</configuration>
+			</plugin>
+		</plugins>
+	</reporting>
 	<repositories>
 		<repository>
 			<id>jboss</id>

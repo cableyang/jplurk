@@ -17,6 +17,10 @@ import org.json.JSONObject;
 
 import com.google.jplurk.exception.PlurkException;
 
+/**
+ * Test required params only (no network access need.)
+ * @author qrtt1
+ */
 public class PlurkClientRequiredParamsTest extends TestCase {
 
     static Pattern QUERY_PARAM = Pattern
@@ -104,7 +108,7 @@ public class PlurkClientRequiredParamsTest extends TestCase {
         validateRequired("api_key", "profile_image");
     }
 
-    public void testGetFriendsByOffset() throws Exception {
+    public void testGetFriendsByOffset() throws Exception  {
         client.getFriendsByOffset("1234", 4);
         validateRequired("api_key", "user_id");
     }
