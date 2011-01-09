@@ -154,7 +154,7 @@ public class PlurkClient {
             PrivacyPolicy privacyPolicy, DateTime birth) throws PlurkException {
         if (StringUtils.isBlank(currentPassword)) {
             logger.warn("current password can not be null.");
-            return null;
+            throw new PlurkException("current password can not be null");
         }
 
         Args args = config.args();
@@ -196,7 +196,7 @@ public class PlurkClient {
     public JSONObject updatePicture(File file) throws PlurkException {
         if (file == null || !file.exists() || !file.isFile()) {
             logger.warn("not a valid file: " + file);
-            return null;
+            throw new PlurkException("not a valid file: " + file);
         }
 
         HttpPost method = new HttpPost("http://www.plurk.com/API/Users/updatePicture");
