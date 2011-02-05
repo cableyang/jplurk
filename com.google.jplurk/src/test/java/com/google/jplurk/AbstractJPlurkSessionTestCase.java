@@ -1,20 +1,14 @@
 package com.google.jplurk;
 
-import java.awt.HeadlessException;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
-
-import javax.swing.JOptionPane;
 
 import junit.framework.TestCase;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.json.JSONArray;
-import org.json.JSONObject;
 
 import com.google.jplurk.exception.PlurkException;
 
@@ -47,54 +41,10 @@ public abstract class AbstractJPlurkSessionTestCase extends TestCase {
         }
     }
 
-    private static File getCookieStore() {
+    public static File getCookieStore() {
         File dir = new File(System.getProperty("user.home", "."));
         dir.mkdirs();
         return new File(dir, ".jplurkCookies");
-    }
-
-    public static void main(String[] args) throws Exception {
-        exportCookieStore();
-    }
-
-    private static void exportCookieStore() throws Exception {
-        PlurkSettings settings;
-        try {
-            settings = new PlurkSettings();
-        } catch (PlurkException e) {
-            JOptionPane.showConfirmDialog(null,
-                    "cannot create jplurk settings.");
-            return;
-        }
-
-        JSONObject result = new PlurkClient(settings).login(JOptionPane
-                .showInputDialog("Please input your username"), JOptionPane
-                .showInputDialog("Please input your password"));
-
-        if (result == null) {
-            JOptionPane.showMessageDialog(null,
-                    "export cookie store is failure. Stop to export cookie");
-            return;
-        }
-
-        FileWriter fw = null;
-        try {
-            fw = new FileWriter(getCookieStore());
-            fw.write(settings.exportCookies().toString());
-            fw.close();
-            JOptionPane.showMessageDialog(null,
-                    "export cookie store to ~/.jplurkCookies");
-        } catch (IOException e) {
-        } finally {
-            if (fw != null) {
-                try {
-                    fw.close();
-                } catch (IOException ignored) {
-                } finally {
-                    fw = null;
-                }
-            }
-        }
     }
 
 }
