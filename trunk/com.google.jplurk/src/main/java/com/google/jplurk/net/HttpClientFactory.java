@@ -1,5 +1,14 @@
 package com.google.jplurk.net;
 
+import java.security.SecureRandom;
+
+import javax.net.ssl.KeyManager;
+import javax.net.ssl.SSLContext;
+import javax.net.ssl.TrustManager;
+import javax.net.ssl.X509TrustManager;
+
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.apache.http.HttpVersion;
 import org.apache.http.conn.ClientConnectionManager;
 import org.apache.http.conn.params.ConnManagerParams;
@@ -18,6 +27,26 @@ public class HttpClientFactory {
     
     public final static long SECOND = 1000L;
     public final static int TIMEOUT = (int) (30 * SECOND);
+    private static Log logger = LogFactory.getLog(HttpClientFactory.class);
+    
+    private final static TrustManager TRUST_EVEYONE_MANAGER = new X509TrustManager() {
+
+        public void checkClientTrusted(
+                java.security.cert.X509Certificate[] chain, String authType)
+                throws java.security.cert.CertificateException {
+            logger.debug("trust the client certificate");
+        }
+
+        public void checkServerTrusted(
+                java.security.cert.X509Certificate[] chain, String authType)
+                throws java.security.cert.CertificateException {
+            logger.debug("trust the server certificate");
+        }
+
+        public java.security.cert.X509Certificate[] getAcceptedIssuers() {
+            return null;
+        }
+    };
 
     public static DefaultHttpClient createThreadSafeHttpClient() {
         // Create and initialize HTTP parameters
@@ -32,8 +61,17 @@ public class HttpClientFactory {
         SchemeRegistry schemeRegistry = new SchemeRegistry();
         schemeRegistry.register(new Scheme("http", PlainSocketFactory
                 .getSocketFactory(), 80));
-        schemeRegistry.register(new Scheme("https", SSLSocketFactory
-                .getSocketFactory(), 443));
+
+        try {
+            SSLContext sslcontext = SSLContext.getInstance("TLS");
+            sslcontext.init(new KeyManager[0], new TrustManager[] { TRUST_EVEYONE_MANAGER }, new SecureRandom());
+            SSLSocketFactory sslSocketFactory = new SSLSocketFactory(sslcontext);
+            sslSocketFactory.setHostnameVerifier(SSLSocketFactory.ALLOW_ALL_HOSTNAME_VERIFIER);
+            schemeRegistry.register(new Scheme("https", sslSocketFactory, 443));
+        } catch (Exception e) {
+            logger.error(e.getMessage(), e);
+        }
+
 
         // Create an HttpClient with the ThreadSafeClientConnManager.
         // This connection manager must be used if more than one thread will
