@@ -3,8 +3,8 @@
 
 === about library dependencies ===
 
-For Android Developer: *only jplurk-2.x.x-SNAPSHOT.jar* is needed.
-For general Java Developer: *all JARs* in the zip is needed.
+ * For Android Developer: *only jplurk-2.x.x-SNAPSHOT.jar* is needed.
+ * For general Java Developer: *all JARs* in the zip is needed.
 
 
 = Hello jPlurk =
