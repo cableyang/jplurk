@@ -1,5 +1,6 @@
 package com.google.jplurk.net;
 
+import java.security.KeyStore;
 import java.security.SecureRandom;
 
 import javax.net.ssl.KeyManager;
@@ -29,7 +30,7 @@ public class HttpClientFactory {
     public final static int TIMEOUT = (int) (30 * SECOND);
     private static Log logger = LogFactory.getLog(HttpClientFactory.class);
     
-    private final static TrustManager TRUST_EVEYONE_MANAGER = new X509TrustManager() {
+    public final static TrustManager TRUST_EVEYONE_MANAGER = new X509TrustManager() {
 
         public void checkClientTrusted(
                 java.security.cert.X509Certificate[] chain, String authType)
@@ -63,15 +64,24 @@ public class HttpClientFactory {
                 .getSocketFactory(), 80));
 
         try {
-            SSLContext sslcontext = SSLContext.getInstance("TLS");
-            sslcontext.init(new KeyManager[0], new TrustManager[] { TRUST_EVEYONE_MANAGER }, new SecureRandom());
-            SSLSocketFactory sslSocketFactory = new SSLSocketFactory(sslcontext);
-            sslSocketFactory.setHostnameVerifier(SSLSocketFactory.ALLOW_ALL_HOSTNAME_VERIFIER);
-            schemeRegistry.register(new Scheme("https", sslSocketFactory, 443));
+            try {
+                SSLContext sslcontext = SSLContext.getInstance("TLS");
+                sslcontext.init(new KeyManager[0], new TrustManager[] { TRUST_EVEYONE_MANAGER }, new SecureRandom());
+                SSLSocketFactory sslSocketFactory = new SSLSocketFactory(sslcontext);
+                sslSocketFactory.setHostnameVerifier(SSLSocketFactory.ALLOW_ALL_HOSTNAME_VERIFIER);
+                schemeRegistry.register(new Scheme("https", sslSocketFactory, 443));
+            } catch (NoSuchMethodError e) {
+                /* fallback to use custom AndroidSSLSocketFactory */
+                logger.warn(e.getMessage());
+                logger.warn("try android ssl socket factory: " + com.google.jplurk.net.AndroidSSLSocketFactory.class);
+                com.google.jplurk.net.AndroidSSLSocketFactory androidSSLSocketFactory = new com.google.jplurk.net.AndroidSSLSocketFactory((KeyStore)null);
+                androidSSLSocketFactory.setHostnameVerifier(SSLSocketFactory.ALLOW_ALL_HOSTNAME_VERIFIER);
+                schemeRegistry.register(new Scheme("https", androidSSLSocketFactory, 443));
+            }
+           
         } catch (Exception e) {
             logger.error(e.getMessage(), e);
         }
-
 
         // Create an HttpClient with the ThreadSafeClientConnManager.
         // This connection manager must be used if more than one thread will
