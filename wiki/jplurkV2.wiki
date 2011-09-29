@@ -23,6 +23,10 @@ Windows 下則位於使用者個人目錄中，例如：
 {{{
 C:\Documents and Settings\%UserName%\jplurk.properties
 }}}
+或
+{{{
+C:\Users\%UserName%\jplurk.properties
+}}}
 
 它是一個簡單的 Property 檔案，您至少需要包含 api_key 這個屬性。您也能指定發噗時預設的語系：
 

@@ -24,6 +24,10 @@ If you using Windows, file path is User Folder, ex:
 {{{
 C:\Documents and Settings\%UserName%\jplurk.properties
 }}}
+or
+{{{
+C:\Users\%UserName%\jplurk.properties
+}}}
 
 It is a simple Property File, you need to setup api_key attribute at least.
 You also can setup language if you want:
